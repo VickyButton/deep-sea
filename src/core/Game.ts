@@ -33,6 +33,12 @@ export class Game {
     this.loop.start();
   }
 
+  public stop() {
+    log(GAME_LOG_TAG, 'Stopping...');
+
+    this.loop.stop();
+  }
+
   private onLoop() {
     this.graphics.draw();
   }
