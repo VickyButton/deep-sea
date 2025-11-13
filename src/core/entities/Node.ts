@@ -1,4 +1,4 @@
-export abstract class Node<T extends object> {
+export abstract class Node<T extends object = object> {
   public readonly id: string;
   public state: T;
 
