@@ -1,4 +1,5 @@
 import { Point2D } from './interfaces/Point2D';
+import { log } from './utils/logger';
 
 interface DrawInstructions {
   imageBitmap: ImageBitmap;
@@ -11,6 +12,8 @@ export interface GraphicsConfiguration {
   height: number;
 }
 
+const GRAPHICS_LOG_TAG = 'Graphics';
+
 export class Graphics {
   private readonly configuration: GraphicsConfiguration;
   private targetCanvas?: HTMLCanvasElement;
@@ -22,6 +25,8 @@ export class Graphics {
   }
 
   public initialize(targetCanvas: HTMLCanvasElement) {
+    log(GRAPHICS_LOG_TAG, 'Initializing...');
+
     targetCanvas.width = this.width;
     targetCanvas.height = this.height;
 
