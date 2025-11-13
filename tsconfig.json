@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "isolatedModules": true,
+    "baseUrl": "./",
+    "paths": {
+      "@core/*": ["./src/core/*"],
+      "@nodes/*": ["./src/nodes/*"],
+      "@scenes/*": ["./src/scenes/*"],
+    },
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noEmit": true
+  },
+  "include": ["src", "eslint.config.ts", "vite.config.ts"]
+}
