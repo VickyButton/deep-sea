@@ -1,6 +1,6 @@
 import { Node } from './Node';
 
-interface SceneState {
+export interface SceneState {
   name: string;
 }
 
