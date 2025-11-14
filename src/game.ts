@@ -1,16 +1,22 @@
 import { Game } from '@core/Game';
 
-const GAME_CANVAS_WIDTH = 1000;
-const GAME_CANVAS_HEIGHT = 1000;
-const GAME_FRAMES_PER_SECOND = 60;
+const GRAPHICS_WIDTH = 1000;
+const GRAPHICS_HEIGHT = 1000;
+
+const LOOP_FRAMES_PER_SECOND = 60;
+
+const SCENE_MANAGER_DEFAULT_SCENE_NAME = 'DeepSeaSplash';
 
 // Set up game.
 export const game = new Game({
   graphics: {
-    width: GAME_CANVAS_WIDTH,
-    height: GAME_CANVAS_HEIGHT,
+    width: GRAPHICS_WIDTH,
+    height: GRAPHICS_HEIGHT,
   },
   loop: {
-    framesPerSecond: GAME_FRAMES_PER_SECOND,
+    framesPerSecond: LOOP_FRAMES_PER_SECOND,
+  },
+  sceneManager: {
+    defaultSceneName: SCENE_MANAGER_DEFAULT_SCENE_NAME,
   },
 });

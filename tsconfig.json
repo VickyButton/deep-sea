@@ -16,6 +16,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "useUnknownInCatchVariables": true,
     "noEmit": true
   },
   "include": ["src", "eslint.config.ts", "vite.config.ts"]

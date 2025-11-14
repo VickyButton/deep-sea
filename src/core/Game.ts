@@ -1,12 +1,15 @@
 import type { GraphicsConfiguration } from './Graphics';
 import type { LoopConfiguration } from './Loop';
+import type { SceneManagerConfiguration } from './SceneManager';
 import { Graphics } from './Graphics';
 import { Loop } from './Loop';
+import { SceneManager } from './SceneManager';
 import { log } from './utils/logger';
 
 interface GameConfiguration {
   graphics: GraphicsConfiguration;
   loop: LoopConfiguration;
+  sceneManager: SceneManagerConfiguration;
 }
 
 const GAME_LOG_TAG = 'Game';
@@ -14,10 +17,12 @@ const GAME_LOG_TAG = 'Game';
 export class Game {
   public readonly graphics: Graphics;
   public readonly loop: Loop;
+  public readonly sceneManager: SceneManager;
 
   constructor(configuration: GameConfiguration) {
     this.graphics = new Graphics(configuration.graphics);
     this.loop = new Loop(configuration.loop);
+    this.sceneManager = new SceneManager(configuration.sceneManager);
   }
 
   public initialize(targetCanvas: HTMLCanvasElement) {
@@ -25,21 +30,25 @@ export class Game {
 
     this.graphics.initialize(targetCanvas);
     this.loop.initialize(this.onLoop.bind(this));
+    this.sceneManager.initialize();
   }
 
   public start() {
     log(GAME_LOG_TAG, 'Starting...');
 
+    this.sceneManager.startActiveScene();
     this.loop.start();
   }
 
   public stop() {
     log(GAME_LOG_TAG, 'Stopping...');
 
+    this.sceneManager.stopActiveScene();
     this.loop.stop();
   }
 
-  private onLoop() {
+  private onLoop(dt: number) {
+    this.sceneManager.updateActiveScene(dt);
     this.graphics.draw();
   }
 }

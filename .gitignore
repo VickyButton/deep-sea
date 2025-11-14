@@ -25,4 +25,7 @@ dist-ssr
 
 # Custom Content
 src/nodes
-src/scenes
+src/scenes/*
+
+# Predefined Content
+!src/scenes/DeepSeaSplash
