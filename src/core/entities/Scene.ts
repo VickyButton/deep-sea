@@ -4,4 +4,4 @@ interface SceneState {
   name: string;
 }
 
-export abstract class Scene extends Node<SceneState> {}
+export abstract class Scene<T extends SceneState = SceneState> extends Node<T> {}
