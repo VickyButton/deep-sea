@@ -1,7 +1,7 @@
 import { Game } from '@core/Game';
 
-const GRAPHICS_WIDTH = 1000;
-const GRAPHICS_HEIGHT = 1000;
+const GRAPHICS_WIDTH = window.innerWidth;
+const GRAPHICS_HEIGHT = window.innerHeight;
 
 const LOOP_FRAMES_PER_SECOND = 60;
 

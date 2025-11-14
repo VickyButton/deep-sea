@@ -1,7 +1,7 @@
 import { game } from './game';
 
-const GAME_CANVAS_WIDTH = 1000;
-const GAME_CANVAS_HEIGHT = 1000;
+const CANVAS_WIDTH = window.innerWidth;
+const CANVAS_HEIGHT = window.innerHeight;
 
 function onLoad() {
   // Set up DOM.
@@ -11,8 +11,8 @@ function onLoad() {
   gameWindow.id = 'game-window';
   gameWindow.appendChild(canvas);
 
-  canvas.width = GAME_CANVAS_WIDTH;
-  canvas.height = GAME_CANVAS_HEIGHT;
+  canvas.width = CANVAS_WIDTH;
+  canvas.height = CANVAS_HEIGHT;
 
   document.body.appendChild(gameWindow);
 

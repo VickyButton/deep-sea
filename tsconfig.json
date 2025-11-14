@@ -9,6 +9,7 @@
       "@core/*": ["./src/core/*"],
       "@nodes/*": ["./src/nodes/*"],
       "@scenes/*": ["./src/scenes/*"],
+      "game": ["./src/game"],
     },
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": true,
