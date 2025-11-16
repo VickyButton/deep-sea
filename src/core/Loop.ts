@@ -8,7 +8,6 @@ export interface LoopConfiguration {
 interface LoopState {
   isRunning: boolean;
   then: number;
-  elapsedFrames: number;
 }
 
 const LOOP_LOG_TAG = 'Loop';
@@ -72,7 +71,6 @@ export class Loop {
     return {
       isRunning: false,
       then: 0,
-      elapsedFrames: 0,
     };
   }
 }
