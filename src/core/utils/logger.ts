@@ -1,3 +1,4 @@
+import { timestampNow } from './dateTimeProvider';
 import { downloadFile } from './downloadFile';
 
 let logs: string[] = [];
@@ -38,7 +39,7 @@ export function clearLogs() {
  * Triggers a download of saved logs as a text file.
  */
 export function downloadLogs() {
-  const formattedDateTime = new Date().getTime().toString(); // TODO: Use a DateTimeProvider pattern.
+  const formattedDateTime = String(timestampNow());
   const fileName = `deep_sea_logs-${formattedDateTime}.txt`;
   const file = logsToTextFile();
 
