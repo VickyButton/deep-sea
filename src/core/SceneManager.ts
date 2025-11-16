@@ -33,14 +33,6 @@ export class SceneManager {
     this.activeScene = scene;
   }
 
-  public startActiveScene() {
-    if (this.activeScene) this.activeScene.start();
-  }
-
-  public stopActiveScene() {
-    if (this.activeScene) this.activeScene.stop();
-  }
-
   public updateActiveScene(dt: number) {
     if (this.activeScene) this.activeScene.update(dt);
   }

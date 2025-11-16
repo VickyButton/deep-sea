@@ -17,14 +17,6 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
     log(DEEP_SEA_SPLASH_LOG_TAG, 'Initializing...');
   }
 
-  public start(): void {
-    log(DEEP_SEA_SPLASH_LOG_TAG, 'Starting...');
-  }
-
-  public stop(): void {
-    log(DEEP_SEA_SPLASH_LOG_TAG, 'Stopping...');
-  }
-
   public update(dt: number): void {
     if (this.state.elapsed < FADE_IN_DURATION) this.state.elapsed += dt;
 

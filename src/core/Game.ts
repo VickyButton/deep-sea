@@ -36,14 +36,12 @@ export class Game {
   public start() {
     log(GAME_LOG_TAG, 'Starting...');
 
-    this.sceneManager.startActiveScene();
     this.loop.start();
   }
 
   public stop() {
     log(GAME_LOG_TAG, 'Stopping...');
 
-    this.sceneManager.stopActiveScene();
     this.loop.stop();
   }
 
