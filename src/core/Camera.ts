@@ -43,6 +43,13 @@ export class Camera {
     this.target = target;
   }
 
+  public getPositionRelativeToCamera(position: Point2D) {
+    return {
+      x: position.x - this.state.position.x,
+      y: position.y - this.state.position.y,
+    };
+  }
+
   private getDefaultState() {
     return {
       position: {
