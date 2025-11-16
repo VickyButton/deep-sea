@@ -43,7 +43,7 @@ export class Camera {
     this.target = target;
   }
 
-  public getDefaultState() {
+  private getDefaultState() {
     return {
       position: {
         x: 0,
