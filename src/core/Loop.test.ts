@@ -22,6 +22,7 @@ describe('Loop', () => {
   });
 
   afterEach(() => {
+    vi.clearAllMocks();
     vi.useRealTimers();
   });
 
