@@ -48,7 +48,7 @@ export class Loop {
     this.state = this.getDefaultState();
   }
 
-  public loop() {
+  private loop() {
     if (!this.state.isRunning) return false;
 
     requestAnimationFrame(this.loop.bind(this));
