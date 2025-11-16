@@ -1,6 +1,7 @@
 import type { SceneState } from '@core/entities/Scene';
 import { Scene } from '@core/entities/Scene';
 import { log } from '@core/utils/logger';
+import FpsCounter from '@nodes/FpsCounter/FpsCounter';
 import { game } from 'game';
 
 const DEEP_SEA_SPLASH_LOG_TAG = 'Scene/DeepSeaSplash';
@@ -13,6 +14,8 @@ const FADE_IN_DURATION = 5000;
 const TITLE_TEXT = 'DeepSea';
 
 export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
+  private readonly fpsCounter = new FpsCounter();
+
   public initialize(): void {
     log(DEEP_SEA_SPLASH_LOG_TAG, 'Initializing...');
   }
@@ -20,6 +23,7 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
   public update(dt: number): void {
     if (this.state.elapsed < FADE_IN_DURATION) this.state.elapsed += dt;
 
+    this.fpsCounter.update(dt);
     this.render();
   }
 
@@ -46,7 +50,7 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
     backgroundContext.fillRect(0, 0, width, height);
 
     // Step 2: Render title text.
-    backgroundContext.font = '100px Verdana';
+    backgroundContext.font = '100px Arial';
     backgroundContext.textAlign = 'center';
 
     backgroundContext.fillStyle = 'black';
