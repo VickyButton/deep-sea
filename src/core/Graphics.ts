@@ -57,8 +57,9 @@ export class Graphics {
 
     const canvas = new OffscreenCanvas(this.width, this.height);
     const canvasContext = canvas.getContext('2d');
+    const sortedDrawQueue = new Map([...this.drawQueue.entries()].sort());
 
-    for (const layer of this.drawQueue.values()) {
+    for (const layer of sortedDrawQueue.values()) {
       const layerCanvas = new OffscreenCanvas(this.width, this.height);
       const layerContext = layerCanvas.getContext('2d');
 
