@@ -1,5 +1,6 @@
 import { Node } from './entities/Node';
 import { Point2D } from './interfaces/Point2D';
+import { log } from './utils/logger';
 
 export interface CameraConfiguration {
   width: number;
@@ -12,6 +13,7 @@ interface CameraState {
 
 type TargetNode = Node<{ position: Point2D }>;
 
+const CAMERA_LOG_TAG = 'Camera';
 export class Camera {
   private readonly configuration: CameraConfiguration;
   private state: CameraState;
@@ -35,6 +37,8 @@ export class Camera {
   }
 
   public setTarget(target: TargetNode) {
+    log(CAMERA_LOG_TAG, `Setting camera target: ${target.id}`);
+
     this.target = target;
   }
 
