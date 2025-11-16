@@ -75,6 +75,7 @@ export class Graphics {
     const imageBitmap = canvas.transferToImageBitmap();
 
     this.targetContext.transferFromImageBitmap(imageBitmap);
+    this.clearDrawQueue();
   }
 
   public get width() {
@@ -83,5 +84,9 @@ export class Graphics {
 
   public get height() {
     return this.configuration.height;
+  }
+
+  private clearDrawQueue() {
+    this.drawQueue.clear();
   }
 }
