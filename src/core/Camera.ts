@@ -15,8 +15,9 @@ type TargetNode = Node<{ position: Point2D }>;
 
 const CAMERA_LOG_TAG = 'Camera';
 export class Camera {
+  public state: CameraState;
+
   private readonly configuration: CameraConfiguration;
-  private state: CameraState;
   private target?: TargetNode;
 
   constructor(configuration: CameraConfiguration) {
