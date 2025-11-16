@@ -52,6 +52,7 @@ export class Game {
 
   private onLoop(dt: number) {
     this.sceneManager.updateActiveScene(dt);
+    this.camera.update();
     this.graphics.draw();
   }
 }
