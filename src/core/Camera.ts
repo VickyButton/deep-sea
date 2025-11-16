@@ -1,7 +1,7 @@
 import { Node } from './entities/Node';
 import { Point2D } from './interfaces/Point2D';
 
-interface CameraConfiguration {
+export interface CameraConfiguration {
   width: number;
   height: number;
 }

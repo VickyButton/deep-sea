@@ -1,12 +1,15 @@
+import type { CameraConfiguration } from './Camera';
 import type { GraphicsConfiguration } from './Graphics';
 import type { LoopConfiguration } from './Loop';
 import type { SceneManagerConfiguration } from './SceneManager';
+import { Camera } from './Camera';
 import { Graphics } from './Graphics';
 import { Loop } from './Loop';
 import { SceneManager } from './SceneManager';
 import { log } from './utils/logger';
 
 interface GameConfiguration {
+  camera: CameraConfiguration;
   graphics: GraphicsConfiguration;
   loop: LoopConfiguration;
   sceneManager: SceneManagerConfiguration;
@@ -15,11 +18,13 @@ interface GameConfiguration {
 const GAME_LOG_TAG = 'Game';
 
 export class Game {
+  public readonly camera: Camera;
   public readonly graphics: Graphics;
   public readonly loop: Loop;
   public readonly sceneManager: SceneManager;
 
   constructor(configuration: GameConfiguration) {
+    this.camera = new Camera(configuration.camera);
     this.graphics = new Graphics(configuration.graphics);
     this.loop = new Loop(configuration.loop);
     this.sceneManager = new SceneManager(configuration.sceneManager);
