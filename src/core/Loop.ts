@@ -1,3 +1,4 @@
+import { timestampNow } from './utils/dateTimeProvider';
 import { log } from './utils/logger';
 
 export interface LoopConfiguration {
@@ -32,7 +33,7 @@ export class Loop {
     log(LOOP_LOG_TAG, 'Starting...');
 
     this.state.isRunning = true;
-    this.state.then = performance.now();
+    this.state.then = timestampNow();
     this.loop();
   }
 
@@ -53,7 +54,7 @@ export class Loop {
 
     requestAnimationFrame(this.loop.bind(this));
 
-    const now = performance.now();
+    const now = timestampNow();
     const dt = now - this.state.then;
 
     if (dt <= this.framesPerSecondInterval) return;
