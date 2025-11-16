@@ -22,10 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Custom Content
-src/nodes
-src/scenes/*
-
-# Predefined Content
-!src/scenes/DeepSeaSplash
