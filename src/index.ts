@@ -5,9 +5,13 @@ const CANVAS_WIDTH = window.innerWidth;
 const CANVAS_HEIGHT = window.innerHeight;
 
 const gameConfiguration = {
+  camera: {
+    width: CANVAS_WIDTH,
+    height: CANVAS_HEIGHT,
+  },
   graphics: {
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: CANVAS_WIDTH,
+    height: CANVAS_HEIGHT,
   },
   loop: {
     framesPerSecond: 60,
