@@ -12,6 +12,11 @@ interface CameraState {
 }
 
 type TargetNode = Node<{ position: Point2D }>;
+type TargetNodeWithBounds = Node<{
+  position: Point2D;
+  width: number;
+  height: number;
+}>;
 
 const CAMERA_LOG_TAG = 'Camera';
 export class Camera {
@@ -56,6 +61,49 @@ export class Camera {
       x: position.x - this.state.position.x,
       y: position.y - this.state.position.y,
     };
+  }
+
+  public isOffScreen(node: TargetNodeWithBounds) {
+    const cameraVertices = this.getRectangleVertices(this.state.position, this.width, this.height);
+    const nodeVertices = this.getRectangleVertices(
+      node.state.position,
+      node.state.width,
+      node.state.height,
+    );
+
+    // If one rectangle is to the left of the other.
+    if (cameraVertices.tl.x > nodeVertices.br.x || nodeVertices.tl.x > cameraVertices.br.x)
+      return true;
+
+    // If one rectangle is above the other.
+    if (cameraVertices.br.y < nodeVertices.tl.y || nodeVertices.br.y < cameraVertices.tl.y)
+      return true;
+
+    return false;
+  }
+
+  private getRectangleVertices(center: Point2D, width: number, height: number) {
+    const halfWidth = width / 2;
+    const halfHeight = height / 2;
+
+    const tl = {
+      x: center.x - halfWidth,
+      y: center.y - halfHeight,
+    };
+    const tr = {
+      x: center.x + halfWidth,
+      y: center.y - halfHeight,
+    };
+    const br = {
+      x: center.x + halfWidth,
+      y: center.y + halfHeight,
+    };
+    const bl = {
+      x: center.x - halfWidth,
+      y: center.y + halfHeight,
+    };
+
+    return { tl, tr, br, bl };
   }
 
   private getDefaultState() {
