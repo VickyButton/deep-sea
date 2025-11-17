@@ -30,6 +30,8 @@ export class SceneManager {
   public setActiveScene(scene: Scene) {
     log(SCENE_MANAGER_LOG_TAG, `Setting ${scene.state.name} as active scene...`);
 
+    scene.initialize();
+
     this.activeScene = scene;
   }
 
