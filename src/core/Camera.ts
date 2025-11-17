@@ -25,6 +25,14 @@ export class Camera {
     this.state = this.getDefaultState();
   }
 
+  public get width() {
+    return this.configuration.width;
+  }
+
+  public get height() {
+    return this.configuration.height;
+  }
+
   public reset() {
     this.state = this.getDefaultState();
   }
