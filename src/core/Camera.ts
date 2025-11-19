@@ -9,6 +9,8 @@ export interface CameraConfiguration {
 
 interface CameraState {
   position: Point2D;
+  width: number;
+  height: number;
 }
 
 type TargetNode = Node<{ position: Point2D }>;
@@ -31,11 +33,11 @@ export class Camera {
   }
 
   public get width() {
-    return this.configuration.width;
+    return this.state.width;
   }
 
   public get height() {
-    return this.configuration.height;
+    return this.state.height;
   }
 
   public reset() {
@@ -112,6 +114,8 @@ export class Camera {
         x: 0,
         y: 0,
       },
+      width: this.configuration.width,
+      height: this.configuration.height,
     };
   }
 }

@@ -32,7 +32,7 @@ export class Graphics {
 
     const targetContext = targetCanvas.getContext('bitmaprenderer');
 
-    if (!targetContext) throw new Error('Could not get target context');
+    if (!targetContext) throw new Error('Could not get rendering context');
 
     this.targetContext = targetContext;
   }
