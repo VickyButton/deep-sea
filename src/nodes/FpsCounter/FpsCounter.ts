@@ -6,11 +6,11 @@ interface FpsCounterState {
   currentFramesPerSecond: number;
 }
 
-const FPS_COUNTER_LOG_TAG = 'FpsCounter';
+const LOG_TAG = 'FpsCounter';
 
 export default class FpsCounter extends Node<FpsCounterState> {
   public initialize(): void {
-    log(FPS_COUNTER_LOG_TAG, 'Initializing FpsCounter...');
+    log(LOG_TAG, 'Initializing FpsCounter...');
   }
 
   public update(dt: number): void {

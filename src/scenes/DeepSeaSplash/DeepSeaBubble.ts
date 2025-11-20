@@ -12,11 +12,11 @@ interface DeepSeaBubbleState {
 
 const RADIUS_SHRINK_RATE = 0.0001;
 const BASE_VELOCITY_X = -0.002;
-const DEEP_SEA_BUBBLE_LOG_TAG = 'DeepSeaBubble';
+const LOG_TAG = 'DeepSeaBubble';
 
 export class DeepSeaBubble extends Node<DeepSeaBubbleState> {
   public initialize() {
-    log(DEEP_SEA_BUBBLE_LOG_TAG, 'Initializing...');
+    log(LOG_TAG, 'Initializing...');
 
     this.state.velocity = BASE_VELOCITY_X * this.radius;
   }

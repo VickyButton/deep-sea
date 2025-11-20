@@ -15,7 +15,7 @@ interface GameConfiguration {
   sceneManager: SceneManagerConfiguration;
 }
 
-const GAME_LOG_TAG = 'Game';
+const LOG_TAG = 'Game';
 
 export class Game {
   public readonly camera: Camera;
@@ -31,7 +31,7 @@ export class Game {
   }
 
   public initialize(targetCanvas: HTMLCanvasElement) {
-    log(GAME_LOG_TAG, 'Initializing...');
+    log(LOG_TAG, 'Initializing...');
 
     this.graphics.initialize(targetCanvas);
     this.loop.initialize(this.onLoop.bind(this));
@@ -39,13 +39,13 @@ export class Game {
   }
 
   public start() {
-    log(GAME_LOG_TAG, 'Starting...');
+    log(LOG_TAG, 'Starting...');
 
     this.loop.start();
   }
 
   public stop() {
-    log(GAME_LOG_TAG, 'Stopping...');
+    log(LOG_TAG, 'Stopping...');
 
     this.loop.stop();
   }

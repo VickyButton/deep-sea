@@ -5,7 +5,7 @@ import FpsCounter from '@nodes/FpsCounter/FpsCounter';
 import { game } from 'game';
 import { DeepSeaBubble } from './DeepSeaBubble';
 
-const DEEP_SEA_SPLASH_LOG_TAG = 'Scene/DeepSeaSplash';
+const LOG_TAG = 'Scene/DeepSeaSplash';
 
 interface DeepSeaSplashState extends SceneState {
   elapsed: number;
@@ -22,7 +22,7 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
   private readonly bubbles: DeepSeaBubble[] = [];
 
   public initialize(): void {
-    log(DEEP_SEA_SPLASH_LOG_TAG, 'Initializing...');
+    log(LOG_TAG, 'Initializing...');
 
     game.camera.setPosition({
       x: game.camera.width / 2,

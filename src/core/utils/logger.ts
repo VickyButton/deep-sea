@@ -6,25 +6,39 @@ let logs: string[] = [];
 /**
  * Prints a formatted log in the console and saves formatted log.
  *
- * @param tag The log type or an identifier for where the log originated.
+ * @param tag An identifier for the log's origin.
  * @param message The log message.
  */
 export function log(tag: string, message: string) {
-  const formattedLog = `[${tag}] ${message}`;
+  const formattedLog = formatLog(tag, message);
 
-  switch (tag.toLowerCase()) {
-    case 'error':
-      console.error(formattedLog);
+  console.log(formattedLog);
+  logs.push(formattedLog);
+}
 
-      break;
-    case 'warn':
-      console.warn(formattedLog);
+/**
+ * Prints a formatted warning log in the console and saves formatted warning log.
+ *
+ * @param tag An identifier for the log's origin.
+ * @param message The log message.
+ */
+export function warn(tag: string, message: string) {
+  const formattedLog = formatLog(tag, message);
 
-      break;
-    default:
-      console.log(formattedLog);
-  }
+  console.warn(formattedLog);
+  logs.push(formattedLog);
+}
 
+/**
+ * Prints a formatted error log in the console and saves formatted error log.
+ *
+ * @param tag An identifier for the log's origin.
+ * @param message The log message.
+ */
+export function error(tag: string, message: string) {
+  const formattedLog = formatLog(tag, message);
+
+  console.error(formattedLog);
   logs.push(formattedLog);
 }
 
@@ -44,6 +58,10 @@ export function downloadLogs() {
   const file = logsToTextFile();
 
   downloadFile(fileName, file);
+}
+
+function formatLog(tag: string, message: string) {
+  return `[${tag}] ${message}`;
 }
 
 function logsToTextFile() {

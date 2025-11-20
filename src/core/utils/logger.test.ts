@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { timestampNow } from './dateTimeProvider';
 import { downloadFile } from './downloadFile';
-import { clearLogs, downloadLogs, log } from './logger';
+import { clearLogs, downloadLogs, error, log, warn } from './logger';
 
 vi.mock('./dateTimeProvider', () => ({
   timestampNow: vi.fn(),
@@ -21,7 +21,7 @@ describe('logger', () => {
   it('should log an error in console', () => {
     const consoleSpy = vi.spyOn(console, 'error');
 
-    log('Error', 'message');
+    error('Error', 'message');
 
     expect(consoleSpy).toHaveBeenCalledWith('[Error] message');
   });
@@ -29,7 +29,7 @@ describe('logger', () => {
   it('should log a warning in console', () => {
     const consoleSpy = vi.spyOn(console, 'warn');
 
-    log('Warn', 'message');
+    warn('Warn', 'message');
 
     expect(consoleSpy).toHaveBeenCalledWith('[Warn] message');
   });
@@ -46,11 +46,12 @@ describe('logger', () => {
     vi.mocked(timestampNow).mockReturnValueOnce(1000);
 
     log('1', '2');
-    log('3', '4');
+    warn('3', '4');
+    error('5', '6');
 
     downloadLogs();
 
-    const blob = new Blob(['[1] 2\n[3] 4'], { type: 'text/plain' });
+    const blob = new Blob(['[1] 2\n[3] 4\n[5] 6'], { type: 'text/plain' });
 
     expect(downloadFile).toHaveBeenCalledWith('deep_sea_logs-1000.txt', blob);
   });
