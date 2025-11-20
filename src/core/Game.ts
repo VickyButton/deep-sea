@@ -6,7 +6,7 @@ import { Camera } from './Camera';
 import { Graphics } from './Graphics';
 import { Loop } from './Loop';
 import { SceneManager } from './SceneManager';
-import { log } from './utils/logger';
+import { error, log } from './utils/logger';
 
 interface GameConfiguration {
   camera: CameraConfiguration;
@@ -30,10 +30,10 @@ export class Game {
     this.sceneManager = new SceneManager(configuration.sceneManager);
   }
 
-  public initialize(targetCanvas: HTMLCanvasElement) {
+  public initialize() {
     log(LOG_TAG, 'Initializing...');
 
-    this.graphics.initialize(targetCanvas);
+    this.graphics.initialize();
     this.loop.initialize(this.onLoop.bind(this));
     this.sceneManager.initialize();
   }
@@ -51,8 +51,14 @@ export class Game {
   }
 
   private onLoop(dt: number) {
-    this.sceneManager.updateActiveScene(dt);
-    this.camera.update();
-    this.graphics.draw();
+    try {
+      this.sceneManager.updateActiveScene(dt);
+      this.camera.update();
+      this.graphics.draw();
+    } catch (err) {
+      error(LOG_TAG, `Error: ${String(err)}`);
+
+      this.loop.stop();
+    }
   }
 }

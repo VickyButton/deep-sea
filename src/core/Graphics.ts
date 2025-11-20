@@ -13,6 +13,8 @@ export interface GraphicsConfiguration {
 }
 
 const LOG_TAG = 'Graphics';
+const ERROR_MISSING_TARGET_CANVAS = 'Unable to get target canvas';
+const ERROR_MISSING_TARGET_CONTEXT = 'Unable to get target context';
 
 export class Graphics {
   private readonly configuration: GraphicsConfiguration;
@@ -24,16 +26,19 @@ export class Graphics {
     this.configuration = configuration;
   }
 
-  public initialize(targetCanvas: HTMLCanvasElement) {
+  public initialize() {
     log(LOG_TAG, 'Initializing...');
 
-    targetCanvas.width = this.width;
-    targetCanvas.height = this.height;
+    const targetCanvas = this.getTargetCanvas();
+
+    targetCanvas.width = this.configuration.width;
+    targetCanvas.height = this.configuration.height;
 
     const targetContext = targetCanvas.getContext('bitmaprenderer');
 
-    if (!targetContext) throw new Error('Could not get rendering context');
+    if (!targetContext) throw new Error(ERROR_MISSING_TARGET_CONTEXT);
 
+    this.targetCanvas = targetCanvas;
     this.targetContext = targetContext;
   }
 
@@ -53,7 +58,7 @@ export class Graphics {
   }
 
   public draw() {
-    if (!this.targetContext) return;
+    if (!this.targetContext) throw new Error(ERROR_MISSING_TARGET_CONTEXT);
 
     const canvas = new OffscreenCanvas(this.width, this.height);
     const canvasContext = canvas.getContext('2d');
@@ -80,11 +85,19 @@ export class Graphics {
   }
 
   public get width() {
-    return this.configuration.width;
+    return this.targetCanvas ? this.targetCanvas.width : 0;
   }
 
   public get height() {
-    return this.configuration.height;
+    return this.targetCanvas ? this.targetCanvas.height : 0;
+  }
+
+  private getTargetCanvas() {
+    const targetCanvas = document.getElementById('game-canvas');
+
+    if (!targetCanvas) throw new Error(ERROR_MISSING_TARGET_CANVAS);
+
+    return targetCanvas as HTMLCanvasElement;
   }
 
   private clearDrawQueue() {

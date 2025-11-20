@@ -20,6 +20,7 @@ const gameConfiguration = {
     defaultSceneName: 'DeepSeaSplash',
   },
 };
+const game = new Game(gameConfiguration);
 
 function createGameCanvas() {
   const canvas = document.createElement('canvas');
@@ -31,28 +32,61 @@ function createGameCanvas() {
   return canvas;
 }
 
-function createGameWindow() {
-  const gameWindow = document.createElement('div');
+function createGameContainer() {
+  const container = document.createElement('div');
 
-  gameWindow.id = 'game-window';
+  container.id = 'game-container';
+  container.style.display = 'flex';
+  container.style.alignItems = 'center';
+  container.style.justifyContent = 'center';
+  container.style.backgroundColor = 'black';
+  container.style.width = '100%';
+  container.style.height = '100%';
 
-  return gameWindow;
+  return container;
+}
+
+function createGameStartButton() {
+  const button = document.createElement('button');
+
+  button.id = 'game-start-button';
+  button.textContent = 'Play Game';
+  button.type = 'button';
+  button.style.padding = '16px';
+  button.style.border = 'none';
+  button.style.borderRadius = '16px';
+  button.style.background = '#2b66aaff';
+  button.style.color = 'white';
+  button.style.fontSize = '1.2rem';
+  button.style.fontWeight = 'bold';
+
+  return button;
+}
+
+function setUpGameDom() {
+  const gameContainer = createGameContainer();
+  const gameCanvas = createGameCanvas();
+  const gameStartButton = createGameStartButton();
+
+  gameContainer.appendChild(gameStartButton);
+  document.body.appendChild(gameContainer);
+
+  gameStartButton.addEventListener('click', () => {
+    gameContainer.removeChild(gameStartButton);
+    gameContainer.appendChild(gameCanvas);
+
+    setGame(game);
+    startGame();
+  });
+}
+
+function startGame() {
+  game.initialize();
+  game.start();
 }
 
 function onLoad() {
-  // Set up DOM.
-  const gameWindow = createGameWindow();
-  const canvas = createGameCanvas();
-  const game = new Game(gameConfiguration);
-
-  gameWindow.appendChild(canvas);
-  document.body.appendChild(gameWindow);
-
-  setGame(game);
-
-  // Start game.
-  game.initialize(canvas);
-  game.start();
+  setUpGameDom();
 }
 
 window.addEventListener('load', onLoad);

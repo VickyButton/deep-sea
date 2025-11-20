@@ -78,10 +78,10 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
   }
 
   private renderBackground() {
-    const x = game.graphics.width / 2;
-    const y = game.graphics.height / 2;
-    const width = game.graphics.width;
-    const height = game.graphics.height;
+    const x = game.camera.width / 2;
+    const y = game.camera.height / 2;
+    const width = game.camera.width;
+    const height = game.camera.height;
     const canvas = new OffscreenCanvas(width, height);
     const context = canvas.getContext('2d');
 
@@ -116,10 +116,10 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
   }
 
   private renderMask() {
-    const x = game.graphics.width / 2;
-    const y = game.graphics.height / 2;
-    const width = game.graphics.width;
-    const height = game.graphics.height;
+    const x = game.camera.width / 2;
+    const y = game.camera.height / 2;
+    const width = game.camera.width;
+    const height = game.camera.height;
     const canvas = new OffscreenCanvas(width, height);
     const context = canvas.getContext('2d');
 
@@ -141,8 +141,8 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
   }
 
   private renderTitle() {
-    const x = game.graphics.width / 2;
-    const y = game.graphics.height / 2;
+    const x = game.camera.width / 2;
+    const y = game.camera.height / 2;
     const width = TITLE_FONT_SIZE * 6;
     const height = TITLE_FONT_SIZE;
     const canvas = new OffscreenCanvas(width, height);
