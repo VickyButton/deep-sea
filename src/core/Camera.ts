@@ -23,9 +23,8 @@ type TargetNodeWithBounds = Node<{
 const LOG_TAG = 'Camera';
 
 export class Camera {
-  public state: CameraState;
-
   private readonly configuration: CameraConfiguration;
+  private state: CameraState;
   private target?: TargetNode;
 
   constructor(configuration: CameraConfiguration) {
@@ -39,6 +38,10 @@ export class Camera {
 
   public get height() {
     return this.state.height;
+  }
+
+  public get position() {
+    return this.state.position;
   }
 
   public reset() {
@@ -67,7 +70,11 @@ export class Camera {
   }
 
   public isOffScreen(node: TargetNodeWithBounds) {
-    const cameraVertices = this.getRectangleVertices(this.state.position, this.width, this.height);
+    const cameraVertices = this.getRectangleVertices(
+      this.state.position,
+      this.state.width,
+      this.state.height,
+    );
     const nodeVertices = this.getRectangleVertices(
       node.state.position,
       node.state.width,

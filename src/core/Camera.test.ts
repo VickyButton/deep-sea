@@ -47,7 +47,7 @@ describe('Camera', () => {
     camera.update();
 
     // Assert that camera is at target position.
-    expect(camera.state.position).toEqual(targetPosition);
+    expect(camera.position).toEqual(targetPosition);
   });
 
   it('should calculate position relative to camera', () => {
