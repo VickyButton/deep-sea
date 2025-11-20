@@ -20,7 +20,8 @@ type TargetNodeWithBounds = Node<{
   height: number;
 }>;
 
-const CAMERA_LOG_TAG = 'Camera';
+const LOG_TAG = 'Camera';
+
 export class Camera {
   public state: CameraState;
 
@@ -53,7 +54,7 @@ export class Camera {
   }
 
   public setTarget(target: TargetNode) {
-    log(CAMERA_LOG_TAG, `Setting camera target: ${target.id}`);
+    log(LOG_TAG, `Setting camera target: ${target.id}`);
 
     this.target = target;
   }

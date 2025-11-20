@@ -12,7 +12,7 @@ export interface GraphicsConfiguration {
   height: number;
 }
 
-const GRAPHICS_LOG_TAG = 'Graphics';
+const LOG_TAG = 'Graphics';
 
 export class Graphics {
   private readonly configuration: GraphicsConfiguration;
@@ -25,7 +25,7 @@ export class Graphics {
   }
 
   public initialize(targetCanvas: HTMLCanvasElement) {
-    log(GRAPHICS_LOG_TAG, 'Initializing...');
+    log(LOG_TAG, 'Initializing...');
 
     targetCanvas.width = this.width;
     targetCanvas.height = this.height;

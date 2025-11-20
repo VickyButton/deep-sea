@@ -10,7 +10,7 @@ interface LoopState {
   then: number;
 }
 
-const LOOP_LOG_TAG = 'Loop';
+const LOG_TAG = 'Loop';
 
 export class Loop {
   private readonly configuration: LoopConfiguration;
@@ -23,13 +23,13 @@ export class Loop {
   }
 
   public initialize(onLoop: (dt: number) => void) {
-    log(LOOP_LOG_TAG, 'Initializing...');
+    log(LOG_TAG, 'Initializing...');
 
     this.onLoop = onLoop;
   }
 
   public start() {
-    log(LOOP_LOG_TAG, 'Starting...');
+    log(LOG_TAG, 'Starting...');
 
     this.state.isRunning = true;
     this.state.then = timestampNow();
@@ -37,13 +37,13 @@ export class Loop {
   }
 
   public stop() {
-    log(LOOP_LOG_TAG, 'Stopping...');
+    log(LOG_TAG, 'Stopping...');
 
     this.state.isRunning = false;
   }
 
   public reset() {
-    log(LOOP_LOG_TAG, 'Resetting...');
+    log(LOG_TAG, 'Resetting...');
 
     this.state = this.getDefaultState();
   }
