@@ -13,14 +13,23 @@ export function log(tag: string, message: string) {
   const formattedLog = formatLog(tag, message);
 
   switch (tag.toLowerCase()) {
-    case 'warn':
-      console.warn(formattedLog);
-
-      break;
     default:
       console.log(formattedLog);
   }
 
+  logs.push(formattedLog);
+}
+
+/**
+ * Prints a formatted warning log in the console and saves formatted warning log.
+ *
+ * @param tag An identifier for the log's origin.
+ * @param message The log message.
+ */
+export function warn(tag: string, message: string) {
+  const formattedLog = formatLog(tag, message);
+
+  console.warn(formattedLog);
   logs.push(formattedLog);
 }
 
