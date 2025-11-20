@@ -12,11 +12,7 @@ let logs: string[] = [];
 export function log(tag: string, message: string) {
   const formattedLog = formatLog(tag, message);
 
-  switch (tag.toLowerCase()) {
-    default:
-      console.log(formattedLog);
-  }
-
+  console.log(formattedLog);
   logs.push(formattedLog);
 }
 
