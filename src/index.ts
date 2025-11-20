@@ -21,18 +21,31 @@ const gameConfiguration = {
   },
 };
 
-function onLoad() {
-  // Set up DOM.
-  const gameWindow = document.createElement('div');
+function createGameCanvas() {
   const canvas = document.createElement('canvas');
-  const game = new Game(gameConfiguration);
 
-  gameWindow.id = 'game-window';
-  gameWindow.appendChild(canvas);
-
+  canvas.id = 'game-canvas';
   canvas.width = CANVAS_WIDTH;
   canvas.height = CANVAS_HEIGHT;
 
+  return canvas;
+}
+
+function createGameWindow() {
+  const gameWindow = document.createElement('div');
+
+  gameWindow.id = 'game-window';
+
+  return gameWindow;
+}
+
+function onLoad() {
+  // Set up DOM.
+  const gameWindow = createGameWindow();
+  const canvas = createGameCanvas();
+  const game = new Game(gameConfiguration);
+
+  gameWindow.appendChild(canvas);
   document.body.appendChild(gameWindow);
 
   setGame(game);
