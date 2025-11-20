@@ -10,7 +10,7 @@ let logs: string[] = [];
  * @param message The log message.
  */
 export function log(tag: string, message: string) {
-  const formattedLog = `[${tag}] ${message}`;
+  const formattedLog = formatLog(tag, message);
 
   switch (tag.toLowerCase()) {
     case 'error':
@@ -44,6 +44,10 @@ export function downloadLogs() {
   const file = logsToTextFile();
 
   downloadFile(fileName, file);
+}
+
+function formatLog(tag: string, message: string) {
+  return `[${tag}] ${message}`;
 }
 
 function logsToTextFile() {
