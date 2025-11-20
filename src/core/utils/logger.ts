@@ -6,17 +6,13 @@ let logs: string[] = [];
 /**
  * Prints a formatted log in the console and saves formatted log.
  *
- * @param tag The log type or an identifier for where the log originated.
+ * @param tag An identifier for the log's origin.
  * @param message The log message.
  */
 export function log(tag: string, message: string) {
   const formattedLog = formatLog(tag, message);
 
   switch (tag.toLowerCase()) {
-    case 'error':
-      console.error(formattedLog);
-
-      break;
     case 'warn':
       console.warn(formattedLog);
 
@@ -25,6 +21,19 @@ export function log(tag: string, message: string) {
       console.log(formattedLog);
   }
 
+  logs.push(formattedLog);
+}
+
+/**
+ * Prints a formatted error log in the console and saves formatted error log.
+ *
+ * @param tag An identifier for the log's origin.
+ * @param message The log message.
+ */
+export function error(tag: string, message: string) {
+  const formattedLog = formatLog(tag, message);
+
+  console.error(formattedLog);
   logs.push(formattedLog);
 }
 
