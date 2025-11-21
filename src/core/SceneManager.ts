@@ -14,6 +14,9 @@ export class SceneManager {
   public setActiveScene(scene: Scene) {
     log(LOG_TAG, `Setting ${scene.state.name} as active scene...`);
 
+    // If a scene is already active, teardown scene.
+    if (this.activeScene) this.activeScene.teardown();
+
     scene.setup();
 
     this.activeScene = scene;
