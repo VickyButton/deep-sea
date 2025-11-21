@@ -21,7 +21,7 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
   private readonly fpsCounter = new FpsCounter();
   private readonly bubbles: DeepSeaBubble[] = [];
 
-  public initialize(): void {
+  public setup(): void {
     log(LOG_TAG, 'Initializing...');
 
     game.camera.setPosition({
@@ -71,7 +71,7 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
     bubble.state.position.x = x;
     bubble.state.position.y = y;
 
-    bubble.initialize();
+    bubble.setup();
 
     this.bubbles.push(bubble);
   }

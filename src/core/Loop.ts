@@ -27,7 +27,7 @@ export class Loop {
    *
    * @param onLoop The callback to execute on each loop.
    */
-  public initialize(onLoop: (dt: number) => void) {
+  public setup(onLoop: (dt: number) => void) {
     log(LOG_TAG, 'Initializing...');
 
     this.onLoop = onLoop;

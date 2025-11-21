@@ -38,7 +38,7 @@ describe('Loop', () => {
       framesPerSecond: FRAMES_PER_SECOND,
     });
 
-    loop.initialize(onLoop);
+    loop.setup(onLoop);
     loop.start();
 
     expect(onLoop).not.toHaveBeenCalled();
@@ -60,7 +60,7 @@ describe('Loop', () => {
       framesPerSecond: FRAMES_PER_SECOND,
     });
 
-    loop.initialize(onLoop);
+    loop.setup(onLoop);
     loop.start();
 
     expect(onLoop).not.toHaveBeenCalled();

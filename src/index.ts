@@ -79,7 +79,7 @@ function setUpGameDom() {
 }
 
 function startGame() {
-  game.initialize(TITLE_SCENE_NAME);
+  game.setup(TITLE_SCENE_NAME);
   game.start();
 }
 

@@ -9,7 +9,7 @@ const ORIGIN_POINT = {
 } as const;
 
 class TargetNode extends Node<{ position: Point2D; width: number; height: number }> {
-  public initialize = vi.fn();
+  public setup = vi.fn();
   public update = vi.fn();
 
   protected getDefaultState() {
