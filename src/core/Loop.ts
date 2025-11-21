@@ -22,12 +22,20 @@ export class Loop {
     this.state = this.getDefaultState();
   }
 
+  /**
+   * Defines the callback to be executed on each loop.
+   *
+   * @param onLoop The callback to execute on each loop.
+   */
   public initialize(onLoop: (dt: number) => void) {
     log(LOG_TAG, 'Initializing...');
 
     this.onLoop = onLoop;
   }
 
+  /**
+   * Starts loop.
+   */
   public start() {
     log(LOG_TAG, 'Starting...');
 
@@ -36,12 +44,18 @@ export class Loop {
     this.loop();
   }
 
+  /**
+   * Stops loop.
+   */
   public stop() {
     log(LOG_TAG, 'Stopping...');
 
     this.state.isRunning = false;
   }
 
+  /**
+   * Resets loop to default state.
+   */
   public reset() {
     log(LOG_TAG, 'Resetting...');
 
