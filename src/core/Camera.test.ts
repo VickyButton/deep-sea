@@ -11,6 +11,7 @@ const ORIGIN_POINT = {
 class TargetNode extends Node<{ position: Point2D; width: number; height: number }> {
   public setup = vi.fn();
   public update = vi.fn();
+  public teardown = vi.fn();
 
   protected getDefaultState() {
     return {
