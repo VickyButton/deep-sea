@@ -1,7 +1,7 @@
 import { Game } from '@core/Game';
 import { setGame } from './game';
 
-const INTRO_SCENE_NAME = 'DeepSeaSplash';
+const TITLE_SCENE_NAME = 'DeepSeaSplash';
 const CANVAS_WIDTH = window.innerWidth;
 const CANVAS_HEIGHT = window.innerHeight;
 
@@ -79,7 +79,7 @@ function setUpGameDom() {
 }
 
 function startGame() {
-  game.initialize(INTRO_SCENE_NAME);
+  game.initialize(TITLE_SCENE_NAME);
   game.start();
 }
 
