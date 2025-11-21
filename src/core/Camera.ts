@@ -32,36 +32,67 @@ export class Camera {
     this.state = this.getDefaultState();
   }
 
+  /**
+   * The width of the camera.
+   */
   public get width() {
     return this.state.width;
   }
 
+  /**
+   * The height of the camera.
+   */
   public get height() {
     return this.state.height;
   }
 
+  /**
+   * The position of the camera.
+   */
   public get position() {
     return this.state.position;
   }
 
+  /**
+   * Resets the camera back to it's default state.
+   */
   public reset() {
     this.state = this.getDefaultState();
   }
 
+  /**
+   * Updates the camera's position if tracking a target.
+   */
   public update() {
     if (this.target) this.state.position = this.target.state.position;
   }
 
+  /**
+   * Sets the position of the camera.
+   *
+   * @param position The position in which the camera should center on.
+   */
   public setPosition(position: Point2D) {
     this.state.position = position;
   }
 
+  /**
+   * Sets a target node to follow.
+   *
+   * @param target The target node to follow.
+   */
   public setTarget(target: TargetNode) {
     log(LOG_TAG, `Setting camera target: ${target.id}`);
 
     this.target = target;
   }
 
+  /**
+   * Returns a world position relative to the camera.
+   *
+   * @param position The world position.
+   * @returns The world position relative to the camera.
+   */
   public getPositionRelativeToCamera(position: Point2D) {
     return {
       x: position.x - this.state.position.x,
@@ -69,6 +100,12 @@ export class Camera {
     };
   }
 
+  /**
+   * Determines if a given node is offscreen.
+   *
+   * @param node Node to check.
+   * @returns True if node is offscreen, false if not.
+   */
   public isOffScreen(node: TargetNodeWithBounds) {
     const cameraVertices = this.getRectangleVertices(
       this.state.position,
