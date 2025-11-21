@@ -7,6 +7,7 @@ import { Camera } from './Camera';
 import { Graphics } from './Graphics';
 import { Loop } from './Loop';
 import { SceneManager } from './SceneManager';
+import { TaskManager } from './TaskManager';
 import { error, log } from './utils/logger';
 
 interface GameConfiguration {
@@ -24,6 +25,7 @@ export class Game {
   public readonly graphics: Graphics;
   public readonly loop: Loop;
   public readonly sceneManager: SceneManager;
+  public readonly taskManager: TaskManager;
 
   constructor(configuration: GameConfiguration) {
     this.audio = new Audio();
@@ -31,6 +33,7 @@ export class Game {
     this.graphics = new Graphics(configuration.graphics);
     this.loop = new Loop(configuration.loop);
     this.sceneManager = new SceneManager(configuration.sceneManager);
+    this.taskManager = new TaskManager();
   }
 
   public initialize() {

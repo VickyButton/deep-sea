@@ -29,16 +29,13 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
       y: game.camera.height / 2,
     });
 
-    game.audio
-      .loadBuffer('deep-sea-sonar-beep.mp3')
-      .then((buffer) => {
-        if (!buffer) throw new Error('Could not retrieve buffer');
+    const loadAudioTask = game.audio.loadBuffer('deep-sea-sonar-beep.mp3');
 
-        game.audio.loopBuffer(buffer);
-      })
-      .catch((err: unknown) => {
-        log(LOG_TAG, String(err));
-      });
+    game.taskManager.registerTask(loadAudioTask, (buffer) => {
+      if (!buffer) throw new Error('Could not retrieve buffer');
+
+      game.audio.loopBuffer(buffer);
+    });
   }
 
   public update(dt: number): void {
