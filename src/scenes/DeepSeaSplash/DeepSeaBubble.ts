@@ -15,7 +15,7 @@ const BASE_VELOCITY_X = -0.002;
 const LOG_TAG = 'DeepSeaBubble';
 
 export class DeepSeaBubble extends Node<DeepSeaBubbleState> {
-  public initialize() {
+  public setup() {
     log(LOG_TAG, 'Initializing...');
 
     this.state.velocity = BASE_VELOCITY_X * this.radius;

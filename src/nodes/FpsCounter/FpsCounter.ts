@@ -9,7 +9,7 @@ interface FpsCounterState {
 const LOG_TAG = 'FpsCounter';
 
 export default class FpsCounter extends Node<FpsCounterState> {
-  public initialize(): void {
+  public setup(): void {
     log(LOG_TAG, 'Initializing FpsCounter...');
   }
 

@@ -9,7 +9,7 @@ export abstract class Node<T extends object = object> {
     this.state = this.getDefaultState();
   }
 
-  public abstract initialize(): void;
+  public abstract setup(): void;
   public abstract update(dt: number): void;
   protected abstract getDefaultState(): T;
 }

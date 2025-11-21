@@ -37,15 +37,15 @@ export class Game {
   }
 
   /**
-   * Initializes game components and loads the intro scene and title scene.
+   * Sets up the game components and loads the intro scene and title scene.
    *
    * @param sceneName The title scene to switch to after the intro scene.
    */
-  public initialize(sceneName: string) {
+  public setup(sceneName: string) {
     log(LOG_TAG, 'Initializing...');
 
-    this.graphics.initialize();
-    this.loop.initialize(this.onLoop.bind(this));
+    this.graphics.setup();
+    this.loop.setup(this.onLoop.bind(this));
 
     const loadScenesTask = Promise.all([
       this.sceneManager.loadScene(INTRO_SCENE_NAME),
