@@ -28,6 +28,17 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
       x: game.camera.width / 2,
       y: game.camera.height / 2,
     });
+
+    game.audio
+      .loadBuffer('deep-sea-sonar-beep.mp3')
+      .then((buffer) => {
+        if (!buffer) throw new Error('Could not retrieve buffer');
+
+        game.audio.loopBuffer(buffer);
+      })
+      .catch((err: unknown) => {
+        log(LOG_TAG, String(err));
+      });
   }
 
   public update(dt: number): void {

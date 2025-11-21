@@ -2,6 +2,7 @@ import type { CameraConfiguration } from './Camera';
 import type { GraphicsConfiguration } from './Graphics';
 import type { LoopConfiguration } from './Loop';
 import type { SceneManagerConfiguration } from './SceneManager';
+import { Audio } from './Audio';
 import { Camera } from './Camera';
 import { Graphics } from './Graphics';
 import { Loop } from './Loop';
@@ -18,12 +19,14 @@ interface GameConfiguration {
 const LOG_TAG = 'Game';
 
 export class Game {
+  public readonly audio: Audio;
   public readonly camera: Camera;
   public readonly graphics: Graphics;
   public readonly loop: Loop;
   public readonly sceneManager: SceneManager;
 
   constructor(configuration: GameConfiguration) {
+    this.audio = new Audio();
     this.camera = new Camera(configuration.camera);
     this.graphics = new Graphics(configuration.graphics);
     this.loop = new Loop(configuration.loop);
