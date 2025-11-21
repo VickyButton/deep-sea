@@ -15,6 +15,9 @@ export class SceneManager {
     this.configuration = configuration;
   }
 
+  /**
+   * Loads and sets the default scene, as defined in the configuration.
+   */
   public initialize() {
     log(LOG_TAG, 'Initializing...');
 
@@ -27,6 +30,11 @@ export class SceneManager {
       });
   }
 
+  /**
+   * Sets a new active scene for use.
+   *
+   * @param scene The scene to switch to.
+   */
   public setActiveScene(scene: Scene) {
     log(LOG_TAG, `Setting ${scene.state.name} as active scene...`);
 
@@ -35,14 +43,24 @@ export class SceneManager {
     this.activeScene = scene;
   }
 
+  /**
+   * Updates the active scene.
+   *
+   * @param dt The time, in milliseconds, since the last update call.
+   */
   public updateActiveScene(dt: number) {
     if (this.activeScene) this.activeScene.update(dt);
   }
 
+  /**
+   * Loads a scene from the src/scenes directory.
+   *
+   * @param sceneName The name of the scene to load.
+   * @returns The loaded scene.
+   */
   public async loadScene(sceneName: string) {
     const filePath = `/src/scenes/${sceneName}/${sceneName}`; // TODO: Use dist instead of src when not in dev env.
-    const moduleImport = import(filePath) as Promise<unknown>;
-    const importedModule = await moduleImport;
+    const importedModule: unknown = await import(filePath);
 
     if (!importedModule) {
       throw new Error(`Could not load ${filePath}`);
