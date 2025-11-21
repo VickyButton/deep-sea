@@ -11,7 +11,7 @@ interface DeepSeaSplashState extends SceneState {
   elapsed: number;
 }
 
-const MAX_BUBBLE_COUNT = 50;
+const MAX_BUBBLE_COUNT = 20;
 const FADE_IN_DURATION = 5000;
 const TITLE_FONT_SIZE = 100;
 const TITLE_FONT_FAMILY = 'Arial';
@@ -20,7 +20,7 @@ const TITLE_TEXT = 'DEEP SEA';
 export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
   private readonly fpsCounter = new FpsCounter();
   private readonly bubbles: DeepSeaBubble[] = [];
-  private stopAudioLoop?: () => void;
+  private stopAudio?: () => void;
 
   public setup(): void {
     log(LOG_TAG, 'Initializing...');
@@ -35,7 +35,7 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
     game.taskManager.registerTask(loadAudioTask, (buffer) => {
       if (!buffer) throw new Error('Could not retrieve buffer');
 
-      this.stopAudioLoop = game.audio.loopBuffer(buffer);
+      this.stopAudio = game.audio.playBuffer(buffer);
     });
   }
 
@@ -48,11 +48,11 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
   }
 
   public teardown() {
-    if (this.stopAudioLoop) this.stopAudioLoop();
+    if (this.stopAudio) this.stopAudio();
   }
 
   private updateBubbles(dt: number) {
-    const shouldSpawnBubble = this.bubbles.length < MAX_BUBBLE_COUNT && Math.random() <= 0.03;
+    const shouldSpawnBubble = this.bubbles.length < MAX_BUBBLE_COUNT;
 
     if (shouldSpawnBubble) this.spawnBubble();
 
@@ -66,7 +66,8 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
   }
 
   private spawnBubble() {
-    const diameter = Math.floor(240 * Math.random()) + 1;
+    const maxDiameter = game.camera.width / 8;
+    const diameter = Math.floor(maxDiameter * Math.random()) + 1;
     const x = game.camera.width * Math.random();
     const y = game.camera.height + diameter / 2;
     const bubble = new DeepSeaBubble();
