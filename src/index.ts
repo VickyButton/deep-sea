@@ -1,6 +1,7 @@
 import { Game } from '@core/Game';
 import { setGame } from './game';
 
+const INTRO_SCENE_NAME = 'DeepSeaSplash';
 const CANVAS_WIDTH = window.innerWidth;
 const CANVAS_HEIGHT = window.innerHeight;
 
@@ -15,9 +16,6 @@ const gameConfiguration = {
   },
   loop: {
     framesPerSecond: 60,
-  },
-  sceneManager: {
-    defaultSceneName: 'DeepSeaSplash',
   },
 };
 const game = new Game(gameConfiguration);
@@ -81,7 +79,7 @@ function setUpGameDom() {
 }
 
 function startGame() {
-  game.initialize();
+  game.initialize(INTRO_SCENE_NAME);
   game.start();
 }
 

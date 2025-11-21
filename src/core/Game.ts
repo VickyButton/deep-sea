@@ -1,7 +1,6 @@
 import type { CameraConfiguration } from './Camera';
 import type { GraphicsConfiguration } from './Graphics';
 import type { LoopConfiguration } from './Loop';
-import type { SceneManagerConfiguration } from './SceneManager';
 import { Audio } from './Audio';
 import { Camera } from './Camera';
 import { Graphics } from './Graphics';
@@ -14,7 +13,6 @@ interface GameConfiguration {
   camera: CameraConfiguration;
   graphics: GraphicsConfiguration;
   loop: LoopConfiguration;
-  sceneManager: SceneManagerConfiguration;
 }
 
 const LOG_TAG = 'Game';
@@ -26,22 +24,29 @@ export class Game {
   public readonly loop: Loop;
   public readonly sceneManager: SceneManager;
   public readonly taskManager: TaskManager;
+  private loadSceneTaskId?: string;
 
   constructor(configuration: GameConfiguration) {
     this.audio = new Audio();
     this.camera = new Camera(configuration.camera);
     this.graphics = new Graphics(configuration.graphics);
     this.loop = new Loop(configuration.loop);
-    this.sceneManager = new SceneManager(configuration.sceneManager);
+    this.sceneManager = new SceneManager();
     this.taskManager = new TaskManager();
   }
 
-  public initialize() {
+  public initialize(sceneName: string) {
     log(LOG_TAG, 'Initializing...');
 
     this.graphics.initialize();
     this.loop.initialize(this.onLoop.bind(this));
-    this.sceneManager.initialize();
+
+    const loadSceneTask = this.sceneManager.loadScene(sceneName);
+
+    // Load and set scene.
+    this.loadSceneTaskId = this.taskManager.registerTask(loadSceneTask, (scene) => {
+      this.sceneManager.setActiveScene(scene);
+    });
   }
 
   public start() {
@@ -56,7 +61,13 @@ export class Game {
     this.loop.stop();
   }
 
+  private get isReady() {
+    return this.loadSceneTaskId ? !this.taskManager.isTaskActive(this.loadSceneTaskId) : true;
+  }
+
   private onLoop(dt: number) {
+    if (!this.isReady) return;
+
     try {
       this.sceneManager.updateActiveScene(dt);
       this.camera.update();

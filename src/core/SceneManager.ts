@@ -1,34 +1,10 @@
 import { Scene } from './entities/Scene';
-import { error, log } from './utils/logger';
-
-export interface SceneManagerConfiguration {
-  defaultSceneName: string;
-}
+import { log } from './utils/logger';
 
 const LOG_TAG = 'SceneManager';
 
 export class SceneManager {
-  private readonly configuration: SceneManagerConfiguration;
   private activeScene?: Scene;
-
-  constructor(configuration: SceneManagerConfiguration) {
-    this.configuration = configuration;
-  }
-
-  /**
-   * Loads and sets the default scene, as defined in the configuration.
-   */
-  public initialize() {
-    log(LOG_TAG, 'Initializing...');
-
-    this.loadScene(this.configuration.defaultSceneName)
-      .then((scene) => {
-        this.setActiveScene(scene);
-      })
-      .catch((err: unknown) => {
-        error(LOG_TAG, err instanceof Error ? err.message : 'Could not load default scene');
-      });
-  }
 
   /**
    * Sets a new active scene for use.
