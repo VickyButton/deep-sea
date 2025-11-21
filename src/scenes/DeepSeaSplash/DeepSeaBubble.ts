@@ -30,6 +30,10 @@ export class DeepSeaBubble extends Node<DeepSeaBubbleState> {
     this.state.height = newDiameter;
   }
 
+  public teardown() {
+    // Empty function.
+  }
+
   public render() {
     const width = this.state.width;
     const height = this.state.height;

@@ -11,5 +11,6 @@ export abstract class Node<T extends object = object> {
 
   public abstract setup(): void;
   public abstract update(dt: number): void;
+  public abstract teardown(): void;
   protected abstract getDefaultState(): T;
 }

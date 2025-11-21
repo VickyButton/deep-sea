@@ -20,6 +20,7 @@ const TITLE_TEXT = 'DEEP SEA';
 export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
   private readonly fpsCounter = new FpsCounter();
   private readonly bubbles: DeepSeaBubble[] = [];
+  private stopAudioLoop?: () => void;
 
   public setup(): void {
     log(LOG_TAG, 'Initializing...');
@@ -34,7 +35,7 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
     game.taskManager.registerTask(loadAudioTask, (buffer) => {
       if (!buffer) throw new Error('Could not retrieve buffer');
 
-      game.audio.loopBuffer(buffer);
+      this.stopAudioLoop = game.audio.loopBuffer(buffer);
     });
   }
 
@@ -44,6 +45,10 @@ export default class DeepSeaSplash extends Scene<DeepSeaSplashState> {
     this.fpsCounter.update(dt);
     this.updateBubbles(dt);
     this.render();
+  }
+
+  public teardown() {
+    if (this.stopAudioLoop) this.stopAudioLoop();
   }
 
   private updateBubbles(dt: number) {
