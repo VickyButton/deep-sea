@@ -10,7 +10,7 @@ interface DeepSeaBubbleState {
   position: Point2D;
 }
 
-const RADIUS_SHRINK_RATE = 0.0001;
+const RADIUS_SHRINK_RATE = 0.000075;
 const BASE_VELOCITY_X = -0.002;
 const LOG_TAG = 'DeepSeaBubble';
 
