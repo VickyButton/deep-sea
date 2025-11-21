@@ -26,6 +26,9 @@ export class Graphics {
     this.configuration = configuration;
   }
 
+  /**
+   * Fetches target canvas by ID and resizes to size defined in configuration.
+   */
   public initialize() {
     log(LOG_TAG, 'Initializing...');
 
@@ -42,8 +45,11 @@ export class Graphics {
     this.targetContext = targetContext;
   }
 
+  /**
+   * Resets target canvas to a blank canvas.
+   */
   public clear() {
-    if (!this.targetContext) return;
+    if (!this.targetContext) throw new Error(ERROR_MISSING_TARGET_CONTEXT);
 
     const canvas = new OffscreenCanvas(this.width, this.height);
     const imageBitmap = canvas.transferToImageBitmap();
@@ -51,12 +57,20 @@ export class Graphics {
     this.targetContext.transferFromImageBitmap(imageBitmap);
   }
 
+  /**
+   * Adds drawing instructions to the draw queue for rendering on the next frame.
+   *
+   * @param drawInstructions Instructions for what to draw and where to draw it.
+   */
   public addToDrawQueue(drawInstructions: DrawInstructions) {
     if (!this.drawQueue.has(drawInstructions.layer)) this.drawQueue.set(drawInstructions.layer, []);
 
     this.drawQueue.get(drawInstructions.layer)?.push(drawInstructions);
   }
 
+  /**
+   * Iterates through draw queue to render frame and clears drawing queue after.
+   */
   public draw() {
     if (!this.targetContext) throw new Error(ERROR_MISSING_TARGET_CONTEXT);
 
@@ -84,10 +98,16 @@ export class Graphics {
     this.clearDrawQueue();
   }
 
+  /**
+   * The width of the target canvas.
+   */
   public get width() {
     return this.targetCanvas ? this.targetCanvas.width : 0;
   }
 
+  /**
+   * The height of the target canvas.
+   */
   public get height() {
     return this.targetCanvas ? this.targetCanvas.height : 0;
   }
