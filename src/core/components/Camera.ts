@@ -1,6 +1,6 @@
-import { Node } from './entities/Node';
-import { Point2D } from './interfaces/Point2D';
-import { log } from './utils/logger';
+import { Node } from '../entities/Node';
+import { Point2D } from '../interfaces/Point2D';
+import { log } from '../utils/logger';
 
 export interface CameraConfiguration {
   width: number;

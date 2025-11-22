@@ -1,12 +1,12 @@
-import type { CameraConfiguration } from './Camera';
-import type { GraphicsConfiguration } from './Graphics';
-import type { LoopConfiguration } from './Loop';
-import { Audio } from './Audio';
-import { Camera } from './Camera';
-import { Graphics } from './Graphics';
-import { Loop } from './Loop';
-import { SceneManager } from './SceneManager';
-import { TaskManager } from './TaskManager';
+import type { CameraConfiguration } from './components/Camera';
+import type { GraphicsConfiguration } from './components/Graphics';
+import type { LoopConfiguration } from './components/Loop';
+import { Audio } from './components/Audio';
+import { Camera } from './components/Camera';
+import { Graphics } from './components/Graphics';
+import { Loop } from './components/Loop';
+import { SceneManager } from './components/SceneManager';
+import { TaskManager } from './components/TaskManager';
 import { error, log } from './utils/logger';
 
 interface GameConfiguration {

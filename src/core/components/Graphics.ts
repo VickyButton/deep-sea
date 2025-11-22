@@ -1,5 +1,5 @@
-import { Point2D } from './interfaces/Point2D';
-import { log } from './utils/logger';
+import { Point2D } from '../interfaces/Point2D';
+import { log } from '../utils/logger';
 
 interface DrawInstructions {
   imageBitmap: ImageBitmap;
