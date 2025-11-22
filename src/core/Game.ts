@@ -45,7 +45,7 @@ export class Game {
     log(LOG_TAG, 'Initializing...');
 
     this.loop.setLoopCallback(this.onLoop.bind(this));
-    this.graphics.setup();
+    this.graphics.syncWithTargetCanvas();
 
     const initialSceneLoadTask = this.sceneManager.loadScene(this.configuration.initialSceneName);
 

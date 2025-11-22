@@ -23,7 +23,7 @@ vi.mock('./components/Audio', () => ({
 vi.mock('./components/Graphics', () => ({
   Graphics: vi.fn(
     class {
-      setup = vi.fn();
+      syncWithTargetCanvas = vi.fn();
     },
   ),
 }));
@@ -64,7 +64,7 @@ describe('Game', () => {
 
   it('should setup components and initial scene on setup', () => {
     const game = new Game(configuration);
-    const graphicsSetupSpy = vi.spyOn(game.graphics, 'setup');
+    const graphicsSetupSpy = vi.spyOn(game.graphics, 'syncWithTargetCanvas');
     const loopSetLoopCallbackSpy = vi.spyOn(game.loop, 'setLoopCallback');
     const taskManagerRegisterTaskSpy = vi.spyOn(game.taskManager, 'registerTask');
     const sceneManagerLoadSceneSpy = vi.spyOn(game.sceneManager, 'loadScene');
