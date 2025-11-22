@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { Camera } from './Camera';
-import { Node } from './entities/Node';
-import { Point2D } from './interfaces/Point2D';
+import { Node } from '../entities/Node';
+import { Point2D } from '../interfaces/Point2D';
 
 const ORIGIN_POINT = {
   x: 0,

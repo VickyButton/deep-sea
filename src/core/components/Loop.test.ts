@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Loop } from './Loop';
-import { timestampNow } from './utils/dateTimeProvider';
+import { timestampNow } from '../utils/dateTimeProvider';
 
 const FRAMES_PER_SECOND = 60;
 const FRAMES_PER_SECOND_INTERVAL = Math.pow(0.1, 14) + 1000 / FRAMES_PER_SECOND;
@@ -12,7 +12,7 @@ global.requestAnimationFrame = (cb: FrameRequestCallback) => {
   return 0;
 };
 
-vi.mock('./utils/dateTimeProvider', () => ({
+vi.mock('../utils/dateTimeProvider', () => ({
   timestampNow: vi.fn(),
 }));
 
