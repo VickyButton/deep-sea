@@ -23,17 +23,6 @@ export class Loop {
   }
 
   /**
-   * Defines the callback to be executed on each loop.
-   *
-   * @param onLoop The callback to execute on each loop.
-   */
-  public setup(onLoop: (dt: number) => void) {
-    log(LOG_TAG, 'Initializing...');
-
-    this.onLoop = onLoop;
-  }
-
-  /**
    * Starts loop.
    */
   public start() {
@@ -51,6 +40,15 @@ export class Loop {
     log(LOG_TAG, 'Stopping...');
 
     this.state.isRunning = false;
+  }
+
+  /**
+   * Sets the callback that is called on each loop.
+   *
+   * @param onLoop The callback to execute on each loop.
+   */
+  public setLoopCallback(onLoop: (dt: number) => void) {
+    this.onLoop = onLoop;
   }
 
   /**

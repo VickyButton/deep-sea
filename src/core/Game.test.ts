@@ -31,7 +31,7 @@ vi.mock('./components/Graphics', () => ({
 vi.mock('./components/Loop', () => ({
   Loop: vi.fn(
     class {
-      setup = vi.fn();
+      setLoopCallback = vi.fn();
       start = vi.fn();
       stop = vi.fn();
     },
@@ -65,7 +65,7 @@ describe('Game', () => {
   it('should setup components and initial scene on setup', () => {
     const game = new Game(configuration);
     const graphicsSetupSpy = vi.spyOn(game.graphics, 'setup');
-    const loopSetupSpy = vi.spyOn(game.loop, 'setup');
+    const loopSetLoopCallbackSpy = vi.spyOn(game.loop, 'setLoopCallback');
     const taskManagerRegisterTaskSpy = vi.spyOn(game.taskManager, 'registerTask');
     const sceneManagerLoadSceneSpy = vi.spyOn(game.sceneManager, 'loadScene');
     const sceneManagerSetActiveSceneSpy = vi.spyOn(game.sceneManager, 'setActiveScene');
@@ -73,7 +73,7 @@ describe('Game', () => {
     game.setup();
 
     expect(graphicsSetupSpy).toHaveBeenCalled();
-    expect(loopSetupSpy).toHaveBeenCalled();
+    expect(loopSetLoopCallbackSpy).toHaveBeenCalled();
     expect(taskManagerRegisterTaskSpy).toHaveBeenCalled();
     expect(sceneManagerLoadSceneSpy).toHaveBeenCalledWith(configuration.initialSceneName);
     expect(sceneManagerSetActiveSceneSpy).toHaveBeenCalled();
