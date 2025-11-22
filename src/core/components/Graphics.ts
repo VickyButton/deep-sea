@@ -75,7 +75,10 @@ export class Graphics {
     if (!this.targetContext) throw new Error(ERROR_MISSING_TARGET_CONTEXT);
 
     const canvas = new OffscreenCanvas(this.width, this.height);
-    const canvasContext = canvas.getContext('2d');
+    const context = canvas.getContext('2d');
+
+    if (!context) throw new Error('Unable to get rendering context');
+
     const sortedDrawQueue = new Map([...this.drawQueue.entries()].sort());
 
     for (const layer of sortedDrawQueue.values()) {
@@ -89,7 +92,7 @@ export class Graphics {
         layerContext?.drawImage(drawInstructions.imageBitmap, dx, dy);
       }
 
-      canvasContext?.drawImage(layerCanvas, 0, 0);
+      context.drawImage(layerCanvas, 0, 0);
     }
 
     const imageBitmap = canvas.transferToImageBitmap();
