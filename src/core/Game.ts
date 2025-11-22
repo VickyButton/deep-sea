@@ -10,6 +10,7 @@ import { TaskManager } from './components/TaskManager';
 import { error, log } from './utils/logger';
 
 interface GameConfiguration {
+  initialSceneName: string;
   camera: CameraConfiguration;
   graphics: GraphicsConfiguration;
   loop: LoopConfiguration;
@@ -24,9 +25,11 @@ export class Game {
   public readonly loop: Loop;
   public readonly sceneManager: SceneManager;
   public readonly taskManager: TaskManager;
+  private readonly configuration: GameConfiguration;
   private initialSceneLoadTaskId?: string;
 
   constructor(configuration: GameConfiguration) {
+    this.configuration = configuration;
     this.audio = new Audio();
     this.camera = new Camera(configuration.camera);
     this.graphics = new Graphics(configuration.graphics);
@@ -36,17 +39,15 @@ export class Game {
   }
 
   /**
-   * Sets up the game components and loads the initial scene.
-   *
-   * @param sceneName The name of the initial scene to load.
+   * Sets up the game components and loads initial scene.
    */
-  public setup(sceneName: string) {
+  public setup() {
     log(LOG_TAG, 'Initializing...');
 
     this.graphics.setup();
     this.loop.setup(this.onLoop.bind(this));
 
-    const initialSceneLoadTask = this.sceneManager.loadScene(sceneName);
+    const initialSceneLoadTask = this.sceneManager.loadScene(this.configuration.initialSceneName);
 
     // Loads and sets initial scene.
     this.initialSceneLoadTaskId = this.taskManager.registerTask(initialSceneLoadTask, (scene) => {

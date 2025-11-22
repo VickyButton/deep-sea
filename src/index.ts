@@ -1,11 +1,11 @@
 import { Game } from '@core/Game';
 import { setGame } from './game';
 
-const TITLE_SCENE_NAME = 'DeepSeaSplash';
 const CANVAS_WIDTH = window.innerWidth;
 const CANVAS_HEIGHT = window.innerHeight;
 
 const gameConfiguration = {
+  initialSceneName: '',
   camera: {
     width: CANVAS_WIDTH,
     height: CANVAS_HEIGHT,
@@ -79,7 +79,7 @@ function setUpGameDom() {
 }
 
 function startGame() {
-  game.setup(TITLE_SCENE_NAME);
+  game.setup();
   game.start();
 }
 

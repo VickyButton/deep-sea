@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Game } from './Game';
 
 const configuration = {
+  initialSceneName: '',
   camera: {
     width: 1,
     height: 1,
@@ -66,14 +67,16 @@ describe('Game', () => {
     const graphicsSetupSpy = vi.spyOn(game.graphics, 'setup');
     const loopSetupSpy = vi.spyOn(game.loop, 'setup');
     const taskManagerRegisterTaskSpy = vi.spyOn(game.taskManager, 'registerTask');
-    const sceneManagerSetActiveScene = vi.spyOn(game.sceneManager, 'setActiveScene');
+    const sceneManagerLoadSceneSpy = vi.spyOn(game.sceneManager, 'loadScene');
+    const sceneManagerSetActiveSceneSpy = vi.spyOn(game.sceneManager, 'setActiveScene');
 
-    game.setup('scene');
+    game.setup();
 
     expect(graphicsSetupSpy).toHaveBeenCalled();
     expect(loopSetupSpy).toHaveBeenCalled();
     expect(taskManagerRegisterTaskSpy).toHaveBeenCalled();
-    expect(sceneManagerSetActiveScene).toHaveBeenCalled();
+    expect(sceneManagerLoadSceneSpy).toHaveBeenCalledWith(configuration.initialSceneName);
+    expect(sceneManagerSetActiveSceneSpy).toHaveBeenCalled();
   });
 
   it('should start loop on start', () => {
