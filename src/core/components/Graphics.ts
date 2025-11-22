@@ -29,8 +29,8 @@ export class Graphics {
   /**
    * Fetches target canvas by ID and resizes to size defined in configuration.
    */
-  public setup() {
-    log(LOG_TAG, 'Initializing...');
+  public syncWithTargetCanvas() {
+    log(LOG_TAG, 'Syncing with target canvas...');
 
     const targetCanvas = this.getTargetCanvas();
 
