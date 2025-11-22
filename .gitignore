@@ -22,8 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Custom content
-src/assets/*
-src/nodes/*
-src/scenes/*
