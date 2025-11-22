@@ -34,9 +34,7 @@ export class TaskManager {
         this.completeTask(taskId);
       })
       .catch((err: unknown) => {
-        error(LOG_TAG, String(err));
-
-        throw new Error(`Task ${taskId} failed`);
+        error(LOG_TAG, `Task ${taskId} failed with following error: "${String(err)}"`);
       });
 
     return taskId;
