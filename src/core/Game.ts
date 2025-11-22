@@ -16,7 +16,6 @@ interface GameConfiguration {
 }
 
 const LOG_TAG = 'Game';
-const INTRO_SCENE_NAME = 'DeepSeaSplash';
 
 export class Game {
   public readonly audio: Audio;
@@ -25,7 +24,7 @@ export class Game {
   public readonly loop: Loop;
   public readonly sceneManager: SceneManager;
   public readonly taskManager: TaskManager;
-  private loadScenesTaskId?: string;
+  private initialSceneLoadTaskId?: string;
 
   constructor(configuration: GameConfiguration) {
     this.audio = new Audio();
@@ -37,9 +36,9 @@ export class Game {
   }
 
   /**
-   * Sets up the game components and loads the intro scene and title scene.
+   * Sets up the game components and loads the initial scene.
    *
-   * @param sceneName The title scene to switch to after the intro scene.
+   * @param sceneName The name of the initial scene to load.
    */
   public setup(sceneName: string) {
     log(LOG_TAG, 'Initializing...');
@@ -47,22 +46,12 @@ export class Game {
     this.graphics.setup();
     this.loop.setup(this.onLoop.bind(this));
 
-    const loadScenesTask = Promise.all([
-      this.sceneManager.loadScene(INTRO_SCENE_NAME),
-      this.sceneManager.loadScene(sceneName),
-    ]);
+    const initialSceneLoadTask = this.sceneManager.loadScene(sceneName);
 
-    // Loads and sets intro and title scenes.
-    this.loadScenesTaskId = this.taskManager.registerTask(
-      loadScenesTask,
-      ([introScene, titleScene]) => {
-        this.sceneManager.setActiveScene(introScene);
-
-        setTimeout(() => {
-          this.sceneManager.setActiveScene(titleScene);
-        }, 5000);
-      },
-    );
+    // Loads and sets initial scene.
+    this.initialSceneLoadTaskId = this.taskManager.registerTask(initialSceneLoadTask, (scene) => {
+      this.sceneManager.setActiveScene(scene);
+    });
   }
 
   /**
@@ -84,7 +73,9 @@ export class Game {
   }
 
   private get isReady() {
-    return this.loadScenesTaskId ? !this.taskManager.isTaskActive(this.loadScenesTaskId) : true;
+    return this.initialSceneLoadTaskId
+      ? !this.taskManager.isTaskActive(this.initialSceneLoadTaskId)
+      : true;
   }
 
   private onLoop(dt: number) {
