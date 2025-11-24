@@ -2,9 +2,19 @@ export class Vector2D {
   public x: number;
   public y: number;
 
-  constructor(x: number, y: number) {
+  constructor(x = 0, y = 0) {
     this.x = x;
     this.y = y;
+  }
+
+  /**
+   * Sets the vector to the passed value.
+   *
+   * @param value The value to set.
+   */
+  public set(value: Vector2D) {
+    this.x = value.x;
+    this.y = value.y;
   }
 
   /**
