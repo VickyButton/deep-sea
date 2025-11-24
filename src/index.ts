@@ -1,3 +1,4 @@
+import { Vector2D } from '@core/entities/Vector2D';
 import { Game } from '@core/Game';
 import { setGame } from './game';
 
@@ -7,8 +8,7 @@ const CANVAS_HEIGHT = window.innerHeight;
 const gameConfiguration = {
   initialSceneName: '',
   camera: {
-    width: CANVAS_WIDTH,
-    height: CANVAS_HEIGHT,
+    size: new Vector2D(CANVAS_WIDTH, CANVAS_HEIGHT),
   },
   graphics: {
     width: CANVAS_WIDTH,
