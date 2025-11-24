@@ -5,7 +5,7 @@ import { Node } from '../entities/Node';
 
 const ORIGIN_POINT = new Vector2D(0, 0);
 
-class TargetNode extends Node<{ position: Vector2D; width: number; height: number }> {
+class TargetNode extends Node<{ position: Vector2D; size: Vector2D }> {
   public setup = vi.fn();
   public update = vi.fn();
   public teardown = vi.fn();
@@ -13,15 +13,13 @@ class TargetNode extends Node<{ position: Vector2D; width: number; height: numbe
   protected getDefaultState() {
     return {
       position: new Vector2D(ORIGIN_POINT.x, ORIGIN_POINT.y),
-      width: 100,
-      height: 100,
+      size: new Vector2D(1, 1),
     };
   }
 }
 
 const cameraConfiguration = {
-  width: 100,
-  height: 100,
+  size: new Vector2D(1, 1),
 };
 
 describe('Camera', () => {
@@ -107,49 +105,49 @@ describe('Camera', () => {
     expect(camera.isOffScreen(target)).toBe(false);
 
     // Move camera to top left corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 100, ORIGIN_POINT.y - 100));
+    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 1, ORIGIN_POINT.y - 1));
 
     // Assert that target is not off screen.
     expect(camera.isOffScreen(target)).toBe(false);
 
     // Move camera past top left corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 101, ORIGIN_POINT.y - 101));
+    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 2, ORIGIN_POINT.y - 2));
 
     // Assert that target is off screen.
     expect(camera.isOffScreen(target)).toBe(true);
 
     // Move camera to top right corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 100, ORIGIN_POINT.y - 100));
+    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 1, ORIGIN_POINT.y - 1));
 
     // Assert that target is not off screen.
     expect(camera.isOffScreen(target)).toBe(false);
 
     // Move camera past top right corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 101, ORIGIN_POINT.y - 101));
+    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 2, ORIGIN_POINT.y - 2));
 
     // Assert that target is off screen.
     expect(camera.isOffScreen(target)).toBe(true);
 
     // Move camera to bottom right corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 100, ORIGIN_POINT.y + 100));
+    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 1, ORIGIN_POINT.y + 1));
 
     // Assert that target is not off screen.
     expect(camera.isOffScreen(target)).toBe(false);
 
     // Move camera past bottom right corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 101, ORIGIN_POINT.y + 101));
+    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 2, ORIGIN_POINT.y + 2));
 
     // Assert that target is off screen.
     expect(camera.isOffScreen(target)).toBe(true);
 
     // Move camera to bottom left corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 100, ORIGIN_POINT.y + 100));
+    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 1, ORIGIN_POINT.y + 1));
 
     // Assert that target is not off screen.
     expect(camera.isOffScreen(target)).toBe(false);
 
     // Move camera past bottom left corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 101, ORIGIN_POINT.y + 101));
+    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 2, ORIGIN_POINT.y + 2));
 
     // Assert that target is off screen.
     expect(camera.isOffScreen(target)).toBe(true);
