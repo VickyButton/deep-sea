@@ -1,5 +1,5 @@
+import { Vector2D } from '@core/entities/Vector2D';
 import { Node } from '../entities/Node';
-import { Point2D } from '../types/Point2D';
 import { log } from '../utils/logger';
 
 export interface CameraConfiguration {
@@ -8,14 +8,14 @@ export interface CameraConfiguration {
 }
 
 interface CameraState {
-  position: Point2D;
+  position: Vector2D;
   width: number;
   height: number;
 }
 
-type TargetNode = Node<{ position: Point2D }>;
+type TargetNode = Node<{ position: Vector2D }>;
 type TargetNodeWithBounds = Node<{
-  position: Point2D;
+  position: Vector2D;
   width: number;
   height: number;
 }>;
@@ -72,7 +72,7 @@ export class Camera {
    *
    * @param position The position in which the camera should center on.
    */
-  public setPosition(position: Point2D) {
+  public setPosition(position: Vector2D) {
     this.state.position = position;
   }
 
@@ -93,11 +93,8 @@ export class Camera {
    * @param position The world position.
    * @returns The world position relative to the camera.
    */
-  public getPositionRelativeToCamera(position: Point2D) {
-    return {
-      x: position.x - this.state.position.x,
-      y: position.y - this.state.position.y,
-    };
+  public getPositionRelativeToCamera(position: Vector2D) {
+    return new Vector2D(position.x - this.state.position.x, position.y - this.state.position.y);
   }
 
   /**
@@ -129,36 +126,21 @@ export class Camera {
     return false;
   }
 
-  private getRectangleVertices(center: Point2D, width: number, height: number) {
+  private getRectangleVertices(center: Vector2D, width: number, height: number) {
     const halfWidth = width / 2;
     const halfHeight = height / 2;
 
-    const tl = {
-      x: center.x - halfWidth,
-      y: center.y - halfHeight,
-    };
-    const tr = {
-      x: center.x + halfWidth,
-      y: center.y - halfHeight,
-    };
-    const br = {
-      x: center.x + halfWidth,
-      y: center.y + halfHeight,
-    };
-    const bl = {
-      x: center.x - halfWidth,
-      y: center.y + halfHeight,
-    };
+    const tl = new Vector2D(center.x - halfWidth, center.y - halfHeight);
+    const tr = new Vector2D(center.x + halfWidth, center.y - halfHeight);
+    const br = new Vector2D(center.x + halfWidth, center.y + halfHeight);
+    const bl = new Vector2D(center.x - halfWidth, center.y + halfHeight);
 
     return { tl, tr, br, bl };
   }
 
   private getDefaultState() {
     return {
-      position: {
-        x: 0,
-        y: 0,
-      },
+      position: new Vector2D(0, 0),
       width: this.configuration.width,
       height: this.configuration.height,
     };
