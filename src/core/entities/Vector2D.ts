@@ -8,13 +8,14 @@ export class Vector2D {
   }
 
   /**
-   * Sets the vector to the passed value.
+   * Sets components of the vector.
    *
-   * @param value The value to set.
+   * @param x The x component of the vector.
+   * @param y The y component of the vector.
    */
-  public set(value: Vector2D) {
-    this.x = value.x;
-    this.y = value.y;
+  public set(x: number, y: number) {
+    this.x = x;
+    this.y = y;
   }
 
   /**

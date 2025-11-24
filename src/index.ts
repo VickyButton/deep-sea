@@ -7,7 +7,7 @@ const CANVAS_SIZE = new Vector2D(window.innerWidth, window.innerHeight);
 const gameConfiguration = {
   initialSceneName: '',
   camera: {
-    position: new Vector2D(0, 0),
+    position: Vector2D.zero,
     size: new Vector2D(CANVAS_SIZE.x, CANVAS_SIZE.y),
   },
   graphics: {

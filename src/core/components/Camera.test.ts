@@ -60,7 +60,6 @@ describe('Camera', () => {
     const target = new TargetNode();
 
     // Scenario: Target position is zero.
-    target.state.rectangle.position.set(Vector2D.zero);
     expect(camera.isOffScreen(target)).toBe(false);
 
     // Scenario: Camera is above target.
