@@ -8,8 +8,7 @@ interface DrawInstructions {
 }
 
 export interface GraphicsConfiguration {
-  width: number;
-  height: number;
+  size: Vector2D;
 }
 
 const LOG_TAG = 'Graphics';
@@ -27,6 +26,20 @@ export class Graphics {
   }
 
   /**
+   * The width of the target canvas.
+   */
+  public get width() {
+    return this.targetCanvas ? this.targetCanvas.width : 0;
+  }
+
+  /**
+   * The height of the target canvas.
+   */
+  public get height() {
+    return this.targetCanvas ? this.targetCanvas.height : 0;
+  }
+
+  /**
    * Fetches target canvas by ID and resizes to size defined in configuration.
    */
   public syncWithTargetCanvas() {
@@ -34,8 +47,8 @@ export class Graphics {
 
     const targetCanvas = this.getTargetCanvas();
 
-    targetCanvas.width = this.configuration.width;
-    targetCanvas.height = this.configuration.height;
+    targetCanvas.width = this.configuration.size.x;
+    targetCanvas.height = this.configuration.size.y;
 
     const targetContext = targetCanvas.getContext('bitmaprenderer');
 
@@ -99,20 +112,6 @@ export class Graphics {
 
     this.targetContext.transferFromImageBitmap(imageBitmap);
     this.clearDrawQueue();
-  }
-
-  /**
-   * The width of the target canvas.
-   */
-  public get width() {
-    return this.targetCanvas ? this.targetCanvas.width : 0;
-  }
-
-  /**
-   * The height of the target canvas.
-   */
-  public get height() {
-    return this.targetCanvas ? this.targetCanvas.height : 0;
   }
 
   private getTargetCanvas() {
