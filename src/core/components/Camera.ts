@@ -3,21 +3,18 @@ import { Node } from '../entities/Node';
 import { log } from '../utils/logger';
 
 export interface CameraConfiguration {
-  width: number;
-  height: number;
+  size: Vector2D;
 }
 
 interface CameraState {
   position: Vector2D;
-  width: number;
-  height: number;
+  size: Vector2D;
 }
 
 type TargetNode = Node<{ position: Vector2D }>;
 type TargetNodeWithBounds = Node<{
   position: Vector2D;
-  width: number;
-  height: number;
+  size: Vector2D;
 }>;
 
 const LOG_TAG = 'Camera';
@@ -33,24 +30,17 @@ export class Camera {
   }
 
   /**
-   * The width of the camera.
-   */
-  public get width() {
-    return this.state.width;
-  }
-
-  /**
-   * The height of the camera.
-   */
-  public get height() {
-    return this.state.height;
-  }
-
-  /**
    * The position of the camera.
    */
   public get position() {
     return this.state.position;
+  }
+
+  /**
+   * The size of the camera.
+   */
+  public get size() {
+    return this.state.size;
   }
 
   /**
@@ -113,16 +103,8 @@ export class Camera {
    * @returns True if node is offscreen, false if not.
    */
   public isOffScreen(node: TargetNodeWithBounds) {
-    const cameraVertices = this.getRectangleVertices(
-      this.state.position,
-      this.state.width,
-      this.state.height,
-    );
-    const nodeVertices = this.getRectangleVertices(
-      node.state.position,
-      node.state.width,
-      node.state.height,
-    );
+    const cameraVertices = this.getRectangleVertices(this.state.position, this.state.size);
+    const nodeVertices = this.getRectangleVertices(node.state.position, node.state.size);
 
     // If one rectangle is to the left of the other.
     if (cameraVertices.tl.x > nodeVertices.br.x || nodeVertices.tl.x > cameraVertices.br.x)
@@ -135,14 +117,13 @@ export class Camera {
     return false;
   }
 
-  private getRectangleVertices(center: Vector2D, width: number, height: number) {
-    const halfWidth = width / 2;
-    const halfHeight = height / 2;
+  private getRectangleVertices(center: Vector2D, size: Vector2D) {
+    const halfSize = new Vector2D(size.x / 2, size.y / 2);
 
-    const tl = new Vector2D(center.x - halfWidth, center.y - halfHeight);
-    const tr = new Vector2D(center.x + halfWidth, center.y - halfHeight);
-    const br = new Vector2D(center.x + halfWidth, center.y + halfHeight);
-    const bl = new Vector2D(center.x - halfWidth, center.y + halfHeight);
+    const tl = new Vector2D(center.x - halfSize.x, center.y - halfSize.y);
+    const tr = new Vector2D(center.x + halfSize.x, center.y - halfSize.y);
+    const br = new Vector2D(center.x + halfSize.x, center.y + halfSize.y);
+    const bl = new Vector2D(center.x - halfSize.x, center.y + halfSize.y);
 
     return { tl, tr, br, bl };
   }
@@ -150,8 +131,7 @@ export class Camera {
   private getDefaultState() {
     return {
       position: new Vector2D(0, 0),
-      width: this.configuration.width,
-      height: this.configuration.height,
+      size: new Vector2D(this.configuration.size.x, this.configuration.size.y),
     };
   }
 }

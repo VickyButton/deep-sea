@@ -1,11 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { Vector2D } from './entities/Vector2D';
 import { Game } from './Game';
 
 const configuration = {
   initialSceneName: '',
   camera: {
-    width: 1,
-    height: 1,
+    size: new Vector2D(1, 1),
   },
   graphics: {
     width: 1,
