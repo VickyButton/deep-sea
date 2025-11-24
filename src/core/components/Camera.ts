@@ -43,7 +43,7 @@ export class Camera {
    * @param position The position in which the camera should center on.
    */
   public setPosition(position: Vector2D) {
-    this.rectangle.position.set(position);
+    this.rectangle.position.set(position.x, position.y);
   }
 
   /**
@@ -54,7 +54,7 @@ export class Camera {
   public move(distance: Vector2D) {
     const newPosition = Vector2D.add(this.rectangle.position, distance);
 
-    this.rectangle.position.set(newPosition);
+    this.rectangle.position.set(newPosition.x, newPosition.y);
   }
 
   /**
