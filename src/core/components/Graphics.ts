@@ -99,8 +99,8 @@ export class Graphics {
       const layerContext = layerCanvas.getContext('2d');
 
       for (const drawInstructions of layer) {
-        const dx = drawInstructions.position.x - drawInstructions.imageBitmap.width / 2;
-        const dy = drawInstructions.position.y - drawInstructions.imageBitmap.height / 2;
+        const dx = drawInstructions.position.x;
+        const dy = drawInstructions.position.y;
 
         layerContext?.drawImage(drawInstructions.imageBitmap, dx, dy);
       }
