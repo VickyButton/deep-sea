@@ -1,9 +1,9 @@
-import { Point2D } from '../types/Point2D';
+import { Vector2D } from '@core/entities/Vector2D';
 import { log } from '../utils/logger';
 
 interface DrawInstructions {
   imageBitmap: ImageBitmap;
-  position: Point2D;
+  position: Vector2D;
   layer: number;
 }
 
