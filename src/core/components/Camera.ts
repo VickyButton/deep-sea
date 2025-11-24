@@ -64,7 +64,7 @@ export class Camera {
    * Updates the camera's position if tracking a target.
    */
   public update() {
-    if (this.target) this.state.position = this.target.state.position;
+    if (this.target) this.state.position.set(this.target.state.position);
   }
 
   /**
@@ -73,7 +73,7 @@ export class Camera {
    * @param position The position in which the camera should center on.
    */
   public setPosition(position: Vector2D) {
-    this.state.position = position;
+    this.state.position.set(position);
   }
 
   /**
@@ -85,6 +85,15 @@ export class Camera {
     log(LOG_TAG, `Setting camera target: ${target.id}`);
 
     this.target = target;
+  }
+
+  /**
+   * Moves camera by specified distance.
+   *
+   * @param distance The distance to move the camera.
+   */
+  public move(distance: Vector2D) {
+    this.position.add(distance);
   }
 
   /**
