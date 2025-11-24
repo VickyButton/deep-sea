@@ -1,4 +1,4 @@
-import { Point2D } from '../interfaces/Point2D';
+import { Point2D } from '../types/Point2D';
 import { log } from '../utils/logger';
 
 interface DrawInstructions {
