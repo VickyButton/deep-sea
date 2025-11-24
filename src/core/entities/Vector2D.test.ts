@@ -32,7 +32,7 @@ describe('Vector2D', () => {
     expect(vector.y).toBe(4);
   });
 
-  it('should add two vectors', () => {
+  it('should divide two vectors', () => {
     const vector = new Vector2D(4, 4);
     const divisor = new Vector2D(2, 2);
 
@@ -40,5 +40,12 @@ describe('Vector2D', () => {
 
     expect(vector.x).toBe(2);
     expect(vector.y).toBe(2);
+  });
+
+  it('should compare two vectors for equality', () => {
+    const vector = new Vector2D(0, 0);
+
+    expect(vector.equals(new Vector2D(0, 0))).toBe(true);
+    expect(vector.equals(new Vector2D(1, 1))).toBe(false);
   });
 });
