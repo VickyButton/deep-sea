@@ -28,6 +28,60 @@ export class Vector2D {
   }
 
   /**
+   * Represents a zero vector.
+   *
+   * @returns A vector representing zero.
+   */
+  public static get zero() {
+    return new Vector2D(0, 0);
+  }
+
+  /**
+   * Represents a one vector.
+   *
+   * @returns A vector representing one.
+   */
+  public static get one() {
+    return new Vector2D(1, 1);
+  }
+
+  /**
+   * Represents an upwards direction.
+   *
+   * @returns A vector representing an upwards direction.
+   */
+  public static get up() {
+    return new Vector2D(0, -1);
+  }
+
+  /**
+   * Represents a leftwards direction.
+   *
+   * @returns A vector representing a leftwards direction.
+   */
+  public static get left() {
+    return new Vector2D(-1, 0);
+  }
+
+  /**
+   * Represents a downwards direction.
+   *
+   * @returns A vector representing a downwards direction.
+   */
+  public static get down() {
+    return new Vector2D(0, 1);
+  }
+
+  /**
+   * Represents a rightwards direction.
+   *
+   * @returns A vector representing a rightwards direction.
+   */
+  public static get right() {
+    return new Vector2D(1, 0);
+  }
+
+  /**
    * Adds two vectors together.
    *
    * @param addend1 The first addend vector.
@@ -69,41 +123,5 @@ export class Vector2D {
    */
   public static divide(dividend: Vector2D, divisor: Vector2D) {
     return new Vector2D(dividend.x / divisor.x, dividend.y / divisor.y);
-  }
-
-  /**
-   * Represents an upwards direction.
-   *
-   * @returns A vector representing an upwards direction.
-   */
-  public static up() {
-    return new Vector2D(0, -1);
-  }
-
-  /**
-   * Represents a leftwards direction.
-   *
-   * @returns A vector representing a leftwards direction.
-   */
-  public static left() {
-    return new Vector2D(-1, 0);
-  }
-
-  /**
-   * Represents a downwards direction.
-   *
-   * @returns A vector representing a downwards direction.
-   */
-  public static down() {
-    return new Vector2D(0, 1);
-  }
-
-  /**
-   * Represents a rightwards direction.
-   *
-   * @returns A vector representing a rightwards direction.
-   */
-  public static right() {
-    return new Vector2D(1, 0);
   }
 }
