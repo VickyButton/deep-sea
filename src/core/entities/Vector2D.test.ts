@@ -2,6 +2,15 @@ import { describe, expect, it } from 'vitest';
 import { Vector2D } from './Vector2D';
 
 describe('Vector2D', () => {
+  it('should set vector as value', () => {
+    const vector = new Vector2D();
+    const value = new Vector2D(1, 1);
+
+    vector.set(value);
+
+    expect(vector.equals(new Vector2D(1, 1))).toBe(true);
+  });
+
   it('should add two vectors', () => {
     const vector = new Vector2D(1, 1);
     const addend = new Vector2D(1, 1);
