@@ -2,17 +2,15 @@ import { Vector2D } from '@core/entities/Vector2D';
 import { Game } from '@core/Game';
 import { setGame } from './game';
 
-const CANVAS_WIDTH = window.innerWidth;
-const CANVAS_HEIGHT = window.innerHeight;
+const CANVAS_SZIE = new Vector2D(window.innerWidth, window.innerHeight);
 
 const gameConfiguration = {
   initialSceneName: '',
   camera: {
-    size: new Vector2D(CANVAS_WIDTH, CANVAS_HEIGHT),
+    size: new Vector2D(CANVAS_SZIE.x, CANVAS_SZIE.y),
   },
   graphics: {
-    width: CANVAS_WIDTH,
-    height: CANVAS_HEIGHT,
+    size: new Vector2D(CANVAS_SZIE.x, CANVAS_SZIE.y),
   },
   loop: {
     framesPerSecond: 60,
@@ -24,8 +22,8 @@ function createGameCanvas() {
   const canvas = document.createElement('canvas');
 
   canvas.id = 'game-canvas';
-  canvas.width = CANVAS_WIDTH;
-  canvas.height = CANVAS_HEIGHT;
+  canvas.width = CANVAS_SZIE.x;
+  canvas.height = CANVAS_SZIE.y;
 
   return canvas;
 }

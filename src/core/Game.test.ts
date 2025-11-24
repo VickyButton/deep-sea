@@ -8,8 +8,7 @@ const configuration = {
     size: new Vector2D(1, 1),
   },
   graphics: {
-    width: 1,
-    height: 1,
+    size: new Vector2D(1, 1),
   },
   loop: {
     framesPerSecond: 1,
