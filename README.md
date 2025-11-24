@@ -8,7 +8,7 @@ To start a new project, simply clone this repository and start building!
 
 ## File Structure
 
-Deep Sea uses an opinionated file structure to allowing for predictable loading paths. Custom content should be organized as followed:
+Deep Sea uses an opinionated file structure to allow for predictable loading paths. Custom content should be organized as followed:
 
 ```
 src/
