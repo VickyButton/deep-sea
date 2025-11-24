@@ -5,6 +5,7 @@ import { Game } from './Game';
 const configuration = {
   initialSceneName: '',
   camera: {
+    position: new Vector2D(0, 0),
     size: new Vector2D(1, 1),
   },
   graphics: {

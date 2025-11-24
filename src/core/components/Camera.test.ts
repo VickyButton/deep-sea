@@ -1,155 +1,82 @@
+import { Rectangle } from '@core/entities/Rectangle';
 import { Vector2D } from '@core/entities/Vector2D';
 import { describe, expect, it, vi } from 'vitest';
 import { Camera } from './Camera';
 import { Node } from '../entities/Node';
 
-const ORIGIN_POINT = new Vector2D(0, 0);
-
-class TargetNode extends Node<{ position: Vector2D; size: Vector2D }> {
+class TargetNode extends Node<{ rectangle: Rectangle }> {
   public setup = vi.fn();
   public update = vi.fn();
   public teardown = vi.fn();
 
   protected getDefaultState() {
     return {
-      position: new Vector2D(ORIGIN_POINT.x, ORIGIN_POINT.y),
-      size: new Vector2D(1, 1),
+      rectangle: new Rectangle(0, 0, 1, 1),
     };
   }
 }
 
 const cameraConfiguration = {
-  size: new Vector2D(1, 1),
+  position: Vector2D.zero,
+  size: Vector2D.one,
 };
 
 describe('Camera', () => {
-  it('should follow target node', () => {
-    const camera = new Camera(cameraConfiguration);
-
-    // Set camera position to origin.
-    camera.setPosition(ORIGIN_POINT);
-
-    // Set up target.
-    const target = new TargetNode();
-    const targetPosition = new Vector2D(ORIGIN_POINT.x + 1, ORIGIN_POINT.y + 1);
-
-    target.state.position.set(targetPosition);
-
-    // Set target and update.
-    camera.setTarget(target);
-    camera.update();
-
-    // Assert that camera is at target position.
-    expect(camera.position.equals(target.state.position)).toBe(true);
-  });
-
   it('should move the camera', () => {
     const camera = new Camera(cameraConfiguration);
 
-    camera.setPosition(ORIGIN_POINT);
-
-    // Move camera down and right.
-    camera.move(new Vector2D(1, 1));
-
+    // Scenario: Move camera right and down from zero.
+    camera.setPosition(Vector2D.zero);
+    camera.move(Vector2D.right);
+    camera.move(Vector2D.down);
     expect(camera.position.equals(new Vector2D(1, 1))).toBe(true);
   });
 
   it('should calculate position relative to camera', () => {
     const camera = new Camera(cameraConfiguration);
 
-    // Set camera position to origin.
-    camera.setPosition(ORIGIN_POINT);
+    // Scenario: Position is zero.
+    expect(camera.getPositionRelativeToCamera(Vector2D.zero).equals(Vector2D.zero)).toBe(true);
 
-    // Assert that target position is equal to origin point.
-    expect(camera.getPositionRelativeToCamera(ORIGIN_POINT).equals(ORIGIN_POINT)).toBe(true);
+    // Scenario: Camera is above target.
+    camera.setPosition(Vector2D.up);
+    expect(camera.getPositionRelativeToCamera(Vector2D.zero).equals(Vector2D.down)).toBe(true);
 
-    // Offset camera position to top and left of origin.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 1, ORIGIN_POINT.y - 1));
+    // Scenario: Camera is to the left of target.
+    camera.setPosition(Vector2D.left);
+    expect(camera.getPositionRelativeToCamera(Vector2D.zero).equals(Vector2D.right)).toBe(true);
 
-    // Assert that target position is to bottom and right relative of camera.
-    expect(camera.getPositionRelativeToCamera(ORIGIN_POINT).equals(new Vector2D(1, 1))).toBe(true);
+    // Scenario: Camera is below target.
+    camera.setPosition(Vector2D.down);
+    expect(camera.getPositionRelativeToCamera(Vector2D.zero).equals(Vector2D.up)).toBe(true);
 
-    // Offset camera position to top and right of origin.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 1, ORIGIN_POINT.y - 1));
-
-    // Assert that target position is to bottom and left relative of camera.
-    expect(camera.getPositionRelativeToCamera(ORIGIN_POINT).equals(new Vector2D(-1, 1))).toBe(true);
-
-    // Offset camera position to bottom and right of origin.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 1, ORIGIN_POINT.y + 1));
-
-    // Assert that target position is to top and left relative of camera.
-    expect(camera.getPositionRelativeToCamera(ORIGIN_POINT).equals(new Vector2D(-1, -1))).toBe(
-      true,
-    );
-
-    // Offset camera position to bottom and left of origin.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 1, ORIGIN_POINT.y + 1));
-
-    // Assert that target position is to top and right relative of camera.
-    expect(camera.getPositionRelativeToCamera(ORIGIN_POINT).equals(new Vector2D(1, -1))).toBe(true);
+    // Scenario: Camera is to the right of target.
+    camera.setPosition(Vector2D.right);
+    expect(camera.getPositionRelativeToCamera(Vector2D.zero).equals(Vector2D.left)).toBe(true);
   });
 
   it('should calculate if a node is off screen', () => {
     const camera = new Camera(cameraConfiguration);
-
-    // Set camera position to origin.
-    camera.setPosition(ORIGIN_POINT);
-
-    // Set up target at origin.
     const target = new TargetNode();
 
-    target.state.position.set(ORIGIN_POINT);
-
-    // Assert that target is not off screen.
+    // Scenario: Target position is zero.
+    target.state.rectangle.position.set(Vector2D.zero);
     expect(camera.isOffScreen(target)).toBe(false);
 
-    // Move camera to top left corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 1, ORIGIN_POINT.y - 1));
-
-    // Assert that target is not off screen.
-    expect(camera.isOffScreen(target)).toBe(false);
-
-    // Move camera past top left corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 2, ORIGIN_POINT.y - 2));
-
-    // Assert that target is off screen.
+    // Scenario: Camera is above target.
+    camera.setPosition(Vector2D.up);
     expect(camera.isOffScreen(target)).toBe(true);
 
-    // Move camera to top right corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 1, ORIGIN_POINT.y - 1));
-
-    // Assert that target is not off screen.
-    expect(camera.isOffScreen(target)).toBe(false);
-
-    // Move camera past top right corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 2, ORIGIN_POINT.y - 2));
-
-    // Assert that target is off screen.
+    // Scenario: Camera is to the left of target.
+    camera.setPosition(Vector2D.left);
     expect(camera.isOffScreen(target)).toBe(true);
 
-    // Move camera to bottom right corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 1, ORIGIN_POINT.y + 1));
-
-    // Assert that target is not off screen.
-    expect(camera.isOffScreen(target)).toBe(false);
-
-    // Move camera past bottom right corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x + 2, ORIGIN_POINT.y + 2));
-
-    // Assert that target is off screen.
+    // Scenario: Camera is below target.
+    camera.setPosition(Vector2D.down);
     expect(camera.isOffScreen(target)).toBe(true);
 
-    // Move camera to bottom left corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 1, ORIGIN_POINT.y + 1));
-
-    // Assert that target is not off screen.
-    expect(camera.isOffScreen(target)).toBe(false);
-
-    // Move camera past bottom left corner of target.
-    camera.setPosition(new Vector2D(ORIGIN_POINT.x - 2, ORIGIN_POINT.y + 2));
-
-    // Assert that target is off screen.
+    // Scenario: Camera is to the right of target.
+    camera.setPosition(Vector2D.right);
     expect(camera.isOffScreen(target)).toBe(true);
   });
 });
