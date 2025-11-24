@@ -12,7 +12,7 @@ class TargetNode extends Node<{ position: Vector2D; width: number; height: numbe
 
   protected getDefaultState() {
     return {
-      position: ORIGIN_POINT,
+      position: new Vector2D(ORIGIN_POINT.x, ORIGIN_POINT.y),
       width: 100,
       height: 100,
     };
@@ -35,14 +35,25 @@ describe('Camera', () => {
     const target = new TargetNode();
     const targetPosition = new Vector2D(ORIGIN_POINT.x + 1, ORIGIN_POINT.y + 1);
 
-    target.state.position = targetPosition;
+    target.state.position.set(targetPosition);
 
     // Set target and update.
     camera.setTarget(target);
     camera.update();
 
     // Assert that camera is at target position.
-    expect(camera.position).toEqual(targetPosition);
+    expect(camera.position.equals(target.state.position)).toBe(true);
+  });
+
+  it('should move the camera', () => {
+    const camera = new Camera(cameraConfiguration);
+
+    camera.setPosition(ORIGIN_POINT);
+
+    // Move camera down and right.
+    camera.move(new Vector2D(1, 1));
+
+    expect(camera.position.equals(new Vector2D(1, 1))).toBe(true);
   });
 
   it('should calculate position relative to camera', () => {
@@ -90,7 +101,7 @@ describe('Camera', () => {
     // Set up target at origin.
     const target = new TargetNode();
 
-    target.state.position = ORIGIN_POINT;
+    target.state.position.set(ORIGIN_POINT);
 
     // Assert that target is not off screen.
     expect(camera.isOffScreen(target)).toBe(false);
