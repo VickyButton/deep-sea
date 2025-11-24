@@ -54,6 +54,6 @@ export class Vector2D {
    * @returns True if equal, false if not.
    */
   public equals(vector: Vector2D) {
-    return this.x === vector.x && vector.y === vector.y;
+    return this.x === vector.x && this.y === vector.y;
   }
 }

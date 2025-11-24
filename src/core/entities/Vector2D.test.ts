@@ -46,6 +46,8 @@ describe('Vector2D', () => {
     const vector = new Vector2D(0, 0);
 
     expect(vector.equals(new Vector2D(0, 0))).toBe(true);
+    expect(vector.equals(new Vector2D(1, 0))).toBe(false);
+    expect(vector.equals(new Vector2D(0, 1))).toBe(false);
     expect(vector.equals(new Vector2D(1, 1))).toBe(false);
   });
 });
