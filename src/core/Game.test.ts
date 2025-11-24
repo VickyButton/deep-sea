@@ -16,11 +16,11 @@ const configuration = {
   },
 };
 
-vi.mock('./components/Audio', () => ({
+vi.mock('./engine/Audio', () => ({
   Audio: vi.fn(),
 }));
 
-vi.mock('./components/Graphics', () => ({
+vi.mock('./engine/Graphics', () => ({
   Graphics: vi.fn(
     class {
       syncWithTargetCanvas = vi.fn();
@@ -28,7 +28,7 @@ vi.mock('./components/Graphics', () => ({
   ),
 }));
 
-vi.mock('./components/Loop', () => ({
+vi.mock('./engine/Loop', () => ({
   Loop: vi.fn(
     class {
       setLoopCallback = vi.fn();
@@ -38,7 +38,7 @@ vi.mock('./components/Loop', () => ({
   ),
 }));
 
-vi.mock('./components/SceneManager', () => ({
+vi.mock('./engine/SceneManager', () => ({
   SceneManager: vi.fn(
     class {
       loadScene = vi.fn();
@@ -47,7 +47,7 @@ vi.mock('./components/SceneManager', () => ({
   ),
 }));
 
-vi.mock('./components/TaskManager', () => ({
+vi.mock('./engine/TaskManager', () => ({
   TaskManager: vi.fn(
     class {
       registerTask = vi.fn().mockImplementation((_task: Promise<void>, callback: () => void) => {
