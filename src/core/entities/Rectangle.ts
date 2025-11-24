@@ -8,6 +8,12 @@ export class Rectangle {
   public readonly position: Vector2D;
   public readonly size: Vector2D;
 
+  /**
+   * @param x The x position of the rectangle.
+   * @param y The y position of the rectangle.
+   * @param width The width of the rectangle.
+   * @param height The height of the rectangle.
+   */
   constructor(x: number, y: number, width: number, height: number) {
     this.position = new Vector2D(x, y);
     this.size = new Vector2D(width, height);
@@ -67,6 +73,21 @@ export class Rectangle {
    */
   public get right() {
     return this.position.x + this.size.x;
+  }
+
+  /**
+   * Sets components of the rectangle.
+   *
+   * @param x The x position of the rectangle.
+   * @param y The y position of the rectangle.
+   * @param width The width of the rectangle.
+   * @param height The height of the rectangle.
+   */
+  public set(x: number, y: number, width: number, height: number) {
+    this.position.x = x;
+    this.position.y = y;
+    this.size.x = width;
+    this.size.y = height;
   }
 
   /**
