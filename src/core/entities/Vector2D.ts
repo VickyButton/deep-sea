@@ -18,46 +18,6 @@ export class Vector2D {
   }
 
   /**
-   * Adds addend to vector.
-   *
-   * @param addend The vector to add.
-   */
-  public add(addend: Vector2D) {
-    this.x += addend.x;
-    this.y += addend.y;
-  }
-
-  /**
-   * Subtracts subtrahend from vector.
-   *
-   * @param subtrahend The vector to subtract.
-   */
-  public subtract(subtrahend: Vector2D) {
-    this.x -= subtrahend.x;
-    this.y -= subtrahend.y;
-  }
-
-  /**
-   * Multiplies vector by multiplicand.
-   *
-   * @param multiplicand The vector to multiply.
-   */
-  public multiply(multiplicand: Vector2D) {
-    this.x *= multiplicand.x;
-    this.y *= multiplicand.y;
-  }
-
-  /**
-   * Divides vector by divisor.
-   *
-   * @param divisor The vector to divide.
-   */
-  public divide(divisor: Vector2D) {
-    this.x /= divisor.x;
-    this.y /= divisor.y;
-  }
-
-  /**
    * Compares two vectors for equality.
    *
    * @param vector The vector to compare for equality.
@@ -65,6 +25,50 @@ export class Vector2D {
    */
   public equals(vector: Vector2D) {
     return this.x === vector.x && this.y === vector.y;
+  }
+
+  /**
+   * Adds two vectors together.
+   *
+   * @param addend1 The first addend vector.
+   * @param addend2 The second addend vector.
+   * @returns The sum of the two vectors.
+   */
+  public static add(addend1: Vector2D, addend2: Vector2D) {
+    return new Vector2D(addend1.x + addend2.x, addend1.y + addend2.y);
+  }
+
+  /**
+   * Subtracts a subtrahend vector from a minuend vector.
+   *
+   * @param minuend The vector to subtract from.
+   * @param subtrahend The vector to subtract.
+   * @returns The difference of the two vectors.
+   */
+  public static subtract(minuend: Vector2D, subtrahend: Vector2D) {
+    return new Vector2D(minuend.x - subtrahend.x, minuend.y - subtrahend.y);
+  }
+
+  /**
+   * Multiplies a multiplicand vector by a multiplier vector.
+   *
+   * @param multiplier The vector to multiply by.
+   * @param multiplicand The vector to multiply.
+   * @returns The product of the two vectors.
+   */
+  public static multiply(multiplier: Vector2D, multiplicand: Vector2D) {
+    return new Vector2D(multiplier.x * multiplicand.x, multiplier.y * multiplicand.y);
+  }
+
+  /**
+   * Divides a dividend vector by a divisor vector.
+   *
+   * @param dividend The vector to be divided (numerator).
+   * @param divisor The vector by which to divide (denominator).
+   * @returns The quotient of the two vectors.
+   */
+  public static divide(dividend: Vector2D, divisor: Vector2D) {
+    return new Vector2D(dividend.x / divisor.x, dividend.y / divisor.y);
   }
 
   /**

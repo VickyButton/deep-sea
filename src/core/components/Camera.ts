@@ -83,7 +83,7 @@ export class Camera {
    * @param distance The distance to move the camera.
    */
   public move(distance: Vector2D) {
-    this.position.add(distance);
+    this.state.position = Vector2D.add(this.state.position, distance);
   }
 
   /**
