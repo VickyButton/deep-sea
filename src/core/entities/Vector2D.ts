@@ -66,4 +66,40 @@ export class Vector2D {
   public equals(vector: Vector2D) {
     return this.x === vector.x && this.y === vector.y;
   }
+
+  /**
+   * Represents an upwards direction.
+   *
+   * @returns A vector representing an upwards direction.
+   */
+  public static up() {
+    return new Vector2D(0, -1);
+  }
+
+  /**
+   * Represents a leftwards direction.
+   *
+   * @returns A vector representing a leftwards direction.
+   */
+  public static left() {
+    return new Vector2D(-1, 0);
+  }
+
+  /**
+   * Represents a downwards direction.
+   *
+   * @returns A vector representing a downwards direction.
+   */
+  public static down() {
+    return new Vector2D(0, 1);
+  }
+
+  /**
+   * Represents a rightwards direction.
+   *
+   * @returns A vector representing a rightwards direction.
+   */
+  public static right() {
+    return new Vector2D(1, 0);
+  }
 }
