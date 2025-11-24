@@ -8,47 +8,43 @@ describe('Vector2D', () => {
 
     vector.set(value);
 
-    expect(vector.equals(new Vector2D(1, 1))).toBe(true);
+    expect(vector.equals(value)).toBe(true);
   });
 
   it('should add two vectors', () => {
-    const vector = new Vector2D(1, 1);
-    const addend = new Vector2D(1, 1);
+    const addend1 = new Vector2D(1, 1);
+    const addend2 = new Vector2D(1, 1);
+    const sum = Vector2D.add(addend1, addend2);
 
-    vector.add(addend);
-
-    expect(vector.x).toBe(2);
-    expect(vector.y).toBe(2);
+    expect(sum.x).toBe(2);
+    expect(sum.y).toBe(2);
   });
 
   it('should subtract two vectors', () => {
-    const vector = new Vector2D(1, 1);
+    const minuend = new Vector2D(1, 1);
     const subtrahend = new Vector2D(1, 1);
+    const difference = Vector2D.subtract(minuend, subtrahend);
 
-    vector.subtract(subtrahend);
-
-    expect(vector.x).toBe(0);
-    expect(vector.y).toBe(0);
+    expect(difference.x).toBe(0);
+    expect(difference.y).toBe(0);
   });
 
   it('should multiply two vectors', () => {
-    const vector = new Vector2D(2, 2);
+    const multiplier = new Vector2D(2, 2);
     const multiplicand = new Vector2D(2, 2);
+    const product = Vector2D.multiply(multiplier, multiplicand);
 
-    vector.multiply(multiplicand);
-
-    expect(vector.x).toBe(4);
-    expect(vector.y).toBe(4);
+    expect(product.x).toBe(4);
+    expect(product.y).toBe(4);
   });
 
   it('should divide two vectors', () => {
-    const vector = new Vector2D(4, 4);
+    const dividend = new Vector2D(4, 4);
     const divisor = new Vector2D(2, 2);
+    const quotient = Vector2D.divide(dividend, divisor);
 
-    vector.divide(divisor);
-
-    expect(vector.x).toBe(2);
-    expect(vector.y).toBe(2);
+    expect(quotient.x).toBe(2);
+    expect(quotient.y).toBe(2);
   });
 
   it('should compare two vectors for equality', () => {
