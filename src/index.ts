@@ -1,5 +1,5 @@
-import { Vector2D } from '@core/entities/Vector2D';
 import { Game } from '@core/Game';
+import { Vector2D } from '@core/structures/Vector2D';
 import { setGame } from './game';
 
 const CANVAS_SIZE = new Vector2D(window.innerWidth, window.innerHeight);

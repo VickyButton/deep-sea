@@ -1,5 +1,5 @@
-import { generateId } from '../utils/generateId';
-import { error, log } from '../utils/logger';
+import { generateId } from '@core/utils/generateId';
+import { error, log } from '@core/utils/logger';
 
 type Task<T> = Promise<T>;
 

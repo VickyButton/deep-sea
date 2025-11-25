@@ -1,5 +1,5 @@
-import { timestampNow } from '../utils/dateTimeProvider';
-import { log } from '../utils/logger';
+import { timestampNow } from '@core/utils/dateTimeProvider';
+import { log } from '@core/utils/logger';
 
 export interface LoopConfiguration {
   framesPerSecond: number;

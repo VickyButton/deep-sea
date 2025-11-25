@@ -1,6 +1,6 @@
-import { Rectangle } from '@core/entities/Rectangle';
-import { Vector2D } from '@core/entities/Vector2D';
-import { Node } from '../entities/Node';
+import { Node } from '@core/entities/Node';
+import { Rectangle } from '@core/structures/Rectangle';
+import { Vector2D } from '@core/structures/Vector2D';
 
 export interface CameraConfiguration {
   position: Vector2D;
