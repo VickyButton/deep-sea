@@ -1,20 +1,6 @@
-import { Node } from '@core/entities/Node';
-import { Rectangle } from '@core/structures/Rectangle';
 import { Vector2D } from '@core/structures/Vector2D';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { Camera } from './Camera';
-
-class TargetNode extends Node<{ rectangle: Rectangle }> {
-  public setup = vi.fn();
-  public update = vi.fn();
-  public teardown = vi.fn();
-
-  protected getDefaultState() {
-    return {
-      rectangle: new Rectangle(0, 0, 1, 1),
-    };
-  }
-}
 
 const cameraConfiguration = {
   position: Vector2D.zero,
@@ -53,29 +39,5 @@ describe('Camera', () => {
     // Scenario: Camera is to the right of target.
     camera.setPosition(Vector2D.right);
     expect(camera.getPositionRelativeToCamera(Vector2D.zero).equals(Vector2D.left)).toBe(true);
-  });
-
-  it('should calculate if a node is off screen', () => {
-    const camera = new Camera(cameraConfiguration);
-    const target = new TargetNode();
-
-    // Scenario: Target position is zero.
-    expect(camera.isOffScreen(target)).toBe(false);
-
-    // Scenario: Camera is above target.
-    camera.setPosition(Vector2D.up);
-    expect(camera.isOffScreen(target)).toBe(true);
-
-    // Scenario: Camera is to the left of target.
-    camera.setPosition(Vector2D.left);
-    expect(camera.isOffScreen(target)).toBe(true);
-
-    // Scenario: Camera is below target.
-    camera.setPosition(Vector2D.down);
-    expect(camera.isOffScreen(target)).toBe(true);
-
-    // Scenario: Camera is to the right of target.
-    camera.setPosition(Vector2D.right);
-    expect(camera.isOffScreen(target)).toBe(true);
   });
 });

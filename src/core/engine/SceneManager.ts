@@ -1,4 +1,4 @@
-import { Scene } from '@core/entities/Scene';
+import { Scene } from '@core/nodes/Scene';
 import { log } from '@core/utils/logger';
 
 const LOG_TAG = 'SceneManager';

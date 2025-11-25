@@ -1,4 +1,3 @@
-import { Node } from '@core/entities/Node';
 import { Rectangle } from '@core/structures/Rectangle';
 import { Vector2D } from '@core/structures/Vector2D';
 
@@ -65,16 +64,6 @@ export class Camera {
    */
   public getPositionRelativeToCamera(position: Vector2D) {
     return Vector2D.subtract(position, this.rectangle.position);
-  }
-
-  /**
-   * Determines if a given node is offscreen.
-   *
-   * @param node Node to check.
-   * @returns True if node is offscreen, false if not.
-   */
-  public isOffScreen(node: Node<{ rectangle: Rectangle }>) {
-    return !this.rectangle.overlaps(node.state.rectangle);
   }
 
   private getDefaultRectangle() {

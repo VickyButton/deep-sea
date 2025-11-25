@@ -1,17 +1,11 @@
-import { Scene } from '@core/entities/Scene';
+import { Scene } from '@core/nodes/Scene';
 import { describe, expect, it, vi } from 'vitest';
 import { SceneManager } from './SceneManager';
 
 class TestScene extends Scene {
-  public setup = vi.fn();
-  public update = vi.fn();
-  public teardown = vi.fn();
-
-  protected getDefaultState() {
-    return {
-      name: 'Test',
-    };
-  }
+  setup = vi.fn();
+  update = vi.fn();
+  teardown = vi.fn();
 }
 
 describe('SceneManager', () => {
