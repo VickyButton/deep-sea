@@ -1,8 +1,8 @@
-import { Rectangle } from '@core/entities/Rectangle';
-import { Vector2D } from '@core/entities/Vector2D';
+import { Node } from '@core/entities/Node';
+import { Rectangle } from '@core/structures/Rectangle';
+import { Vector2D } from '@core/structures/Vector2D';
 import { describe, expect, it, vi } from 'vitest';
 import { Camera } from './Camera';
-import { Node } from '../entities/Node';
 
 class TargetNode extends Node<{ rectangle: Rectangle }> {
   public setup = vi.fn();

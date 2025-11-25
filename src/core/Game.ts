@@ -1,13 +1,13 @@
-import type { CameraConfiguration } from './engine/Camera';
-import type { GraphicsConfiguration } from './engine/Graphics';
-import type { LoopConfiguration } from './engine/Loop';
-import { Audio } from './engine/Audio';
-import { Camera } from './engine/Camera';
-import { Graphics } from './engine/Graphics';
-import { Loop } from './engine/Loop';
-import { SceneManager } from './engine/SceneManager';
-import { TaskManager } from './engine/TaskManager';
-import { error, log } from './utils/logger';
+import type { CameraConfiguration } from '@core/engine/Camera';
+import type { GraphicsConfiguration } from '@core/engine/Graphics';
+import type { LoopConfiguration } from '@core/engine/Loop';
+import { Audio } from '@core/engine/Audio';
+import { Camera } from '@core/engine/Camera';
+import { Graphics } from '@core/engine/Graphics';
+import { Loop } from '@core/engine/Loop';
+import { SceneManager } from '@core/engine/SceneManager';
+import { TaskManager } from '@core/engine/TaskManager';
+import { error, log } from '@core/utils/logger';
 
 interface GameConfiguration {
   initialSceneName: string;

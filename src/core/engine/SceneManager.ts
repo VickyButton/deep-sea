@@ -1,5 +1,5 @@
-import { Scene } from '../entities/Scene';
-import { log } from '../utils/logger';
+import { Scene } from '@core/entities/Scene';
+import { log } from '@core/utils/logger';
 
 const LOG_TAG = 'SceneManager';
 

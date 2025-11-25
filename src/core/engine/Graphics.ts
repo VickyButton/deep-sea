@@ -1,5 +1,5 @@
-import { Vector2D } from '@core/entities/Vector2D';
-import { log } from '../utils/logger';
+import { Vector2D } from '@core/structures/Vector2D';
+import { log } from '@core/utils/logger';
 
 interface DrawInstructions {
   imageBitmap: ImageBitmap;

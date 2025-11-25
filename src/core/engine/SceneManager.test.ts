@@ -1,6 +1,6 @@
+import { Scene } from '@core/entities/Scene';
 import { describe, expect, it, vi } from 'vitest';
 import { SceneManager } from './SceneManager';
-import { Scene } from '../entities/Scene';
 
 class TestScene extends Scene {
   public setup = vi.fn();

@@ -1,4 +1,4 @@
-import { error } from '../utils/logger';
+import { error } from '@core/utils/logger';
 
 interface AudioState {
   volume: number;

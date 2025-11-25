@@ -1,5 +1,5 @@
+import { Vector2D } from '@core/structures/Vector2D';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { Vector2D } from './entities/Vector2D';
 import { Game } from './Game';
 
 const configuration = {
@@ -16,11 +16,11 @@ const configuration = {
   },
 };
 
-vi.mock('./engine/Audio', () => ({
+vi.mock('@core/engine/Audio', () => ({
   Audio: vi.fn(),
 }));
 
-vi.mock('./engine/Graphics', () => ({
+vi.mock('@core/engine/Graphics', () => ({
   Graphics: vi.fn(
     class {
       syncWithTargetCanvas = vi.fn();
@@ -28,7 +28,7 @@ vi.mock('./engine/Graphics', () => ({
   ),
 }));
 
-vi.mock('./engine/Loop', () => ({
+vi.mock('@core/engine/Loop', () => ({
   Loop: vi.fn(
     class {
       setLoopCallback = vi.fn();
@@ -38,7 +38,7 @@ vi.mock('./engine/Loop', () => ({
   ),
 }));
 
-vi.mock('./engine/SceneManager', () => ({
+vi.mock('@core/engine/SceneManager', () => ({
   SceneManager: vi.fn(
     class {
       loadScene = vi.fn();
@@ -47,7 +47,7 @@ vi.mock('./engine/SceneManager', () => ({
   ),
 }));
 
-vi.mock('./engine/TaskManager', () => ({
+vi.mock('@core/engine/TaskManager', () => ({
   TaskManager: vi.fn(
     class {
       registerTask = vi.fn().mockImplementation((_task: Promise<void>, callback: () => void) => {
