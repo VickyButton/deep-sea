@@ -3,7 +3,7 @@ import { generateId } from '@core/utils/generateId';
 export class GameNode {
   public readonly id = generateId();
   public children = new Map<string, GameNode>();
-  public parent?: GameNode;
+  public parent: GameNode | null = null;
 
   /**
    * The number of direct children this node has.
@@ -29,7 +29,7 @@ export class GameNode {
    * @param node The node to detach.
    */
   public removeChild(node: GameNode) {
-    node.parent = undefined;
+    node.parent = null;
 
     this.children.delete(node.id);
   }
@@ -59,5 +59,17 @@ export class GameNode {
    */
   public teardown() {
     for (const child of this.children.values()) child.teardown();
+  }
+
+  /**
+   * A recursive method that travels up the node tree and executes a callback, starting with the
+   * current node.
+   *
+   * @param callback The callback to be executed on each recursion.
+   */
+  public traverseToRoot(callback: (node: GameNode) => void) {
+    callback(this);
+
+    if (this.parent) this.parent.traverseToRoot(callback);
   }
 }
