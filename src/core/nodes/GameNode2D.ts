@@ -1,5 +1,5 @@
-import { GameNode } from '@core/entities/GameNode';
 import { Vector2D } from '@core/structures/Vector2D';
+import { GameNode } from './GameNode';
 
 /**
  * Manages position, rotation, and scale in a 2D space.

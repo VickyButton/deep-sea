@@ -1,4 +1,4 @@
-import { GameNode } from '@core/entities/GameNode';
+import { GameNode } from './GameNode';
 
 export class Scene extends GameNode {
   public name = '';
