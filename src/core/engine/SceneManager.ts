@@ -1,4 +1,4 @@
-import { Scene } from '@core/entities/Scene';
+import { Scene } from '@core/nodes/Scene';
 import { log } from '@core/utils/logger';
 
 const LOG_TAG = 'SceneManager';
@@ -12,7 +12,7 @@ export class SceneManager {
    * @param scene The scene to switch to.
    */
   public setActiveScene(scene: Scene) {
-    log(LOG_TAG, `Setting ${scene.state.name} as active scene...`);
+    log(LOG_TAG, `Setting ${scene.title} as active scene...`);
 
     this.teardownActiveScene();
 
