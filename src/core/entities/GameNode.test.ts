@@ -65,7 +65,7 @@ describe('GameNode', () => {
     const middleNode = new GameNode();
     const leafNode = new GameNode();
 
-    // Add children to create a node tree 3 levels deep.
+    // Arrange a node tree with a depth of 2.
     rootNode.addChild(middleNode);
     middleNode.addChild(leafNode);
 
