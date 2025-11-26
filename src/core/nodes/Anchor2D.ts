@@ -1,7 +1,7 @@
 import { GameNode } from '@core/entities/GameNode';
 import { Vector2D } from '@core/structures/Vector2D';
 
-interface AnchorNode2DState {
+interface Anchor2DState {
   position: Vector2D;
   rotation: Vector2D;
   scale: Vector2D;
@@ -10,8 +10,8 @@ interface AnchorNode2DState {
 /**
  * Manages position, rotation, and scale in a 2D space.
  */
-export class AnchorNode2D extends GameNode {
-  public state: AnchorNode2DState = this.getDefaultState();
+export class Anchor2D extends GameNode {
+  public state: Anchor2DState = this.getDefaultState();
 
   /**
    * Updates the node's position.
