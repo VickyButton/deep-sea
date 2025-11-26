@@ -61,13 +61,13 @@ describe('GameNode', () => {
   });
 
   it('should traverse to root', () => {
-    const rootNode = new GameNode();
-    const middleNode = new GameNode();
-    const leafNode = new GameNode();
+    const nodeA = new GameNode();
+    const nodeB = new GameNode();
+    const nodeC = new GameNode();
 
     // Arrange a node tree with a depth of 2.
-    rootNode.addChild(middleNode);
-    middleNode.addChild(leafNode);
+    nodeA.addChild(nodeB);
+    nodeB.addChild(nodeC);
 
     // For each recursion, iterate a count variable.
     let count = 0;
@@ -76,7 +76,7 @@ describe('GameNode', () => {
     };
 
     // Scenario: Node traverses to root.
-    leafNode.traverseToRoot(callback);
+    nodeC.traverseToRoot(callback);
     expect(count).toBe(2);
   });
 });
