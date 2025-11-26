@@ -77,6 +77,6 @@ describe('GameNode', () => {
 
     // Scenario: Node traverses to root.
     secondChild.traverseToRoot(callback);
-    expect(count).toBe(3);
+    expect(count).toBe(2);
   });
 });

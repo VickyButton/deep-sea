@@ -63,13 +63,15 @@ export class GameNode {
 
   /**
    * A recursive method that travels up the node tree and executes a callback, starting with the
-   * current node.
+   * current node's parent.
    *
    * @param callback The callback to be executed on each recursion.
    */
   public traverseToRoot(callback: (node: GameNode) => void) {
-    callback(this);
+    if (!this.parent) return;
 
-    if (this.parent) this.parent.traverseToRoot(callback);
+    callback(this.parent);
+
+    this.parent.traverseToRoot(callback);
   }
 }
