@@ -1,8 +1,17 @@
 import { generateId } from '@core/utils/generateId';
 
 export class GameNode {
+  /**
+   * The node's unique identifer.
+   */
   public readonly id = generateId();
+  /**
+   * The node's children nodes.
+   */
   public children = new Map<string, GameNode>();
+  /**
+   * The node's parent node.
+   */
   public parent: GameNode | null = null;
 
   /**
