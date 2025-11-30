@@ -79,4 +79,26 @@ describe('GameNode', () => {
     nodeC.traverseToRoot(callback);
     expect(count).toBe(2);
   });
+
+  it('should traverse to leaves', () => {
+    const nodeA = new GameNode();
+    const nodeB = new GameNode();
+    const nodeC = new GameNode();
+    const nodeD = new GameNode();
+
+    // Arrange a node tree with a depth of 2.
+    nodeA.addChild(nodeB);
+    nodeB.addChild(nodeC);
+    nodeB.addChild(nodeD);
+
+    // For each recursion, iterate a count variable.
+    let count = 0;
+    const callback = () => {
+      count++;
+    };
+
+    // Scenario: Node traverses to root.
+    nodeA.traverseToLeaves(callback);
+    expect(count).toBe(3);
+  });
 });
