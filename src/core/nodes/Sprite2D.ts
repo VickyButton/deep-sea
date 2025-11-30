@@ -21,12 +21,16 @@ export class Sprite2D extends RenderableNode2D {
    */
   private sprite?: ImageBitmap;
 
+  public get size() {
+    return this.sprite ? new Vector2D(this.sprite.width, this.sprite.height) : Vector2D.zero;
+  }
+
   public setup() {
-    this.isVisible = false;
+    this.visible = false;
 
     game.taskManager.registerTask(this.loadSprite(), (sprite) => {
       this.sprite = sprite;
-      this.isVisible = true;
+      this.visible = true;
     });
   }
 
