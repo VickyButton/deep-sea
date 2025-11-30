@@ -8,9 +8,11 @@ import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
+import { AssetLoader, AssetLoaderConfiguration } from './engine/AssetLoader';
 
 interface GameConfiguration {
   initialSceneName: string;
+  assetLoader: AssetLoaderConfiguration;
   camera: CameraConfiguration;
   graphics: GraphicsConfiguration;
   loop: LoopConfiguration;
@@ -19,6 +21,7 @@ interface GameConfiguration {
 const LOG_TAG = 'Game';
 
 export class Game {
+  public readonly assetLoader: AssetLoader;
   public readonly audio: Audio;
   public readonly camera: Camera;
   public readonly graphics: Graphics;
@@ -30,6 +33,7 @@ export class Game {
 
   constructor(configuration: GameConfiguration) {
     this.configuration = configuration;
+    this.assetLoader = new AssetLoader(configuration.assetLoader);
     this.audio = new Audio();
     this.camera = new Camera(configuration.camera);
     this.graphics = new Graphics(configuration.graphics);
