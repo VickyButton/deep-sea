@@ -26,6 +26,8 @@ export class Sprite2D extends RenderableNode2D {
   }
 
   public setup() {
+    super.setup();
+
     this.visible = false;
 
     game.taskManager.registerTask(this.loadSprite(), (sprite) => {
