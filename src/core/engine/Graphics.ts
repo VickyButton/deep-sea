@@ -178,13 +178,28 @@ export class Graphics {
       drawInstructions.imageBitmap.height,
     );
     const scaledSize = Vector2D.multiply(drawInstructions.scale, size);
-    const dx = drawInstructions.position.x;
-    const dy = drawInstructions.position.y;
     const dWidth = scaledSize.x;
     const dHeight = scaledSize.y;
+    const dx = drawInstructions.position.x + dWidth / 2;
+    const dy = drawInstructions.position.y + dHeight / 2;
 
+    // Apply transformations.
+    layerContext.translate(dx, dy);
+    layerContext.rotate(-drawInstructions.rotation.x);
+
+    // Draw image.
     layerContext.imageSmoothingEnabled = false;
-    layerContext.drawImage(drawInstructions.imageBitmap, dx, dy, dWidth, dHeight);
+    layerContext.drawImage(
+      drawInstructions.imageBitmap,
+      -dWidth / 2,
+      -dHeight / 2,
+      dWidth,
+      dHeight,
+    );
+
+    // Apply inverse transformations.
+    layerContext.rotate(drawInstructions.rotation.x);
+    layerContext.translate(-dx, -dy);
   }
 
   private getVisibleNodes() {
