@@ -3,7 +3,7 @@ import { Vector2D } from '@core/structures/Vector2D';
 import { game } from 'game';
 import { GameNode2D } from './GameNode2D';
 
-export abstract class RenderableNode2D extends GameNode2D {
+export abstract class GraphicsNode2D extends GameNode2D {
   /**
    * A flag for rendering the node. If false, the node should not be rendered.
    */
@@ -24,7 +24,7 @@ export abstract class RenderableNode2D extends GameNode2D {
     let layer = this.layer;
 
     this.traverseToRoot((node) => {
-      if (node instanceof RenderableNode2D) layer += node.layer;
+      if (node instanceof GraphicsNode2D) layer += node.layer;
     });
 
     return layer;

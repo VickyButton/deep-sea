@@ -1,5 +1,5 @@
 import { Camera2D } from '@core/nodes/Camera2D';
-import { RenderableNode2D } from '@core/nodes/RenderableNode2D';
+import { GraphicsNode2D } from '@core/nodes/GraphicsNode2D';
 import { Vector2D } from '@core/structures/Vector2D';
 import { log } from '@core/utils/logger';
 
@@ -22,7 +22,7 @@ const ERROR_MISSING_TARGET_CONTEXT = 'Unable to get target context';
 export class Graphics {
   private readonly configuration: GraphicsConfiguration;
   private camera?: Camera2D;
-  private nodes = new Set<RenderableNode2D>();
+  private nodes = new Set<GraphicsNode2D>();
   private targetCanvas?: HTMLCanvasElement;
   private targetContext?: ImageBitmapRenderingContext;
   private drawQueue = new Map<number, DrawInstructions[]>();
@@ -50,7 +50,7 @@ export class Graphics {
    *
    * @param node The node to register.
    */
-  public registerNode(node: RenderableNode2D) {
+  public registerNode(node: GraphicsNode2D) {
     this.nodes.add(node);
   }
 
@@ -59,7 +59,7 @@ export class Graphics {
    *
    * @param node The node to deregister.
    */
-  public deregisterNode(node: RenderableNode2D) {
+  public deregisterNode(node: GraphicsNode2D) {
     this.nodes.delete(node);
   }
 
@@ -165,7 +165,7 @@ export class Graphics {
   }
 
   private getVisibleNodes() {
-    const visibleNodes = new Set<RenderableNode2D>();
+    const visibleNodes = new Set<GraphicsNode2D>();
 
     for (const node of this.nodes) {
       if (this.isNodeVisible(node)) visibleNodes.add(node);
@@ -174,11 +174,11 @@ export class Graphics {
     return visibleNodes;
   }
 
-  private isNodeVisible(node: RenderableNode2D) {
+  private isNodeVisible(node: GraphicsNode2D) {
     return node.visible && !this.isNodeOffScreen(node);
   }
 
-  private isNodeOffScreen(node: RenderableNode2D) {
+  private isNodeOffScreen(node: GraphicsNode2D) {
     if (!this.camera) throw new Error('No camera set');
 
     return !this.camera.rectangle.overlaps(node.rectangle);

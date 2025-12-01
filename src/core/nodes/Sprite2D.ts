@@ -1,9 +1,9 @@
 import { Rectangle } from '@core/structures/Rectangle';
 import { Vector2D } from '@core/structures/Vector2D';
 import { game } from 'game';
-import { RenderableNode2D } from './RenderableNode2D';
+import { GraphicsNode2D } from './GraphicsNode2D';
 
-export class Sprite2D extends RenderableNode2D {
+export class Sprite2D extends GraphicsNode2D {
   /**
    * The path of the sprite's sprite sheet image.
    */
