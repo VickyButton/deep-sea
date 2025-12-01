@@ -1,9 +1,13 @@
+import { Camera2D } from '@core/nodes/Camera2D';
+import { RenderableNode2D } from '@core/nodes/RenderableNode2D';
 import { Vector2D } from '@core/structures/Vector2D';
 import { log } from '@core/utils/logger';
 
 interface DrawInstructions {
   imageBitmap: ImageBitmap;
   position: Vector2D;
+  rotation: Vector2D;
+  scale: Vector2D;
   layer: number;
 }
 
@@ -17,6 +21,8 @@ const ERROR_MISSING_TARGET_CONTEXT = 'Unable to get target context';
 
 export class Graphics {
   private readonly configuration: GraphicsConfiguration;
+  private camera?: Camera2D;
+  private nodes = new Set<RenderableNode2D>();
   private targetCanvas?: HTMLCanvasElement;
   private targetContext?: ImageBitmapRenderingContext;
   private drawQueue = new Map<number, DrawInstructions[]>();
@@ -37,6 +43,33 @@ export class Graphics {
    */
   public get height() {
     return this.targetCanvas ? this.targetCanvas.height : 0;
+  }
+
+  /**
+   * Registers a node to be considered for rendering each frame.
+   *
+   * @param node The node to register.
+   */
+  public registerNode(node: RenderableNode2D) {
+    this.nodes.add(node);
+  }
+
+  /**
+   * Deregisters a node from consideration for rendering each frame.
+   *
+   * @param node The node to deregister.
+   */
+  public deregisterNode(node: RenderableNode2D) {
+    this.nodes.delete(node);
+  }
+
+  /**
+   * Sets a camera to be used for bounding.
+   *
+   * @param camera The camera to use.
+   */
+  public setCamera(camera: Camera2D) {
+    this.camera = camera;
   }
 
   /**
@@ -112,6 +145,49 @@ export class Graphics {
 
     this.targetContext.transferFromImageBitmap(imageBitmap);
     this.clearDrawQueue();
+  }
+
+  /**
+   * Iterates through visible nodes and creates draw instructions for them.
+   */
+  public update() {
+    if (!this.camera) throw new Error('No camera set');
+
+    for (const node of this.getVisibleNodes()) {
+      this.addToDrawQueue({
+        imageBitmap: node.render(),
+        position: this.getPositionRelativeToCamera(node.globalPosition),
+        rotation: node.globalRotation,
+        scale: node.globalScale,
+        layer: node.globalLayer,
+      });
+    }
+  }
+
+  private getVisibleNodes() {
+    const visibleNodes = new Set<RenderableNode2D>();
+
+    for (const node of this.nodes) {
+      if (this.isNodeVisible(node)) visibleNodes.add(node);
+    }
+
+    return visibleNodes;
+  }
+
+  private isNodeVisible(node: RenderableNode2D) {
+    return node.visible && !this.isNodeOffScreen(node);
+  }
+
+  private isNodeOffScreen(node: RenderableNode2D) {
+    if (!this.camera) throw new Error('No camera set');
+
+    return !this.camera.rectangle.overlaps(node.rectangle);
+  }
+
+  private getPositionRelativeToCamera(position: Vector2D) {
+    if (!this.camera) throw new Error('No camera set');
+
+    return Vector2D.subtract(position, this.camera.position);
   }
 
   private getTargetCanvas() {

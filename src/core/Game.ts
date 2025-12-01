@@ -83,6 +83,7 @@ export class Game {
 
     try {
       this.sceneManager.updateActiveScene(dt);
+      this.graphics.update();
       this.graphics.draw();
     } catch (err) {
       error(LOG_TAG, String(err));
