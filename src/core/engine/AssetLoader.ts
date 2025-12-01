@@ -24,13 +24,13 @@ export class AssetLoader {
       const url = `${this.configuration.imagesPath}/${imagePath}`;
       const image = new Image();
 
-      log(LOG_TAG, `Loading image at ${url}...`);
+      log(LOG_TAG, `Loading image at "${url}"...`);
 
       image.addEventListener('load', () => {
         resolve(image);
       });
       image.addEventListener('error', () => {
-        reject(new Error(`Failed to load image at ${url}`));
+        reject(new Error(`Failed to load image at "${url}"`));
       });
 
       image.src = url;
