@@ -15,6 +15,8 @@ export interface GraphicsConfiguration {
   size: Vector2D;
 }
 
+type Layer = DrawInstructions[];
+
 const LOG_TAG = 'Graphics';
 const ERROR_MISSING_TARGET_CANVAS = 'Unable to get target canvas';
 const ERROR_MISSING_TARGET_CONTEXT = 'Unable to get target context';
@@ -25,7 +27,7 @@ export class Graphics {
   private nodes = new Set<GraphicsNode2D>();
   private targetCanvas?: HTMLCanvasElement;
   private targetContext?: ImageBitmapRenderingContext;
-  private drawQueue = new Map<number, DrawInstructions[]>();
+  private drawQueue = new Map<number, Layer>();
 
   constructor(configuration: GraphicsConfiguration) {
     this.configuration = configuration;
@@ -128,17 +130,7 @@ export class Graphics {
     const sortedDrawQueue = new Map([...this.drawQueue.entries()].sort());
 
     for (const layer of sortedDrawQueue.values()) {
-      const layerCanvas = new OffscreenCanvas(this.width, this.height);
-      const layerContext = layerCanvas.getContext('2d');
-
-      for (const drawInstructions of layer) {
-        const dx = drawInstructions.position.x;
-        const dy = drawInstructions.position.y;
-
-        layerContext?.drawImage(drawInstructions.imageBitmap, dx, dy);
-      }
-
-      context.drawImage(layerCanvas, 0, 0);
+      context.drawImage(this.renderLayer(layer), 0, 0);
     }
 
     const imageBitmap = canvas.transferToImageBitmap();
@@ -162,6 +154,29 @@ export class Graphics {
         layer: node.globalLayer,
       });
     }
+  }
+
+  private renderLayer(layer: Layer) {
+    const layerCanvas = new OffscreenCanvas(this.width, this.height);
+    const layerContext = layerCanvas.getContext('2d');
+
+    if (!layerContext) throw new Error('Unable to get rendering context');
+
+    for (const drawInstructions of layer) {
+      this.drawOntoLayer(layerContext, drawInstructions);
+    }
+
+    return layerCanvas;
+  }
+
+  private drawOntoLayer(
+    layerContext: OffscreenCanvasRenderingContext2D,
+    drawInstructions: DrawInstructions,
+  ) {
+    const dx = drawInstructions.position.x;
+    const dy = drawInstructions.position.y;
+
+    layerContext.drawImage(drawInstructions.imageBitmap, dx, dy);
   }
 
   private getVisibleNodes() {
