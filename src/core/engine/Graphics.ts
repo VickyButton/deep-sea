@@ -173,10 +173,18 @@ export class Graphics {
     layerContext: OffscreenCanvasRenderingContext2D,
     drawInstructions: DrawInstructions,
   ) {
+    const size = new Vector2D(
+      drawInstructions.imageBitmap.width,
+      drawInstructions.imageBitmap.height,
+    );
+    const scaledSize = Vector2D.multiply(drawInstructions.scale, size);
     const dx = drawInstructions.position.x;
     const dy = drawInstructions.position.y;
+    const dWidth = scaledSize.x;
+    const dHeight = scaledSize.y;
 
-    layerContext.drawImage(drawInstructions.imageBitmap, dx, dy);
+    layerContext.imageSmoothingEnabled = false;
+    layerContext.drawImage(drawInstructions.imageBitmap, dx, dy, dWidth, dHeight);
   }
 
   private getVisibleNodes() {
