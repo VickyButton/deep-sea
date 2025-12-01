@@ -17,13 +17,4 @@ describe('Camera2D', () => {
 
     expect(camera.size.equals(Vector2D.one)).toBe(true);
   });
-
-  it('should move a specified distance', () => {
-    const camera = new Camera2D();
-
-    // Scenario: Camera is moved two units to the right.
-    camera.move(Vector2D.right);
-    camera.move(Vector2D.right);
-    expect(camera.position.equals(new Vector2D(2, 0))).toBe(true);
-  });
 });

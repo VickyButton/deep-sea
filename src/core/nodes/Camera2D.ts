@@ -18,13 +18,4 @@ export class Camera2D extends GameNode2D {
 
     return new Rectangle(position.x, position.y, size.x, size.y);
   }
-
-  /**
-   * Moves the camera by the specified distance.
-   *
-   * @param distance The distance to move the camera by.
-   */
-  public move(distance: Vector2D) {
-    this.position = Vector2D.add(this.position, distance);
-  }
 }
