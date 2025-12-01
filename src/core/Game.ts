@@ -90,7 +90,7 @@ export class Game {
       this.sceneManager.updateActiveScene(dt);
       this.graphics.draw();
     } catch (err) {
-      error(LOG_TAG, `Error: ${String(err)}`);
+      error(LOG_TAG, String(err));
 
       this.loop.stop();
     }
