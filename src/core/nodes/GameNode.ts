@@ -83,4 +83,12 @@ export class GameNode {
 
     this.parent.traverseToRoot(callback);
   }
+
+  public traverseToLeaves(callback: (node: GameNode) => void) {
+    for (const child of this.children.values()) {
+      callback(child);
+
+      child.traverseToLeaves(callback);
+    }
+  }
 }

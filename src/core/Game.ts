@@ -1,8 +1,6 @@
-import type { CameraConfiguration } from '@core/engine/Camera';
 import type { GraphicsConfiguration } from '@core/engine/Graphics';
 import type { LoopConfiguration } from '@core/engine/Loop';
 import { Audio } from '@core/engine/Audio';
-import { Camera } from '@core/engine/Camera';
 import { Graphics } from '@core/engine/Graphics';
 import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
@@ -13,7 +11,6 @@ import { AssetLoader, AssetLoaderConfiguration } from './engine/AssetLoader';
 interface GameConfiguration {
   initialSceneName: string;
   assetLoader: AssetLoaderConfiguration;
-  camera: CameraConfiguration;
   graphics: GraphicsConfiguration;
   loop: LoopConfiguration;
 }
@@ -23,7 +20,6 @@ const LOG_TAG = 'Game';
 export class Game {
   public readonly assetLoader: AssetLoader;
   public readonly audio: Audio;
-  public readonly camera: Camera;
   public readonly graphics: Graphics;
   public readonly loop: Loop;
   public readonly sceneManager: SceneManager;
@@ -35,7 +31,6 @@ export class Game {
     this.configuration = configuration;
     this.assetLoader = new AssetLoader(configuration.assetLoader);
     this.audio = new Audio();
-    this.camera = new Camera(configuration.camera);
     this.graphics = new Graphics(configuration.graphics);
     this.loop = new Loop(configuration.loop);
     this.sceneManager = new SceneManager();
@@ -88,9 +83,10 @@ export class Game {
 
     try {
       this.sceneManager.updateActiveScene(dt);
+      this.graphics.update();
       this.graphics.draw();
     } catch (err) {
-      error(LOG_TAG, `Error: ${String(err)}`);
+      error(LOG_TAG, String(err));
 
       this.loop.stop();
     }

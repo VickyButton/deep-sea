@@ -1,5 +1,5 @@
 import { GameNode } from './GameNode';
 
-export class Scene extends GameNode {
-  public title = '';
+export abstract class Scene extends GameNode {
+  public abstract readonly title: string;
 }

@@ -24,8 +24,8 @@ export class GameNode2D extends GameNode {
   public get globalPosition() {
     let position = this.position;
 
-    this.traverseToRoot((gameNode) => {
-      if (gameNode instanceof GameNode2D) position = Vector2D.add(position, gameNode.position);
+    this.traverseToRoot((node) => {
+      if (node instanceof GameNode2D) position = Vector2D.add(position, node.position);
     });
 
     return position;
@@ -37,8 +37,8 @@ export class GameNode2D extends GameNode {
   public get globalRotation() {
     let rotation = this.rotation;
 
-    this.traverseToRoot((gameNode) => {
-      if (gameNode instanceof GameNode2D) rotation = Vector2D.add(rotation, gameNode.rotation);
+    this.traverseToRoot((node) => {
+      if (node instanceof GameNode2D) rotation = Vector2D.add(rotation, node.rotation);
     });
 
     return rotation;
@@ -50,8 +50,8 @@ export class GameNode2D extends GameNode {
   public get globalScale() {
     let scale = this.scale;
 
-    this.traverseToRoot((gameNode) => {
-      if (gameNode instanceof GameNode2D) scale = Vector2D.multiply(scale, gameNode.scale);
+    this.traverseToRoot((node) => {
+      if (node instanceof GameNode2D) scale = Vector2D.multiply(scale, node.scale);
     });
 
     return scale;
