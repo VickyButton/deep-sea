@@ -1,5 +1,4 @@
 import { Rectangle } from '@core/structures/Rectangle';
-import { Vector2D } from '@core/structures/Vector2D';
 import { game } from 'game';
 import { GameNode2D } from './GameNode2D';
 
@@ -12,10 +11,6 @@ export abstract class GraphicsNode2D extends GameNode2D {
    * The layer on which the node should be rendered on.
    */
   public layer = 0;
-  /**
-   * The pre-scale size of the node.
-   */
-  public abstract size: Vector2D;
 
   /**
    * The visibility relative to the global scope.
@@ -42,14 +37,9 @@ export abstract class GraphicsNode2D extends GameNode2D {
   }
 
   /**
-   * The bounding rectangle formed by the node.
+   * The bounding rectangle of the node, relative to the global space.
    */
-  public get rectangle() {
-    const position = this.globalPosition;
-    const size = Vector2D.multiply(this.globalScale, this.size);
-
-    return new Rectangle(position.x, position.y, size.x, size.y);
-  }
+  public abstract get boundingBox(): Rectangle;
 
   public setup() {
     super.setup();
