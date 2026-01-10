@@ -17,6 +17,10 @@ export class Circle2D extends Shape2D {
     return new Circle(position.x, position.y, radius);
   }
 
+  public get diameter() {
+    return 2 * this.radius;
+  }
+
   /**
    * Checks if a given node is an instance of Circle2D.
    * @param node The node to check.
