@@ -2,10 +2,14 @@ import { Scene } from '@core/nodes/Scene';
 import { describe, expect, it, vi } from 'vitest';
 import { SceneManager } from './SceneManager';
 
+class TestScene extends Scene {
+  title = 'TestScene';
+}
+
 describe('SceneManager', () => {
   it('should setup new active scene', () => {
     const sceneManager = new SceneManager();
-    const scene = new Scene();
+    const scene = new TestScene();
     const sceneSetupSpy = vi.spyOn(scene, 'setup');
 
     expect(sceneSetupSpy).not.toHaveBeenCalled();
@@ -17,7 +21,7 @@ describe('SceneManager', () => {
 
   it('should update active scene', () => {
     const sceneManager = new SceneManager();
-    const scene = new Scene();
+    const scene = new TestScene();
     const sceneUpdateSpy = vi.spyOn(scene, 'update');
 
     sceneManager.setActiveScene(scene);
@@ -28,7 +32,7 @@ describe('SceneManager', () => {
 
   it('should teardown current active scene when setting new active scene', () => {
     const sceneManager = new SceneManager();
-    const scene = new Scene();
+    const scene = new TestScene();
     const sceneTeardownSpy = vi.spyOn(scene, 'teardown');
 
     sceneManager.setActiveScene(scene);
