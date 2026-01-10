@@ -67,6 +67,11 @@ export class Game {
     this.initialSceneLoadTaskId = this.taskManager.registerTask(initialSceneLoadTask, (scene) => {
       this.sceneManager.setActiveScene(scene);
     });
+
+    // Attaches default control for toggling debug mode.
+    this.inputController.addKeypressEventListener((e) => {
+      if (e.key === 'm') this.toggleDebugMode();
+    });
   }
 
   public teardown() {
