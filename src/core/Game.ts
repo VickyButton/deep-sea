@@ -26,6 +26,7 @@ export class Game {
   public readonly physics: Physics2D;
   public readonly sceneManager: SceneManager;
   public readonly taskManager: TaskManager;
+  public debugMode = false;
   private readonly configuration: GameConfiguration;
   private initialSceneLoadTaskId?: string;
 
@@ -38,6 +39,13 @@ export class Game {
     this.physics = new Physics2D();
     this.sceneManager = new SceneManager();
     this.taskManager = new TaskManager();
+  }
+
+  /**
+   * Toggles debug mode.
+   */
+  public toggleDebugMode() {
+    this.debugMode = !this.debugMode;
   }
 
   /**
