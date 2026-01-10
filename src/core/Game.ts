@@ -12,9 +12,11 @@ import { Physics2D } from './engine/Physics2D';
 
 interface GameConfiguration {
   initialSceneName: string;
-  assetLoader: AssetLoaderConfiguration;
-  graphics: GraphicsConfiguration;
-  loop: LoopConfiguration;
+  engine: {
+    assetLoader: AssetLoaderConfiguration;
+    graphics: GraphicsConfiguration;
+    loop: LoopConfiguration;
+  };
 }
 
 const LOG_TAG = 'Game';
@@ -34,11 +36,11 @@ export class Game {
 
   constructor(configuration: GameConfiguration) {
     this.configuration = configuration;
-    this.assetLoader = new AssetLoader(configuration.assetLoader);
+    this.assetLoader = new AssetLoader(configuration.engine.assetLoader);
     this.audio = new Audio();
-    this.graphics = new Graphics(configuration.graphics);
+    this.graphics = new Graphics(configuration.engine.graphics);
     this.inputController = new InputController();
-    this.loop = new Loop(configuration.loop);
+    this.loop = new Loop(configuration.engine.loop);
     this.physics = new Physics2D();
     this.sceneManager = new SceneManager();
     this.taskManager = new TaskManager();
