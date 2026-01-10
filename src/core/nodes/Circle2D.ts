@@ -17,6 +17,9 @@ export class Circle2D extends Shape2D {
     return new Circle(position.x, position.y, radius);
   }
 
+  /**
+   * The diameter of the circle.
+   */
   public get diameter() {
     return 2 * this.radius;
   }
