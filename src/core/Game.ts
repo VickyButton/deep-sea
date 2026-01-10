@@ -7,6 +7,7 @@ import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
 import { AssetLoader, AssetLoaderConfiguration } from './engine/AssetLoader';
+import { Physics2D } from './engine/Physics2D';
 
 interface GameConfiguration {
   initialSceneName: string;
@@ -22,6 +23,7 @@ export class Game {
   public readonly audio: Audio;
   public readonly graphics: Graphics;
   public readonly loop: Loop;
+  public readonly physics: Physics2D;
   public readonly sceneManager: SceneManager;
   public readonly taskManager: TaskManager;
   private readonly configuration: GameConfiguration;
@@ -33,6 +35,7 @@ export class Game {
     this.audio = new Audio();
     this.graphics = new Graphics(configuration.graphics);
     this.loop = new Loop(configuration.loop);
+    this.physics = new Physics2D();
     this.sceneManager = new SceneManager();
     this.taskManager = new TaskManager();
   }
@@ -83,6 +86,7 @@ export class Game {
 
     try {
       this.sceneManager.updateActiveScene(dt);
+      this.physics.update();
       this.graphics.update();
       this.graphics.draw();
     } catch (err) {
