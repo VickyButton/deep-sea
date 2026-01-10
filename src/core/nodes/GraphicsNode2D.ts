@@ -18,6 +18,17 @@ export abstract class GraphicsNode2D extends GameNode2D {
   public abstract size: Vector2D;
 
   /**
+   * The visibility relative to the global scope.
+   */
+  public get globalVisible() {
+    this.traverseToRoot((node) => {
+      if (node instanceof GraphicsNode2D && !node.visible) return false;
+    });
+
+    return this.visible;
+  }
+
+  /**
    * The layer relative to the global space.
    */
   public get globalLayer() {
