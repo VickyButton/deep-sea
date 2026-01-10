@@ -6,18 +6,16 @@ const CANVAS_SIZE = new Vector2D(window.innerWidth, window.innerHeight);
 
 const gameConfiguration = {
   initialSceneName: '',
-  assetLoader: {
-    imagesPath: '/src/assets/images',
-  },
-  camera: {
-    position: Vector2D.zero,
-    size: new Vector2D(CANVAS_SIZE.x, CANVAS_SIZE.y),
-  },
-  graphics: {
-    size: new Vector2D(CANVAS_SIZE.x, CANVAS_SIZE.y),
-  },
-  loop: {
-    framesPerSecond: 60,
+  engine: {
+    assetLoader: {
+      imagesPath: '/src/assets/images',
+    },
+    graphics: {
+      size: new Vector2D(CANVAS_SIZE.x, CANVAS_SIZE.y),
+    },
+    loop: {
+      framesPerSecond: 60,
+    },
   },
 };
 const game = new Game(gameConfiguration);
