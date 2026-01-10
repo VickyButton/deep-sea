@@ -5,7 +5,13 @@ import { Vector2D } from './Vector2D';
  * the rectangle and X increases to the right and Y increases downwards.
  */
 export class Rectangle {
+  /**
+   * The top-left corner position of the rectangle.
+   */
   public readonly position: Vector2D;
+  /**
+   * The dimensions of the rectangle.
+   */
   public readonly size: Vector2D;
 
   /**
