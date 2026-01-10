@@ -219,7 +219,7 @@ export class Graphics {
   private isNodeOffScreen(node: GraphicsNode2D) {
     if (!this.camera) throw new Error('No camera set');
 
-    return !this.camera.rectangle.overlaps(node.rectangle);
+    return !this.camera.rectangle.overlaps(node.boundingBox);
   }
 
   private getPositionRelativeToCamera(position: Vector2D) {

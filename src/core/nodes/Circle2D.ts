@@ -1,11 +1,29 @@
 import { Circle } from '@core/structures/Circle';
+import { Rectangle } from '@core/structures/Rectangle';
+import { Vector2D } from '@core/structures/Vector2D';
+import { game } from 'game';
 import { Shape2D } from './Shape2D';
 
 export class Circle2D extends Shape2D {
   /**
+   * The circle outline color for when debug mode is enabled.
+   */
+  public debugOutlineColor = 'red';
+
+  /**
    * The radius of the circle.
    */
   public radius = 1;
+
+  public get boundingBox() {
+    const size = Vector2D.multiply(this.globalScale, new Vector2D(this.diameter, this.diameter));
+    const position = Vector2D.subtract(
+      this.globalPosition,
+      Vector2D.divide(size, new Vector2D(2, 2)),
+    );
+
+    return new Rectangle(position.x, position.y, size.x, size.y);
+  }
 
   /**
    * The bounding circle formed by the node.
@@ -31,5 +49,20 @@ export class Circle2D extends Shape2D {
    */
   public static isCircle2D(node: unknown): node is Circle2D {
     return node instanceof Circle2D;
+  }
+
+  public render() {
+    const canvas = new OffscreenCanvas(this.diameter, this.diameter);
+    const context = canvas.getContext('2d');
+
+    if (!context) throw new Error('Unable to get rendering context');
+
+    if (game.debugMode) {
+      context.strokeStyle = this.debugOutlineColor;
+      context.arc(this.radius, this.radius, this.radius - 0.5, 0, 2 * Math.PI);
+      context.stroke();
+    }
+
+    return canvas.transferToImageBitmap();
   }
 }

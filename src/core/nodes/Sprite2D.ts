@@ -21,8 +21,13 @@ export class Sprite2D extends GraphicsNode2D {
    */
   private sprite?: ImageBitmap;
 
-  public get size() {
-    return this.sprite ? new Vector2D(this.sprite.width, this.sprite.height) : Vector2D.zero;
+  public get boundingBox() {
+    const position = this.globalPosition;
+    const size = this.sprite
+      ? Vector2D.multiply(this.globalScale, new Vector2D(this.sprite.width, this.sprite.height))
+      : Vector2D.zero;
+
+    return new Rectangle(position.x, position.y, size.x, size.y);
   }
 
   public setup() {
