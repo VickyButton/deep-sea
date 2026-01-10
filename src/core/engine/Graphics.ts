@@ -213,7 +213,7 @@ export class Graphics {
   }
 
   private isNodeVisible(node: GraphicsNode2D) {
-    return node.visible && !this.isNodeOffScreen(node);
+    return node.globalVisible && !this.isNodeOffScreen(node);
   }
 
   private isNodeOffScreen(node: GraphicsNode2D) {
