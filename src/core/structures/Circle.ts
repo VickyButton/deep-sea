@@ -1,7 +1,13 @@
 import { Vector2D } from './Vector2D';
 
 export class Circle {
+  /**
+   * The center position of the circle.
+   */
   public readonly position: Vector2D;
+  /**
+   * The radius of the circle.
+   */
   public radius: number;
 
   /**
