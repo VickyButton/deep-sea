@@ -7,6 +7,7 @@ import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
 import { AssetLoader, AssetLoaderConfiguration } from './engine/AssetLoader';
+import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 
 interface GameConfiguration {
@@ -22,6 +23,7 @@ export class Game {
   public readonly assetLoader: AssetLoader;
   public readonly audio: Audio;
   public readonly graphics: Graphics;
+  public readonly inputController: InputController;
   public readonly loop: Loop;
   public readonly physics: Physics2D;
   public readonly sceneManager: SceneManager;
@@ -35,6 +37,7 @@ export class Game {
     this.assetLoader = new AssetLoader(configuration.assetLoader);
     this.audio = new Audio();
     this.graphics = new Graphics(configuration.graphics);
+    this.inputController = new InputController();
     this.loop = new Loop(configuration.loop);
     this.physics = new Physics2D();
     this.sceneManager = new SceneManager();
@@ -56,6 +59,7 @@ export class Game {
 
     this.loop.setLoopCallback(this.onLoop.bind(this));
     this.graphics.syncWithTargetCanvas();
+    this.inputController.attachListeners();
 
     const initialSceneLoadTask = this.sceneManager.loadScene(this.configuration.initialSceneName);
 
@@ -63,6 +67,10 @@ export class Game {
     this.initialSceneLoadTaskId = this.taskManager.registerTask(initialSceneLoadTask, (scene) => {
       this.sceneManager.setActiveScene(scene);
     });
+  }
+
+  public teardown() {
+    this.inputController.detachListeners();
   }
 
   /**
