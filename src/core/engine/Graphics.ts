@@ -7,7 +7,6 @@ interface DrawInstructions {
   imageBitmap: ImageBitmap;
   position: Vector2D;
   rotation: Vector2D;
-  scale: Vector2D;
   layer: number;
 }
 
@@ -150,7 +149,6 @@ export class Graphics {
         imageBitmap: node.render(),
         position: this.getPositionRelativeToCamera(node.globalPosition),
         rotation: node.globalRotation,
-        scale: node.globalScale,
         layer: node.globalLayer,
       });
     }
@@ -177,9 +175,8 @@ export class Graphics {
       drawInstructions.imageBitmap.width,
       drawInstructions.imageBitmap.height,
     );
-    const scaledSize = Vector2D.multiply(drawInstructions.scale, size);
-    const dWidth = scaledSize.x;
-    const dHeight = scaledSize.y;
+    const dWidth = size.x;
+    const dHeight = size.y;
     const dx = drawInstructions.position.x + dWidth / 2;
     const dy = drawInstructions.position.y + dHeight / 2;
 
@@ -188,7 +185,6 @@ export class Graphics {
     layerContext.rotate(-drawInstructions.rotation.x);
 
     // Draw image.
-    layerContext.imageSmoothingEnabled = false;
     layerContext.drawImage(
       drawInstructions.imageBitmap,
       -dWidth / 2,

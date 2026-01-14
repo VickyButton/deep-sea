@@ -52,14 +52,16 @@ export class Circle2D extends Shape2D {
   }
 
   public render() {
-    const canvas = new OffscreenCanvas(this.diameter, this.diameter);
+    const size = Vector2D.multiply(this.globalScale, new Vector2D(this.diameter, this.diameter));
+    const radius = size.x / 2;
+    const canvas = new OffscreenCanvas(size.x, size.y);
     const context = canvas.getContext('2d');
 
     if (!context) throw new Error('Unable to get rendering context');
 
     if (game.debugMode) {
       context.strokeStyle = this.debugOutlineColor;
-      context.arc(this.radius, this.radius, this.radius - 0.5, 0, 2 * Math.PI);
+      context.arc(radius, radius, radius - 0.5, 0, 2 * Math.PI);
       context.stroke();
     }
 
