@@ -44,7 +44,19 @@ export class Sprite2D extends GraphicsNode2D {
   public render() {
     if (!this.sprite) throw new Error(`Unable to render sprite ${this.id}`);
 
-    return this.sprite;
+    const size = Vector2D.multiply(
+      this.globalScale,
+      new Vector2D(this.sprite.width, this.sprite.height),
+    );
+    const canvas = new OffscreenCanvas(size.x, size.y);
+    const context = canvas.getContext('2d');
+
+    if (!context) throw new Error('Unable to get rendering context');
+
+    context.imageSmoothingEnabled = false;
+    context.drawImage(this.sprite, 0, 0, size.x, size.y);
+
+    return canvas.transferToImageBitmap();
   }
 
   private async loadSprite() {
