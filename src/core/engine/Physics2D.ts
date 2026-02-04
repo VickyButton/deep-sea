@@ -33,8 +33,8 @@ export class Physics2D {
       const isColliding = this.checkCollision(...pair);
 
       if (isColliding) {
-        pair[0].onCollision();
-        pair[1].onCollision();
+        if (pair[0].onCollision) pair[0].onCollision(pair[1]);
+        if (pair[1].onCollision) pair[1].onCollision(pair[0]);
       }
     }
   }
