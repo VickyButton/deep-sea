@@ -14,8 +14,6 @@ export interface GraphicsConfiguration {
   size: Vector2D;
 }
 
-type Layer = DrawInstructions[];
-
 const LOG_TAG = 'Graphics';
 const ERROR_MISSING_TARGET_CANVAS = 'Unable to get target canvas';
 const ERROR_MISSING_TARGET_CONTEXT = 'Unable to get target context';
@@ -26,7 +24,7 @@ export class Graphics {
   private nodes = new Set<GraphicsNode2D>();
   private targetCanvas?: HTMLCanvasElement;
   private targetContext?: ImageBitmapRenderingContext;
-  private drawQueue = new Map<number, Layer>();
+  private drawQueue = new Map<number, DrawInstructions[]>();
 
   constructor(configuration: GraphicsConfiguration) {
     this.configuration = configuration;
@@ -154,7 +152,7 @@ export class Graphics {
     }
   }
 
-  private renderLayer(layer: Layer) {
+  private renderLayer(layer: DrawInstructions[]) {
     const layerCanvas = new OffscreenCanvas(this.width, this.height);
     const layerContext = layerCanvas.getContext('2d');
 
