@@ -4,26 +4,40 @@ import { Game } from './Game';
 
 const configuration = {
   initialSceneName: '',
-  camera: {
-    position: new Vector2D(0, 0),
-    size: new Vector2D(1, 1),
-  },
-  graphics: {
-    size: new Vector2D(1, 1),
-  },
-  loop: {
-    framesPerSecond: 1,
+  engine: {
+    assetLoader: {
+      imagesPath: '',
+    },
+    graphics: {
+      size: new Vector2D(1, 1),
+    },
+    loop: {
+      framesPerSecond: 1,
+    },
   },
 };
 
 vi.mock('@core/engine/Audio', () => ({
-  Audio: vi.fn(),
+  Audio: vi.fn(
+    class {
+      initialize = vi.fn();
+    },
+  ),
 }));
 
 vi.mock('@core/engine/Graphics', () => ({
   Graphics: vi.fn(
     class {
       syncWithTargetCanvas = vi.fn();
+    },
+  ),
+}));
+
+vi.mock('@core/engine/InputController', () => ({
+  InputController: vi.fn(
+    class {
+      addKeypressEventListener = vi.fn();
+      attachListeners = vi.fn();
     },
   ),
 }));
@@ -64,6 +78,7 @@ describe('Game', () => {
 
   it('should setup components and initial scene on setup', () => {
     const game = new Game(configuration);
+    const audioInitializeSpy = vi.spyOn(game.audio, 'initialize');
     const graphicsSetupSpy = vi.spyOn(game.graphics, 'syncWithTargetCanvas');
     const loopSetLoopCallbackSpy = vi.spyOn(game.loop, 'setLoopCallback');
     const taskManagerRegisterTaskSpy = vi.spyOn(game.taskManager, 'registerTask');
@@ -72,6 +87,7 @@ describe('Game', () => {
 
     game.setup();
 
+    expect(audioInitializeSpy).toHaveBeenCalled();
     expect(graphicsSetupSpy).toHaveBeenCalled();
     expect(loopSetLoopCallbackSpy).toHaveBeenCalled();
     expect(taskManagerRegisterTaskSpy).toHaveBeenCalled();
