@@ -4,8 +4,8 @@ function createGameCanvas() {
   const canvas = document.createElement('canvas');
 
   canvas.id = 'game-canvas';
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = game.graphics.width;
+  canvas.height = game.graphics.height;
 
   return canvas;
 }
