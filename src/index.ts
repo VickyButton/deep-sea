@@ -1,31 +1,11 @@
-import { Game } from '@core/Game';
-import { Vector2D } from '@core/structures/Vector2D';
-import { setGame } from './game';
-
-const CANVAS_SIZE = new Vector2D(window.innerWidth, window.innerHeight);
-
-const gameConfiguration = {
-  initialSceneName: '',
-  engine: {
-    assetLoader: {
-      imagesPath: '/src/assets/images',
-    },
-    graphics: {
-      size: new Vector2D(CANVAS_SIZE.x, CANVAS_SIZE.y),
-    },
-    loop: {
-      framesPerSecond: 60,
-    },
-  },
-};
-const game = new Game(gameConfiguration);
+import { game, loadGame, setGame } from './game';
 
 function createGameCanvas() {
   const canvas = document.createElement('canvas');
 
   canvas.id = 'game-canvas';
-  canvas.width = CANVAS_SIZE.x;
-  canvas.height = CANVAS_SIZE.y;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
   return canvas;
 }
@@ -73,9 +53,19 @@ function setUpGameDom() {
     gameContainer.removeChild(gameStartButton);
     gameContainer.appendChild(gameCanvas);
 
-    setGame(game);
     startGame();
   });
+}
+
+function setUpGame() {
+  loadGame('/game.config.json')
+    .then((game) => {
+      setGame(game);
+      setUpGameDom();
+    })
+    .catch((err: unknown) => {
+      console.error(err);
+    });
 }
 
 function startGame() {
@@ -84,7 +74,7 @@ function startGame() {
 }
 
 function onLoad() {
-  setUpGameDom();
+  setUpGame();
 }
 
 window.addEventListener('load', onLoad);

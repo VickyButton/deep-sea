@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 
 # Note: Comment out the following directories to allow git tracking of custom content.
+game.config.json
 src/assets
 src/nodes
 src/scenes
