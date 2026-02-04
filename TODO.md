@@ -1,0 +1,3 @@
+- [ ] Implement sprite animations
+- [ ] Implement mouse controls
+- [ ] Implement proper error handling by presenting error screen
