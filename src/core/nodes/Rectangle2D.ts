@@ -41,7 +41,8 @@ export class Rectangle2D extends Shape2D {
   }
 
   public render() {
-    const canvas = new OffscreenCanvas(this.size.x, this.size.y);
+    const size = Vector2D.multiply(this.globalScale, this.size);
+    const canvas = new OffscreenCanvas(size.x, size.y);
     const context = canvas.getContext('2d');
 
     if (!context) throw new Error('Unable to get rendering context');
@@ -49,7 +50,7 @@ export class Rectangle2D extends Shape2D {
     if (game.debugMode) {
       context.strokeStyle = this.debugOutlineColor;
       context.lineWidth = 1.5;
-      context.strokeRect(0, 0, this.size.x, this.size.y);
+      context.strokeRect(0, 0, size.x, size.y);
     }
 
     return canvas.transferToImageBitmap();
