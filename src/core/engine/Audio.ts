@@ -11,11 +11,17 @@ const VOLUME_MAX = 4;
 
 export class Audio {
   private state: AudioState;
-  private audioContext: AudioContext;
-  private gainNode: GainNode;
+  private audioContext?: AudioContext;
+  private gainNode?: GainNode;
 
   constructor() {
     this.state = this.getDefaultState();
+  }
+
+  /**
+   * Creates an audio context with an attached gain node for audio control.
+   */
+  public initialize() {
     this.audioContext = new AudioContext();
     this.gainNode = this.audioContext.createGain();
     this.gainNode.connect(this.audioContext.destination);
@@ -28,6 +34,8 @@ export class Audio {
    * @param volume Volume, in gain. Minimum -1, maximum 4.
    */
   public setVolume(volume: number) {
+    if (!this.gainNode) throw new Error('Gain node not set');
+
     const adjustedVolume = Math.max(Math.min(volume, VOLUME_MAX), VOLUME_MIN);
 
     this.state.volume = adjustedVolume;
@@ -38,6 +46,8 @@ export class Audio {
    * Mutes all audio.
    */
   public mute() {
+    if (!this.gainNode) throw new Error('Gain node not set');
+
     this.state.isMuted = true;
     this.gainNode.gain.value = -1;
   }
@@ -46,6 +56,8 @@ export class Audio {
    * Unmutes all audio.
    */
   public unmute() {
+    if (!this.gainNode) throw new Error('Gain node not set');
+
     this.state.isMuted = false;
     this.gainNode.gain.value = this.state.volume;
   }
@@ -90,6 +102,8 @@ export class Audio {
    * @returns The audio file decoded as an audio buffer.
    */
   public async loadBuffer(fileName: string) {
+    if (!this.audioContext) throw new Error('Audio context not set');
+
     try {
       const filePath = `/src/assets/audio/${fileName}`;
       const response = await fetch(filePath);
@@ -106,6 +120,8 @@ export class Audio {
   }
 
   private createBufferSource(buffer: AudioBuffer) {
+    if (!this.audioContext) throw new Error('Audio context not set');
+
     const source = this.audioContext.createBufferSource();
 
     this.applyGain(source);
@@ -117,6 +133,8 @@ export class Audio {
   }
 
   private applyGain(source: AudioBufferSourceNode) {
+    if (!this.gainNode) throw new Error('Gain node not set');
+
     source.connect(this.gainNode);
   }
 

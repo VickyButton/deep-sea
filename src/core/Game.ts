@@ -60,6 +60,7 @@ export class Game {
     log(LOG_TAG, 'Initializing...');
 
     this.loop.setLoopCallback(this.onLoop.bind(this));
+    this.audio.initialize();
     this.graphics.syncWithTargetCanvas();
     this.inputController.attachListeners();
 
