@@ -16,11 +16,8 @@ export class Circle2D extends Shape2D {
   public radius = 1;
 
   public get boundingBox() {
+    const position = this.globalPosition;
     const size = Vector2D.multiply(this.globalScale, new Vector2D(this.diameter, this.diameter));
-    const position = Vector2D.subtract(
-      this.globalPosition,
-      Vector2D.divide(size, new Vector2D(2, 2)),
-    );
 
     return new Rectangle(position.x, position.y, size.x, size.y);
   }
