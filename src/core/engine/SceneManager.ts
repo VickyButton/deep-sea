@@ -45,7 +45,7 @@ export class SceneManager {
    */
   public async loadScene(sceneName: string) {
     const filePath = `/src/scenes/${sceneName}/${sceneName}`; // TODO: Use dist instead of src when not in dev env.
-    const importedModule: unknown = await import(filePath);
+    const importedModule: unknown = await import(/* @vite-ignore */ filePath);
 
     if (!importedModule) {
       throw new Error(`Could not load ${filePath}`);
