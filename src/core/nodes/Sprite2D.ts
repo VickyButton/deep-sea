@@ -1,4 +1,4 @@
-import { Rectangle } from '@core/structures/Rectangle';
+import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
 import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { getGame } from 'game';

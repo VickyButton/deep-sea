@@ -1,5 +1,4 @@
-import { Circle } from '@core/structures/Circle';
-import { Rectangle } from '@core/structures/Rectangle';
+import { Circle, Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
 import { getConfig } from 'config';
 import { Shape2D } from './Shape2D';

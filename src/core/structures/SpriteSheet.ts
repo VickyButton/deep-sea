@@ -1,5 +1,5 @@
 import { getCanvasContext2D } from '@core/utils/getCanvasContext';
-import { Rectangle } from './Rectangle';
+import { Rectangle } from './Shapes';
 
 const ERROR_INVALID_SPRITE_SHEET_RECTANGLE = 'Invalid sprite sheet rectangle';
 
