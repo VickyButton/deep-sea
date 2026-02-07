@@ -24,8 +24,9 @@ vi.mock('./downloadFile', () => ({
 describe('logger', () => {
   afterEach(() => {
     vi.clearAllMocks();
-
     clearLogs();
+
+    config.dev.printLogs = true;
   });
 
   it('should log an error in console', () => {
@@ -36,6 +37,16 @@ describe('logger', () => {
     expect(consoleSpy).toHaveBeenCalledWith('[Error] message');
   });
 
+  it('should not log an error in console if printLogs turned off', () => {
+    config.dev.printLogs = false;
+
+    const consoleSpy = vi.spyOn(console, 'error');
+
+    error('Error', 'message');
+
+    expect(consoleSpy).not.toHaveBeenCalled();
+  });
+
   it('should log a warning in console', () => {
     const consoleSpy = vi.spyOn(console, 'warn');
 
@@ -44,12 +55,32 @@ describe('logger', () => {
     expect(consoleSpy).toHaveBeenCalledWith('[Warn] message');
   });
 
+  it('should not log a warning in console if printLogs turned off', () => {
+    config.dev.printLogs = false;
+
+    const consoleSpy = vi.spyOn(console, 'warn');
+
+    warn('Warn', 'message');
+
+    expect(consoleSpy).not.toHaveBeenCalled();
+  });
+
   it('should log a message in console', () => {
     const consoleSpy = vi.spyOn(console, 'log');
 
     log('Tag', 'message');
 
     expect(consoleSpy).toHaveBeenCalledWith('[Tag] message');
+  });
+
+  it('should not log a message in console if printLogs turned off', () => {
+    config.dev.printLogs = false;
+
+    const consoleSpy = vi.spyOn(console, 'log');
+
+    log('Tag', 'message');
+
+    expect(consoleSpy).not.toHaveBeenCalled();
   });
 
   it('should download logs', () => {
