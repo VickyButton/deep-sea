@@ -45,10 +45,10 @@ export class Game {
     // Attaches default controls for dev functions.
     this.inputController.addKeypressEventListener((e) => {
       switch (e.key) {
-        case 'm':
+        case config.actions.toggleDebugMode:
           toggleDebugMode();
           break;
-        case 'p':
+        case config.actions.restartGame:
           restartGame();
           break;
       }

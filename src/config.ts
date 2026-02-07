@@ -1,4 +1,8 @@
 interface Config {
+  actions: {
+    restartGame: string;
+    toggleDebugMode: string;
+  };
   assets: {
     audio: string;
     images: string;
@@ -24,6 +28,10 @@ let config = defaultConfig();
 
 function defaultConfig(): Config {
   return {
+    actions: {
+      restartGame: 'p',
+      toggleDebugMode: 'm',
+    },
     assets: {
       audio: new URL('./assets/audio', import.meta.url).pathname,
       images: new URL('./assets/images', import.meta.url).pathname,

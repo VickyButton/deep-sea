@@ -2,6 +2,10 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Game } from './Game';
 
 const config = {
+  actions: {
+    restartGame: 'p',
+    toggleDebugMode: 'm',
+  },
   assets: {
     audio: '',
     images: '',
