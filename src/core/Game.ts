@@ -24,14 +24,10 @@ export class Game {
   private initialSceneLoadTaskId?: string;
 
   constructor() {
-    const config = getConfig();
-
     this.audio = new Audio();
     this.graphics = new Graphics();
     this.inputController = new InputController();
-    this.loop = new Loop({
-      framesPerSecond: config.game.framesPerSecond,
-    });
+    this.loop = new Loop();
     this.physics = new Physics2D();
     this.sceneManager = new SceneManager();
     this.spriteSheetManager = new SpriteSheetManager();
