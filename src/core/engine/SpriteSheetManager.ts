@@ -28,7 +28,7 @@ export class SpriteSheetManager {
    * @returns The loaded sprite sheet.
    */
   public async load(name: string) {
-    const image = await loadImage(`/src/${name}`); // TODO: Retrieve URL base from config.
+    const image = await loadImage(`/src/images/${name}`); // TODO: Retrieve URL base from config.
     const spriteSheet = new SpriteSheet(image);
 
     this.spriteSheets.set(name, spriteSheet);
