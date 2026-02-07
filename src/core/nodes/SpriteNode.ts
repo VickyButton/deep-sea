@@ -8,7 +8,7 @@ const ERROR_SPRITE_SHEET_NAME_UNDEFINED = 'Sprite sheet name not defined';
 const ERROR_SPRITE_SHEET_NOT_FOUND = 'Unable to retrieve sprite';
 const ERROR_SPRITE_RECTANGLE_UNDEFINED = 'Sprite rectangle not defined';
 
-export class Sprite2D extends GraphicsNode2D {
+export class SpriteNode extends GraphicsNode2D {
   /**
    * The file name of the sprite sheet image, including the file extension.
    */
