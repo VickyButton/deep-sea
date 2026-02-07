@@ -1,9 +1,9 @@
 import { Circle, Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
 import { getConfig } from 'config';
-import { Shape2D } from './Shape2D';
+import { ShapeNode2D } from './ShapeNode2D';
 
-export class CircleNode extends Shape2D {
+export class CircleNode extends ShapeNode2D {
   /**
    * The circle outline color for when debug mode is enabled.
    */
