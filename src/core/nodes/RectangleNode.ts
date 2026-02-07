@@ -3,7 +3,7 @@ import { Vector2D } from '@core/structures/Vector2D';
 import { getConfig } from 'config';
 import { Shape2D } from './Shape2D';
 
-export class Rectangle2D extends Shape2D {
+export class RectangleNode extends Shape2D {
   /**
    * The rectangle outline color for when debug mode is enabled.
    */
@@ -32,12 +32,12 @@ export class Rectangle2D extends Shape2D {
   }
 
   /**
-   * Checks if a given node is an instance of Rectangle2D.
+   * Checks if a given node is an instance of RectangleNode.
    * @param node The node to check.
-   * @returns True if an instance of Rectangle2D, false if not.
+   * @returns True if an instance of RectangleNode, false if not.
    */
-  public static isRectangle2D(node: unknown): node is Rectangle2D {
-    return node instanceof Rectangle2D;
+  public static isRectangleNode(node: unknown): node is RectangleNode {
+    return node instanceof RectangleNode;
   }
 
   public render() {

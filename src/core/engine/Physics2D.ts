@@ -1,6 +1,6 @@
 import { CircleNode } from '@core/nodes/CircleNode';
 import { CollisionNode2D } from '@core/nodes/CollisionNode2D';
-import { Rectangle2D } from '@core/nodes/Rectangle2D';
+import { RectangleNode } from '@core/nodes/RectangleNode';
 
 export class Physics2D {
   private nodes = new Set<CollisionNode2D>();
@@ -74,7 +74,7 @@ export class Physics2D {
     switch (true) {
       case CircleNode.isCircleNode(base.parent):
         return this.checkCollisionWithCircleBase(base.parent, target);
-      case Rectangle2D.isRectangle2D(base.parent):
+      case RectangleNode.isRectangleNode(base.parent):
         return this.checkCollisionWithRectangleBase(base.parent, target);
     }
   }
@@ -83,16 +83,16 @@ export class Physics2D {
     switch (true) {
       case CircleNode.isCircleNode(target.parent):
         return base.circle.overlaps(target.parent.circle);
-      case Rectangle2D.isRectangle2D(target.parent):
+      case RectangleNode.isRectangleNode(target.parent):
         return false; // TODO: Implement collision detection for circle-rectangle pairs.
     }
   }
 
-  private checkCollisionWithRectangleBase(base: Rectangle2D, target: CollisionNode2D) {
+  private checkCollisionWithRectangleBase(base: RectangleNode, target: CollisionNode2D) {
     switch (true) {
       case CircleNode.isCircleNode(target.parent):
         return false; // TODO: Implement collision detection for circle-rectangle pairs.
-      case Rectangle2D.isRectangle2D(target.parent):
+      case RectangleNode.isRectangleNode(target.parent):
         return base.rectangle.overlaps(target.parent.rectangle);
     }
   }
