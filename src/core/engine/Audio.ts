@@ -97,7 +97,7 @@ export class Audio {
   }
 
   /**
-   * Loads an audio file from the src/assets/audio directory as an audio buffer.
+   * Loads an audio file from the audio directory as a buffer.
    *
    * @param fileName The file name, including the file extension.
    * @returns The audio file decoded as an audio buffer.
