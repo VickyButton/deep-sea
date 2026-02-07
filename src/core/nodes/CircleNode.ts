@@ -24,7 +24,7 @@ export class CircleNode extends ShapeNode2D {
   /**
    * The bounding circle formed by the node.
    */
-  public get circle() {
+  public get shape() {
     const position = this.globalPosition;
     const radius = Math.min(this.globalScale.x, this.globalScale.y) * this.radius;
 

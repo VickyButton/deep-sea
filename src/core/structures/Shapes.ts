@@ -1,34 +1,98 @@
 import { Vector2D } from './Vector2D';
 
-export class Circle {
+export abstract class Shape {
   /**
-   * The center position of the circle.
+   * The position of the shape.
    */
   public readonly position: Vector2D;
-  /**
-   * The radius of the circle.
-   */
-  public radius: number;
 
-  /**
-   * @param x The center x position of the circle.
-   * @param y The center y position of the circle.
-   * @param radius The radius of the circle.
-   */
-  constructor(x: number, y: number, radius: number) {
+  constructor(x: number, y: number) {
     this.position = new Vector2D(x, y);
-    this.radius = radius;
   }
 
   /**
-   * The x position of the circle.
+   * The X position of the shape.
    */
   public get x() {
     return this.position.x;
   }
 
   /**
-   * The y position of the circle.
+   * The Y position of the shape.
+   */
+  public get y() {
+    return this.position.y;
+  }
+
+  /**
+   * Sets components of the shape.
+   * @param x The X position of the shape.
+   * @param y The Y position of the shape.
+   */
+  public set(x: number, y: number) {
+    this.position.set(x, y);
+  }
+
+  /**
+   * Checks if a point is contained within the shape.
+   * @param point The point to check.
+   * @returns True if the point is contained within the shape, false if not.
+   */
+  public abstract containsPoint(point: Vector2D): boolean;
+
+  /**
+   * Checks if another shape is contained within the shape.
+   * @param shape The shape to check.
+   * @returns True if the shape is contained within the shape, false if not.
+   */
+  public abstract containsShape(shape: Shape): boolean;
+
+  /**
+   * Checks if another shape overlaps the shape.
+   * @param shape The shape to check.
+   * @return True if the shape overlaps the shape, false if not.
+   */
+  public abstract overlaps(shape: Shape): boolean;
+
+  public static isShape(shape: unknown): shape is Shape {
+    return shape instanceof Shape;
+  }
+}
+
+/**
+ * Circles are defined by a center position and a radius.
+ */
+export class Circle extends Shape {
+  /**
+   * The center position of the circle.
+   */
+  declare public readonly position: Vector2D;
+  /**
+   * The radius of the circle.
+   */
+  public radius: number;
+
+  /**
+   * Sets components of the circle.
+   * @param x The center X position of the circle.
+   * @param y The center Y position of the circle.
+   * @param radius The radius of the circle.
+   */
+  constructor(x: number, y: number, radius: number) {
+    super(x, y);
+
+    this.radius = radius;
+  }
+
+  /**
+   * The center X position of the circle.
+   */
+  public get x() {
+    return this.position.x;
+  }
+
+  /**
+   * The center Y position of the circle.
    */
   public get y() {
     return this.position.y;
@@ -43,21 +107,20 @@ export class Circle {
 
   /**
    * Sets components of the circle.
-   *
    * @param x The center x position of the circle.
    * @param y The center y position of the circle.
    * @param radius The radius of the circle.
    */
   public set(x: number, y: number, radius: number) {
-    this.position.x = x;
-    this.position.y = y;
+    super.set(x, y);
+
     this.radius = radius;
   }
 
   /**
    * Checks if a point is contained within the circle.
-   *
    * @param point The point to check if it is contained in the circle.
+   * @returns True if the point is contained within the circle, false if not.
    */
   public containsPoint(point: Vector2D) {
     const dx = this.position.x - point.x;
@@ -67,11 +130,21 @@ export class Circle {
   }
 
   /**
-   * Checks if another circle overlaps with the circle.
-   *
-   * @param circle The circle to check if it is overlapping with the circle.
+   * Checks if another shape overlaps with the circle.
+   * @param shape The shape to check if it is overlapping with the circle.
    */
-  public overlaps(circle: Circle) {
+  public overlaps(shape: Shape) {
+    switch (true) {
+      case Circle.isCircle(shape):
+        return this.overlapsCircle(shape);
+      case Rectangle.isRectangle(shape):
+        return this.overlapsRectangle(shape);
+      default:
+        return false;
+    }
+  }
+
+  private overlapsCircle(circle: Circle) {
     const dx = this.position.x - circle.x;
     const dxSquared = Math.pow(dx, 2);
     const dy = this.position.y - circle.y;
@@ -83,42 +156,52 @@ export class Circle {
       dxSquared + dySquared >= Math.pow(this.radius - circle.radius, 2)
     );
   }
+
+  private overlapsRectangle(rectangle: Rectangle) {
+    // TODO: Implement.
+    return false;
+  }
+
+  public static isCircle(shape: Shape): shape is Circle {
+    return shape instanceof Circle;
+  }
 }
 
 /**
  * Rectangles are defined by a position and a size, where the position is the top-left corner of
  * the rectangle and X increases to the right and Y increases downwards.
  */
-export class Rectangle {
+export class Rectangle extends Shape {
   /**
    * The top-left corner position of the rectangle.
    */
-  public readonly position: Vector2D;
+  declare public readonly position: Vector2D;
   /**
    * The dimensions of the rectangle.
    */
   public readonly size: Vector2D;
 
   /**
-   * @param x The x position of the rectangle.
-   * @param y The y position of the rectangle.
+   * @param x The X position of the rectangle.
+   * @param y The Y position of the rectangle.
    * @param width The width of the rectangle.
    * @param height The height of the rectangle.
    */
   constructor(x: number, y: number, width: number, height: number) {
-    this.position = new Vector2D(x, y);
+    super(x, y);
+
     this.size = new Vector2D(width, height);
   }
 
   /**
-   * The x position of the rectangle.
+   * The X position of the rectangle.
    */
   public get x() {
     return this.position.x;
   }
 
   /**
-   * The y position of the rectangle.
+   * The Y position of the rectangle.
    */
   public get y() {
     return this.position.y;
@@ -168,9 +251,8 @@ export class Rectangle {
 
   /**
    * Sets components of the rectangle.
-   *
-   * @param x The x position of the rectangle.
-   * @param y The y position of the rectangle.
+   * @param x The X position of the rectangle.
+   * @param y The Y position of the rectangle.
    * @param width The width of the rectangle.
    * @param height The height of the rectangle.
    */
@@ -183,8 +265,8 @@ export class Rectangle {
 
   /**
    * Checks if a point is contained within the rectangle.
-   *
-   * @param point The point to check if it is contained in the rectangle.
+   * @param point The point to check.
+   * @returns True if the point is contained within the rectangle, false if not.
    */
   public containsPoint(point: Vector2D) {
     return (
@@ -193,14 +275,35 @@ export class Rectangle {
   }
 
   /**
-   * Checks if the rectangle overlaps another.
+   * Checks if another shape overlaps with the rectangle.
+   * @param shape The shape to check if it is overlapping with the rectangle.
    */
-  public overlaps(rectangle: Rectangle) {
+  public overlaps(shape: Shape) {
+    switch (true) {
+      case Circle.isCircle(shape):
+        return this.overlapsCircle(shape);
+      case Rectangle.isRectangle(shape):
+        return this.overlapsRectangle(shape);
+      default:
+        return false;
+    }
+  }
+
+  private overlapsCircle(circle: Circle) {
+    // TODO: Implement.
+    return false;
+  }
+
+  private overlapsRectangle(rectangle: Rectangle) {
     return (
       rectangle.left < this.right &&
       rectangle.right > this.left &&
       rectangle.top < this.bottom &&
       rectangle.bottom > this.top
     );
+  }
+
+  public static isRectangle(shape: Shape): shape is Rectangle {
+    return shape instanceof Rectangle;
   }
 }
