@@ -9,3 +9,15 @@ export function getGame() {
 export function setGame(_game: Game) {
   game = _game;
 }
+
+export function restartGame() {
+  game.stop();
+  game.teardown();
+
+  const newGame = new Game();
+
+  game = newGame;
+
+  game.setup();
+  game.start();
+}

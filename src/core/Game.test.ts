@@ -27,6 +27,10 @@ vi.mock('config', () => ({
   getConfig: () => config,
 }));
 
+vi.mock('game', () => ({
+  restartGame: vi.fn(),
+}));
+
 vi.mock('@core/engine/Audio', () => ({
   Audio: vi.fn(
     class {

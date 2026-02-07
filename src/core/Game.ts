@@ -5,7 +5,7 @@ import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
 import { getConfig, toggleDebugMode } from 'config';
-import { setGame } from 'game';
+import { restartGame } from 'game';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 import { SpriteSheetManager } from './engine/SpriteSheetManager';
@@ -42,10 +42,16 @@ export class Game {
       this.sceneManager.setActiveScene(scene);
     });
 
-    // Attaches default control for toggling debug mode.
+    // Attaches default controls for dev functions.
     this.inputController.addKeypressEventListener((e) => {
-      if (e.key === 'm') toggleDebugMode();
-      if (e.key === 'p') this.restart();
+      switch (e.key) {
+        case 'm':
+          toggleDebugMode();
+          break;
+        case 'p':
+          restartGame();
+          break;
+      }
     });
   }
 
@@ -69,20 +75,6 @@ export class Game {
     log(LOG_TAG, 'Stopping...');
 
     this.loop.stop();
-  }
-
-  public restart() {
-    log(LOG_TAG, 'Restarting...');
-
-    this.stop();
-    this.teardown();
-
-    const newGame = new Game();
-
-    setGame(newGame);
-
-    newGame.setup();
-    newGame.start();
   }
 
   private get isReady() {
