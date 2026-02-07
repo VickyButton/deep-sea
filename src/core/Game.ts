@@ -12,27 +12,16 @@ import { SpriteSheetManager } from './engine/SpriteSheetManager';
 const LOG_TAG = 'Game';
 
 export class Game {
-  public readonly audio: Audio;
-  public readonly graphics: Graphics;
-  public readonly inputController: InputController;
-  public readonly loop: Loop;
-  public readonly physics: Physics2D;
-  public readonly sceneManager: SceneManager;
-  public readonly spriteSheetManager: SpriteSheetManager;
-  public readonly taskManager: TaskManager;
+  public readonly audio = new Audio();
+  public readonly graphics = new Graphics();
+  public readonly inputController = new InputController();
+  public readonly loop = new Loop();
+  public readonly physics = new Physics2D();
+  public readonly sceneManager = new SceneManager();
+  public readonly spriteSheetManager = new SpriteSheetManager();
+  public readonly taskManager = new TaskManager();
   public debugMode = false;
   private initialSceneLoadTaskId?: string;
-
-  constructor() {
-    this.audio = new Audio();
-    this.graphics = new Graphics();
-    this.inputController = new InputController();
-    this.loop = new Loop();
-    this.physics = new Physics2D();
-    this.sceneManager = new SceneManager();
-    this.spriteSheetManager = new SpriteSheetManager();
-    this.taskManager = new TaskManager();
-  }
 
   /**
    * Toggles debug mode.
