@@ -2,6 +2,11 @@ import { log } from './logger';
 
 const LOG_TAG = 'loadImage.ts';
 
+/**
+ * Loads image from specified path and returns it as a bitmap.
+ * @param path The path of the image file.
+ * @returns The image bitmap.
+ */
 export function loadImage(path: string) {
   return new Promise<ImageBitmap>((resolve, reject) => {
     const image = new Image();
