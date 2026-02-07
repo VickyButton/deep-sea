@@ -3,7 +3,7 @@ import { Vector2D } from '@core/structures/Vector2D';
 import { getConfig } from 'config';
 import { Shape2D } from './Shape2D';
 
-export class Circle2D extends Shape2D {
+export class CircleNode extends Shape2D {
   /**
    * The circle outline color for when debug mode is enabled.
    */
@@ -39,12 +39,12 @@ export class Circle2D extends Shape2D {
   }
 
   /**
-   * Checks if a given node is an instance of Circle2D.
+   * Checks if a given node is an instance of CircleNode.
    * @param node The node to check.
-   * @returns True if an instance of Circle2D, false if not.
+   * @returns True if an instance of CircleNode, false if not.
    */
-  public static isCircle2D(node: unknown): node is Circle2D {
-    return node instanceof Circle2D;
+  public static isCircleNode(node: unknown): node is CircleNode {
+    return node instanceof CircleNode;
   }
 
   public render() {
