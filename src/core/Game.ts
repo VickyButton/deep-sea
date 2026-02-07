@@ -5,7 +5,6 @@ import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
 import { getConfig } from 'config';
-import { AssetLoader } from './engine/AssetLoader';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 import { SpriteSheetManager } from './engine/SpriteSheetManager';
@@ -14,7 +13,6 @@ import { Vector2D } from './structures/Vector2D';
 const LOG_TAG = 'Game';
 
 export class Game {
-  public readonly assetLoader: AssetLoader;
   public readonly audio: Audio;
   public readonly graphics: Graphics;
   public readonly inputController: InputController;
@@ -29,9 +27,6 @@ export class Game {
   constructor() {
     const config = getConfig();
 
-    this.assetLoader = new AssetLoader({
-      imagesPath: config.assets.images,
-    });
     this.audio = new Audio();
     this.graphics = new Graphics({
       size: new Vector2D(config.graphics.width, config.graphics.height),
