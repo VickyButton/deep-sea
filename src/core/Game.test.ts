@@ -16,6 +16,7 @@ const config = {
   dev: {
     autoStart: false,
     debugMode: false,
+    printLogs: false,
   },
   game: {
     framesPerSecond: 1,

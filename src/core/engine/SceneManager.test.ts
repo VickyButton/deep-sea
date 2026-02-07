@@ -1,11 +1,14 @@
 import { Scene } from '@core/nodes/Scene';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SceneManager } from './SceneManager';
 
 vi.mock('config', () => ({
   getConfig: () => ({
     content: {
       scenes: '/src/scenes',
+    },
+    dev: {
+      printLogs: true,
     },
   }),
 }));
@@ -15,6 +18,10 @@ class TestScene extends Scene {
 }
 
 describe('SceneManager', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('should setup new active scene', () => {
     const sceneManager = new SceneManager();
     const scene = new TestScene();

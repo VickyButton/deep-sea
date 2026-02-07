@@ -13,6 +13,7 @@ interface Config {
   dev: {
     autoStart: boolean;
     debugMode: boolean;
+    printLogs: boolean;
   };
   game: {
     framesPerSecond: number;
@@ -42,6 +43,7 @@ function defaultConfig(): Config {
     dev: {
       autoStart: false,
       debugMode: false,
+      printLogs: false,
     },
     game: {
       framesPerSecond: 60,

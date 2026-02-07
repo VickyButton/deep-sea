@@ -1,3 +1,4 @@
+import { getConfig } from 'config';
 import { timestampNow } from './dateTimeProvider';
 import { downloadFile } from './downloadFile';
 
@@ -10,9 +11,11 @@ let logs: string[] = [];
  * @param message The log message.
  */
 export function log(tag: string, message: string) {
+  const config = getConfig();
   const formattedLog = formatLog(tag, message);
 
-  console.log(formattedLog);
+  if (config.dev.printLogs) console.log(formattedLog);
+
   logs.push(formattedLog);
 }
 
@@ -23,9 +26,11 @@ export function log(tag: string, message: string) {
  * @param message The log message.
  */
 export function warn(tag: string, message: string) {
+  const config = getConfig();
   const formattedLog = formatLog(tag, message);
 
-  console.warn(formattedLog);
+  if (config.dev.printLogs) console.warn(formattedLog);
+
   logs.push(formattedLog);
 }
 
@@ -36,9 +41,11 @@ export function warn(tag: string, message: string) {
  * @param message The log message.
  */
 export function error(tag: string, message: string) {
+  const config = getConfig();
   const formattedLog = formatLog(tag, message);
 
-  console.error(formattedLog);
+  if (config.dev.printLogs) console.error(formattedLog);
+
   logs.push(formattedLog);
 }
 

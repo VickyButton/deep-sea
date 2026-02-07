@@ -3,6 +3,16 @@ import { timestampNow } from './dateTimeProvider';
 import { downloadFile } from './downloadFile';
 import { clearLogs, downloadLogs, error, log, warn } from './logger';
 
+const config = {
+  dev: {
+    printLogs: true,
+  },
+};
+
+vi.mock('config', () => ({
+  getConfig: () => ({ ...config }),
+}));
+
 vi.mock('./dateTimeProvider', () => ({
   timestampNow: vi.fn(),
 }));
