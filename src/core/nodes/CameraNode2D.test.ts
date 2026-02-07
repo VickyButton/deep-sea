@@ -1,6 +1,6 @@
 import { Vector2D } from '@core/structures/Vector2D';
 import { describe, expect, it, vi } from 'vitest';
-import { Camera2D } from './Camera2D';
+import { CameraNode2D } from './CameraNode2D';
 
 vi.mock('game', () => ({
   getGame: () => ({
@@ -11,9 +11,9 @@ vi.mock('game', () => ({
   }),
 }));
 
-describe('Camera2D', () => {
+describe('CameraNode2D', () => {
   it('should initialize with size from game configuration', () => {
-    const camera = new Camera2D();
+    const camera = new CameraNode2D();
 
     expect(camera.size.equals(Vector2D.one)).toBe(true);
   });

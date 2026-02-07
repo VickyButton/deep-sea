@@ -1,4 +1,4 @@
-import { Camera2D } from '@core/nodes/Camera2D';
+import { CameraNode2D } from '@core/nodes/CameraNode2D';
 import { GraphicsNode2D } from '@core/nodes/GraphicsNode2D';
 import { Vector2D } from '@core/structures/Vector2D';
 import { log } from '@core/utils/logger';
@@ -16,7 +16,7 @@ const ERROR_MISSING_TARGET_CANVAS = 'Unable to get target canvas';
 const ERROR_MISSING_TARGET_CONTEXT = 'Unable to get target context';
 
 export class Graphics {
-  private camera?: Camera2D;
+  private camera?: CameraNode2D;
   private nodes = new Set<GraphicsNode2D>();
   private targetCanvas?: HTMLCanvasElement;
   private targetContext?: ImageBitmapRenderingContext;
@@ -59,7 +59,7 @@ export class Graphics {
    *
    * @param camera The camera to use.
    */
-  public setCamera(camera: Camera2D) {
+  public setCamera(camera: CameraNode2D) {
     this.camera = camera;
   }
 
