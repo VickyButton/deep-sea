@@ -18,6 +18,10 @@ const config = {
   },
 };
 
+vi.mock('config', () => ({
+  getConfig: () => config,
+}));
+
 vi.mock('@core/engine/Audio', () => ({
   Audio: vi.fn(
     class {
@@ -51,6 +55,10 @@ vi.mock('@core/engine/Loop', () => ({
       stop = vi.fn();
     },
   ),
+}));
+
+vi.mock('@core/engine/Physics2D', () => ({
+  Physics2D: vi.fn(),
 }));
 
 vi.mock('@core/engine/SceneManager', () => ({
