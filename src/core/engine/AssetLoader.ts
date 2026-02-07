@@ -1,3 +1,4 @@
+// TODO: Remove this file after creating config helper.
 import { log } from '@core/utils/logger';
 
 export interface AssetLoaderConfiguration {
