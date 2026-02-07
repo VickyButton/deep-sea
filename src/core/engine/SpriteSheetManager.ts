@@ -30,7 +30,7 @@ export class SpriteSheetManager {
    */
   public async load(name: string) {
     const config = getConfig();
-    const image = await loadImage(`${config.assets.images}/${name}`); // TODO: Retrieve URL base from config.
+    const image = await loadImage(`${config.assets.images}/${name}`);
     const spriteSheet = new SpriteSheet(image);
 
     this.spriteSheets.set(name, spriteSheet);
