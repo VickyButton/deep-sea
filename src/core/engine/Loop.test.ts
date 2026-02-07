@@ -34,9 +34,7 @@ describe('Loop', () => {
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(FRAMES_PER_SECOND_INTERVAL);
 
-    const loop = new Loop({
-      framesPerSecond: FRAMES_PER_SECOND,
-    });
+    const loop = new Loop();
 
     loop.setLoopCallback(onLoop);
     loop.start();
@@ -56,9 +54,7 @@ describe('Loop', () => {
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(FRAMES_PER_SECOND_INTERVAL);
 
-    const loop = new Loop({
-      framesPerSecond: FRAMES_PER_SECOND,
-    });
+    const loop = new Loop();
 
     loop.setLoopCallback(onLoop);
     loop.start();
