@@ -10,6 +10,7 @@ const config = {
     scenes: '',
   },
   dev: {
+    autoStart: false,
     debugMode: false,
   },
   game: {

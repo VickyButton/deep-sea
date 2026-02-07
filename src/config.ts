@@ -7,6 +7,7 @@ interface Config {
     scenes: string;
   };
   dev: {
+    autoStart: boolean;
     debugMode: boolean;
   };
   game: {
@@ -31,6 +32,7 @@ function defaultConfig(): Config {
       scenes: new URL('./scenes', import.meta.url).pathname,
     },
     dev: {
+      autoStart: false,
       debugMode: false,
     },
     game: {

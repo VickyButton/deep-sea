@@ -44,6 +44,7 @@ function createGameStartButton() {
 }
 
 function setUpGameDom() {
+  const config = getConfig();
   const gameContainer = createGameContainer();
   const gameCanvas = createGameCanvas();
   const gameStartButton = createGameStartButton();
@@ -57,6 +58,8 @@ function setUpGameDom() {
 
     startGame();
   });
+
+  if (config.dev.autoStart) gameStartButton.click();
 }
 
 function setUpGame() {
