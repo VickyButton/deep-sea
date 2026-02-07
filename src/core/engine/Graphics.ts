@@ -2,6 +2,7 @@ import { Camera2D } from '@core/nodes/Camera2D';
 import { GraphicsNode2D } from '@core/nodes/GraphicsNode2D';
 import { Vector2D } from '@core/structures/Vector2D';
 import { log } from '@core/utils/logger';
+import { getConfig } from 'config';
 
 interface DrawInstructions {
   imageBitmap: ImageBitmap;
@@ -10,25 +11,16 @@ interface DrawInstructions {
   layer: number;
 }
 
-export interface GraphicsConfiguration {
-  size: Vector2D;
-}
-
 const LOG_TAG = 'Graphics';
 const ERROR_MISSING_TARGET_CANVAS = 'Unable to get target canvas';
 const ERROR_MISSING_TARGET_CONTEXT = 'Unable to get target context';
 
 export class Graphics {
-  private readonly configuration: GraphicsConfiguration;
   private camera?: Camera2D;
   private nodes = new Set<GraphicsNode2D>();
   private targetCanvas?: HTMLCanvasElement;
   private targetContext?: ImageBitmapRenderingContext;
   private drawQueue = new Map<number, DrawInstructions[]>();
-
-  constructor(configuration: GraphicsConfiguration) {
-    this.configuration = configuration;
-  }
 
   /**
    * The width of the target canvas.
@@ -72,15 +64,16 @@ export class Graphics {
   }
 
   /**
-   * Fetches target canvas by ID and resizes to size defined in configuration.
+   * Fetches target canvas by ID and resizes to size defined in config.
    */
   public syncWithTargetCanvas() {
     log(LOG_TAG, 'Syncing with target canvas...');
+    const config = getConfig();
 
     const targetCanvas = this.getTargetCanvas();
 
-    targetCanvas.width = this.configuration.size.x;
-    targetCanvas.height = this.configuration.size.y;
+    targetCanvas.width = config.graphics.width;
+    targetCanvas.height = config.graphics.height;
 
     const targetContext = targetCanvas.getContext('bitmaprenderer');
 

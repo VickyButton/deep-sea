@@ -8,7 +8,6 @@ import { getConfig } from 'config';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 import { SpriteSheetManager } from './engine/SpriteSheetManager';
-import { Vector2D } from './structures/Vector2D';
 
 const LOG_TAG = 'Game';
 
@@ -28,9 +27,7 @@ export class Game {
     const config = getConfig();
 
     this.audio = new Audio();
-    this.graphics = new Graphics({
-      size: new Vector2D(config.graphics.width, config.graphics.height),
-    });
+    this.graphics = new Graphics();
     this.inputController = new InputController();
     this.loop = new Loop({
       framesPerSecond: config.game.framesPerSecond,
