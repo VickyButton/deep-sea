@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ColorRGB, ColorRGBA } from './Color';
+import { ColorRGB, ColorRGBA } from './Colors';
 
 describe('ColorRGB', () => {
   it('should set RGB components', () => {
