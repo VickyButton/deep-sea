@@ -1,31 +1,28 @@
 import { Rectangle } from '@core/structures/Rectangle';
 import { Vector2D } from '@core/structures/Vector2D';
+import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { game } from 'game';
 import { GraphicsNode2D } from './GraphicsNode2D';
 
+const ERROR_SPRITE_SHEET_NAME_UNDEFINED = 'Sprite sheet name not defined';
+const ERROR_SPRITE_SHEET_NOT_FOUND = 'Unable to retrieve sprite';
+const ERROR_SPRITE_RECTANGLE_UNDEFINED = 'Sprite rectangle not defined';
+
 export class Sprite2D extends GraphicsNode2D {
   /**
-   * The path of the sprite's sprite sheet image.
+   * The file name of the sprite sheet image, including the file extension.
    */
-  public spriteSheetImagePath?: string;
+  public spriteSheetName?: string;
   /**
-   * The top-left corner position of the sprite in the sprite sheet image.
+   * The sprite's rectangle within the sprite sheet.
    */
-  public spritePosition?: Vector2D;
-  /**
-   * The size of the sprite in the sprite sheet image.
-   */
-  public spriteSize?: Vector2D;
-  /**
-   * The parsed sprite from the sprite sheet image.
-   */
-  private sprite?: ImageBitmap;
+  public spriteRectangle?: Rectangle;
 
   public get boundingBox() {
+    if (!this.spriteRectangle) throw new Error(ERROR_SPRITE_RECTANGLE_UNDEFINED);
+
     const position = this.globalPosition;
-    const size = this.sprite
-      ? Vector2D.multiply(this.globalScale, new Vector2D(this.sprite.width, this.sprite.height))
-      : Vector2D.zero;
+    const size = Vector2D.multiply(this.globalScale, this.spriteRectangle.size);
 
     return new Rectangle(position.x, position.y, size.x, size.y);
   }
@@ -35,79 +32,35 @@ export class Sprite2D extends GraphicsNode2D {
 
     this.visible = false;
 
-    game.taskManager.registerTask(this.loadSprite(), (sprite) => {
-      this.sprite = sprite;
+    if (!this.spriteSheetName) throw new Error(ERROR_SPRITE_SHEET_NAME_UNDEFINED);
+    // If sprite sheet is already loaded, exit early.
+    if (game.spriteSheetManager.get(this.spriteSheetName)) return;
+
+    // Load sprite sheet.
+    // TODO: If two different sprites use the same sprite sheet, the sprite sheet would be loaded
+    // twice. A fix will be needed in order to ensure the same sprite sheet isn't loaded twice.
+    game.taskManager.registerTask(game.spriteSheetManager.load(this.spriteSheetName), () => {
       this.visible = true;
     });
   }
 
   public render() {
-    if (!this.sprite) throw new Error(`Unable to render sprite ${this.id}`);
+    if (!this.spriteSheetName) throw new Error(ERROR_SPRITE_SHEET_NAME_UNDEFINED);
+    if (!this.spriteRectangle) throw new Error(ERROR_SPRITE_RECTANGLE_UNDEFINED);
 
-    const size = Vector2D.multiply(
-      this.globalScale,
-      new Vector2D(this.sprite.width, this.sprite.height),
-    );
+    // Retrieve sprite sheet.
+    const spriteSheet = game.spriteSheetManager.get(this.spriteSheetName);
+
+    if (!spriteSheet) throw new Error(ERROR_SPRITE_SHEET_NOT_FOUND);
+
+    // Parse sprite from sprite sheet.
+    const sprite = spriteSheet.parseSprite(this.spriteRectangle);
+    const size = Vector2D.multiply(this.globalScale, this.spriteRectangle.size);
     const canvas = new OffscreenCanvas(size.x, size.y);
-    const context = canvas.getContext('2d');
+    const ctx = getCanvasContext2D(canvas);
 
-    if (!context) throw new Error('Unable to get rendering context');
-
-    context.imageSmoothingEnabled = false;
-    context.drawImage(this.sprite, 0, 0, size.x, size.y);
-
-    return canvas.transferToImageBitmap();
-  }
-
-  private async loadSprite() {
-    const spriteSheetImage = await this.loadSpriteSheetImage();
-
-    return this.parseSpriteFromSpriteSheet(spriteSheetImage);
-  }
-
-  private loadSpriteSheetImage() {
-    if (!this.spriteSheetImagePath) throw new Error(`Image path not defined for sprite ${this.id}`);
-
-    return game.assetLoader.loadImage(this.spriteSheetImagePath);
-  }
-
-  private parseSpriteFromSpriteSheet(spriteSheetImage: HTMLImageElement) {
-    if (!this.spriteSize) throw new Error(`Sprite size not defined for sprite ${this.id}`);
-    if (!this.spritePosition) throw new Error(`Sprite position not defined for sprite ${this.id}`);
-
-    const spriteSheetImageRectangle = new Rectangle(
-      0,
-      0,
-      spriteSheetImage.width,
-      spriteSheetImage.height,
-    );
-    const spriteRectangle = new Rectangle(
-      this.spritePosition.x,
-      this.spritePosition.y,
-      this.spriteSize.x,
-      this.spriteSize.y,
-    );
-
-    // Verify that provided sprite parse instructions are valid.
-    if (!spriteSheetImageRectangle.overlaps(spriteRectangle))
-      throw new Error('Invalid sprite parse instructions');
-
-    const canvas = new OffscreenCanvas(this.spriteSize.x, this.spriteSize.y);
-    const context = canvas.getContext('2d');
-
-    if (!context) throw new Error('Unable to get rendering context');
-
-    context.drawImage(
-      spriteSheetImage,
-      this.spritePosition.x,
-      this.spritePosition.y,
-      this.spriteSize.x,
-      this.spriteSize.y,
-      0,
-      0,
-      this.spriteSize.x,
-      this.spriteSize.y,
-    );
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(sprite, 0, 0, size.x, size.y);
 
     return canvas.transferToImageBitmap();
   }
