@@ -6,13 +6,30 @@
     "isolatedModules": true,
     "baseUrl": "./",
     "paths": {
-      "@assets/*": ["./src/assets/*"],
-      "@core/*": ["./src/core/*"],
-      "@nodes/*": ["./src/nodes/*"],
-      "@scenes/*": ["./src/scenes/*"],
-      "game": ["./src/game"],
+      "@assets/*": [
+        "./src/assets/*"
+      ],
+      "@core/*": [
+        "./src/core/*"
+      ],
+      "@nodes/*": [
+        "./src/nodes/*"
+      ],
+      "@scenes/*": [
+        "./src/scenes/*"
+      ],
+      "config": [
+        "./src/config"
+      ],
+      "game": [
+        "./src/game"
+      ],
     },
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,5 +38,9 @@
     "useUnknownInCatchVariables": true,
     "noEmit": true
   },
-  "include": ["src", "eslint.config.ts", "vite.config.ts"]
+  "include": [
+    "src",
+    "eslint.config.ts",
+    "vite.config.ts"
+  ]
 }
