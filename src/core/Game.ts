@@ -9,6 +9,7 @@ import { error, log } from '@core/utils/logger';
 import { AssetLoader, AssetLoaderConfiguration } from './engine/AssetLoader';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
+import { SpriteSheetManager } from './engine/SpriteSheetManager';
 
 interface GameConfiguration {
   initialSceneName: string;
@@ -29,6 +30,7 @@ export class Game {
   public readonly loop: Loop;
   public readonly physics: Physics2D;
   public readonly sceneManager: SceneManager;
+  public readonly spriteSheetManager: SpriteSheetManager;
   public readonly taskManager: TaskManager;
   public debugMode = false;
   private readonly configuration: GameConfiguration;
@@ -43,6 +45,7 @@ export class Game {
     this.loop = new Loop(configuration.engine.loop);
     this.physics = new Physics2D();
     this.sceneManager = new SceneManager();
+    this.spriteSheetManager = new SpriteSheetManager();
     this.taskManager = new TaskManager();
   }
 
