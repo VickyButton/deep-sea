@@ -2,6 +2,9 @@ interface Config {
   assets: {
     images: string;
   };
+  dev: {
+    debugMode: boolean;
+  };
   game: {
     framesPerSecond: number;
     splashScene: string;
@@ -18,6 +21,9 @@ function defaultConfig(): Config {
   return {
     assets: {
       images: new URL('./assets/images', import.meta.url).pathname,
+    },
+    dev: {
+      debugMode: false,
     },
     game: {
       framesPerSecond: 60,
@@ -53,4 +59,8 @@ export function getConfig() {
 
 export function setConfig(_config: Config) {
   config = _config;
+}
+
+export function toggleDebugMode() {
+  config.dev.debugMode = !config.dev.debugMode;
 }

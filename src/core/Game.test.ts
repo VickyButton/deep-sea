@@ -5,6 +5,9 @@ const config = {
   assets: {
     images: '',
   },
+  dev: {
+    debugMode: false,
+  },
   game: {
     framesPerSecond: 1,
     splashScene: '',

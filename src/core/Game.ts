@@ -4,7 +4,7 @@ import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
-import { getConfig } from 'config';
+import { getConfig, toggleDebugMode } from 'config';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 import { SpriteSheetManager } from './engine/SpriteSheetManager';
@@ -20,15 +20,7 @@ export class Game {
   public readonly sceneManager = new SceneManager();
   public readonly spriteSheetManager = new SpriteSheetManager();
   public readonly taskManager = new TaskManager();
-  public debugMode = false;
   private initialSceneLoadTaskId?: string;
-
-  /**
-   * Toggles debug mode.
-   */
-  public toggleDebugMode() {
-    this.debugMode = !this.debugMode;
-  }
 
   /**
    * Sets up the game components and loads initial scene.
@@ -51,7 +43,7 @@ export class Game {
 
     // Attaches default control for toggling debug mode.
     this.inputController.addKeypressEventListener((e) => {
-      if (e.key === 'm') this.toggleDebugMode();
+      if (e.key === 'm') toggleDebugMode();
     });
   }
 
