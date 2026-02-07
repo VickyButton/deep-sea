@@ -1,24 +1,15 @@
-import type { GraphicsConfiguration } from '@core/engine/Graphics';
-import type { LoopConfiguration } from '@core/engine/Loop';
 import { Audio } from '@core/engine/Audio';
 import { Graphics } from '@core/engine/Graphics';
 import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
-import { AssetLoader, AssetLoaderConfiguration } from './engine/AssetLoader';
+import { getConfig } from 'config';
+import { AssetLoader } from './engine/AssetLoader';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 import { SpriteSheetManager } from './engine/SpriteSheetManager';
-
-interface GameConfiguration {
-  initialSceneName: string;
-  engine: {
-    assetLoader: AssetLoaderConfiguration;
-    graphics: GraphicsConfiguration;
-    loop: LoopConfiguration;
-  };
-}
+import { Vector2D } from './structures/Vector2D';
 
 const LOG_TAG = 'Game';
 
@@ -33,16 +24,22 @@ export class Game {
   public readonly spriteSheetManager: SpriteSheetManager;
   public readonly taskManager: TaskManager;
   public debugMode = false;
-  private readonly configuration: GameConfiguration;
   private initialSceneLoadTaskId?: string;
 
-  constructor(configuration: GameConfiguration) {
-    this.configuration = configuration;
-    this.assetLoader = new AssetLoader(configuration.engine.assetLoader);
+  constructor() {
+    const config = getConfig();
+
+    this.assetLoader = new AssetLoader({
+      imagesPath: config.assets.images,
+    });
     this.audio = new Audio();
-    this.graphics = new Graphics(configuration.engine.graphics);
+    this.graphics = new Graphics({
+      size: new Vector2D(config.graphics.width, config.graphics.height),
+    });
     this.inputController = new InputController();
-    this.loop = new Loop(configuration.engine.loop);
+    this.loop = new Loop({
+      framesPerSecond: config.game.framesPerSecond,
+    });
     this.physics = new Physics2D();
     this.sceneManager = new SceneManager();
     this.spriteSheetManager = new SpriteSheetManager();
@@ -61,13 +58,14 @@ export class Game {
    */
   public setup() {
     log(LOG_TAG, 'Initializing...');
+    const config = getConfig();
 
     this.loop.setLoopCallback(this.onLoop.bind(this));
     this.audio.initialize();
     this.graphics.syncWithTargetCanvas();
     this.inputController.attachListeners();
 
-    const initialSceneLoadTask = this.sceneManager.loadScene(this.configuration.initialSceneName);
+    const initialSceneLoadTask = this.sceneManager.loadScene(config.game.splashScene);
 
     // Loads and sets initial scene.
     this.initialSceneLoadTaskId = this.taskManager.registerTask(initialSceneLoadTask, (scene) => {
