@@ -1,5 +1,6 @@
 interface Config {
   assets: {
+    audio: string;
     images: string;
   };
   dev: {
@@ -20,6 +21,7 @@ let config = defaultConfig();
 function defaultConfig(): Config {
   return {
     assets: {
+      audio: new URL('./assets/audio', import.meta.url).pathname,
       images: new URL('./assets/images', import.meta.url).pathname,
     },
     dev: {

@@ -1,4 +1,5 @@
 import { error } from '@core/utils/logger';
+import { getConfig } from 'config';
 
 interface AudioState {
   volume: number;
@@ -104,8 +105,10 @@ export class Audio {
   public async loadBuffer(fileName: string) {
     if (!this.audioContext) throw new Error('Audio context not set');
 
+    const config = getConfig();
+
     try {
-      const filePath = `/src/assets/audio/${fileName}`;
+      const filePath = `${config.assets.audio}/${fileName}`;
       const response = await fetch(filePath);
 
       return await this.audioContext.decodeAudioData(await response.arrayBuffer());

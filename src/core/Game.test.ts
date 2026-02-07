@@ -3,6 +3,7 @@ import { Game } from './Game';
 
 const config = {
   assets: {
+    audio: '',
     images: '',
   },
   dev: {
