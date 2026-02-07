@@ -1,6 +1,6 @@
 import { log } from './logger';
 
-const LOG_TAG = 'loadImage.ts';
+const LOG_TAG = 'loadImage';
 
 /**
  * Loads image from specified path and returns it as a bitmap.
