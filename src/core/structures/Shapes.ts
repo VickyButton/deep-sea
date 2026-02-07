@@ -59,7 +59,7 @@ export class Circle {
    *
    * @param point The point to check if it is contained in the circle.
    */
-  public contains(point: Vector2D) {
+  public containsPoint(point: Vector2D) {
     const dx = this.position.x - point.x;
     const dy = this.position.y - point.y;
 
@@ -186,7 +186,7 @@ export class Rectangle {
    *
    * @param point The point to check if it is contained in the rectangle.
    */
-  public contains(point: Vector2D) {
+  public containsPoint(point: Vector2D) {
     return (
       point.x > this.left && point.x < this.right && point.y > this.top && point.y < this.bottom
     );

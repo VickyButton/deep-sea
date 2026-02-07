@@ -7,13 +7,13 @@ describe('Circle', () => {
     const circle = new Circle(0, 0, 1);
 
     // Assert that a point at the center is contained.
-    expect(circle.contains(Vector2D.zero)).toBe(true);
+    expect(circle.containsPoint(Vector2D.zero)).toBe(true);
 
     // Assert that a point on the circumference of the circle is not contained.
-    expect(circle.contains(Vector2D.right)).toBe(false);
+    expect(circle.containsPoint(Vector2D.right)).toBe(false);
 
     // Assert that a point outside the circle is not contained.
-    expect(circle.contains(Vector2D.one)).toBe(false);
+    expect(circle.containsPoint(Vector2D.one)).toBe(false);
   });
 
   it('should check if two circles overlap', () => {
@@ -50,19 +50,19 @@ describe('Rectangle', () => {
     const rectangle = new Rectangle(0, 0, 1, 1);
 
     // Assert that a point that lies on the top-left corner is not contained.
-    expect(rectangle.contains(new Vector2D(0, 0))).toBe(false);
+    expect(rectangle.containsPoint(new Vector2D(0, 0))).toBe(false);
 
     // Assert that a point that lies on the top-right corner is not contained.
-    expect(rectangle.contains(new Vector2D(0, 1))).toBe(false);
+    expect(rectangle.containsPoint(new Vector2D(0, 1))).toBe(false);
 
     // Assert that a point that lies on the bottom-right corner is not contained.
-    expect(rectangle.contains(new Vector2D(1, 1))).toBe(false);
+    expect(rectangle.containsPoint(new Vector2D(1, 1))).toBe(false);
 
     // Assert that a point that lies on the bottom-left corner is not contained.
-    expect(rectangle.contains(new Vector2D(0, 1))).toBe(false);
+    expect(rectangle.containsPoint(new Vector2D(0, 1))).toBe(false);
 
     // Assert that a point that lies in the middle of the rectangle is contained.
-    expect(rectangle.contains(new Vector2D(0.5, 0.5))).toBe(true);
+    expect(rectangle.containsPoint(new Vector2D(0.5, 0.5))).toBe(true);
   });
 
   it('should check if the rectangle overlaps another rectangle', () => {
