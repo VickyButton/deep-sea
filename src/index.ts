@@ -1,11 +1,13 @@
-import { game, loadGame, setGame } from './game';
+import { getConfig, loadConfig, setConfig } from './config';
+import { game } from './game';
 
 function createGameCanvas() {
+  const config = getConfig();
   const canvas = document.createElement('canvas');
 
   canvas.id = 'game-canvas';
-  canvas.width = game.graphics.width;
-  canvas.height = game.graphics.height;
+  canvas.width = config.graphics.width;
+  canvas.height = config.graphics.height;
 
   return canvas;
 }
@@ -58,9 +60,11 @@ function setUpGameDom() {
 }
 
 function setUpGame() {
-  loadGame('/game.config.json')
-    .then((game) => {
-      setGame(game);
+  const configPath = new URL('../game.config.json', import.meta.url).pathname;
+
+  loadConfig(configPath)
+    .then((config) => {
+      setConfig(config);
       setUpGameDom();
     })
     .catch((err: unknown) => {

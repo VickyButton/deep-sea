@@ -1,73 +1,40 @@
-import type { GraphicsConfiguration } from '@core/engine/Graphics';
-import type { LoopConfiguration } from '@core/engine/Loop';
 import { Audio } from '@core/engine/Audio';
 import { Graphics } from '@core/engine/Graphics';
 import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
-import { AssetLoader, AssetLoaderConfiguration } from './engine/AssetLoader';
+import { getConfig, toggleDebugMode } from 'config';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 import { SpriteSheetManager } from './engine/SpriteSheetManager';
 
-interface GameConfiguration {
-  initialSceneName: string;
-  engine: {
-    assetLoader: AssetLoaderConfiguration;
-    graphics: GraphicsConfiguration;
-    loop: LoopConfiguration;
-  };
-}
-
 const LOG_TAG = 'Game';
 
 export class Game {
-  public readonly assetLoader: AssetLoader;
-  public readonly audio: Audio;
-  public readonly graphics: Graphics;
-  public readonly inputController: InputController;
-  public readonly loop: Loop;
-  public readonly physics: Physics2D;
-  public readonly sceneManager: SceneManager;
-  public readonly spriteSheetManager: SpriteSheetManager;
-  public readonly taskManager: TaskManager;
-  public debugMode = false;
-  private readonly configuration: GameConfiguration;
+  public readonly audio = new Audio();
+  public readonly graphics = new Graphics();
+  public readonly inputController = new InputController();
+  public readonly loop = new Loop();
+  public readonly physics = new Physics2D();
+  public readonly sceneManager = new SceneManager();
+  public readonly spriteSheetManager = new SpriteSheetManager();
+  public readonly taskManager = new TaskManager();
   private initialSceneLoadTaskId?: string;
-
-  constructor(configuration: GameConfiguration) {
-    this.configuration = configuration;
-    this.assetLoader = new AssetLoader(configuration.engine.assetLoader);
-    this.audio = new Audio();
-    this.graphics = new Graphics(configuration.engine.graphics);
-    this.inputController = new InputController();
-    this.loop = new Loop(configuration.engine.loop);
-    this.physics = new Physics2D();
-    this.sceneManager = new SceneManager();
-    this.spriteSheetManager = new SpriteSheetManager();
-    this.taskManager = new TaskManager();
-  }
-
-  /**
-   * Toggles debug mode.
-   */
-  public toggleDebugMode() {
-    this.debugMode = !this.debugMode;
-  }
 
   /**
    * Sets up the game components and loads initial scene.
    */
   public setup() {
     log(LOG_TAG, 'Initializing...');
+    const config = getConfig();
 
     this.loop.setLoopCallback(this.onLoop.bind(this));
     this.audio.initialize();
     this.graphics.syncWithTargetCanvas();
     this.inputController.attachListeners();
 
-    const initialSceneLoadTask = this.sceneManager.loadScene(this.configuration.initialSceneName);
+    const initialSceneLoadTask = this.sceneManager.loadScene(config.game.splashScene);
 
     // Loads and sets initial scene.
     this.initialSceneLoadTaskId = this.taskManager.registerTask(initialSceneLoadTask, (scene) => {
@@ -76,7 +43,7 @@ export class Game {
 
     // Attaches default control for toggling debug mode.
     this.inputController.addKeypressEventListener((e) => {
-      if (e.key === 'm') this.toggleDebugMode();
+      if (e.key === 'm') toggleDebugMode();
     });
   }
 

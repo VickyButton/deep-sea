@@ -1,5 +1,6 @@
 import { SpriteSheet } from '@core/structures/SpriteSheet';
 import { loadImage } from '@core/utils/loadImage';
+import { getConfig } from 'config';
 
 export class SpriteSheetManager {
   private readonly spriteSheets = new Map<string, SpriteSheet>();
@@ -28,7 +29,8 @@ export class SpriteSheetManager {
    * @returns The loaded sprite sheet.
    */
   public async load(name: string) {
-    const image = await loadImage(`/src/assets/images/${name}`); // TODO: Retrieve URL base from config.
+    const config = getConfig();
+    const image = await loadImage(`${config.assets.images}/${name}`);
     const spriteSheet = new SpriteSheet(image);
 
     this.spriteSheets.set(name, spriteSheet);
