@@ -1,9 +1,6 @@
 import { timestampNow } from '@core/utils/dateTimeProvider';
 import { log } from '@core/utils/logger';
-
-export interface LoopConfiguration {
-  framesPerSecond: number;
-}
+import { getConfig } from 'config';
 
 interface LoopState {
   isRunning: boolean;
@@ -13,12 +10,10 @@ interface LoopState {
 const LOG_TAG = 'Loop';
 
 export class Loop {
-  private readonly configuration: LoopConfiguration;
   private state: LoopState;
   private onLoop?: (dt: number) => void;
 
-  constructor(configuration: LoopConfiguration) {
-    this.configuration = configuration;
+  constructor() {
     this.state = this.getDefaultState();
   }
 
@@ -76,7 +71,9 @@ export class Loop {
   }
 
   private get framesPerSecondInterval() {
-    return 1000 / this.configuration.framesPerSecond;
+    const config = getConfig();
+
+    return 1000 / config.game.framesPerSecond;
   }
 
   private getDefaultState() {
