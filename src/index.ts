@@ -1,5 +1,5 @@
 import { getConfig, loadConfig, setConfig } from './config';
-import { game } from './game';
+import { getGame } from './game';
 
 function createGameCanvas() {
   const config = getConfig();
@@ -73,6 +73,8 @@ function setUpGame() {
 }
 
 function startGame() {
+  const game = getGame();
+
   game.setup();
   game.start();
 }

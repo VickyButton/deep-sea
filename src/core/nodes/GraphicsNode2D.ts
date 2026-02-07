@@ -1,5 +1,5 @@
 import { Rectangle } from '@core/structures/Rectangle';
-import { game } from 'game';
+import { getGame } from 'game';
 import { GameNode2D } from './GameNode2D';
 
 export abstract class GraphicsNode2D extends GameNode2D {
@@ -44,11 +44,15 @@ export abstract class GraphicsNode2D extends GameNode2D {
   public setup() {
     super.setup();
 
+    const game = getGame();
+
     game.graphics.registerNode(this);
   }
 
   public teardown() {
     super.teardown();
+
+    const game = getGame();
 
     game.graphics.deregisterNode(this);
   }

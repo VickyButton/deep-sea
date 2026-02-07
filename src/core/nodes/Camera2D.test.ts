@@ -3,12 +3,12 @@ import { describe, expect, it, vi } from 'vitest';
 import { Camera2D } from './Camera2D';
 
 vi.mock('game', () => ({
-  game: {
+  getGame: () => ({
     graphics: {
       width: 1,
       height: 1,
     },
-  },
+  }),
 }));
 
 describe('Camera2D', () => {

@@ -1,7 +1,7 @@
 import { Rectangle } from '@core/structures/Rectangle';
 import { Vector2D } from '@core/structures/Vector2D';
 import { getCanvasContext2D } from '@core/utils/getCanvasContext';
-import { game } from 'game';
+import { getGame } from 'game';
 import { GraphicsNode2D } from './GraphicsNode2D';
 
 const ERROR_SPRITE_SHEET_NAME_UNDEFINED = 'Sprite sheet name not defined';
@@ -30,6 +30,8 @@ export class Sprite2D extends GraphicsNode2D {
   public setup() {
     super.setup();
 
+    const game = getGame();
+
     this.visible = false;
 
     if (!this.spriteSheetName) throw new Error(ERROR_SPRITE_SHEET_NAME_UNDEFINED);
@@ -48,6 +50,7 @@ export class Sprite2D extends GraphicsNode2D {
     if (!this.spriteSheetName) throw new Error(ERROR_SPRITE_SHEET_NAME_UNDEFINED);
     if (!this.spriteRectangle) throw new Error(ERROR_SPRITE_RECTANGLE_UNDEFINED);
 
+    const game = getGame();
     // Retrieve sprite sheet.
     const spriteSheet = game.spriteSheetManager.get(this.spriteSheetName);
 
