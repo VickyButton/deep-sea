@@ -1,6 +1,8 @@
 import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { Rectangle } from './Rectangle';
 
+const ERROR_INVALID_SPRITE_SHEET_RECTANGLE = 'Invalid sprite sheet rectangle';
+
 export class SpriteSheet {
   private readonly image: ImageBitmap;
 
@@ -9,7 +11,7 @@ export class SpriteSheet {
   }
 
   public parseSprite(rectangle: Rectangle) {
-    if (!this.isValidRectangle(rectangle)) throw new Error('Invalid sprite sheet rectangle');
+    if (!this.isValidRectangle(rectangle)) throw new Error(ERROR_INVALID_SPRITE_SHEET_RECTANGLE);
 
     const canvas = new OffscreenCanvas(rectangle.width, rectangle.height);
     const ctx = getCanvasContext2D(canvas);
