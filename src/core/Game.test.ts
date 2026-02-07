@@ -1,19 +1,17 @@
-import { Vector2D } from '@core/structures/Vector2D';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Game } from './Game';
 
-const configuration = {
-  initialSceneName: '',
-  engine: {
-    assetLoader: {
-      imagesPath: '',
-    },
-    graphics: {
-      size: new Vector2D(1, 1),
-    },
-    loop: {
-      framesPerSecond: 1,
-    },
+const config = {
+  assets: {
+    images: '',
+  },
+  game: {
+    framesPerSecond: 1,
+    splashScene: '',
+  },
+  graphics: {
+    width: 1,
+    height: 1,
   },
 };
 
@@ -77,7 +75,7 @@ describe('Game', () => {
   });
 
   it('should setup components and initial scene on setup', () => {
-    const game = new Game(configuration);
+    const game = new Game();
     const audioInitializeSpy = vi.spyOn(game.audio, 'initialize');
     const graphicsSetupSpy = vi.spyOn(game.graphics, 'syncWithTargetCanvas');
     const loopSetLoopCallbackSpy = vi.spyOn(game.loop, 'setLoopCallback');
@@ -91,12 +89,12 @@ describe('Game', () => {
     expect(graphicsSetupSpy).toHaveBeenCalled();
     expect(loopSetLoopCallbackSpy).toHaveBeenCalled();
     expect(taskManagerRegisterTaskSpy).toHaveBeenCalled();
-    expect(sceneManagerLoadSceneSpy).toHaveBeenCalledWith(configuration.initialSceneName);
+    expect(sceneManagerLoadSceneSpy).toHaveBeenCalledWith(config.game.splashScene);
     expect(sceneManagerSetActiveSceneSpy).toHaveBeenCalled();
   });
 
   it('should start loop on start', () => {
-    const game = new Game(configuration);
+    const game = new Game();
     const loopStartSpy = vi.spyOn(game.loop, 'start');
 
     game.start();
@@ -105,7 +103,7 @@ describe('Game', () => {
   });
 
   it('should stop loop on stop', () => {
-    const game = new Game(configuration);
+    const game = new Game();
     const loopStopSpy = vi.spyOn(game.loop, 'stop');
 
     game.stop();
