@@ -2,6 +2,14 @@ import { Scene } from '@core/nodes/Scene';
 import { describe, expect, it, vi } from 'vitest';
 import { SceneManager } from './SceneManager';
 
+vi.mock('config', () => ({
+  getConfig: () => ({
+    content: {
+      scenes: '/src/scenes',
+    },
+  }),
+}));
+
 class TestScene extends Scene {
   title = 'TestScene';
 }

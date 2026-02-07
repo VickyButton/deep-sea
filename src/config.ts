@@ -3,6 +3,9 @@ interface Config {
     audio: string;
     images: string;
   };
+  content: {
+    scenes: string;
+  };
   dev: {
     debugMode: boolean;
   };
@@ -23,6 +26,9 @@ function defaultConfig(): Config {
     assets: {
       audio: new URL('./assets/audio', import.meta.url).pathname,
       images: new URL('./assets/images', import.meta.url).pathname,
+    },
+    content: {
+      scenes: new URL('./scenes', import.meta.url).pathname,
     },
     dev: {
       debugMode: false,

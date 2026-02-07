@@ -6,6 +6,9 @@ const config = {
     audio: '',
     images: '',
   },
+  content: {
+    scenes: '',
+  },
   dev: {
     debugMode: false,
   },

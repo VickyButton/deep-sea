@@ -1,5 +1,6 @@
 import { Scene } from '@core/nodes/Scene';
 import { log } from '@core/utils/logger';
+import { getConfig } from 'config';
 
 const LOG_TAG = 'SceneManager';
 
@@ -44,8 +45,8 @@ export class SceneManager {
    * @returns The loaded scene.
    */
   public async loadScene(sceneName: string) {
-    const scenesPath = new URL('../../scenes', import.meta.url).pathname;
-    const filePath = `${scenesPath}/${sceneName}/${sceneName}`;
+    const config = getConfig();
+    const filePath = `${config.content.scenes}/${sceneName}/${sceneName}`;
     const importedModule: unknown = await import(/* @vite-ignore */ filePath);
 
     if (!importedModule) {
