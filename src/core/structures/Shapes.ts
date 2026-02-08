@@ -31,6 +31,8 @@ export abstract class Shape {
    */
   public abstract containsPoint(point: Vector2D): boolean;
 
+  // TODO: Add abstract containsShape method.
+
   /**
    * Checks if another shape overlaps the shape.
    * @param shape The shape to check.
