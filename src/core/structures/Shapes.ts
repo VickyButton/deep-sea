@@ -2,29 +2,6 @@ import { Vector2D } from './Vector2D';
 
 export abstract class Shape {
   /**
-   * The position of the shape.
-   */
-  public readonly position: Vector2D;
-
-  constructor(x: number, y: number) {
-    this.position = new Vector2D(x, y);
-  }
-
-  /**
-   * The X position of the shape.
-   */
-  public get x() {
-    return this.position.x;
-  }
-
-  /**
-   * The Y position of the shape.
-   */
-  public get y() {
-    return this.position.y;
-  }
-
-  /**
    * Checks if a point is contained within the shape.
    * @param point The point to check.
    * @returns True if the point is contained within the shape, false if not.
@@ -57,7 +34,7 @@ export class Circle extends Shape {
   /**
    * The center position of the circle.
    */
-  declare public readonly position: Vector2D;
+  public readonly position: Vector2D;
   /**
    * The radius of the circle.
    */
@@ -70,8 +47,9 @@ export class Circle extends Shape {
    * @param radius The radius of the circle.
    */
   constructor(x: number, y: number, radius: number) {
-    super(x, y);
+    super();
 
+    this.position = new Vector2D(x, y);
     this.radius = radius;
   }
 
@@ -161,7 +139,7 @@ export class Rectangle extends Shape {
   /**
    * The top-left corner position of the rectangle.
    */
-  declare public readonly position: Vector2D;
+  public readonly position: Vector2D;
   /**
    * The dimensions of the rectangle.
    */
@@ -174,8 +152,9 @@ export class Rectangle extends Shape {
    * @param height The height of the rectangle.
    */
   constructor(x: number, y: number, width: number, height: number) {
-    super(x, y);
+    super();
 
+    this.position = new Vector2D(x, y);
     this.size = new Vector2D(width, height);
   }
 
