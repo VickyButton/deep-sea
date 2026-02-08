@@ -17,7 +17,7 @@ export class RectangleNode extends ShapeNode2D {
   /**
    * The bounding rectangle formed by the node.
    */
-  public get rectangle() {
+  public get shape() {
     const position = this.globalPosition;
     const size = Vector2D.multiply(this.globalScale, this.size);
 
