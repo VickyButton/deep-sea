@@ -25,27 +25,11 @@ export abstract class Shape {
   }
 
   /**
-   * Sets components of the shape.
-   * @param x The X position of the shape.
-   * @param y The Y position of the shape.
-   */
-  public set(x: number, y: number) {
-    this.position.set(x, y);
-  }
-
-  /**
    * Checks if a point is contained within the shape.
    * @param point The point to check.
    * @returns True if the point is contained within the shape, false if not.
    */
   public abstract containsPoint(point: Vector2D): boolean;
-
-  /**
-   * Checks if another shape is contained within the shape.
-   * @param shape The shape to check.
-   * @returns True if the shape is contained within the shape, false if not.
-   */
-  public abstract containsShape(shape: Shape): boolean;
 
   /**
    * Checks if another shape overlaps the shape.
@@ -54,6 +38,11 @@ export abstract class Shape {
    */
   public abstract overlaps(shape: Shape): boolean;
 
+  /**
+   * Checks if a given value is an instance of Shape.
+   * @param node The value to check.
+   * @returns True if an instance of Shape, false if not.
+   */
   public static isShape(shape: unknown): shape is Shape {
     return shape instanceof Shape;
   }
@@ -112,8 +101,7 @@ export class Circle extends Shape {
    * @param radius The radius of the circle.
    */
   public set(x: number, y: number, radius: number) {
-    super.set(x, y);
-
+    this.position.set(x, y);
     this.radius = radius;
   }
 
@@ -138,7 +126,8 @@ export class Circle extends Shape {
       case Circle.isCircle(shape):
         return this.overlapsCircle(shape);
       case Rectangle.isRectangle(shape):
-        return this.overlapsRectangle(shape);
+        // TODO: Implement check.
+        return false;
       default:
         return false;
     }
@@ -155,11 +144,6 @@ export class Circle extends Shape {
       dxSquared + dySquared <= Math.pow(radiiSum, 2) &&
       dxSquared + dySquared >= Math.pow(this.radius - circle.radius, 2)
     );
-  }
-
-  private overlapsRectangle(rectangle: Rectangle) {
-    // TODO: Implement.
-    return false;
   }
 
   public static isCircle(shape: Shape): shape is Circle {
@@ -257,10 +241,8 @@ export class Rectangle extends Shape {
    * @param height The height of the rectangle.
    */
   public set(x: number, y: number, width: number, height: number) {
-    this.position.x = x;
-    this.position.y = y;
-    this.size.x = width;
-    this.size.y = height;
+    this.position.set(x, y);
+    this.size.set(width, height);
   }
 
   /**
@@ -281,17 +263,13 @@ export class Rectangle extends Shape {
   public overlaps(shape: Shape) {
     switch (true) {
       case Circle.isCircle(shape):
-        return this.overlapsCircle(shape);
+        // TODO: Implement check.
+        return false;
       case Rectangle.isRectangle(shape):
         return this.overlapsRectangle(shape);
       default:
         return false;
     }
-  }
-
-  private overlapsCircle(circle: Circle) {
-    // TODO: Implement.
-    return false;
   }
 
   private overlapsRectangle(rectangle: Rectangle) {
