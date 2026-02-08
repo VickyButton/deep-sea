@@ -6,21 +6,18 @@ import { GraphicsNode2D } from './GraphicsNode2D';
 
 const ERROR_SPRITE_SHEET_NAME_UNDEFINED = 'Sprite sheet name not defined';
 const ERROR_SPRITE_SHEET_NOT_FOUND = 'Unable to retrieve sprite';
-const ERROR_SPRITE_RECTANGLE_UNDEFINED = 'Sprite rectangle not defined';
 
 export class SpriteNode extends GraphicsNode2D {
   /**
    * The file name of the sprite sheet image, including the file extension.
    */
-  public spriteSheetName?: string;
+  public spriteSheetName = '';
   /**
    * The sprite's rectangle within the sprite sheet.
    */
-  public spriteRectangle?: Rectangle;
+  public spriteRectangle = new Rectangle(0, 0, 0, 0);
 
   public get boundingBox() {
-    if (!this.spriteRectangle) throw new Error(ERROR_SPRITE_RECTANGLE_UNDEFINED);
-
     const position = this.globalPosition;
     const size = Vector2D.multiply(this.globalScale, this.spriteRectangle.size);
 
@@ -48,7 +45,6 @@ export class SpriteNode extends GraphicsNode2D {
 
   public render() {
     if (!this.spriteSheetName) throw new Error(ERROR_SPRITE_SHEET_NAME_UNDEFINED);
-    if (!this.spriteRectangle) throw new Error(ERROR_SPRITE_RECTANGLE_UNDEFINED);
 
     const game = getGame();
     // Retrieve sprite sheet.
