@@ -1,5 +1,6 @@
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
+import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { getConfig } from 'config';
 import { ShapeNode2D } from './ShapeNode2D';
 
@@ -44,14 +45,12 @@ export class RectangleNode extends ShapeNode2D {
     const config = getConfig();
     const size = Vector2D.multiply(this.globalScale, this.size);
     const canvas = new OffscreenCanvas(size.x, size.y);
-    const context = canvas.getContext('2d');
-
-    if (!context) throw new Error('Unable to get rendering context');
+    const ctx = getCanvasContext2D(canvas);
 
     if (config.dev.debugMode) {
-      context.strokeStyle = this.debugOutlineColor;
-      context.lineWidth = 1.5;
-      context.strokeRect(0, 0, size.x, size.y);
+      ctx.strokeStyle = this.debugOutlineColor;
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(0, 0, size.x, size.y);
     }
 
     return canvas.transferToImageBitmap();

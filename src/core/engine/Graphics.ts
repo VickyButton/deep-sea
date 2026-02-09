@@ -1,6 +1,7 @@
 import { CameraNode2D } from '@core/nodes/CameraNode2D';
 import { GraphicsNode2D } from '@core/nodes/GraphicsNode2D';
 import { Vector2D } from '@core/structures/Vector2D';
+import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { log } from '@core/utils/logger';
 import { getConfig } from 'config';
 
@@ -19,7 +20,7 @@ export class Graphics {
   private camera?: CameraNode2D;
   private nodes = new Set<GraphicsNode2D>();
   private targetCanvas?: HTMLCanvasElement;
-  private targetContext?: ImageBitmapRenderingContext;
+  private targetCtx?: ImageBitmapRenderingContext;
   private drawQueue = new Map<number, DrawInstructions[]>();
 
   /**
@@ -75,12 +76,12 @@ export class Graphics {
     targetCanvas.width = config.graphics.width;
     targetCanvas.height = config.graphics.height;
 
-    const targetContext = targetCanvas.getContext('bitmaprenderer');
+    const targetCtx = targetCanvas.getContext('bitmaprenderer');
 
-    if (!targetContext) throw new Error(ERROR_MISSING_TARGET_CONTEXT);
+    if (!targetCtx) throw new Error(ERROR_MISSING_TARGET_CONTEXT);
 
     this.targetCanvas = targetCanvas;
-    this.targetContext = targetContext;
+    this.targetCtx = targetCtx;
   }
 
   /**
@@ -98,22 +99,19 @@ export class Graphics {
    * Iterates through draw queue to render frame and clears drawing queue after.
    */
   public draw() {
-    if (!this.targetContext) throw new Error(ERROR_MISSING_TARGET_CONTEXT);
+    if (!this.targetCtx) throw new Error(ERROR_MISSING_TARGET_CONTEXT);
 
     const canvas = new OffscreenCanvas(this.width, this.height);
-    const context = canvas.getContext('2d');
-
-    if (!context) throw new Error('Unable to get rendering context');
-
+    const ctx = getCanvasContext2D(canvas);
     const sortedDrawQueue = new Map([...this.drawQueue.entries()].sort());
 
     for (const layer of sortedDrawQueue.values()) {
-      context.drawImage(this.renderLayer(layer), 0, 0);
+      ctx.drawImage(this.renderLayer(layer), 0, 0);
     }
 
     const imageBitmap = canvas.transferToImageBitmap();
 
-    this.targetContext.transferFromImageBitmap(imageBitmap);
+    this.targetCtx.transferFromImageBitmap(imageBitmap);
     this.clearDrawQueue();
 
     imageBitmap.close();
@@ -137,19 +135,17 @@ export class Graphics {
 
   private renderLayer(layer: DrawInstructions[]) {
     const layerCanvas = new OffscreenCanvas(this.width, this.height);
-    const layerContext = layerCanvas.getContext('2d');
-
-    if (!layerContext) throw new Error('Unable to get rendering context');
+    const layerCtx = getCanvasContext2D(layerCanvas);
 
     for (const drawInstructions of layer) {
-      this.drawOntoLayer(layerContext, drawInstructions);
+      this.drawOntoLayer(layerCtx, drawInstructions);
     }
 
     return layerCanvas;
   }
 
   private drawOntoLayer(
-    layerContext: OffscreenCanvasRenderingContext2D,
+    layerCtx: OffscreenCanvasRenderingContext2D,
     drawInstructions: DrawInstructions,
   ) {
     const size = new Vector2D(
@@ -162,23 +158,17 @@ export class Graphics {
     const dy = drawInstructions.position.y + dHeight / 2;
 
     // Apply transformations.
-    layerContext.translate(dx, dy);
-    layerContext.rotate(-drawInstructions.rotation.x);
+    layerCtx.translate(dx, dy);
+    layerCtx.rotate(-drawInstructions.rotation.x);
 
     // Draw image.
-    layerContext.drawImage(
-      drawInstructions.imageBitmap,
-      -dWidth / 2,
-      -dHeight / 2,
-      dWidth,
-      dHeight,
-    );
+    layerCtx.drawImage(drawInstructions.imageBitmap, -dWidth / 2, -dHeight / 2, dWidth, dHeight);
 
     drawInstructions.imageBitmap.close();
 
     // Apply inverse transformations.
-    layerContext.rotate(drawInstructions.rotation.x);
-    layerContext.translate(-dx, -dy);
+    layerCtx.rotate(drawInstructions.rotation.x);
+    layerCtx.translate(-dx, -dy);
   }
 
   private getVisibleNodes() {
