@@ -93,6 +93,8 @@ export class Graphics {
     const imageBitmap = canvas.transferToImageBitmap();
 
     this.targetContext.transferFromImageBitmap(imageBitmap);
+
+    imageBitmap.close();
   }
 
   /**
@@ -127,6 +129,8 @@ export class Graphics {
 
     this.targetContext.transferFromImageBitmap(imageBitmap);
     this.clearDrawQueue();
+
+    imageBitmap.close();
   }
 
   /**
@@ -183,6 +187,8 @@ export class Graphics {
       dWidth,
       dHeight,
     );
+
+    drawInstructions.imageBitmap.close();
 
     // Apply inverse transformations.
     layerContext.rotate(drawInstructions.rotation.x);
