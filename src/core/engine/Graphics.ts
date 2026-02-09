@@ -1,3 +1,4 @@
+// TODO: Refactor Graphics to reduce new instances of OffscreenCanvas.
 import { CameraNode2D } from '@core/nodes/CameraNode2D';
 import { GraphicsNode2D } from '@core/nodes/GraphicsNode2D';
 import { Vector2D } from '@core/structures/Vector2D';
