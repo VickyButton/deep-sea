@@ -84,20 +84,6 @@ export class Graphics {
   }
 
   /**
-   * Resets target canvas to a blank canvas.
-   */
-  public clear() {
-    if (!this.targetContext) throw new Error(ERROR_MISSING_TARGET_CONTEXT);
-
-    const canvas = new OffscreenCanvas(this.width, this.height);
-    const imageBitmap = canvas.transferToImageBitmap();
-
-    this.targetContext.transferFromImageBitmap(imageBitmap);
-
-    imageBitmap.close();
-  }
-
-  /**
    * Adds drawing instructions to the draw queue for rendering on the next frame.
    *
    * @param drawInstructions Instructions for what to draw and where to draw it.
