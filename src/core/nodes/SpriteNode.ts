@@ -11,11 +11,18 @@ export class SpriteNode extends GraphicsNode2D {
   /**
    * The file name of the sprite sheet image, including the file extension.
    */
-  public spriteSheetName = '';
+  public spriteSheetName: string;
   /**
    * The sprite's rectangle within the sprite sheet.
    */
-  public spriteRectangle = new Rectangle(0, 0, 0, 0);
+  public spriteRectangle: Rectangle;
+
+  constructor(spriteSheetName = '', spriteRectangle = new Rectangle(0, 0, 0, 0)) {
+    super();
+
+    this.spriteSheetName = spriteSheetName;
+    this.spriteRectangle = spriteRectangle;
+  }
 
   public get boundingBox() {
     const position = this.globalPosition;
