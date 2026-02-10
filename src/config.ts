@@ -62,7 +62,7 @@ function defaultConfig(): Config {
  * @returns The loaded config.
  */
 export async function loadConfig(path: string) {
-  const config = (await import(path, {
+  const config = (await import(/* @vite-ignore */ path, {
     with: {
       type: 'json',
     },
