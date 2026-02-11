@@ -1,8 +1,8 @@
-import { Shape } from '@core/structures/Shapes';
+import { Shape2D } from '@core/structures/Shapes';
 import { GraphicsNode2D } from './GraphicsNode2D';
 
 export abstract class ShapeNode2D extends GraphicsNode2D {
-  public abstract readonly shape: Shape;
+  public abstract readonly shape: Shape2D;
 
   /**
    * Checks if a given node is an instance of ShapeNode2D.

@@ -1,6 +1,6 @@
 import { Vector2D } from './Vector2D';
 
-export abstract class Shape {
+export abstract class Shape2D {
   /**
    * Checks if a point is contained within the shape.
    * @param point The point to check.
@@ -15,22 +15,22 @@ export abstract class Shape {
    * @param shape The shape to check.
    * @return True if the shape overlaps the shape, false if not.
    */
-  public abstract overlaps(shape: Shape): boolean;
+  public abstract overlaps(shape: Shape2D): boolean;
 
   /**
-   * Checks if a given value is an instance of Shape.
+   * Checks if a given value is an instance of Shape2D.
    * @param node The value to check.
    * @returns True if an instance of Shape, false if not.
    */
-  public static isShape(shape: unknown): shape is Shape {
-    return shape instanceof Shape;
+  public static isShape2D(shape: unknown): shape is Shape2D {
+    return shape instanceof Shape2D;
   }
 }
 
 /**
  * Circles are defined by a center position and a radius.
  */
-export class Circle extends Shape {
+export class Circle extends Shape2D {
   /**
    * The center position of the circle.
    */
@@ -101,7 +101,7 @@ export class Circle extends Shape {
    * Checks if another shape overlaps with the circle.
    * @param shape The shape to check if it is overlapping with the circle.
    */
-  public overlaps(shape: Shape) {
+  public overlaps(shape: Shape2D) {
     switch (true) {
       case Circle.isCircle(shape):
         return this.overlapsCircle(shape);
@@ -126,8 +126,8 @@ export class Circle extends Shape {
     );
   }
 
-  public static isCircle(shape: Shape): shape is Circle {
-    return shape instanceof Circle;
+  public static isCircle(value: unknown): value is Circle {
+    return value instanceof Circle;
   }
 }
 
@@ -135,7 +135,7 @@ export class Circle extends Shape {
  * Rectangles are defined by a position and a size, where the position is the top-left corner of
  * the rectangle and X increases to the right and Y increases downwards.
  */
-export class Rectangle extends Shape {
+export class Rectangle extends Shape2D {
   /**
    * The top-left corner position of the rectangle.
    */
@@ -241,7 +241,7 @@ export class Rectangle extends Shape {
    * Checks if another shape overlaps with the rectangle.
    * @param shape The shape to check if it is overlapping with the rectangle.
    */
-  public overlaps(shape: Shape) {
+  public overlaps(shape: Shape2D) {
     switch (true) {
       case Circle.isCircle(shape):
         // TODO: Implement check.
@@ -262,7 +262,7 @@ export class Rectangle extends Shape {
     );
   }
 
-  public static isRectangle(shape: Shape): shape is Rectangle {
-    return shape instanceof Rectangle;
+  public static isRectangle(value: unknown): value is Rectangle {
+    return value instanceof Rectangle;
   }
 }
