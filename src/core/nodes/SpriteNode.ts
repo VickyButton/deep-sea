@@ -11,18 +11,11 @@ export class SpriteNode extends GraphicsNode2D {
   /**
    * The file name of the sprite sheet image, including the file extension.
    */
-  public spriteSheetName: string;
+  public spriteSheetName = '';
   /**
    * The sprite's rectangle within the sprite sheet.
    */
-  public spriteRectangle: Rectangle;
-
-  constructor(spriteSheetName = '', spriteRectangle = new Rectangle(0, 0, 0, 0)) {
-    super();
-
-    this.spriteSheetName = spriteSheetName;
-    this.spriteRectangle = spriteRectangle;
-  }
+  public spriteRectangle = new Rectangle(0, 0, 0, 0);
 
   public get boundingBox() {
     const position = this.globalPosition;
@@ -69,5 +62,14 @@ export class SpriteNode extends GraphicsNode2D {
     ctx.drawImage(sprite, 0, 0, size.x, size.y);
 
     return canvas.transferToImageBitmap();
+  }
+
+  public static create(spriteSheetName = '', spriteRectangle = new Rectangle(0, 0, 0, 0)) {
+    const node = new SpriteNode();
+
+    node.spriteSheetName = spriteSheetName;
+    node.spriteRectangle = spriteRectangle;
+
+    return node;
   }
 }
