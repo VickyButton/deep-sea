@@ -19,11 +19,11 @@ export abstract class Shape2D {
 
   /**
    * Checks if a given value is an instance of Shape2D.
-   * @param node The value to check.
+   * @param value The value to check.
    * @returns True if an instance of Shape, false if not.
    */
-  public static isShape2D(shape: unknown): shape is Shape2D {
-    return shape instanceof Shape2D;
+  public static isShape2D(value: unknown): value is Shape2D {
+    return value instanceof Shape2D;
   }
 }
 
