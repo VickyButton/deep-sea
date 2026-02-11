@@ -4,12 +4,18 @@ const RGB_VALUE_MIN = 0;
 const ALPHA_VALUE_MAX = 1;
 const ALPHA_VALUE_MIN = 0;
 
-export class ColorRGB {
+export abstract class Color {
+  public abstract toString(): string;
+}
+
+export class ColorRGB extends Color {
   protected _r: number;
   protected _g: number;
   protected _b: number;
 
   constructor(r = 0, g = 0, b = 0) {
+    super();
+
     this._r = this.clampRgbValue(r);
     this._g = this.clampRgbValue(g);
     this._b = this.clampRgbValue(b);
@@ -64,7 +70,7 @@ export class ColorRGB {
    * Converts the color into RGB string format.
    * @returns The color as an RGB string.
    */
-  public toRgbString() {
+  public toString() {
     return `rgb(${this.r.toString()},${this.g.toString()},${this.b.toString()})`;
   }
 
@@ -179,7 +185,7 @@ export class ColorRGBA extends ColorRGB {
    * Converts the color into RGBA string format.
    * @returns The color as an RGBA string.
    */
-  public toRgbaString() {
+  public toString() {
     return `rgba(${this.r.toString()},${this.g.toString()},${this.b.toString()},${this.a.toString()})`;
   }
 
