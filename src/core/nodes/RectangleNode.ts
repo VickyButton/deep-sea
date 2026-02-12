@@ -55,4 +55,13 @@ export class RectangleNode extends ShapeNode2D {
 
     return canvas.transferToImageBitmap();
   }
+
+  public static create(x: number, y: number, width: number, height: number) {
+    const node = new RectangleNode();
+
+    node.position = new Vector2D(x, y);
+    node.size = new Vector2D(width, height);
+
+    return node;
+  }
 }
