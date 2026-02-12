@@ -13,6 +13,7 @@ import { SpriteSheetManager } from './engine/SpriteSheetManager';
 const LOG_TAG = 'Game';
 
 export class Game {
+  // TODO: Move asset manager, graphics, etc. into own modules similar to config.
   public readonly audio = new Audio();
   public readonly graphics = new Graphics();
   public readonly inputController = new InputController();
