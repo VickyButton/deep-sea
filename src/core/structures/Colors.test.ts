@@ -34,7 +34,7 @@ describe('ColorRGB', () => {
   it('should convert color to RGB string', () => {
     const color = ColorRGBA.black;
 
-    expect(color.toString()).toBe('rgb(0,0,0)');
+    expect(color.toRgbString()).toBe('rgb(0,0,0)');
   });
 });
 
@@ -71,6 +71,6 @@ describe('ColorRGBA', () => {
   it('should convert color to RGBA string', () => {
     const color = ColorRGBA.black;
 
-    expect(color.toString()).toBe('rgba(0,0,0,1)');
+    expect(color.toRgbaString()).toBe('rgba(0,0,0,1)');
   });
 });
