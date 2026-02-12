@@ -6,6 +6,7 @@ interface Config {
   assets: {
     audio: string;
     images: string;
+    spriteSheets: string;
   };
   content: {
     scenes: string;
@@ -36,6 +37,7 @@ function defaultConfig(): Config {
     assets: {
       audio: new URL('./assets/audio', import.meta.url).pathname,
       images: new URL('./assets/images', import.meta.url).pathname,
+      spriteSheets: new URL('./assets/spriteSheets', import.meta.url).pathname,
     },
     content: {
       scenes: new URL('./scenes', import.meta.url).pathname,

@@ -9,6 +9,7 @@ const config = {
   assets: {
     audio: '',
     images: '',
+    spriteSheets: '',
   },
   content: {
     scenes: '',
