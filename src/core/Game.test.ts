@@ -49,14 +49,6 @@ vi.mock('@core/engine/Audio', () => ({
   ),
 }));
 
-vi.mock('@core/engine/Graphics', () => ({
-  Graphics: vi.fn(
-    class {
-      syncWithTargetCanvas = vi.fn();
-    },
-  ),
-}));
-
 vi.mock('@core/engine/InputController', () => ({
   InputController: vi.fn(
     class {
