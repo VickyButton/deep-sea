@@ -1,11 +1,9 @@
 import { getAssets } from '@core/engine/assets';
+import { getRenderer } from '@core/engine/renderer';
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
-import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { getGame } from 'game';
 import { GraphicsNode2D } from './GraphicsNode2D';
-
-const ERROR_SPRITE_SHEET_NOT_FOUND = 'Unable to retrieve sprite';
 
 export class SpriteNode extends GraphicsNode2D {
   /**
@@ -45,49 +43,27 @@ export class SpriteNode extends GraphicsNode2D {
     });
   }
 
-  public render() {
+  public draw(ctx: CanvasRenderingContext2D) {
     const assets = getAssets();
-    // Retrieve sprite sheet.
-    const spriteSheet = assets.spriteSheets.get(this.spriteSheetName);
-
-    if (!spriteSheet) throw new Error(ERROR_SPRITE_SHEET_NOT_FOUND);
-
-    // Parse sprite from sprite sheet.
-    const sprite = this.parseSprite();
-    const size = Vector2D.multiply(this.globalScale, this.spriteRectangle.size);
-    const canvas = new OffscreenCanvas(size.x, size.y);
-    const ctx = getCanvasContext2D(canvas);
-
-    ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(sprite, 0, 0, size.x, size.y);
-
-    return canvas.transferToImageBitmap();
-  }
-
-  private parseSprite() {
-    const assets = getAssets();
+    const renderer = getRenderer();
     const image = assets.images.get(this.spriteSheetName);
-    const spriteSheet = assets.spriteSheets.get(this.spriteSheetName);
 
     if (!image) throw new Error('Unable to retrieve sprite sheet image');
-    if (!spriteSheet) throw new Error('Unable to retrieve sprite sheet');
 
-    const canvas = new OffscreenCanvas(this.spriteRectangle.width, this.spriteRectangle.height);
-    const ctx = getCanvasContext2D(canvas);
+    const drawPosition = renderer.getActiveCamera().calculateRelativePosition(this.globalPosition);
+    const drawSize = Vector2D.multiply(this.globalScale, this.spriteRectangle.size);
+    const sx = this.spriteRectangle.x;
+    const sy = this.spriteRectangle.y;
+    const sw = this.spriteRectangle.width;
+    const sh = this.spriteRectangle.height;
+    const dx = drawPosition.x;
+    const dy = drawPosition.y;
+    const dw = drawSize.x;
+    const dh = drawSize.y;
 
-    ctx.drawImage(
-      image,
-      this.spriteRectangle.x,
-      this.spriteRectangle.y,
-      this.spriteRectangle.width,
-      this.spriteRectangle.height,
-      0,
-      0,
-      this.spriteRectangle.width,
-      this.spriteRectangle.height,
-    );
-
-    return canvas.transferToImageBitmap();
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
+    ctx.imageSmoothingEnabled = false;
   }
 
   public static create(spriteSheetName = '', spriteRectangle = new Rectangle(0, 0, 0, 0)) {
