@@ -10,7 +10,7 @@ const config = {
 };
 
 vi.mock('config', () => ({
-  getConfig: () => ({ ...config }),
+  useConfig: () => ({ ...config }),
 }));
 
 vi.mock('./dateTimeProvider', () => ({

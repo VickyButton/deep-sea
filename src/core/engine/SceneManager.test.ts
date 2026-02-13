@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SceneManager } from './SceneManager';
 
 vi.mock('config', () => ({
-  getConfig: () => ({
+  useConfig: () => ({
     content: {
       scenes: '/src/scenes',
     },

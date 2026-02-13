@@ -1,5 +1,5 @@
 import { error } from '@core/utils/logger';
-import { getConfig } from 'config';
+import { useConfig } from 'config';
 
 interface AudioState {
   volume: number;
@@ -105,7 +105,7 @@ export class Audio {
   public async loadBuffer(fileName: string) {
     if (!this.audioContext) throw new Error('Audio context not set');
 
-    const config = getConfig();
+    const config = useConfig();
 
     try {
       const filePath = `${config.assets.audio}/${fileName}`;
@@ -151,6 +151,6 @@ export class Audio {
 
 const audio = new Audio();
 
-export function getAudio() {
+export function useAudio() {
   return audio;
 }

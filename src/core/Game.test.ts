@@ -30,17 +30,17 @@ const config = {
 };
 
 vi.mock('audio', () => ({
-  getAudio: () => ({
+  useAudio: () => ({
     initialize: vi.fn(),
   }),
 }));
 
 vi.mock('config', () => ({
-  getConfig: () => config,
+  useConfig: () => config,
 }));
 
 vi.mock('graphics', () => ({
-  getGraphics: () => ({
+  useGraphics: () => ({
     syncWithGameCanvas: vi.fn(),
   }),
 }));

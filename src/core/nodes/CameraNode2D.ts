@@ -1,6 +1,6 @@
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
-import { getConfig } from 'config';
+import { useConfig } from 'config';
 import { GameNode2D } from './GameNode2D';
 
 export class CameraNode2D extends GameNode2D {
@@ -29,7 +29,7 @@ export class CameraNode2D extends GameNode2D {
   }
 
   private defaultSize() {
-    const config = getConfig();
+    const config = useConfig();
 
     return new Vector2D(config.graphics.width, config.graphics.height);
   }

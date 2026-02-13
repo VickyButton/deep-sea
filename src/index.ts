@@ -1,8 +1,8 @@
-import { getConfig, loadConfig, setConfig } from './config';
-import { getGame } from './game';
+import { useConfig, loadConfig, setConfig } from './config';
+import { useGame } from './game';
 
 function createGameCanvas() {
-  const config = getConfig();
+  const config = useConfig();
   const canvas = document.createElement('canvas');
 
   canvas.id = 'game-canvas';
@@ -44,7 +44,7 @@ function createGameStartButton() {
 }
 
 function setUpGameDom() {
-  const config = getConfig();
+  const config = useConfig();
   const gameContainer = createGameContainer();
   const gameCanvas = createGameCanvas();
   const gameStartButton = createGameStartButton();
@@ -76,7 +76,7 @@ function setUpGame() {
 }
 
 function startGame() {
-  const game = getGame();
+  const game = useGame();
 
   game.setup();
   game.start();
