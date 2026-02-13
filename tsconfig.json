@@ -30,6 +30,9 @@
       "graphics": [
         "./src/core/engine/graphics"
       ],
+      "loop": [
+        "./src/core/engine/loop"
+      ],
       "renderer": [
         "./src/core/engine/renderer"
       ]

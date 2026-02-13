@@ -1,4 +1,3 @@
-import { useLoop } from '@core/engine/loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
@@ -6,6 +5,7 @@ import { useAudio } from 'audio';
 import { useConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
 import { useGraphics } from 'graphics';
+import { useLoop } from 'loop';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 
