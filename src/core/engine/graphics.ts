@@ -53,6 +53,10 @@ export class Graphics {
     this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
   }
 
+  public drawRectangle(x: number, y: number, width: number, height: number) {
+    this.ctx.rect(x, y, width, height);
+  }
+
   public fill(color: string) {
     this.ctx.fillStyle = color;
     this.ctx.fill();
