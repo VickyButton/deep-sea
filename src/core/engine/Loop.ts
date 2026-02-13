@@ -84,3 +84,9 @@ export class Loop {
     };
   }
 }
+
+const loop = new Loop();
+
+export function useLoop() {
+  return loop;
+}
