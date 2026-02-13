@@ -30,7 +30,7 @@ const config = {
 };
 
 vi.mock('audio', () => ({
-  getAudio: () => ({
+  useAudio: () => ({
     initialize: vi.fn(),
   }),
 }));

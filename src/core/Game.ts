@@ -2,7 +2,7 @@ import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
-import { getAudio } from 'audio';
+import { useAudio } from 'audio';
 import { getConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
 import { getGraphics } from 'graphics';
@@ -25,7 +25,7 @@ export class Game {
    */
   public setup() {
     log(LOG_TAG, 'Initializing...');
-    const audio = getAudio();
+    const audio = useAudio();
     const config = getConfig();
     const graphics = getGraphics();
 

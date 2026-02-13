@@ -151,6 +151,6 @@ export class Audio {
 
 const audio = new Audio();
 
-export function getAudio() {
+export function useAudio() {
   return audio;
 }
