@@ -1,4 +1,4 @@
-import { useLoop } from '@core/engine/Loop';
+import { useLoop } from '@core/engine/loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';

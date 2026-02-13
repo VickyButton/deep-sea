@@ -1,6 +1,6 @@
 import { timestampNow } from '@core/utils/dateTimeProvider';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { Loop } from './Loop';
+import { Loop } from './loop';
 
 const FRAMES_PER_SECOND = 60;
 const FRAMES_PER_SECOND_INTERVAL = Math.pow(0.1, 14) + 1000 / FRAMES_PER_SECOND;
@@ -16,7 +16,7 @@ vi.mock('../utils/dateTimeProvider', () => ({
   timestampNow: vi.fn(),
 }));
 
-describe('Loop', () => {
+describe('loop', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
