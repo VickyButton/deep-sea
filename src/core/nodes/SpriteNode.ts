@@ -5,7 +5,6 @@ import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { getGame } from 'game';
 import { GraphicsNode2D } from './GraphicsNode2D';
 
-const ERROR_SPRITE_SHEET_NAME_UNDEFINED = 'Sprite sheet name not defined';
 const ERROR_SPRITE_SHEET_NOT_FOUND = 'Unable to retrieve sprite';
 
 export class SpriteNode extends GraphicsNode2D {
@@ -33,7 +32,6 @@ export class SpriteNode extends GraphicsNode2D {
 
     this.visible = false;
 
-    if (!this.spriteSheetName) throw new Error(ERROR_SPRITE_SHEET_NAME_UNDEFINED);
     // If sprite sheet is already loaded, exit early.
     if (assets.spriteSheets.get(this.spriteSheetName)) return;
 
@@ -51,8 +49,6 @@ export class SpriteNode extends GraphicsNode2D {
   }
 
   public render() {
-    if (!this.spriteSheetName) throw new Error(ERROR_SPRITE_SHEET_NAME_UNDEFINED);
-
     const assets = getAssets();
     // Retrieve sprite sheet.
     const spriteSheet = assets.spriteSheets.get(this.spriteSheetName);
