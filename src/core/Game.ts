@@ -8,7 +8,6 @@ import { getConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
-import { SpriteSheetManager } from './engine/SpriteSheetManager';
 
 const LOG_TAG = 'Game';
 
@@ -20,7 +19,6 @@ export class Game {
   public readonly loop = new Loop();
   public readonly physics = new Physics2D();
   public readonly sceneManager = new SceneManager();
-  public readonly spriteSheetManager = new SpriteSheetManager();
   public readonly taskManager = new TaskManager();
   private initialSceneLoadTaskId?: string;
 
