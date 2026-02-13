@@ -1,5 +1,5 @@
 import { Audio } from '@core/engine/Audio';
-import { Graphics } from '@core/engine/Graphics';
+import { getGraphics } from '@core/engine/Graphics';
 import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
@@ -14,7 +14,6 @@ const LOG_TAG = 'Game';
 export class Game {
   // TODO: Move asset manager, graphics, etc. into own modules similar to config.
   public readonly audio = new Audio();
-  public readonly graphics = new Graphics();
   public readonly inputController = new InputController();
   public readonly loop = new Loop();
   public readonly physics = new Physics2D();
@@ -28,10 +27,11 @@ export class Game {
   public setup() {
     log(LOG_TAG, 'Initializing...');
     const config = getConfig();
+    const graphics = getGraphics();
 
     this.loop.setLoopCallback(this.onLoop.bind(this));
     this.audio.initialize();
-    this.graphics.syncWithTargetCanvas();
+    graphics.syncWithGameCanvas();
     this.inputController.attachListeners();
 
     const initialSceneLoadTask = this.sceneManager.loadScene(config.game.splashScene);
@@ -85,11 +85,12 @@ export class Game {
   private onLoop(dt: number) {
     if (!this.isReady) return;
 
+    const graphics = getGraphics();
+
     try {
       this.sceneManager.updateActiveScene(dt);
       this.physics.update();
-      this.graphics.update();
-      this.graphics.draw();
+      graphics.update();
     } catch (err) {
       error(LOG_TAG, String(err));
 
