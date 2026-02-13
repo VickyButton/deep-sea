@@ -48,6 +48,21 @@ export class Graphics {
     this._ctx = ctx;
   }
 
+  public drawCircle(x: number, y: number, radius: number) {
+    this.ctx.beginPath();
+    this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
+  }
+
+  public fill(color: string) {
+    this.ctx.fillStyle = color;
+    this.ctx.fill();
+  }
+
+  public stroke(color: string) {
+    this.ctx.strokeStyle = color;
+    this.ctx.stroke();
+  }
+
   public drawImage(
     image: ImageBitmap,
     sx: number,
