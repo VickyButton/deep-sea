@@ -1,4 +1,3 @@
-import { Audio } from '@core/engine/Audio';
 import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
@@ -6,6 +5,7 @@ import { error, log } from '@core/utils/logger';
 import { getConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
 import { getGraphics } from 'graphics';
+import { getAudio } from './engine/Audio';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 
@@ -13,7 +13,6 @@ const LOG_TAG = 'Game';
 
 export class Game {
   // TODO: Move asset manager, graphics, etc. into own modules similar to config.
-  public readonly audio = new Audio();
   public readonly inputController = new InputController();
   public readonly loop = new Loop();
   public readonly physics = new Physics2D();
@@ -26,11 +25,12 @@ export class Game {
    */
   public setup() {
     log(LOG_TAG, 'Initializing...');
+    const audio = getAudio();
     const config = getConfig();
     const graphics = getGraphics();
 
     this.loop.setLoopCallback(this.onLoop.bind(this));
-    this.audio.initialize();
+    audio.initialize();
     graphics.syncWithGameCanvas();
     this.inputController.attachListeners();
 
