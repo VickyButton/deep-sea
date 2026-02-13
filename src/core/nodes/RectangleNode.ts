@@ -1,3 +1,4 @@
+import { useRenderer } from '@core/engine/renderer';
 import { ColorRGB } from '@core/structures/Colors';
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
@@ -36,7 +37,8 @@ export class RectangleNode extends ShapeNode2D {
   public draw() {
     const config = useConfig();
     const graphics = useGraphics();
-    const position = this.shape.position;
+    const renderer = useRenderer();
+    const position = renderer.getActiveCamera().calculateRelativePosition(this.shape.position);
     const size = this.shape.size;
 
     graphics.drawRectangle(position.x, position.y, size.x, size.y);
