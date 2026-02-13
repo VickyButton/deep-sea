@@ -10,20 +10,24 @@ const ERROR_MISSING_GAME_CONTEXT = 'No game rendering context defined';
 
 export class Graphics {
   private canvas?: HTMLCanvasElement;
-  private ctx?: CanvasRenderingContext2D;
+  private _ctx?: CanvasRenderingContext2D;
+
+  public get ctx() {
+    if (!this._ctx) throw new Error(ERROR_MISSING_GAME_CONTEXT);
+
+    return this._ctx;
+  }
 
   /**
    * Iterates through visible nodes and draws each one.
    */
   public update() {
-    if (!this.ctx) throw new Error(ERROR_MISSING_GAME_CONTEXT);
-
     this.clear();
 
     const renderer = getRenderer();
 
     for (const node of renderer.createDrawQueue()) {
-      node.draw(this.ctx);
+      node.draw();
     }
   }
 
@@ -42,12 +46,32 @@ export class Graphics {
     const ctx = getCanvasContext2D(canvas);
 
     this.canvas = canvas;
-    this.ctx = ctx;
+    this._ctx = ctx;
+  }
+
+  public drawImage(
+    image: ImageBitmap,
+    sx: number,
+    sy: number,
+    sw: number,
+    sh: number,
+    dx: number,
+    dy: number,
+    dw: number,
+    dh: number,
+  ) {
+    this.ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
+  }
+
+  public enableImageSmoothing() {
+    this.ctx.imageSmoothingEnabled = true;
+  }
+
+  public disableImageSmoothing() {
+    this.ctx.imageSmoothingEnabled = false;
   }
 
   private clear() {
-    if (!this.ctx) throw new Error(ERROR_MISSING_GAME_CONTEXT);
-
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
   }
 

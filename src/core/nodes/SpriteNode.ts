@@ -1,4 +1,5 @@
 import { getAssets } from '@core/engine/assets';
+import { getGraphics } from '@core/engine/graphics';
 import { getRenderer } from '@core/engine/renderer';
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
@@ -43,8 +44,9 @@ export class SpriteNode extends GraphicsNode2D {
     });
   }
 
-  public draw(ctx: CanvasRenderingContext2D) {
+  public draw() {
     const assets = getAssets();
+    const graphics = getGraphics();
     const renderer = getRenderer();
     const image = assets.images.get(this.spriteSheetName);
 
@@ -61,9 +63,9 @@ export class SpriteNode extends GraphicsNode2D {
     const dw = drawSize.x;
     const dh = drawSize.y;
 
-    ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
-    ctx.imageSmoothingEnabled = false;
+    graphics.enableImageSmoothing();
+    graphics.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
+    graphics.disableImageSmoothing();
   }
 
   public static create(spriteSheetName = '', spriteRectangle = new Rectangle(0, 0, 0, 0)) {

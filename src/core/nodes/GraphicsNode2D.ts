@@ -58,8 +58,7 @@ export abstract class GraphicsNode2D extends GameNode2D {
   }
 
   /**
-   * Draws to the screen canvas.
-   * @param ctx The screen canvas context.
+   * Draws to the game canvas.
    */
-  public abstract draw(ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D): void;
+  public abstract draw(): void;
 }
