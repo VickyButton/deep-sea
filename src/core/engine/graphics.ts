@@ -1,4 +1,3 @@
-// TODO: Refactor Graphics to reduce new instances of OffscreenCanvas.
 import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { log } from '@core/utils/logger';
 import { getConfig } from 'config';
