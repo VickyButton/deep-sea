@@ -81,8 +81,12 @@ class Renderer {
   }
 }
 
-const renderer = new Renderer();
+let renderer = new Renderer();
 
 export function useRenderer() {
   return renderer;
+}
+
+export function resetRenderer() {
+  renderer = new Renderer();
 }

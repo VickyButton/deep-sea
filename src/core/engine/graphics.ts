@@ -102,8 +102,12 @@ export class Graphics {
   }
 }
 
-const graphics = new Graphics();
+let graphics = new Graphics();
 
 export function useGraphics() {
   return graphics;
+}
+
+export function resetGraphics() {
+  graphics = new Graphics();
 }

@@ -149,8 +149,12 @@ export class Audio {
   }
 }
 
-const audio = new Audio();
+let audio = new Audio();
 
 export function useAudio() {
   return audio;
+}
+
+export function resetAudio() {
+  audio = new Audio();
 }

@@ -85,8 +85,12 @@ class Loop {
   }
 }
 
-const loop = new Loop();
+let loop = new Loop();
 
 export function useLoop() {
   return loop;
+}
+
+export function resetLoop() {
+  loop = new Loop();
 }

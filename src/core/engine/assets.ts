@@ -104,11 +104,18 @@ class SpriteSheetManager extends AssetManager<SpriteSheet> {
   }
 }
 
-const assets = {
+let assets = {
   images: new ImageManager(),
   spriteSheets: new SpriteSheetManager(),
 };
 
 export function getAssets() {
   return assets;
+}
+
+export function resetAssets() {
+  assets = {
+    images: new ImageManager(),
+    spriteSheets: new SpriteSheetManager(),
+  };
 }
