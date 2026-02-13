@@ -5,7 +5,7 @@ import { error, log } from '@core/utils/logger';
 import { useAudio } from 'audio';
 import { useConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
-import { getGraphics } from 'graphics';
+import { useGraphics } from 'graphics';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 
@@ -27,7 +27,7 @@ export class Game {
     log(LOG_TAG, 'Initializing...');
     const audio = useAudio();
     const config = useConfig();
-    const graphics = getGraphics();
+    const graphics = useGraphics();
 
     this.loop.setLoopCallback(this.onLoop.bind(this));
     audio.initialize();
@@ -85,7 +85,7 @@ export class Game {
   private onLoop(dt: number) {
     if (!this.isReady) return;
 
-    const graphics = getGraphics();
+    const graphics = useGraphics();
 
     try {
       this.sceneManager.updateActiveScene(dt);

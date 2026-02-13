@@ -2,7 +2,7 @@ import { ColorRGB } from '@core/structures/Colors';
 import { Circle, Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
 import { useConfig } from 'config';
-import { getGraphics } from 'graphics';
+import { useGraphics } from 'graphics';
 import { ShapeNode2D } from './ShapeNode2D';
 
 export class CircleNode extends ShapeNode2D {
@@ -51,7 +51,7 @@ export class CircleNode extends ShapeNode2D {
 
   public draw() {
     const config = useConfig();
-    const graphics = getGraphics();
+    const graphics = useGraphics();
     const position = this.position;
     const radius = this.shape.radius;
 

@@ -2,7 +2,7 @@ import { getAssets } from '@core/engine/assets';
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
 import { getGame } from 'game';
-import { getGraphics } from 'graphics';
+import { useGraphics } from 'graphics';
 import { getRenderer } from 'renderer';
 import { GraphicsNode2D } from './GraphicsNode2D';
 
@@ -46,7 +46,7 @@ export class SpriteNode extends GraphicsNode2D {
 
   public draw() {
     const assets = getAssets();
-    const graphics = getGraphics();
+    const graphics = useGraphics();
     const renderer = getRenderer();
     const image = assets.images.get(this.spriteSheetName);
 

@@ -104,6 +104,6 @@ export class Graphics {
 
 const graphics = new Graphics();
 
-export function getGraphics() {
+export function useGraphics() {
   return graphics;
 }

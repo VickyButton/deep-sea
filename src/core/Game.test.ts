@@ -40,7 +40,7 @@ vi.mock('config', () => ({
 }));
 
 vi.mock('graphics', () => ({
-  getGraphics: () => ({
+  useGraphics: () => ({
     syncWithGameCanvas: vi.fn(),
   }),
 }));
