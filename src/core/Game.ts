@@ -8,6 +8,7 @@ import { useGraphics } from 'graphics';
 import { useLoop } from 'loop';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
+import { useRenderer } from './engine/renderer';
 
 const LOG_TAG = 'Game';
 
@@ -55,6 +56,9 @@ export class Game {
   }
 
   public teardown() {
+    const renderer = useRenderer();
+
+    renderer.clearNodes();
     this.inputController.detachListeners();
   }
 

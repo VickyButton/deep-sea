@@ -25,7 +25,7 @@ class Renderer {
   }
 
   /**
-   * Registers a node to be considered for rendering.
+   * Registers a node for rendering.
    * @param node The node to register.
    */
   public registerNode(node: GraphicsNode2D) {
@@ -33,11 +33,18 @@ class Renderer {
   }
 
   /**
-   * Deregisters a node from consideration for rendering.
+   * Deregisters a node from rendering.
    * @param node The node to deregister.
    */
   public deregisterNode(node: GraphicsNode2D) {
     this.nodes.delete(node);
+  }
+
+  /**
+   * Deregisters all nodes from rendering.
+   */
+  public clearNodes() {
+    this.nodes.clear();
   }
 
   /**
