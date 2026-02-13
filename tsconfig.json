@@ -18,6 +18,9 @@
       "@scenes/*": [
         "./src/scenes/*"
       ],
+      "assets": [
+        "./src/core/engine/assets"
+      ],
       "audio": [
         "./src/core/engine/audio"
       ],

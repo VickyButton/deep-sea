@@ -1,6 +1,6 @@
-import { getAssets } from '@core/engine/assets';
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
+import { getAssets } from 'assets';
 import { useGame } from 'game';
 import { useGraphics } from 'graphics';
 import { useRenderer } from 'renderer';
