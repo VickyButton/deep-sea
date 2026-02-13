@@ -18,6 +18,8 @@ export class Graphics {
   public update() {
     if (!this.ctx) throw new Error(ERROR_MISSING_GAME_CONTEXT);
 
+    this.clear();
+
     const renderer = getRenderer();
 
     for (const node of renderer.createDrawQueue()) {
