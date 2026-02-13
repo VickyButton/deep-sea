@@ -27,6 +27,9 @@
       "graphics": [
         "./src/core/engine/graphics"
       ],
+      "renderer": [
+        "./src/core/engine/renderer"
+      ]
     },
     "lib": [
       "DOM",

@@ -1,4 +1,4 @@
-import { getRenderer } from '@core/engine/renderer';
+import { getRenderer } from 'renderer';
 import { CameraNode2D } from './CameraNode2D';
 import { GameNode } from './GameNode';
 

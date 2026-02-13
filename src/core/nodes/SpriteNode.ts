@@ -1,5 +1,5 @@
 import { getAssets } from '@core/engine/assets';
-import { getRenderer } from '@core/engine/renderer';
+import { getRenderer } from 'renderer';
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
 import { getGame } from 'game';
