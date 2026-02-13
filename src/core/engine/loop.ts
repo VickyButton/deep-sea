@@ -10,7 +10,7 @@ interface LoopState {
 
 const LOG_TAG = 'Loop';
 
-export class Loop {
+class Loop {
   private state: LoopState;
   private onLoop?: (dt: number) => void;
 
@@ -83,4 +83,10 @@ export class Loop {
       then: 0,
     };
   }
+}
+
+const loop = new Loop();
+
+export function useLoop() {
+  return loop;
 }

@@ -1,4 +1,3 @@
-import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
@@ -6,6 +5,7 @@ import { useAudio } from 'audio';
 import { useConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
 import { useGraphics } from 'graphics';
+import { useLoop } from 'loop';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 
@@ -14,7 +14,6 @@ const LOG_TAG = 'Game';
 export class Game {
   // TODO: Move asset manager, graphics, etc. into own modules similar to config.
   public readonly inputController = new InputController();
-  public readonly loop = new Loop();
   public readonly physics = new Physics2D();
   public readonly sceneManager = new SceneManager();
   public readonly taskManager = new TaskManager();
@@ -28,8 +27,9 @@ export class Game {
     const audio = useAudio();
     const config = useConfig();
     const graphics = useGraphics();
+    const loop = useLoop();
 
-    this.loop.setLoopCallback(this.onLoop.bind(this));
+    loop.setLoopCallback(this.onLoop.bind(this));
     audio.initialize();
     graphics.syncWithGameCanvas();
     this.inputController.attachListeners();
@@ -63,8 +63,9 @@ export class Game {
    */
   public start() {
     log(LOG_TAG, 'Starting...');
+    const loop = useLoop();
 
-    this.loop.start();
+    loop.start();
   }
 
   /**
@@ -72,8 +73,9 @@ export class Game {
    */
   public stop() {
     log(LOG_TAG, 'Stopping...');
+    const loop = useLoop();
 
-    this.loop.stop();
+    loop.stop();
   }
 
   private get isReady() {
@@ -86,6 +88,7 @@ export class Game {
     if (!this.isReady) return;
 
     const graphics = useGraphics();
+    const loop = useLoop();
 
     try {
       this.sceneManager.updateActiveScene(dt);
@@ -94,7 +97,7 @@ export class Game {
     } catch (err) {
       error(LOG_TAG, String(err));
 
-      this.loop.stop();
+      loop.stop();
     }
   }
 }
