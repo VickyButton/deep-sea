@@ -2,7 +2,7 @@ import { Game } from '@core/Game';
 
 let game = new Game();
 
-export function getGame() {
+export function useGame() {
   return game;
 }
 

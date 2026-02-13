@@ -1,7 +1,7 @@
 import { getAssets } from '@core/engine/assets';
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
-import { getGame } from 'game';
+import { useGame } from 'game';
 import { useGraphics } from 'graphics';
 import { getRenderer } from 'renderer';
 import { GraphicsNode2D } from './GraphicsNode2D';
@@ -26,7 +26,7 @@ export class SpriteNode extends GraphicsNode2D {
   public setup() {
     super.setup();
 
-    const game = getGame();
+    const game = useGame();
     const assets = getAssets();
 
     this.visible = false;
