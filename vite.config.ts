@@ -10,6 +10,7 @@ export default defineConfig({
       '@scenes': path.resolve(__dirname, './src/scenes'),
       config: path.resolve(__dirname, './src/config'),
       game: path.resolve(__dirname, './src/game'),
+      graphics: path.resolve(__dirname, './src/core/engine/graphics'),
     },
   },
   server: {

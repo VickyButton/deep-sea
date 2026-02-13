@@ -34,7 +34,9 @@ vi.mock('config', () => ({
 }));
 
 vi.mock('graphics', () => ({
-  getGraphics: vi.fn(),
+  getGraphics: () => ({
+    syncWithGameCanvas: vi.fn(),
+  }),
 }));
 
 vi.mock('game', () => ({

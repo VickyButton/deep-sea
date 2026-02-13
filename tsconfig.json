@@ -24,6 +24,9 @@
       "game": [
         "./src/game"
       ],
+      "graphics": [
+        "./src/core/engine/graphics"
+      ],
     },
     "lib": [
       "DOM",

@@ -1,11 +1,11 @@
 import { Audio } from '@core/engine/Audio';
-import { getGraphics } from '@core/engine/graphics';
 import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
 import { getConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
+import { getGraphics } from 'graphics';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 

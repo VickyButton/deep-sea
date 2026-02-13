@@ -1,9 +1,9 @@
 import { getAssets } from '@core/engine/assets';
-import { getGraphics } from '@core/engine/graphics';
 import { getRenderer } from '@core/engine/renderer';
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
 import { getGame } from 'game';
+import { getGraphics } from 'graphics';
 import { GraphicsNode2D } from './GraphicsNode2D';
 
 export class SpriteNode extends GraphicsNode2D {

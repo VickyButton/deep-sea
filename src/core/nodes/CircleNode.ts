@@ -1,4 +1,4 @@
-import { getGraphics } from '@core/engine/graphics';
+import { getGraphics } from 'graphics';
 import { ColorRGB } from '@core/structures/Colors';
 import { Circle, Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
