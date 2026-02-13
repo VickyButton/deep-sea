@@ -40,9 +40,6 @@ export class SpriteNode extends GraphicsNode2D {
       assets.spriteSheets.load(this.spriteSheetName),
     ]);
 
-    // Load sprite sheet.
-    // TODO: If two different sprites use the same sprite sheet, the sprite sheet would be loaded
-    // twice. A fix will be needed in order to ensure the same sprite sheet isn't loaded twice.
     game.taskManager.registerTask(load, () => {
       this.visible = true;
     });
