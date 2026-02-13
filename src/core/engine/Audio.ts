@@ -148,3 +148,9 @@ export class Audio {
     };
   }
 }
+
+const audio = new Audio();
+
+export function getAudio() {
+  return audio;
+}
