@@ -10,7 +10,7 @@ interface LoopState {
 
 const LOG_TAG = 'Loop';
 
-export class Loop {
+class Loop {
   private state: LoopState;
   private onLoop?: (dt: number) => void;
 
