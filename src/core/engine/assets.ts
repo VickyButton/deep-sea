@@ -5,7 +5,7 @@ import { getConfig } from 'config';
 
 abstract class AssetManager<T> {
   protected assets = new Map<string, T>();
-  protected loadingAssets = new Set<string>();
+  protected assetTasks = new Map<string, Promise<T>>();
 
   /**
    * Retrieves asset from storage.
@@ -38,25 +38,29 @@ abstract class AssetManager<T> {
    * @param name The asset name.
    * @returns The asset if loaded, undefined if not.
    */
-  public abstract load(name: string): Promise<T | undefined>;
+  public abstract load(name: string): Promise<T>;
 }
 
 class ImageManager extends AssetManager<ImageBitmap> {
   public async load(name: string) {
-    if (this.loadingAssets.has(name)) return;
+    const activeTask = this.assetTasks.get(name);
 
-    this.loadingAssets.add(name);
+    if (activeTask) return activeTask;
 
     try {
       const config = getConfig();
-      const image = await loadImage(`${config.assets.images}/${name}.png`);
+      const loadAsset = loadImage(`${config.assets.images}/${name}.png`);
 
-      this.loadingAssets.delete(name);
-      this.assets.set(name, image);
+      this.assetTasks.set(name, loadAsset);
 
-      return image;
+      const asset = await loadAsset;
+
+      this.assetTasks.delete(name);
+      this.assets.set(name, asset);
+
+      return asset;
     } catch {
-      this.loadingAssets.delete(name);
+      this.assetTasks.delete(name);
 
       throw new Error(`Unable to load image ${name}.png`);
     }
@@ -65,22 +69,26 @@ class ImageManager extends AssetManager<ImageBitmap> {
 
 class SpriteSheetManager extends AssetManager<SpriteSheet> {
   public async load(name: string) {
-    if (this.loadingAssets.has(name)) return;
+    const activeTask = this.assetTasks.get(name);
 
-    this.loadingAssets.add(name);
+    if (activeTask) return activeTask;
 
     try {
       const config = getConfig();
-      const spriteSheet = await loadJson(`${config.assets.spriteSheets}/${name}.json`);
+      const loadAsset = loadJson(`${config.assets.spriteSheets}/${name}.json`);
 
-      if (!this.isSpriteSheet(spriteSheet)) throw new Error('Invalid sprite sheet');
+      this.assetTasks.set(name, loadAsset as Promise<SpriteSheet>);
 
-      this.loadingAssets.delete(name);
-      this.assets.set(name, spriteSheet);
+      const asset = await loadAsset;
 
-      return spriteSheet;
+      if (!this.isSpriteSheet(asset)) throw new Error('Invalid sprite sheet');
+
+      this.assetTasks.delete(name);
+      this.assets.set(name, asset);
+
+      return asset;
     } catch {
-      this.loadingAssets.delete(name);
+      this.assetTasks.delete(name);
 
       throw new Error(`Unable to load sprite sheet ${name}.json`);
     }
