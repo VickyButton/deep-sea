@@ -76,6 +76,6 @@ class Renderer {
 
 const renderer = new Renderer();
 
-export function getRenderer() {
+export function useRenderer() {
   return renderer;
 }

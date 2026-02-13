@@ -1,5 +1,5 @@
 import { Rectangle } from '@core/structures/Shapes';
-import { getRenderer } from 'renderer';
+import { useRenderer } from 'renderer';
 import { GameNode2D } from './GameNode2D';
 
 export abstract class GraphicsNode2D extends GameNode2D {
@@ -44,7 +44,7 @@ export abstract class GraphicsNode2D extends GameNode2D {
   public setup() {
     super.setup();
 
-    const renderer = getRenderer();
+    const renderer = useRenderer();
 
     renderer.registerNode(this);
   }
@@ -52,7 +52,7 @@ export abstract class GraphicsNode2D extends GameNode2D {
   public teardown() {
     super.teardown();
 
-    const renderer = getRenderer();
+    const renderer = useRenderer();
 
     renderer.deregisterNode(this);
   }

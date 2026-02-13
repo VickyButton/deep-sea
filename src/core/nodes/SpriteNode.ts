@@ -3,7 +3,7 @@ import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
 import { useGame } from 'game';
 import { useGraphics } from 'graphics';
-import { getRenderer } from 'renderer';
+import { useRenderer } from 'renderer';
 import { GraphicsNode2D } from './GraphicsNode2D';
 
 export class SpriteNode extends GraphicsNode2D {
@@ -47,7 +47,7 @@ export class SpriteNode extends GraphicsNode2D {
   public draw() {
     const assets = getAssets();
     const graphics = useGraphics();
-    const renderer = getRenderer();
+    const renderer = useRenderer();
     const image = assets.images.get(this.spriteSheetName);
 
     if (!image) throw new Error('Unable to retrieve sprite sheet image');

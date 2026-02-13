@@ -1,4 +1,4 @@
-import { getRenderer } from 'renderer';
+import { useRenderer } from 'renderer';
 import { CameraNode2D } from './CameraNode2D';
 import { GameNode } from './GameNode';
 
@@ -13,7 +13,7 @@ export abstract class Scene extends GameNode {
   }
 
   private setupCamera() {
-    const renderer = getRenderer();
+    const renderer = useRenderer();
 
     renderer.setActiveCamera(this.camera);
     this.addChild(this.camera);

@@ -1,7 +1,7 @@
 import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { log } from '@core/utils/logger';
 import { useConfig } from 'config';
-import { getRenderer } from './renderer';
+import { useRenderer } from './renderer';
 
 const LOG_TAG = 'Graphics';
 const ERROR_MISSING_GAME_CANVAS = 'Unable to get game canvas';
@@ -23,7 +23,7 @@ export class Graphics {
   public update() {
     this.clear();
 
-    const renderer = getRenderer();
+    const renderer = useRenderer();
 
     for (const node of renderer.createDrawQueue()) {
       node.draw();
