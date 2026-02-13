@@ -61,4 +61,13 @@ export class CircleNode extends ShapeNode2D {
       graphics.stroke(this.debugOutlineColor.toRgbString());
     }
   }
+
+  public static create(x: number, y: number, radius: number) {
+    const node = new CircleNode();
+
+    node.position.set(x, y);
+    node.radius = radius;
+
+    return node;
+  }
 }
