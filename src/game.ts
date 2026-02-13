@@ -1,9 +1,9 @@
-import { resetAssets } from '@core/engine/assets';
-import { resetAudio } from '@core/engine/audio';
-import { resetGraphics } from '@core/engine/graphics';
-import { resetLoop } from '@core/engine/loop';
-import { resetRenderer } from '@core/engine/renderer';
 import { Game } from '@core/Game';
+import { resetAssets } from 'assets';
+import { resetAudio } from 'audio';
+import { resetGraphics } from 'graphics';
+import { resetLoop } from 'loop';
+import { resetRenderer } from 'renderer';
 
 let game = new Game();
 
