@@ -1,6 +1,6 @@
 import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { log } from '@core/utils/logger';
-import { getConfig } from 'config';
+import { useConfig } from 'config';
 import { getRenderer } from './renderer';
 
 const LOG_TAG = 'Graphics';
@@ -35,7 +35,7 @@ export class Graphics {
    */
   public syncWithGameCanvas() {
     log(LOG_TAG, 'Syncing with target canvas...');
-    const config = getConfig();
+    const config = useConfig();
 
     const canvas = this.getGameCanvas();
 

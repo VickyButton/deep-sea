@@ -1,7 +1,7 @@
 // TODO: Convert state into class members.
 import { timestampNow } from '@core/utils/dateTimeProvider';
 import { log } from '@core/utils/logger';
-import { getConfig } from 'config';
+import { useConfig } from 'config';
 
 interface LoopState {
   isRunning: boolean;
@@ -72,7 +72,7 @@ export class Loop {
   }
 
   private get framesPerSecondInterval() {
-    const config = getConfig();
+    const config = useConfig();
 
     return 1000 / config.game.framesPerSecond;
   }

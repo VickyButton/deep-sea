@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { CameraNode2D } from './CameraNode2D';
 
 vi.mock('config', () => ({
-  getConfig: () => ({
+  useConfig: () => ({
     graphics: {
       width: 1,
       height: 1,

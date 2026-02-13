@@ -36,7 +36,7 @@ vi.mock('audio', () => ({
 }));
 
 vi.mock('config', () => ({
-  getConfig: () => config,
+  useConfig: () => config,
 }));
 
 vi.mock('graphics', () => ({

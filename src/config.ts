@@ -75,7 +75,7 @@ export async function loadConfig(path: string) {
   return config as Config;
 }
 
-export function getConfig() {
+export function useConfig() {
   return config;
 }
 

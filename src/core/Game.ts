@@ -3,7 +3,7 @@ import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
 import { useAudio } from 'audio';
-import { getConfig, toggleDebugMode } from 'config';
+import { useConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
 import { getGraphics } from 'graphics';
 import { InputController } from './engine/InputController';
@@ -26,7 +26,7 @@ export class Game {
   public setup() {
     log(LOG_TAG, 'Initializing...');
     const audio = useAudio();
-    const config = getConfig();
+    const config = useConfig();
     const graphics = getGraphics();
 
     this.loop.setLoopCallback(this.onLoop.bind(this));
