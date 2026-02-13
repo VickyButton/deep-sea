@@ -1,5 +1,5 @@
 import { Audio } from '@core/engine/Audio';
-import { getGraphics } from '@core/engine/Graphics';
+import { getGraphics } from '@core/engine/graphics';
 import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
