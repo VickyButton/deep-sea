@@ -1,3 +1,4 @@
+import { useRenderer } from '@core/engine/renderer';
 import { ColorRGB } from '@core/structures/Colors';
 import { Circle, Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
@@ -17,8 +18,11 @@ export class CircleNode extends ShapeNode2D {
   public radius = 1;
 
   public get boundingBox() {
-    const position = this.globalPosition;
     const size = Vector2D.multiply(this.globalScale, new Vector2D(this.diameter, this.diameter));
+    const position = Vector2D.subtract(
+      this.globalPosition,
+      Vector2D.multiply(size, new Vector2D(0.5, 0.5)),
+    );
 
     return new Rectangle(position.x, position.y, size.x, size.y);
   }
@@ -52,7 +56,8 @@ export class CircleNode extends ShapeNode2D {
   public draw() {
     const config = useConfig();
     const graphics = useGraphics();
-    const position = this.position;
+    const renderer = useRenderer();
+    const position = renderer.getActiveCamera().calculateRelativePosition(this.globalPosition);
     const radius = this.shape.radius;
 
     graphics.drawCircle(position.x, position.y, radius);
