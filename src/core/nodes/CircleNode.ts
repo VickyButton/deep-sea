@@ -1,6 +1,7 @@
+import { getGraphics } from '@core/engine/graphics';
+import { ColorRGB } from '@core/structures/Colors';
 import { Circle, Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
-import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { getConfig } from 'config';
 import { ShapeNode2D } from './ShapeNode2D';
 
@@ -8,7 +9,7 @@ export class CircleNode extends ShapeNode2D {
   /**
    * The circle outline color for when debug mode is enabled.
    */
-  public debugOutlineColor = 'red';
+  public debugOutlineColor = ColorRGB.red;
 
   /**
    * The radius of the circle.
@@ -48,19 +49,16 @@ export class CircleNode extends ShapeNode2D {
     return node instanceof CircleNode;
   }
 
-  public render() {
+  public draw() {
     const config = getConfig();
-    const size = Vector2D.multiply(this.globalScale, new Vector2D(this.diameter, this.diameter));
-    const radius = size.x / 2;
-    const canvas = new OffscreenCanvas(size.x, size.y);
-    const ctx = getCanvasContext2D(canvas);
+    const graphics = getGraphics();
+    const position = this.position;
+    const radius = this.shape.radius;
+
+    graphics.drawCircle(position.x, position.y, radius);
 
     if (config.dev.debugMode) {
-      ctx.strokeStyle = this.debugOutlineColor;
-      ctx.arc(radius, radius, radius - 0.5, 0, 2 * Math.PI);
-      ctx.stroke();
+      graphics.stroke(this.debugOutlineColor.toRgbString());
     }
-
-    return canvas.transferToImageBitmap();
   }
 }
