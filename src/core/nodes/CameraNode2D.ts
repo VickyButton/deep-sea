@@ -1,6 +1,6 @@
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
-import { getGame } from 'game';
+import { getConfig } from 'config';
 import { GameNode2D } from './GameNode2D';
 
 export class CameraNode2D extends GameNode2D {
@@ -19,9 +19,18 @@ export class CameraNode2D extends GameNode2D {
     return new Rectangle(position.x, position.y, size.x, size.y);
   }
 
-  private defaultSize() {
-    const game = getGame();
+  /**
+   * Calculates position relative to active camera.
+   * @param position The global position.
+   * @returns The position relative to active camera.
+   */
+  public calculateRelativePosition(position: Vector2D) {
+    return Vector2D.subtract(position, this.globalPosition);
+  }
 
-    return new Vector2D(game.graphics.width, game.graphics.height);
+  private defaultSize() {
+    const config = getConfig();
+
+    return new Vector2D(config.graphics.width, config.graphics.height);
   }
 }
