@@ -1,5 +1,5 @@
 import { Rectangle } from '@core/structures/Shapes';
-import { getGame } from 'game';
+import { getRenderer } from 'renderer';
 import { GameNode2D } from './GameNode2D';
 
 export abstract class GraphicsNode2D extends GameNode2D {
@@ -44,21 +44,21 @@ export abstract class GraphicsNode2D extends GameNode2D {
   public setup() {
     super.setup();
 
-    const game = getGame();
+    const renderer = getRenderer();
 
-    game.graphics.registerNode(this);
+    renderer.registerNode(this);
   }
 
   public teardown() {
     super.teardown();
 
-    const game = getGame();
+    const renderer = getRenderer();
 
-    game.graphics.deregisterNode(this);
+    renderer.deregisterNode(this);
   }
 
   /**
-   * Renders an image bitmap for drawing.
+   * Draws to the game canvas.
    */
-  public abstract render(): ImageBitmap;
+  public abstract draw(): void;
 }

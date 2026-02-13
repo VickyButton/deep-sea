@@ -9,7 +9,7 @@ function hasDefaultExport(value: unknown): value is ExportWithDefault {
 }
 
 export async function loadJson(path: string) {
-  const response: unknown = await import(path, {
+  const response: unknown = await import(/* @vite-ignore */ path, {
     with: {
       type: 'json',
     },

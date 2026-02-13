@@ -33,6 +33,12 @@ vi.mock('config', () => ({
   getConfig: () => config,
 }));
 
+vi.mock('graphics', () => ({
+  getGraphics: () => ({
+    syncWithGameCanvas: vi.fn(),
+  }),
+}));
+
 vi.mock('game', () => ({
   restartGame: vi.fn(),
 }));
@@ -41,14 +47,6 @@ vi.mock('@core/engine/Audio', () => ({
   Audio: vi.fn(
     class {
       initialize = vi.fn();
-    },
-  ),
-}));
-
-vi.mock('@core/engine/Graphics', () => ({
-  Graphics: vi.fn(
-    class {
-      syncWithTargetCanvas = vi.fn();
     },
   ),
 }));
@@ -103,7 +101,6 @@ describe('Game', () => {
   it('should setup components and initial scene on setup', () => {
     const game = new Game();
     const audioInitializeSpy = vi.spyOn(game.audio, 'initialize');
-    const graphicsSetupSpy = vi.spyOn(game.graphics, 'syncWithTargetCanvas');
     const loopSetLoopCallbackSpy = vi.spyOn(game.loop, 'setLoopCallback');
     const taskManagerRegisterTaskSpy = vi.spyOn(game.taskManager, 'registerTask');
     const sceneManagerLoadSceneSpy = vi.spyOn(game.sceneManager, 'loadScene');
@@ -112,7 +109,6 @@ describe('Game', () => {
     game.setup();
 
     expect(audioInitializeSpy).toHaveBeenCalled();
-    expect(graphicsSetupSpy).toHaveBeenCalled();
     expect(loopSetLoopCallbackSpy).toHaveBeenCalled();
     expect(taskManagerRegisterTaskSpy).toHaveBeenCalled();
     expect(sceneManagerLoadSceneSpy).toHaveBeenCalledWith(config.game.splashScene);

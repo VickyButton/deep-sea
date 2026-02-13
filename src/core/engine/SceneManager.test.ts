@@ -7,6 +7,10 @@ vi.mock('config', () => ({
     content: {
       scenes: '/src/scenes',
     },
+    graphics: {
+      width: 1,
+      height: 1,
+    },
     dev: {
       printLogs: true,
     },

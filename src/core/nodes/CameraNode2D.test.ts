@@ -2,8 +2,8 @@ import { Vector2D } from '@core/structures/Vector2D';
 import { describe, expect, it, vi } from 'vitest';
 import { CameraNode2D } from './CameraNode2D';
 
-vi.mock('game', () => ({
-  getGame: () => ({
+vi.mock('config', () => ({
+  getConfig: () => ({
     graphics: {
       width: 1,
       height: 1,

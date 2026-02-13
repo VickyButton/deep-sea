@@ -1,11 +1,10 @@
+import { getAssets } from '@core/engine/assets';
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
-import { getCanvasContext2D } from '@core/utils/getCanvasContext';
 import { getGame } from 'game';
+import { getGraphics } from 'graphics';
+import { getRenderer } from 'renderer';
 import { GraphicsNode2D } from './GraphicsNode2D';
-
-const ERROR_SPRITE_SHEET_NAME_UNDEFINED = 'Sprite sheet name not defined';
-const ERROR_SPRITE_SHEET_NOT_FOUND = 'Unable to retrieve sprite';
 
 export class SpriteNode extends GraphicsNode2D {
   /**
@@ -28,40 +27,45 @@ export class SpriteNode extends GraphicsNode2D {
     super.setup();
 
     const game = getGame();
+    const assets = getAssets();
 
     this.visible = false;
 
-    if (!this.spriteSheetName) throw new Error(ERROR_SPRITE_SHEET_NAME_UNDEFINED);
     // If sprite sheet is already loaded, exit early.
-    if (game.spriteSheetManager.get(this.spriteSheetName)) return;
+    if (assets.spriteSheets.get(this.spriteSheetName)) return;
 
-    // Load sprite sheet.
-    // TODO: If two different sprites use the same sprite sheet, the sprite sheet would be loaded
-    // twice. A fix will be needed in order to ensure the same sprite sheet isn't loaded twice.
-    game.taskManager.registerTask(game.spriteSheetManager.load(this.spriteSheetName), () => {
+    const load = Promise.all([
+      assets.images.load(this.spriteSheetName),
+      assets.spriteSheets.load(this.spriteSheetName),
+    ]);
+
+    game.taskManager.registerTask(load, () => {
       this.visible = true;
     });
   }
 
-  public render() {
-    if (!this.spriteSheetName) throw new Error(ERROR_SPRITE_SHEET_NAME_UNDEFINED);
+  public draw() {
+    const assets = getAssets();
+    const graphics = getGraphics();
+    const renderer = getRenderer();
+    const image = assets.images.get(this.spriteSheetName);
 
-    const game = getGame();
-    // Retrieve sprite sheet.
-    const spriteSheet = game.spriteSheetManager.get(this.spriteSheetName);
+    if (!image) throw new Error('Unable to retrieve sprite sheet image');
 
-    if (!spriteSheet) throw new Error(ERROR_SPRITE_SHEET_NOT_FOUND);
+    const drawPosition = renderer.getActiveCamera().calculateRelativePosition(this.globalPosition);
+    const drawSize = Vector2D.multiply(this.globalScale, this.spriteRectangle.size);
+    const sx = this.spriteRectangle.x;
+    const sy = this.spriteRectangle.y;
+    const sw = this.spriteRectangle.width;
+    const sh = this.spriteRectangle.height;
+    const dx = drawPosition.x;
+    const dy = drawPosition.y;
+    const dw = drawSize.x;
+    const dh = drawSize.y;
 
-    // Parse sprite from sprite sheet.
-    const sprite = spriteSheet.parseSprite(this.spriteRectangle);
-    const size = Vector2D.multiply(this.globalScale, this.spriteRectangle.size);
-    const canvas = new OffscreenCanvas(size.x, size.y);
-    const ctx = getCanvasContext2D(canvas);
-
-    ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(sprite, 0, 0, size.x, size.y);
-
-    return canvas.transferToImageBitmap();
+    graphics.enableImageSmoothing();
+    graphics.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
+    graphics.disableImageSmoothing();
   }
 
   public static create(spriteSheetName = '', spriteRectangle = new Rectangle(0, 0, 0, 0)) {
