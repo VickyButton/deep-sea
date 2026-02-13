@@ -8,8 +8,14 @@ const ERROR_MISSING_GAME_CANVAS = 'Unable to get game canvas';
 const ERROR_MISSING_GAME_CONTEXT = 'No game rendering context defined';
 
 export class Graphics {
-  private canvas?: HTMLCanvasElement;
+  private _canvas?: HTMLCanvasElement;
   private _ctx?: CanvasRenderingContext2D;
+
+  public get canvas() {
+    if (!this._canvas) throw new Error(ERROR_MISSING_GAME_CANVAS);
+
+    return this._canvas;
+  }
 
   public get ctx() {
     if (!this._ctx) throw new Error(ERROR_MISSING_GAME_CONTEXT);
@@ -44,17 +50,20 @@ export class Graphics {
 
     const ctx = getCanvasContext2D(canvas);
 
-    this.canvas = canvas;
+    this._canvas = canvas;
     this._ctx = ctx;
   }
 
   public drawCircle(x: number, y: number, radius: number) {
     this.ctx.beginPath();
     this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
+    this.ctx.closePath();
   }
 
   public drawRectangle(x: number, y: number, width: number, height: number) {
+    this.ctx.beginPath();
     this.ctx.rect(x, y, width, height);
+    this.ctx.closePath();
   }
 
   public fill(color: string) {
@@ -90,7 +99,7 @@ export class Graphics {
   }
 
   private clear() {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
   private getGameCanvas() {
