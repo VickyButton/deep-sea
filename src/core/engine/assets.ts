@@ -1,4 +1,4 @@
-import type { SpriteSheet } from '@core/structures/SpriteSheet';
+import { SpriteSheet, SpriteSheetRect } from '@core/structures/SpriteSheet';
 import { loadImage } from '@core/utils/loadImage';
 import { loadJson } from '@core/utils/loadJson';
 import { getConfig } from 'config';
@@ -75,13 +75,18 @@ class SpriteSheetManager extends AssetManager<SpriteSheet> {
 
     try {
       const config = getConfig();
-      const loadAsset = loadJson(`${config.assets.spriteSheets}/${name}.json`);
+      const loadSpriteSheet = async () => {
+        const assetConfig = await loadJson(`${config.assets.spriteSheets}/${name}.json`);
 
-      this.assetTasks.set(name, loadAsset as Promise<SpriteSheet>);
+        if (!this.isSpriteSheetConfig(assetConfig)) throw new Error('Invalid sprite sheet config');
+
+        return new SpriteSheet(assetConfig.rects);
+      };
+      const loadAsset = loadSpriteSheet();
+
+      this.assetTasks.set(name, loadAsset);
 
       const asset = await loadAsset;
-
-      if (!this.isSpriteSheet(asset)) throw new Error('Invalid sprite sheet');
 
       this.assetTasks.delete(name);
       this.assets.set(name, asset);
@@ -94,7 +99,7 @@ class SpriteSheetManager extends AssetManager<SpriteSheet> {
     }
   }
 
-  private isSpriteSheet(value: unknown): value is SpriteSheet {
+  private isSpriteSheetConfig(value: unknown): value is { rects: Record<string, SpriteSheetRect> } {
     return typeof value === 'object' && value !== null && 'rects' in value;
   }
 }
