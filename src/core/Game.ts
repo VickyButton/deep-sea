@@ -2,10 +2,10 @@ import { Loop } from '@core/engine/Loop';
 import { SceneManager } from '@core/engine/SceneManager';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
+import { getAudio } from 'audio';
 import { getConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
 import { getGraphics } from 'graphics';
-import { getAudio } from './engine/audio';
 import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 

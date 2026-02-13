@@ -8,6 +8,7 @@ export default defineConfig({
       '@core': path.resolve(__dirname, './src/core'),
       '@nodes': path.resolve(__dirname, './src/nodes'),
       '@scenes': path.resolve(__dirname, './src/scenes'),
+      audio: path.resolve(__dirname, './src/core/engine/audio'),
       config: path.resolve(__dirname, './src/config'),
       game: path.resolve(__dirname, './src/game'),
       graphics: path.resolve(__dirname, './src/core/engine/graphics'),
