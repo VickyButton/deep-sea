@@ -1,5 +1,5 @@
-import { getRenderer } from 'renderer';
 import { Rectangle } from '@core/structures/Shapes';
+import { getRenderer } from 'renderer';
 import { GameNode2D } from './GameNode2D';
 
 export abstract class GraphicsNode2D extends GameNode2D {
