@@ -2,8 +2,14 @@ import { useRenderer } from 'renderer';
 import { CameraNode2D } from './CameraNode2D';
 import { GameNode } from './GameNode';
 
-export abstract class Scene extends GameNode {
-  public abstract readonly title: string;
+export class Scene extends GameNode {
+  /**
+   * The title of the scene.
+   */
+  public title = '';
+  /**
+   * The scene camera.
+   */
   public camera = new CameraNode2D();
 
   public setup(): void {
