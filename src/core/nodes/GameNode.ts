@@ -13,6 +13,18 @@ export class GameNode {
    * The node's parent node.
    */
   public parent: GameNode | null = null;
+  /**
+   * Callback for when the node is set up.
+   */
+  public onSetup?: (node: GameNode) => void;
+  /**
+   * Callback for when node is updated.
+   */
+  public onUpdate?: (node: GameNode, dt: number) => void;
+  /**
+   * Callback for when the node is tore down.
+   */
+  public onTeardown?: (node: GameNode) => void;
 
   /**
    * The number of direct children this node has.
@@ -49,6 +61,8 @@ export class GameNode {
    * This is where asset loading and other setup should occur.
    */
   public setup() {
+    if (this.onSetup) this.onSetup(this);
+
     for (const child of this.children.values()) child.setup();
   }
 
@@ -58,6 +72,8 @@ export class GameNode {
    * @param dt Time since the last update, in milliseconds.
    */
   public update(dt: number) {
+    if (this.onUpdate) this.onUpdate(this, dt);
+
     for (const child of this.children.values()) child.update(dt);
   }
 
@@ -67,6 +83,8 @@ export class GameNode {
    * This is where cleanup should occur.
    */
   public teardown() {
+    if (this.onTeardown) this.onTeardown(this);
+
     for (const child of this.children.values()) child.teardown();
   }
 
