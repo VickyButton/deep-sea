@@ -1,15 +1,15 @@
-import { CollisionNode2D } from '@core/nodes/CollisionNode2D';
+import { CollisionNode } from '@core/nodes/CollisionNode';
 import { ShapeNode2D } from '@core/nodes/ShapeNode2D';
 
 class Physics2D {
-  private nodes = new Set<CollisionNode2D>();
+  private nodes = new Set<CollisionNode>();
 
   /**
    * Registers a node to be considered for collision detection each frame.
    *
    * @param node The node to register.
    */
-  public registerNode(node: CollisionNode2D) {
+  public registerNode(node: CollisionNode) {
     this.nodes.add(node);
   }
 
@@ -18,7 +18,7 @@ class Physics2D {
    *
    * @param node The node to deregister.
    */
-  public deregisterNode(node: CollisionNode2D) {
+  public deregisterNode(node: CollisionNode) {
     this.nodes.delete(node);
   }
 
@@ -42,9 +42,9 @@ class Physics2D {
     // TODO: Implement quad trees for more efficient collision pairing.
     // Pair IDs are stored in order to prevent duplicate pairs from being added.
     const pairIds = new Set<string>();
-    const pairs = new Set<[CollisionNode2D, CollisionNode2D]>();
+    const pairs = new Set<[CollisionNode, CollisionNode]>();
 
-    const generatePairId = (node1: CollisionNode2D, node2: CollisionNode2D) => {
+    const generatePairId = (node1: CollisionNode, node2: CollisionNode) => {
       // Sort the node IDs for consistent ordering.
       const nodeIds = [node1.id, node2.id].sort((a, b) => a.localeCompare(b));
 
@@ -69,7 +69,7 @@ class Physics2D {
     return pairs;
   }
 
-  private checkCollision(base: CollisionNode2D, target: CollisionNode2D) {
+  private checkCollision(base: CollisionNode, target: CollisionNode) {
     if (ShapeNode2D.isShapeNode2D(base.parent) && ShapeNode2D.isShapeNode2D(target.parent)) {
       return base.parent.shape.overlaps(target.parent.shape);
     }
