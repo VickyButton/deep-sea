@@ -10,7 +10,7 @@ const LOG_TAG = 'Audio';
 const VOLUME_MIN = -1;
 const VOLUME_MAX = 4;
 
-export class Audio {
+class Audio {
   private state: AudioState;
   private audioContext?: AudioContext;
   private gainNode?: GainNode;

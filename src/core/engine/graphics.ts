@@ -7,7 +7,7 @@ const LOG_TAG = 'Graphics';
 const ERROR_MISSING_GAME_CANVAS = 'Unable to get game canvas';
 const ERROR_MISSING_GAME_CONTEXT = 'No game rendering context defined';
 
-export class Graphics {
+class Graphics {
   private _canvas?: HTMLCanvasElement;
   private _ctx?: CanvasRenderingContext2D;
 
