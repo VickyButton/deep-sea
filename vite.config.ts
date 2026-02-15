@@ -11,7 +11,7 @@ export default defineConfig({
       assets: path.resolve(__dirname, './src/core/engine/assets'),
       audio: path.resolve(__dirname, './src/core/engine/audio'),
       config: path.resolve(__dirname, './src/config'),
-      game: path.resolve(__dirname, './src/game'),
+      game: path.resolve(__dirname, './src/core/engine/game'),
       graphics: path.resolve(__dirname, './src/core/engine/graphics'),
       input: path.resolve(__dirname, './src/core/engine/input'),
       loop: path.resolve(__dirname, './src/core/engine/loop'),

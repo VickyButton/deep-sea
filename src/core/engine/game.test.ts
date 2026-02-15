@@ -45,10 +45,6 @@ vi.mock('graphics', () => ({
   }),
 }));
 
-vi.mock('game', () => ({
-  restartGame: vi.fn(),
-}));
-
 vi.mock('input', () => ({
   useInput: () => ({
     attachListeners: vi.fn(),

@@ -28,7 +28,7 @@
         "./src/config"
       ],
       "game": [
-        "./src/game"
+        "./src/core/engine/game"
       ],
       "graphics": [
         "./src/core/engine/graphics"
