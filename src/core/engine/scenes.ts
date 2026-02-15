@@ -47,26 +47,23 @@ class SceneManager {
   public async loadScene(sceneName: string) {
     const config = useConfig();
     const filePath = `${config.content.scenes}/${sceneName}/${sceneName}`;
-    const importedModule: unknown = await import(/* @vite-ignore */ filePath);
+    const response: unknown = await import(/* @vite-ignore */ filePath);
 
-    if (!importedModule) {
+    if (!response) {
       throw new Error(`Could not load ${filePath}`);
-    } else if (!this.isSceneConstructor(importedModule)) {
-      throw new Error(`No Scene constructor exists in ${filePath}`);
+    } else if (!this.isScene(response)) {
+      throw new Error(`No scene export in ${filePath}`);
     }
 
-    const scene = new importedModule.default();
-
-    return scene;
+    return response.default;
   }
 
-  private isSceneConstructor(
-    importedModule: unknown,
-  ): importedModule is { default: new () => Scene } {
+  private isScene(value: unknown): value is { default: Scene } {
     return (
-      importedModule !== null &&
-      typeof importedModule === 'object' &&
-      Object.keys(importedModule).includes('default')
+      value !== null &&
+      typeof value === 'object' &&
+      'default' in value &&
+      value.default instanceof Scene
     );
   }
 }
