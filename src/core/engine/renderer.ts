@@ -4,7 +4,6 @@ import { GraphicsNode2D } from '@core/nodes/GraphicsNode2D';
 class Renderer {
   private activeCamera?: CameraNode2D;
   private nodes = new Set<GraphicsNode2D>();
-  private drawQueue = new Map<number, GraphicsNode2D[]>();
 
   /**
    * Retrieves the active camera.
