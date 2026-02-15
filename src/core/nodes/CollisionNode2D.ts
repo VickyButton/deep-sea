@@ -1,4 +1,4 @@
-import { useGame } from 'game';
+import { usePhysics } from 'physics';
 import { GameNode } from './GameNode';
 
 export class CollisionNode2D extends GameNode {
@@ -10,16 +10,16 @@ export class CollisionNode2D extends GameNode {
   public setup() {
     super.setup();
 
-    const game = useGame();
+    const physics = usePhysics();
 
-    game.physics.registerNode(this);
+    physics.registerNode(this);
   }
 
   public teardown() {
     super.teardown();
 
-    const game = useGame();
+    const physics = usePhysics();
 
-    game.physics.deregisterNode(this);
+    physics.deregisterNode(this);
   }
 }

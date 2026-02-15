@@ -7,13 +7,12 @@ import { restartGame } from 'game';
 import { useGraphics } from 'graphics';
 import { useInput } from 'input';
 import { useLoop } from 'loop';
-import { Physics2D } from './engine/Physics2D';
+import { usePhysics } from 'physics';
 
 const LOG_TAG = 'Game';
 
 export class Game {
   // TODO: Move asset manager, graphics, etc. into own modules similar to config.
-  public readonly physics = new Physics2D();
   public readonly sceneManager = new SceneManager();
   public readonly taskManager = new TaskManager();
   private initialSceneLoadTaskId?: string;
@@ -91,10 +90,11 @@ export class Game {
 
     const graphics = useGraphics();
     const loop = useLoop();
+    const physics = usePhysics();
 
     try {
       this.sceneManager.updateActiveScene(dt);
-      this.physics.update();
+      physics.update();
       graphics.update();
     } catch (err) {
       error(LOG_TAG, String(err));

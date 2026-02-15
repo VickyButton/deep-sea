@@ -64,10 +64,6 @@ vi.mock('@core/engine/Audio', () => ({
   ),
 }));
 
-vi.mock('@core/engine/Physics2D', () => ({
-  Physics2D: vi.fn(),
-}));
-
 vi.mock('@core/engine/SceneManager', () => ({
   SceneManager: vi.fn(
     class {

@@ -39,6 +39,9 @@
       "loop": [
         "./src/core/engine/loop"
       ],
+      "physics": [
+        "./src/core/engine/physics"
+      ],
       "renderer": [
         "./src/core/engine/renderer"
       ]
