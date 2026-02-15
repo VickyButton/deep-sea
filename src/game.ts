@@ -1,3 +1,4 @@
+import { resetScenes } from '@core/engine/scenes';
 import { Game } from '@core/Game';
 import { resetAssets } from 'assets';
 import { resetAudio } from 'audio';
@@ -25,6 +26,7 @@ function resetEngine() {
   resetLoop();
   resetPhysics();
   resetRenderer();
+  resetScenes();
 }
 
 export function restartGame() {

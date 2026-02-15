@@ -1,6 +1,6 @@
 import { Scene } from '@core/nodes/Scene';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { SceneManager } from './SceneManager';
+import { useScenes } from './scenes';
 
 vi.mock('config', () => ({
   useConfig: () => ({
@@ -21,13 +21,13 @@ class TestScene extends Scene {
   title = 'TestScene';
 }
 
-describe('SceneManager', () => {
+describe('scenes', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
 
   it('should setup new active scene', () => {
-    const sceneManager = new SceneManager();
+    const sceneManager = useScenes();
     const scene = new TestScene();
     const sceneSetupSpy = vi.spyOn(scene, 'setup');
 
@@ -39,7 +39,7 @@ describe('SceneManager', () => {
   });
 
   it('should update active scene', () => {
-    const sceneManager = new SceneManager();
+    const sceneManager = useScenes();
     const scene = new TestScene();
     const sceneUpdateSpy = vi.spyOn(scene, 'update');
 
@@ -50,7 +50,7 @@ describe('SceneManager', () => {
   });
 
   it('should teardown current active scene when setting new active scene', () => {
-    const sceneManager = new SceneManager();
+    const sceneManager = useScenes();
     const scene = new TestScene();
     const sceneTeardownSpy = vi.spyOn(scene, 'teardown');
 
@@ -66,7 +66,7 @@ describe('SceneManager', () => {
   it('should load scene', async () => {
     vi.mock('/src/scenes/Scene/Scene', () => ({ default: Scene }));
 
-    const sceneManager = new SceneManager();
+    const sceneManager = useScenes();
     const scene = await sceneManager.loadScene('Scene');
 
     expect(scene instanceof Scene).toBe(true);

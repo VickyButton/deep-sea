@@ -44,6 +44,9 @@
       ],
       "renderer": [
         "./src/core/engine/renderer"
+      ],
+      "scenes": [
+        "./src/core/engine/scenes"
       ]
     },
     "lib": [

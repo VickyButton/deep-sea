@@ -2,9 +2,9 @@ import { Scene } from '@core/nodes/Scene';
 import { log } from '@core/utils/logger';
 import { useConfig } from 'config';
 
-const LOG_TAG = 'SceneManager';
+const LOG_TAG = 'scenes';
 
-export class SceneManager {
+class SceneManager {
   private activeScene?: Scene;
 
   /**
@@ -69,4 +69,14 @@ export class SceneManager {
       Object.keys(importedModule).includes('default')
     );
   }
+}
+
+let scenes = new SceneManager();
+
+export function useScenes() {
+  return scenes;
+}
+
+export function resetScenes() {
+  scenes = new SceneManager();
 }

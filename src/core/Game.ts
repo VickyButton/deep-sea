@@ -1,4 +1,4 @@
-import { SceneManager } from '@core/engine/SceneManager';
+import { useScenes } from '@core/engine/scenes';
 import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
 import { useAudio } from 'audio';
@@ -13,7 +13,6 @@ const LOG_TAG = 'Game';
 
 export class Game {
   // TODO: Move asset manager, graphics, etc. into own modules similar to config.
-  public readonly sceneManager = new SceneManager();
   public readonly taskManager = new TaskManager();
   private initialSceneLoadTaskId?: string;
 
@@ -27,17 +26,18 @@ export class Game {
     const graphics = useGraphics();
     const input = useInput();
     const loop = useLoop();
+    const scenes = useScenes();
 
     loop.setLoopCallback(this.onLoop.bind(this));
     audio.initialize();
     graphics.syncWithGameCanvas();
     input.attachListeners();
 
-    const initialSceneLoadTask = this.sceneManager.loadScene(config.game.splashScene);
+    const initialSceneLoadTask = scenes.loadScene(config.game.splashScene);
 
     // Loads and sets initial scene.
     this.initialSceneLoadTaskId = this.taskManager.registerTask(initialSceneLoadTask, (scene) => {
-      this.sceneManager.setActiveScene(scene);
+      scenes.setActiveScene(scene);
     });
 
     // Attaches default controls for dev functions.
@@ -91,9 +91,10 @@ export class Game {
     const graphics = useGraphics();
     const loop = useLoop();
     const physics = usePhysics();
+    const scenes = useScenes();
 
     try {
-      this.sceneManager.updateActiveScene(dt);
+      scenes.updateActiveScene(dt);
       physics.update();
       graphics.update();
     } catch (err) {

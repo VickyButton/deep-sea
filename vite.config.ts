@@ -17,6 +17,7 @@ export default defineConfig({
       loop: path.resolve(__dirname, './src/core/engine/loop'),
       physics: path.resolve(__dirname, './src/core/engine/physics'),
       renderer: path.resolve(__dirname, './src/core/engine/renderer'),
+      scenes: path.resolve(__dirname, './src/core/engine/scenes'),
     },
   },
   server: {

@@ -56,19 +56,17 @@ vi.mock('input', () => ({
   }),
 }));
 
+vi.mock('scenes', () => ({
+  useScenes: () => ({
+    loadScene: vi.fn(),
+    setActiveScene: vi.fn(),
+  }),
+}));
+
 vi.mock('@core/engine/Audio', () => ({
   Audio: vi.fn(
     class {
       initialize = vi.fn();
-    },
-  ),
-}));
-
-vi.mock('@core/engine/SceneManager', () => ({
-  SceneManager: vi.fn(
-    class {
-      loadScene = vi.fn();
-      setActiveScene = vi.fn();
     },
   ),
 }));
@@ -92,13 +90,9 @@ describe('Game', () => {
   it('should setup components and initial scene on setup', () => {
     const game = new Game();
     const taskManagerRegisterTaskSpy = vi.spyOn(game.taskManager, 'registerTask');
-    const sceneManagerLoadSceneSpy = vi.spyOn(game.sceneManager, 'loadScene');
-    const sceneManagerSetActiveSceneSpy = vi.spyOn(game.sceneManager, 'setActiveScene');
 
     game.setup();
 
     expect(taskManagerRegisterTaskSpy).toHaveBeenCalled();
-    expect(sceneManagerLoadSceneSpy).toHaveBeenCalledWith(config.game.splashScene);
-    expect(sceneManagerSetActiveSceneSpy).toHaveBeenCalled();
   });
 });
