@@ -1,7 +1,10 @@
 import { SpriteSheet, SpriteSheetRect } from '@core/structures/SpriteSheet';
 import { loadImage } from '@core/utils/loadImage';
 import { loadJson } from '@core/utils/loadJson';
+import { log } from '@core/utils/logger';
 import { useConfig } from 'config';
+
+const LOG_TAG = 'assets';
 
 abstract class AssetManager<T> {
   protected assets = new Map<string, T>();
@@ -47,11 +50,15 @@ class ImageManager extends AssetManager<ImageBitmap> {
 
     if (activeTask) return activeTask;
 
+    const config = useConfig();
+    const url = `${config.assets.images}/${name}.png`;
+
     try {
-      const config = useConfig();
-      const loadAsset = loadImage(`${config.assets.images}/${name}.png`);
+      const loadAsset = loadImage(url);
 
       this.assetTasks.set(name, loadAsset);
+
+      log(LOG_TAG, `Loading image from "${url}"...`);
 
       const asset = await loadAsset;
 
@@ -62,7 +69,7 @@ class ImageManager extends AssetManager<ImageBitmap> {
     } catch {
       this.assetTasks.delete(name);
 
-      throw new Error(`Unable to load image ${name}.png`);
+      throw new Error(`Unable to load image from "${url}"`);
     }
   }
 }
@@ -73,10 +80,12 @@ class SpriteSheetManager extends AssetManager<SpriteSheet> {
 
     if (activeTask) return activeTask;
 
+    const config = useConfig();
+    const url = `${config.assets.spriteSheets}/${name}.json`;
+
     try {
-      const config = useConfig();
       const loadSpriteSheet = async () => {
-        const assetConfig = await loadJson(`${config.assets.spriteSheets}/${name}.json`);
+        const assetConfig = await loadJson(url);
 
         if (!this.isSpriteSheetConfig(assetConfig)) throw new Error('Invalid sprite sheet config');
 
@@ -85,6 +94,8 @@ class SpriteSheetManager extends AssetManager<SpriteSheet> {
       const loadAsset = loadSpriteSheet();
 
       this.assetTasks.set(name, loadAsset);
+
+      log(LOG_TAG, `Loading sprite sheet from "${url}"...`);
 
       const asset = await loadAsset;
 
@@ -95,7 +106,7 @@ class SpriteSheetManager extends AssetManager<SpriteSheet> {
     } catch {
       this.assetTasks.delete(name);
 
-      throw new Error(`Unable to load sprite sheet ${name}.json`);
+      throw new Error(`Unable to load sprite sheet from "${url}"`);
     }
   }
 
