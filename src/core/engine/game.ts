@@ -13,7 +13,7 @@ import { resetRenderer } from './renderer';
 const LOG_TAG = 'game';
 
 class Game {
-  private initialSceneLoadTaskId?: string;
+  private isLoaded = false;
 
   /**
    * Sets up the game components and loads initial scene.
@@ -33,11 +33,13 @@ class Game {
     graphics.syncWithGameCanvas();
     input.attachListeners();
 
-    const initialSceneLoadTask = scenes.loadScene(config.game.splashScene);
+    const loadScene = scenes.loadScene(config.game.splashScene);
 
     // Loads and sets initial scene.
-    this.initialSceneLoadTaskId = tasks.registerTask(initialSceneLoadTask, (scene) => {
+    tasks.registerTask(loadScene, (scene) => {
       scenes.setActiveScene(scene);
+
+      this.isLoaded = true;
     });
 
     // Attaches default controls for dev functions.
