@@ -11,11 +11,16 @@ export class Scene extends GameNode {
    * The scene camera.
    */
   public camera = new CameraNode2D();
+  /**
+   * Callback for when the scene is set up.
+   */
+  public onSetup?: () => void;
 
   public setup(): void {
     super.setup();
-
     this.setupCamera();
+
+    if (this.onSetup) this.onSetup();
   }
 
   private setupCamera() {
