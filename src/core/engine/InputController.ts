@@ -1,6 +1,6 @@
 type KeyboardEventListener = (e: KeyboardEvent) => void;
 
-export class InputController {
+class InputController {
   private keypressEventListeners = new Set<KeyboardEventListener>();
 
   private onKeypress = (e: KeyboardEvent) => {
