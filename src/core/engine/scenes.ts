@@ -13,7 +13,7 @@ class SceneManager {
    * @param scene The scene to switch to.
    */
   public setActiveScene(scene: Scene) {
-    log(LOG_TAG, `Setting ${scene.title} as active scene...`);
+    log(LOG_TAG, `Setting "${scene.title}" as active scene...`);
 
     this.teardownActiveScene();
 
