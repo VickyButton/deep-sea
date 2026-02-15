@@ -1,9 +1,6 @@
 import { generateId } from '@core/utils/generateId';
-import { error, log } from '@core/utils/logger';
 
 type Task<T> = Promise<T>;
-
-const LOG_TAG = 'tasks';
 
 class TaskManager {
   private activeTasks = new Set<string>();
@@ -16,25 +13,18 @@ class TaskManager {
    * @returns A task ID that can be used for tracking the task's progress.
    */
   public registerTask<T>(task: Task<T>, onComplete: (data: T) => void) {
-    const taskStart = performance.now();
     const taskId = generateId();
 
     this.activeTasks.add(taskId);
 
-    log(LOG_TAG, `Task ${taskId} registered`);
-
     task
       .then((data: T) => {
-        const dt = Math.floor(performance.now() - taskStart);
-
-        log(LOG_TAG, `Task ${taskId} completed in ${String(dt)}ms`);
-
         onComplete(data);
 
         this.completeTask(taskId);
       })
       .catch((err: unknown) => {
-        error(LOG_TAG, `Task ${taskId} failed with following error: "${String(err)}"`);
+        throw new Error(String(err));
       });
 
     return taskId;
