@@ -24,4 +24,12 @@ export class Scene extends GameNode {
     renderer.setActiveCamera(this.camera);
     this.addChild(this.camera);
   }
+
+  public static create(title: string) {
+    const node = new Scene();
+
+    node.title = title;
+
+    return node;
+  }
 }
