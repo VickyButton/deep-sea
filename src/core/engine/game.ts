@@ -98,18 +98,6 @@ class Game {
     }
   }
 
-  private setupEngine() {
-    const audio = useAudio();
-    const loop = useLoop();
-    const graphics = useGraphics();
-    const input = useInput();
-
-    audio.initialize();
-    graphics.syncWithGameCanvas();
-    input.attachListeners();
-    loop.setLoopCallback(this.onLoop.bind(this));
-  }
-
   private attachActionListeners() {
     const config = useConfig();
     const input = useInput();
@@ -125,6 +113,18 @@ class Game {
           break;
       }
     });
+  }
+
+  private setupEngine() {
+    const audio = useAudio();
+    const loop = useLoop();
+    const graphics = useGraphics();
+    const input = useInput();
+
+    audio.initialize();
+    graphics.syncWithGameCanvas();
+    input.attachListeners();
+    loop.setLoopCallback(this.onLoop.bind(this));
   }
 
   private resetEngine() {
