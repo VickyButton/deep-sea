@@ -39,3 +39,13 @@ export class InputController {
     document.removeEventListener('keypress', this.onKeypress);
   }
 }
+
+let inputController = new InputController();
+
+export function useInput() {
+  return inputController;
+}
+
+export function resetInput() {
+  inputController = new InputController();
+}
