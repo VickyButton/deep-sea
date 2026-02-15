@@ -1,5 +1,5 @@
+import { useGame } from '@core/engine/Game';
 import { useConfig, loadConfig, setConfig } from './config';
-import { useGame } from './game';
 
 function createGameCanvas() {
   const config = useConfig();

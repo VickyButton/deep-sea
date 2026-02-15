@@ -1,5 +1,5 @@
 import { afterEach, describe, it, vi } from 'vitest';
-import { Game } from './Game';
+import { useGame } from './Game';
 
 const config = {
   actions: {
@@ -78,7 +78,7 @@ describe('Game', () => {
   });
 
   it('should setup components and initial scene on setup', () => {
-    const game = new Game();
+    const game = useGame();
 
     game.setup();
   });

@@ -1,17 +1,18 @@
 import { error, log } from '@core/utils/logger';
-import { useAudio } from 'audio';
+import { resetAudio, useAudio } from 'audio';
 import { useConfig, toggleDebugMode } from 'config';
-import { restartGame } from 'game';
-import { useGraphics } from 'graphics';
-import { useInput } from 'input';
-import { useLoop } from 'loop';
-import { usePhysics } from 'physics';
-import { useScenes } from 'scenes';
-import { useTasks } from 'tasks';
+import { resetGraphics, useGraphics } from 'graphics';
+import { resetInput, useInput } from 'input';
+import { resetLoop, useLoop } from 'loop';
+import { resetPhysics, usePhysics } from 'physics';
+import { resetScenes, useScenes } from 'scenes';
+import { resetTasks, useTasks } from 'tasks';
+import { resetAssets } from './assets';
+import { resetRenderer } from './renderer';
 
-const LOG_TAG = 'Game';
+const LOG_TAG = 'game';
 
-export class Game {
+class Game {
   // TODO: Move asset manager, graphics, etc. into own modules similar to config.
   private initialSceneLoadTaskId?: string;
 
@@ -103,4 +104,37 @@ export class Game {
       loop.stop();
     }
   }
+}
+
+let game = new Game();
+
+export function useGame() {
+  return game;
+}
+
+export function setGame(_game: Game) {
+  game = _game;
+}
+
+function resetEngine() {
+  resetAssets();
+  resetAudio();
+  resetGraphics();
+  resetInput();
+  resetLoop();
+  resetPhysics();
+  resetRenderer();
+  resetScenes();
+  resetTasks();
+}
+
+export function restartGame() {
+  game.stop();
+  game.teardown();
+
+  resetEngine();
+
+  game = new Game();
+  game.setup();
+  game.start();
 }
