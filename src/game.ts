@@ -1,10 +1,10 @@
-import { resetInput } from '@core/engine/input';
-import { resetPhysics } from '@core/engine/physics';
 import { Game } from '@core/Game';
 import { resetAssets } from 'assets';
 import { resetAudio } from 'audio';
 import { resetGraphics } from 'graphics';
+import { resetInput } from 'input';
 import { resetLoop } from 'loop';
+import { resetPhysics } from 'physics';
 import { resetRenderer } from 'renderer';
 
 let game = new Game();
