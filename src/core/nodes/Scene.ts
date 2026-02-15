@@ -15,13 +15,23 @@ export class Scene extends GameNode {
    * Callback for when the scene is set up.
    */
   public onSetup?: (scene: Scene) => void;
+  /**
+   * Callback for when the scene is tore down.
+   */
+  public onTeardown?: (scene: Scene) => void;
 
-  public setup(): void {
+  public setup() {
     this.setupCamera();
 
     if (this.onSetup) this.onSetup(this);
 
     super.setup();
+  }
+
+  public teardown() {
+    if (this.onTeardown) this.onTeardown(this);
+
+    super.teardown();
   }
 
   private setupCamera() {
