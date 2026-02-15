@@ -97,14 +97,8 @@ class Game {
     game.start();
   }
 
-  private get isReady() {
-    const tasks = useTasks();
-
-    return this.initialSceneLoadTaskId ? !tasks.isTaskActive(this.initialSceneLoadTaskId) : true;
-  }
-
   private onLoop(dt: number) {
-    if (!this.isReady) return;
+    if (!this.isLoaded) return;
 
     const graphics = useGraphics();
     const loop = useLoop();
