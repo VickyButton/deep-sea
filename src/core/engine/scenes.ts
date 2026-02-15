@@ -52,7 +52,7 @@ class SceneManager {
     if (!response) {
       throw new Error(`Could not load ${filePath}`);
     } else if (!this.isScene(response)) {
-      throw new Error(`No Scene export in ${filePath}`);
+      throw new Error(`No scene export in ${filePath}`);
     }
 
     return response.default;
