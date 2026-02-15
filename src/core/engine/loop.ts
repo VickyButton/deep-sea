@@ -8,7 +8,7 @@ interface LoopState {
   then: number;
 }
 
-const LOG_TAG = 'Loop';
+const LOG_TAG = 'loop';
 
 class Loop {
   private state: LoopState;

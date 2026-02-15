@@ -3,7 +3,7 @@ import { log } from '@core/utils/logger';
 import { useConfig } from 'config';
 import { useRenderer } from './renderer';
 
-const LOG_TAG = 'Graphics';
+const LOG_TAG = 'graphics';
 const ERROR_MISSING_GAME_CANVAS = 'Unable to get game canvas';
 const ERROR_MISSING_GAME_CONTEXT = 'No game rendering context defined';
 
