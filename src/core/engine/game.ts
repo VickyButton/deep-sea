@@ -48,7 +48,7 @@ class Game {
           toggleDebugMode();
           break;
         case config.actions.restartGame:
-          restartGame();
+          this.restart();
           break;
       }
     });
@@ -80,6 +80,22 @@ class Game {
     loop.stop();
   }
 
+  /**
+   * Restarts the game.
+   */
+  public restart() {
+    this.stop();
+    this.teardown();
+    this.resetEngine();
+
+    resetGame();
+
+    const game = useGame();
+
+    game.setup();
+    game.start();
+  }
+
   private get isReady() {
     const tasks = useTasks();
 
@@ -104,6 +120,18 @@ class Game {
       loop.stop();
     }
   }
+
+  private resetEngine() {
+    resetAssets();
+    resetAudio();
+    resetGraphics();
+    resetInput();
+    resetLoop();
+    resetPhysics();
+    resetRenderer();
+    resetScenes();
+    resetTasks();
+  }
 }
 
 let game = new Game();
@@ -112,29 +140,10 @@ export function useGame() {
   return game;
 }
 
+export function resetGame() {
+  game = new Game();
+}
+
 export function setGame(_game: Game) {
   game = _game;
-}
-
-function resetEngine() {
-  resetAssets();
-  resetAudio();
-  resetGraphics();
-  resetInput();
-  resetLoop();
-  resetPhysics();
-  resetRenderer();
-  resetScenes();
-  resetTasks();
-}
-
-export function restartGame() {
-  game.stop();
-  game.teardown();
-
-  resetEngine();
-
-  game = new Game();
-  game.setup();
-  game.start();
 }
