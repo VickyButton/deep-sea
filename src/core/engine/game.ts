@@ -20,18 +20,12 @@ class Game {
    */
   public setup() {
     log(LOG_TAG, 'Initializing...');
-    const audio = useAudio();
     const config = useConfig();
-    const graphics = useGraphics();
-    const input = useInput();
-    const loop = useLoop();
     const scenes = useScenes();
     const tasks = useTasks();
 
-    loop.setLoopCallback(this.onLoop.bind(this));
-    audio.initialize();
-    graphics.syncWithGameCanvas();
-    input.attachListeners();
+    this.setupEngine();
+    this.attachActionListeners();
 
     const loadScene = scenes.loadScene(config.game.splashScene);
 
@@ -40,18 +34,6 @@ class Game {
       scenes.setActiveScene(scene);
 
       this.isLoaded = true;
-    });
-
-    // Attaches default controls for dev functions.
-    input.addKeypressEventListener((e) => {
-      switch (e.key) {
-        case config.actions.toggleDebugMode:
-          toggleDebugMode();
-          break;
-        case config.actions.restartGame:
-          this.restart();
-          break;
-      }
     });
   }
 
@@ -114,6 +96,35 @@ class Game {
 
       loop.stop();
     }
+  }
+
+  private setupEngine() {
+    const audio = useAudio();
+    const loop = useLoop();
+    const graphics = useGraphics();
+    const input = useInput();
+
+    audio.initialize();
+    graphics.syncWithGameCanvas();
+    input.attachListeners();
+    loop.setLoopCallback(this.onLoop.bind(this));
+  }
+
+  private attachActionListeners() {
+    const config = useConfig();
+    const input = useInput();
+
+    // Attaches default controls for dev functions.
+    input.addKeypressEventListener((e) => {
+      switch (e.key) {
+        case config.actions.toggleDebugMode:
+          toggleDebugMode();
+          break;
+        case config.actions.restartGame:
+          this.restart();
+          break;
+      }
+    });
   }
 
   private resetEngine() {
