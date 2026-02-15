@@ -9,8 +9,9 @@ export abstract class Script<T extends GameNode> {
   /**
    * Callback to be executed when the node is updated.
    * @param node The node the script is attached to.
+   * @param dt The time since the last frame, in miliseconds.
    */
-  public abstract onUpdate(node: T): void;
+  public abstract onUpdate(node: T, dt: number): void;
   /**
    * Callback to be executed when the node is torn down.
    * @param node The node the script is attached to.
@@ -32,17 +33,9 @@ export class GameNode {
    */
   public parent: GameNode | null = null;
   /**
-   * Callback for when the node is set up.
+   * The node's attached scripts.
    */
-  public onSetup?: (node: GameNode) => void;
-  /**
-   * Callback for when node is updated.
-   */
-  public onUpdate?: (node: GameNode, dt: number) => void;
-  /**
-   * Callback for when the node is tore down.
-   */
-  public onTeardown?: (node: GameNode) => void;
+  public scripts = new Set<Script<GameNode>>();
 
   /**
    * The number of direct children this node has.
@@ -74,13 +67,28 @@ export class GameNode {
   }
 
   /**
+   * Attaches a script to the node.
+   * @param script The script to attach.
+   */
+  public attachScript(script: Script<GameNode>) {
+    this.scripts.add(script);
+  }
+
+  /**
+   * Detaches a script from the node.
+   * @param script The script to detach.
+   */
+  public detachScript(script: Script<GameNode>) {
+    this.scripts.delete(script);
+  }
+
+  /**
    * Executes at the beginning of a node's lifecycle.
    *
    * This is where asset loading and other setup should occur.
    */
   public setup() {
-    if (this.onSetup) this.onSetup(this);
-
+    for (const script of this.scripts) script.onSetup(this);
     for (const child of this.children.values()) child.setup();
   }
 
@@ -90,8 +98,7 @@ export class GameNode {
    * @param dt Time since the last update, in milliseconds.
    */
   public update(dt: number) {
-    if (this.onUpdate) this.onUpdate(this, dt);
-
+    for (const script of this.scripts) script.onUpdate(this, dt);
     for (const child of this.children.values()) child.update(dt);
   }
 
@@ -101,8 +108,7 @@ export class GameNode {
    * This is where cleanup should occur.
    */
   public teardown() {
-    if (this.onTeardown) this.onTeardown(this);
-
+    for (const script of this.scripts) script.onTeardown(this);
     for (const child of this.children.values()) child.teardown();
   }
 
