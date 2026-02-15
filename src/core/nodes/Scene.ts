@@ -16,6 +16,10 @@ export class Scene extends GameNode {
    */
   public onSetup?: (scene: Scene) => void;
   /**
+   * Callback for when scene is updated.
+   */
+  public onUpdate?: (scene: Scene, dt: number) => void;
+  /**
    * Callback for when the scene is tore down.
    */
   public onTeardown?: (scene: Scene) => void;
@@ -26,6 +30,10 @@ export class Scene extends GameNode {
     if (this.onSetup) this.onSetup(this);
 
     super.setup();
+  }
+
+  public update(dt: number) {
+    if (this.onUpdate) this.onUpdate(this, dt);
   }
 
   public teardown() {
