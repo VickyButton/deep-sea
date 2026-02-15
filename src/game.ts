@@ -1,3 +1,5 @@
+import { resetInput } from '@core/engine/input';
+import { resetPhysics } from '@core/engine/physics';
 import { Game } from '@core/Game';
 import { resetAssets } from 'assets';
 import { resetAudio } from 'audio';
@@ -19,7 +21,9 @@ function resetEngine() {
   resetAssets();
   resetAudio();
   resetGraphics();
+  resetInput();
   resetLoop();
+  resetPhysics();
   resetRenderer();
 }
 
