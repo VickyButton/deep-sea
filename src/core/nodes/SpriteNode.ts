@@ -1,7 +1,7 @@
+import { useTasks } from '@core/engine/tasks';
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
 import { getAssets } from 'assets';
-import { useGame } from 'game';
 import { useGraphics } from 'graphics';
 import { useRenderer } from 'renderer';
 import { GraphicsNode2D } from './GraphicsNode2D';
@@ -26,8 +26,8 @@ export class SpriteNode extends GraphicsNode2D {
   public setup() {
     super.setup();
 
-    const game = useGame();
     const assets = getAssets();
+    const tasks = useTasks();
 
     this.visible = false;
 
@@ -39,7 +39,7 @@ export class SpriteNode extends GraphicsNode2D {
       assets.spriteSheets.load(this.spriteSheetName),
     ]);
 
-    game.taskManager.registerTask(load, () => {
+    tasks.registerTask(load, () => {
       this.visible = true;
     });
   }

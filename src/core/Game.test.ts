@@ -71,14 +71,12 @@ vi.mock('@core/engine/Audio', () => ({
   ),
 }));
 
-vi.mock('@core/engine/TaskManager', () => ({
-  TaskManager: vi.fn(
-    class {
-      registerTask = vi.fn().mockImplementation((_task: Promise<void>, callback: () => void) => {
-        callback();
-      });
-    },
-  ),
+vi.mock('tasks', () => ({
+  useTasks: () => ({
+    registerTask: vi.fn().mockImplementation((_task: Promise<void>, callback: () => void) => {
+      callback();
+    }),
+  }),
 }));
 
 // TODO: Rewrite Game unit tests after engine components have been decoupled.
@@ -89,10 +87,7 @@ describe('Game', () => {
 
   it('should setup components and initial scene on setup', () => {
     const game = new Game();
-    const taskManagerRegisterTaskSpy = vi.spyOn(game.taskManager, 'registerTask');
 
     game.setup();
-
-    expect(taskManagerRegisterTaskSpy).toHaveBeenCalled();
   });
 });

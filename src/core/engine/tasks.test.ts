@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { TaskManager } from './TaskManager';
+import { useTasks } from './tasks';
 
-describe('TaskManager', () => {
+describe('tasks', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -11,7 +11,7 @@ describe('TaskManager', () => {
   });
 
   it('should execute callback on task complete', async () => {
-    const taskManager = new TaskManager();
+    const taskManager = useTasks();
     const task = Promise.resolve('data');
     const onComplete = vi.fn();
 
@@ -25,7 +25,7 @@ describe('TaskManager', () => {
   });
 
   it('should track active tasks', async () => {
-    const taskManager = new TaskManager();
+    const taskManager = useTasks();
     const task = Promise.resolve('data');
     const onComplete = vi.fn();
 

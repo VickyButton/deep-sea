@@ -1,5 +1,4 @@
 import { useScenes } from '@core/engine/scenes';
-import { TaskManager } from '@core/engine/TaskManager';
 import { error, log } from '@core/utils/logger';
 import { useAudio } from 'audio';
 import { useConfig, toggleDebugMode } from 'config';
@@ -8,12 +7,12 @@ import { useGraphics } from 'graphics';
 import { useInput } from 'input';
 import { useLoop } from 'loop';
 import { usePhysics } from 'physics';
+import { useTasks } from 'tasks';
 
 const LOG_TAG = 'Game';
 
 export class Game {
   // TODO: Move asset manager, graphics, etc. into own modules similar to config.
-  public readonly taskManager = new TaskManager();
   private initialSceneLoadTaskId?: string;
 
   /**
@@ -27,6 +26,7 @@ export class Game {
     const input = useInput();
     const loop = useLoop();
     const scenes = useScenes();
+    const tasks = useTasks();
 
     loop.setLoopCallback(this.onLoop.bind(this));
     audio.initialize();
@@ -36,7 +36,7 @@ export class Game {
     const initialSceneLoadTask = scenes.loadScene(config.game.splashScene);
 
     // Loads and sets initial scene.
-    this.initialSceneLoadTaskId = this.taskManager.registerTask(initialSceneLoadTask, (scene) => {
+    this.initialSceneLoadTaskId = tasks.registerTask(initialSceneLoadTask, (scene) => {
       scenes.setActiveScene(scene);
     });
 
@@ -80,9 +80,9 @@ export class Game {
   }
 
   private get isReady() {
-    return this.initialSceneLoadTaskId
-      ? !this.taskManager.isTaskActive(this.initialSceneLoadTaskId)
-      : true;
+    const tasks = useTasks();
+
+    return this.initialSceneLoadTaskId ? !tasks.isTaskActive(this.initialSceneLoadTaskId) : true;
   }
 
   private onLoop(dt: number) {

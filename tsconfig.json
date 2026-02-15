@@ -47,6 +47,9 @@
       ],
       "scenes": [
         "./src/core/engine/scenes"
+      ],
+      "tasks": [
+        "./src/core/engine/tasks"
       ]
     },
     "lib": [

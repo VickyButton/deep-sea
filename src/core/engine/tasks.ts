@@ -3,9 +3,9 @@ import { error, log } from '@core/utils/logger';
 
 type Task<T> = Promise<T>;
 
-const LOG_TAG = 'TaskManager';
+const LOG_TAG = 'tasks';
 
-export class TaskManager {
+class TaskManager {
   private activeTasks = new Set<string>();
 
   /**
@@ -53,4 +53,14 @@ export class TaskManager {
   private completeTask(taskId: string) {
     this.activeTasks.delete(taskId);
   }
+}
+
+let tasks = new TaskManager();
+
+export function useTasks() {
+  return tasks;
+}
+
+export function resetTasks() {
+  tasks = new TaskManager();
 }
