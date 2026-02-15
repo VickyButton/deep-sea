@@ -22,7 +22,7 @@ class Loop {
    * Starts loop.
    */
   public start() {
-    log(LOG_TAG, 'Starting...');
+    log(LOG_TAG, 'Starting game loop...');
 
     this.state.isRunning = true;
     this.state.then = timestampNow();
@@ -33,7 +33,7 @@ class Loop {
    * Stops loop.
    */
   public stop() {
-    log(LOG_TAG, 'Stopping...');
+    log(LOG_TAG, 'Stopping game loop...');
 
     this.state.isRunning = false;
   }
@@ -51,7 +51,7 @@ class Loop {
    * Resets loop to default state.
    */
   public reset() {
-    log(LOG_TAG, 'Resetting...');
+    log(LOG_TAG, 'Resetting game loop...');
 
     this.state = this.getDefaultState();
   }

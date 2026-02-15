@@ -19,7 +19,7 @@ class Game {
    * Sets up the game components and loads initial scene.
    */
   public setup() {
-    log(LOG_TAG, 'Initializing...');
+    log(LOG_TAG, 'Setting up game...');
     const config = useConfig();
     const scenes = useScenes();
     const tasks = useTasks();
@@ -47,7 +47,7 @@ class Game {
    * Starts the game loop.
    */
   public start() {
-    log(LOG_TAG, 'Starting...');
+    log(LOG_TAG, 'Starting game...');
     const loop = useLoop();
 
     loop.start();
@@ -57,7 +57,7 @@ class Game {
    * Stops the game loop.
    */
   public stop() {
-    log(LOG_TAG, 'Stopping...');
+    log(LOG_TAG, 'Stopping game...');
     const loop = useLoop();
 
     loop.stop();
