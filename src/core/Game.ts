@@ -6,7 +6,7 @@ import { useConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
 import { useGraphics } from 'graphics';
 import { useLoop } from 'loop';
-import { useInput } from './engine/InputController';
+import { useInput } from './engine/input';
 import { Physics2D } from './engine/Physics2D';
 
 const LOG_TAG = 'Game';
