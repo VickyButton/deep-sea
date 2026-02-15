@@ -46,13 +46,16 @@ class SceneManager {
    */
   public async loadScene(sceneName: string) {
     const config = useConfig();
-    const filePath = `${config.content.scenes}/${sceneName}/${sceneName}`;
-    const response: unknown = await import(/* @vite-ignore */ filePath);
+    const url = `${config.content.scenes}/${sceneName}/${sceneName}`;
+
+    log(LOG_TAG, `Loading "${url}"...`);
+
+    const response: unknown = await import(/* @vite-ignore */ url);
 
     if (!response) {
-      throw new Error(`Could not load ${filePath}`);
+      throw new Error(`Unable to load "${url}"`);
     } else if (!this.isScene(response)) {
-      throw new Error(`No scene export in ${filePath}`);
+      throw new Error(`No default scene export provided in "${url}"`);
     }
 
     return response.default;
