@@ -1,7 +1,7 @@
 import { CollisionNode2D } from '@core/nodes/CollisionNode2D';
 import { ShapeNode2D } from '@core/nodes/ShapeNode2D';
 
-export class Physics2D {
+class Physics2D {
   private nodes = new Set<CollisionNode2D>();
 
   /**
@@ -74,4 +74,14 @@ export class Physics2D {
       return base.parent.shape.overlaps(target.parent.shape);
     }
   }
+}
+
+let physics = new Physics2D();
+
+export function usePhysics() {
+  return physics;
+}
+
+export function resetPhysics() {
+  physics = new Physics2D();
 }

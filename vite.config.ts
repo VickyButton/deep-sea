@@ -15,6 +15,7 @@ export default defineConfig({
       graphics: path.resolve(__dirname, './src/core/engine/graphics'),
       input: path.resolve(__dirname, './src/core/engine/input'),
       loop: path.resolve(__dirname, './src/core/engine/loop'),
+      physics: path.resolve(__dirname, './src/core/engine/physics'),
       renderer: path.resolve(__dirname, './src/core/engine/renderer'),
     },
   },
