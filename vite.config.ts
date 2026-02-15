@@ -13,6 +13,7 @@ export default defineConfig({
       config: path.resolve(__dirname, './src/config'),
       game: path.resolve(__dirname, './src/game'),
       graphics: path.resolve(__dirname, './src/core/engine/graphics'),
+      input: path.resolve(__dirname, './src/core/engine/input'),
       loop: path.resolve(__dirname, './src/core/engine/loop'),
       renderer: path.resolve(__dirname, './src/core/engine/renderer'),
     },

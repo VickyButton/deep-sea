@@ -5,8 +5,8 @@ import { useAudio } from 'audio';
 import { useConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
 import { useGraphics } from 'graphics';
+import { useInput } from 'input';
 import { useLoop } from 'loop';
-import { useInput } from './engine/input';
 import { Physics2D } from './engine/Physics2D';
 
 const LOG_TAG = 'Game';
