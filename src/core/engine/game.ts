@@ -13,7 +13,6 @@ import { resetRenderer } from './renderer';
 const LOG_TAG = 'game';
 
 class Game {
-  // TODO: Move asset manager, graphics, etc. into own modules similar to config.
   private initialSceneLoadTaskId?: string;
 
   /**
