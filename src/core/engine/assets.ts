@@ -58,7 +58,7 @@ class ImageManager extends AssetManager<ImageBitmap> {
 
       this.assetTasks.set(name, loadAsset);
 
-      log(LOG_TAG, `Loading image from "${url}"...`);
+      log(LOG_TAG, `Loading "${url}"...`);
 
       const asset = await loadAsset;
 
@@ -69,7 +69,7 @@ class ImageManager extends AssetManager<ImageBitmap> {
     } catch {
       this.assetTasks.delete(name);
 
-      throw new Error(`Unable to load image from "${url}"`);
+      throw new Error(`Unable to load "${url}"`);
     }
   }
 }
@@ -95,7 +95,7 @@ class SpriteSheetManager extends AssetManager<SpriteSheet> {
 
       this.assetTasks.set(name, loadAsset);
 
-      log(LOG_TAG, `Loading sprite sheet from "${url}"...`);
+      log(LOG_TAG, `Loading "${url}"...`);
 
       const asset = await loadAsset;
 
@@ -106,7 +106,7 @@ class SpriteSheetManager extends AssetManager<SpriteSheet> {
     } catch {
       this.assetTasks.delete(name);
 
-      throw new Error(`Unable to load sprite sheet from "${url}"`);
+      throw new Error(`Unable to load "${url}"`);
     }
   }
 
