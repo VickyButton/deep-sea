@@ -17,10 +17,11 @@ export class Scene extends GameNode {
   public onSetup?: (scene: Scene) => void;
 
   public setup(): void {
-    super.setup();
     this.setupCamera();
 
     if (this.onSetup) this.onSetup(this);
+
+    super.setup();
   }
 
   private setupCamera() {
