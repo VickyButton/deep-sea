@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, it, vi } from 'vitest';
 import { Game } from './Game';
 
 const config = {
@@ -61,14 +61,6 @@ vi.mock('scenes', () => ({
     loadScene: vi.fn(),
     setActiveScene: vi.fn(),
   }),
-}));
-
-vi.mock('@core/engine/Audio', () => ({
-  Audio: vi.fn(
-    class {
-      initialize = vi.fn();
-    },
-  ),
 }));
 
 vi.mock('tasks', () => ({

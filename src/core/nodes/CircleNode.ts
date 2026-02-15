@@ -1,9 +1,9 @@
-import { useRenderer } from '@core/engine/renderer';
 import { ColorRGB } from '@core/structures/Colors';
 import { Circle, Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
 import { useConfig } from 'config';
 import { useGraphics } from 'graphics';
+import { useRenderer } from 'renderer';
 import { ShapeNode2D } from './ShapeNode2D';
 
 export class CircleNode extends ShapeNode2D {

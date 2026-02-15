@@ -1,9 +1,9 @@
-import { useTasks } from '@core/engine/tasks';
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
 import { getAssets } from 'assets';
 import { useGraphics } from 'graphics';
 import { useRenderer } from 'renderer';
+import { useTasks } from 'tasks';
 import { GraphicsNode2D } from './GraphicsNode2D';
 
 export class SpriteNode extends GraphicsNode2D {

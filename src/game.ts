@@ -1,5 +1,3 @@
-import { resetScenes } from '@core/engine/scenes';
-import { resetTasks } from '@core/engine/tasks';
 import { Game } from '@core/Game';
 import { resetAssets } from 'assets';
 import { resetAudio } from 'audio';
@@ -8,6 +6,8 @@ import { resetInput } from 'input';
 import { resetLoop } from 'loop';
 import { resetPhysics } from 'physics';
 import { resetRenderer } from 'renderer';
+import { resetScenes } from 'scenes';
+import { resetTasks } from 'tasks';
 
 let game = new Game();
 

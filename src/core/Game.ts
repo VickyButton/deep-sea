@@ -1,4 +1,3 @@
-import { useScenes } from '@core/engine/scenes';
 import { error, log } from '@core/utils/logger';
 import { useAudio } from 'audio';
 import { useConfig, toggleDebugMode } from 'config';
@@ -7,6 +6,7 @@ import { useGraphics } from 'graphics';
 import { useInput } from 'input';
 import { useLoop } from 'loop';
 import { usePhysics } from 'physics';
+import { useScenes } from 'scenes';
 import { useTasks } from 'tasks';
 
 const LOG_TAG = 'Game';
