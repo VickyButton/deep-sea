@@ -82,20 +82,7 @@ class Game {
   private onLoop(dt: number) {
     if (!this.isLoaded) return;
 
-    const graphics = useGraphics();
-    const loop = useLoop();
-    const physics = usePhysics();
-    const scenes = useScenes();
-
-    try {
-      scenes.updateActiveScene(dt);
-      physics.update();
-      graphics.update();
-    } catch (err) {
-      error(LOG_TAG, String(err));
-
-      loop.stop();
-    }
+    this.updateEngine(dt);
   }
 
   private attachActionListeners() {
@@ -125,6 +112,23 @@ class Game {
     graphics.syncWithGameCanvas();
     input.attachListeners();
     loop.setLoopCallback(this.onLoop.bind(this));
+  }
+
+  private updateEngine(dt: number) {
+    const graphics = useGraphics();
+    const loop = useLoop();
+    const physics = usePhysics();
+    const scenes = useScenes();
+
+    try {
+      scenes.updateActiveScene(dt);
+      physics.update();
+      graphics.update();
+    } catch (err) {
+      error(LOG_TAG, String(err));
+
+      loop.stop();
+    }
   }
 
   private resetEngine() {
