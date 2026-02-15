@@ -17,10 +17,6 @@ vi.mock('config', () => ({
   }),
 }));
 
-class TestScene extends Scene {
-  title = 'TestScene';
-}
-
 describe('scenes', () => {
   afterEach(() => {
     vi.clearAllMocks();
@@ -28,7 +24,7 @@ describe('scenes', () => {
 
   it('should setup new active scene', () => {
     const sceneManager = useScenes();
-    const scene = new TestScene();
+    const scene = new Scene();
     const sceneSetupSpy = vi.spyOn(scene, 'setup');
 
     expect(sceneSetupSpy).not.toHaveBeenCalled();
@@ -40,7 +36,7 @@ describe('scenes', () => {
 
   it('should update active scene', () => {
     const sceneManager = useScenes();
-    const scene = new TestScene();
+    const scene = new Scene();
     const sceneUpdateSpy = vi.spyOn(scene, 'update');
 
     sceneManager.setActiveScene(scene);
@@ -51,7 +47,7 @@ describe('scenes', () => {
 
   it('should teardown current active scene when setting new active scene', () => {
     const sceneManager = useScenes();
-    const scene = new TestScene();
+    const scene = new Scene();
     const sceneTeardownSpy = vi.spyOn(scene, 'teardown');
 
     sceneManager.setActiveScene(scene);
@@ -64,7 +60,7 @@ describe('scenes', () => {
   });
 
   it('should load scene', async () => {
-    vi.mock('/src/scenes/Scene/Scene', () => ({ default: Scene }));
+    vi.mock('/src/scenes/Scene/Scene', () => ({ default: new Scene() }));
 
     const sceneManager = useScenes();
     const scene = await sceneManager.loadScene('Scene');
