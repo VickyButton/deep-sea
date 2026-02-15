@@ -33,6 +33,9 @@
       "graphics": [
         "./src/core/engine/graphics"
       ],
+      "input": [
+        "./src/core/engine/input"
+      ],
       "loop": [
         "./src/core/engine/loop"
       ],

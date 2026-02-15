@@ -1,6 +1,6 @@
 type KeyboardEventListener = (e: KeyboardEvent) => void;
 
-export class InputController {
+class InputController {
   private keypressEventListeners = new Set<KeyboardEventListener>();
 
   private onKeypress = (e: KeyboardEvent) => {
@@ -38,4 +38,14 @@ export class InputController {
   public detachListeners() {
     document.removeEventListener('keypress', this.onKeypress);
   }
+}
+
+let inputController = new InputController();
+
+export function useInput() {
+  return inputController;
+}
+
+export function resetInput() {
+  inputController = new InputController();
 }

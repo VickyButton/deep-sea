@@ -49,19 +49,17 @@ vi.mock('game', () => ({
   restartGame: vi.fn(),
 }));
 
+vi.mock('input', () => ({
+  useInput: () => ({
+    attachListeners: vi.fn(),
+    addKeypressEventListener: vi.fn(),
+  }),
+}));
+
 vi.mock('@core/engine/Audio', () => ({
   Audio: vi.fn(
     class {
       initialize = vi.fn();
-    },
-  ),
-}));
-
-vi.mock('@core/engine/InputController', () => ({
-  InputController: vi.fn(
-    class {
-      addKeypressEventListener = vi.fn();
-      attachListeners = vi.fn();
     },
   ),
 }));

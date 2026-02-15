@@ -5,15 +5,14 @@ import { useAudio } from 'audio';
 import { useConfig, toggleDebugMode } from 'config';
 import { restartGame } from 'game';
 import { useGraphics } from 'graphics';
+import { useInput } from 'input';
 import { useLoop } from 'loop';
-import { InputController } from './engine/InputController';
 import { Physics2D } from './engine/Physics2D';
 
 const LOG_TAG = 'Game';
 
 export class Game {
   // TODO: Move asset manager, graphics, etc. into own modules similar to config.
-  public readonly inputController = new InputController();
   public readonly physics = new Physics2D();
   public readonly sceneManager = new SceneManager();
   public readonly taskManager = new TaskManager();
@@ -27,12 +26,13 @@ export class Game {
     const audio = useAudio();
     const config = useConfig();
     const graphics = useGraphics();
+    const input = useInput();
     const loop = useLoop();
 
     loop.setLoopCallback(this.onLoop.bind(this));
     audio.initialize();
     graphics.syncWithGameCanvas();
-    this.inputController.attachListeners();
+    input.attachListeners();
 
     const initialSceneLoadTask = this.sceneManager.loadScene(config.game.splashScene);
 
@@ -42,7 +42,7 @@ export class Game {
     });
 
     // Attaches default controls for dev functions.
-    this.inputController.addKeypressEventListener((e) => {
+    input.addKeypressEventListener((e) => {
       switch (e.key) {
         case config.actions.toggleDebugMode:
           toggleDebugMode();
@@ -55,7 +55,9 @@ export class Game {
   }
 
   public teardown() {
-    this.inputController.detachListeners();
+    const input = useInput();
+
+    input.detachListeners();
   }
 
   /**
