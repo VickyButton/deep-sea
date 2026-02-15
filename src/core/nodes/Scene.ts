@@ -14,13 +14,13 @@ export class Scene extends GameNode {
   /**
    * Callback for when the scene is set up.
    */
-  public onSetup?: () => void;
+  public onSetup?: (scene: Scene) => void;
 
   public setup(): void {
     super.setup();
     this.setupCamera();
 
-    if (this.onSetup) this.onSetup();
+    if (this.onSetup) this.onSetup(this);
   }
 
   private setupCamera() {
