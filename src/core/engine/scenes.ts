@@ -58,7 +58,7 @@ class SceneManager {
     return response.default;
   }
 
-  private isScene(value: unknown): value is { default: new () => Scene } {
+  private isScene(value: unknown): value is { default: Scene } {
     return (
       value !== null &&
       typeof value === 'object' &&
