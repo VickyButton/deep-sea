@@ -1,4 +1,4 @@
-import { useGame } from '@core/engine/Game';
+import { useGame } from '@core/engine/game';
 import { useConfig, loadConfig, setConfig } from './config';
 
 function createGameCanvas() {

@@ -1,5 +1,5 @@
 import { afterEach, describe, it, vi } from 'vitest';
-import { useGame } from './Game';
+import { useGame } from './game';
 
 const config = {
   actions: {
@@ -72,7 +72,7 @@ vi.mock('tasks', () => ({
 }));
 
 // TODO: Rewrite Game unit tests after engine components have been decoupled.
-describe('Game', () => {
+describe('game', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
