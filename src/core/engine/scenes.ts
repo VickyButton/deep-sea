@@ -49,7 +49,7 @@ class SceneManager {
     const assets = useAssets();
     const nodes = useNodes();
     const config = assets.sceneConfigs.get(name) ?? (await assets.sceneConfigs.load(name));
-    const scene = nodes.parseNode(config);
+    const scene = await nodes.parseNode(config);
 
     return scene;
   }
