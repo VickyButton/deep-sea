@@ -1,6 +1,6 @@
 import { generateId } from '@core/utils/generateId';
 
-export abstract class Script<T extends GameNode> {
+export abstract class Script<T = unknown> {
   /**
    * Callback to be executed when the node is set up.
    * @param node The node the script is attached to.

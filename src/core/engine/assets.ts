@@ -1,4 +1,4 @@
-import { GameNode, Script } from '@core/nodes/GameNode';
+import { Script } from '@core/nodes/GameNode';
 import { SpriteSheet, SpriteSheetRect } from '@core/structures/SpriteSheet';
 import { loadImage } from '@core/utils/loadImage';
 import { loadJson } from '@core/utils/loadJson';
@@ -75,7 +75,9 @@ class ImageManager extends AssetManager<ImageBitmap> {
   }
 }
 
-class ScriptManager extends AssetManager<new () => Script<GameNode>> {
+type ScriptConstructor = new () => Script;
+
+class ScriptManager extends AssetManager<ScriptConstructor> {
   public async load(name: string) {
     const activeTask = this.assetTasks.get(name);
 
@@ -111,7 +113,7 @@ class ScriptManager extends AssetManager<new () => Script<GameNode>> {
     }
   }
 
-  private isScriptImport(value: unknown): value is new () => Script<GameNode> {
+  private isScriptImport(value: unknown): value is ScriptConstructor {
     return (
       typeof value === 'object' &&
       value !== null &&
