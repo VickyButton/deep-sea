@@ -6,17 +6,14 @@
     "isolatedModules": true,
     "baseUrl": "./",
     "paths": {
-      "@assets/*": [
-        "./src/assets/*"
-      ],
-      "@core/*": [
-        "./src/core/*"
-      ],
       "@nodes/*": [
-        "./src/nodes/*"
+        "./src/core/nodes/*"
       ],
-      "@scenes/*": [
-        "./src/scenes/*"
+      "@structures/*": [
+        "./src/core/structures/*"
+      ],
+      "@utils/*": [
+        "./src/core/utils/*"
       ],
       "assets": [
         "./src/core/engine/assets"

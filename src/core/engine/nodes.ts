@@ -1,10 +1,10 @@
-import { CircleNode } from '@core/nodes/CircleNode';
-import { CollisionNode } from '@core/nodes/CollisionNode';
-import { GameNode, Script } from '@core/nodes/GameNode';
-import { GameNode2D } from '@core/nodes/GameNode2D';
-import { RectangleNode } from '@core/nodes/RectangleNode';
-import { Scene } from '@core/nodes/Scene';
-import { SpriteNode } from '@core/nodes/SpriteNode';
+import { CircleNode } from '@nodes/CircleNode';
+import { CollisionNode } from '@nodes/CollisionNode';
+import { GameNode, Script } from '@nodes/GameNode';
+import { GameNode2D } from '@nodes/GameNode2D';
+import { RectangleNode } from '@nodes/RectangleNode';
+import { Scene } from '@nodes/Scene';
+import { SpriteNode } from '@nodes/SpriteNode';
 import { useAssets } from 'assets';
 
 const NodeRegistry = {

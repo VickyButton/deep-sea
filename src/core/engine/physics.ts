@@ -1,5 +1,5 @@
-import { CollisionNode } from '@core/nodes/CollisionNode';
-import { ShapeNode2D } from '@core/nodes/ShapeNode2D';
+import { CollisionNode } from '@nodes/CollisionNode';
+import { ShapeNode2D } from '@nodes/ShapeNode2D';
 
 class Physics2D {
   private nodes = new Set<CollisionNode>();

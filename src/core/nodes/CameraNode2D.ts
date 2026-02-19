@@ -1,5 +1,5 @@
-import { Rectangle } from '@core/structures/Shapes';
-import { Vector2D } from '@core/structures/Vector2D';
+import { Rectangle } from '@structures/Shapes';
+import { Vector2D } from '@structures/Vector2D';
 import { useConfig } from 'config';
 import { GameNode2D } from './GameNode2D';
 

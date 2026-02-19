@@ -1,4 +1,4 @@
-import { timestampNow } from '@core/utils/dateTimeProvider';
+import { timestampNow } from '@utils/dateTimeProvider';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useLoop } from './loop';
 

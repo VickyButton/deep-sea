@@ -1,4 +1,4 @@
-import { generateId } from '@core/utils/generateId';
+import { generateId } from '@utils/generateId';
 
 export abstract class Script<T = unknown> {
   /**

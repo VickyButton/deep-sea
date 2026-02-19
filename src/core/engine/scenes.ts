@@ -1,5 +1,5 @@
-import { Scene } from '@core/nodes/Scene';
-import { log } from '@core/utils/logger';
+import { Scene } from '@nodes/Scene';
+import { log } from '@utils/logger';
 import { useAssets } from 'assets';
 import { useNodes } from 'nodes';
 

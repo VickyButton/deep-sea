@@ -1,8 +1,8 @@
-import { Script } from '@core/nodes/GameNode';
-import { SpriteSheet, SpriteSheetRect } from '@core/structures/SpriteSheet';
-import { loadImage } from '@core/utils/loadImage';
-import { loadJson } from '@core/utils/loadJson';
-import { log } from '@core/utils/logger';
+import { Script } from '@nodes/GameNode';
+import { SpriteSheet, SpriteSheetRect } from '@structures/SpriteSheet';
+import { loadImage } from '@utils/loadImage';
+import { loadJson } from '@utils/loadJson';
+import { log } from '@utils/logger';
 import { useConfig } from 'config';
 
 const LOG_TAG = 'assets';

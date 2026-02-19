@@ -1,5 +1,5 @@
-import { getCanvasContext2D } from '@core/utils/getCanvasContext';
-import { log } from '@core/utils/logger';
+import { getCanvasContext2D } from '@utils/getCanvasContext';
+import { log } from '@utils/logger';
 import { useConfig } from 'config';
 import { useRenderer } from './renderer';
 

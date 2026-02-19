@@ -1,6 +1,6 @@
-import { ColorRGB } from '@core/structures/Colors';
-import { Circle, Rectangle } from '@core/structures/Shapes';
-import { Vector2D } from '@core/structures/Vector2D';
+import { ColorRGB } from '@structures/Colors';
+import { Circle, Rectangle } from '@structures/Shapes';
+import { Vector2D } from '@structures/Vector2D';
 import { useConfig } from 'config';
 import { useGraphics } from 'graphics';
 import { useRenderer } from 'renderer';

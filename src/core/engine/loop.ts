@@ -1,6 +1,6 @@
 // TODO: Convert state into class members.
-import { timestampNow } from '@core/utils/dateTimeProvider';
-import { log } from '@core/utils/logger';
+import { timestampNow } from '@utils/dateTimeProvider';
+import { log } from '@utils/logger';
 import { useConfig } from 'config';
 
 interface LoopState {

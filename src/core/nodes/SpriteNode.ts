@@ -1,5 +1,5 @@
-import { Rectangle } from '@core/structures/Shapes';
-import { Vector2D } from '@core/structures/Vector2D';
+import { Rectangle } from '@structures/Shapes';
+import { Vector2D } from '@structures/Vector2D';
 import { useAssets } from 'assets';
 import { useGraphics } from 'graphics';
 import { useRenderer } from 'renderer';

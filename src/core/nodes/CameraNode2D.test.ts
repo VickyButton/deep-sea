@@ -1,4 +1,4 @@
-import { Vector2D } from '@core/structures/Vector2D';
+import { Vector2D } from '@structures/Vector2D';
 import { describe, expect, it, vi } from 'vitest';
 import { CameraNode2D } from './CameraNode2D';
 

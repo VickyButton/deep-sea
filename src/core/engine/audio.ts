@@ -1,4 +1,4 @@
-import { error } from '@core/utils/logger';
+import { error } from '@utils/logger';
 import { useConfig } from 'config';
 
 interface AudioState {

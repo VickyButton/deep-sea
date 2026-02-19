@@ -1,5 +1,5 @@
-import { CameraNode2D } from '@core/nodes/CameraNode2D';
-import { GraphicsNode2D } from '@core/nodes/GraphicsNode2D';
+import { CameraNode2D } from '@nodes/CameraNode2D';
+import { GraphicsNode2D } from '@nodes/GraphicsNode2D';
 
 class Renderer {
   private activeCamera?: CameraNode2D;

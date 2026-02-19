@@ -1,4 +1,4 @@
-import { generateId } from '@core/utils/generateId';
+import { generateId } from '@utils/generateId';
 
 type Task<T> = Promise<T>;
 

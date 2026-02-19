@@ -1,4 +1,4 @@
-import { Shape2D } from '@core/structures/Shapes';
+import { Shape2D } from '@structures/Shapes';
 import { GraphicsNode2D } from './GraphicsNode2D';
 
 export abstract class ShapeNode2D extends GraphicsNode2D {

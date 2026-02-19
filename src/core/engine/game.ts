@@ -1,4 +1,4 @@
-import { error, log } from '@core/utils/logger';
+import { error, log } from '@utils/logger';
 import { resetAudio, useAudio } from 'audio';
 import { useConfig, toggleDebugMode } from 'config';
 import { resetGraphics, useGraphics } from 'graphics';

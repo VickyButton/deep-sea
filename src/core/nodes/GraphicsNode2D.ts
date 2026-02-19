@@ -1,4 +1,4 @@
-import { Rectangle } from '@core/structures/Shapes';
+import { Rectangle } from '@structures/Shapes';
 import { useRenderer } from 'renderer';
 import { GameNode2D } from './GameNode2D';
 

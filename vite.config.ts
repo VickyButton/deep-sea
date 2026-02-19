@@ -4,10 +4,9 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   resolve: {
     alias: {
-      '@assets': path.resolve(__dirname, './src/assets'),
-      '@core': path.resolve(__dirname, './src/core'),
-      '@nodes': path.resolve(__dirname, './src/nodes'),
-      '@scenes': path.resolve(__dirname, './src/scenes'),
+      '@nodes': path.resolve(__dirname, './src/core/nodes'),
+      '@structures': path.resolve(__dirname, './src/core/structures'),
+      '@utils': path.resolve(__dirname, './src/core/utils'),
       assets: path.resolve(__dirname, './src/core/engine/assets'),
       audio: path.resolve(__dirname, './src/core/engine/audio'),
       config: path.resolve(__dirname, './src/core/engine/config'),

@@ -1,4 +1,4 @@
-import { Scene } from '@core/nodes/Scene';
+import { Scene } from '@nodes/Scene';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { useScenes } from './scenes';
 
