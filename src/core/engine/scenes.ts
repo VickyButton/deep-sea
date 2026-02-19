@@ -1,7 +1,7 @@
 import { Scene } from '@core/nodes/Scene';
 import { log } from '@core/utils/logger';
-import { useAssets } from './assets';
-import { useNodes } from './nodes';
+import { useAssets } from 'assets';
+import { useNodes } from 'nodes';
 
 const LOG_TAG = 'scenes';
 

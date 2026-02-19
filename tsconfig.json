@@ -39,6 +39,9 @@
       "loop": [
         "./src/core/engine/loop"
       ],
+      "nodes": [
+        "./src/core/engine/nodes"
+      ],
       "physics": [
         "./src/core/engine/physics"
       ],
