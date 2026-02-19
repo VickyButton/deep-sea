@@ -10,7 +10,7 @@ export default defineConfig({
       '@scenes': path.resolve(__dirname, './src/scenes'),
       assets: path.resolve(__dirname, './src/core/engine/assets'),
       audio: path.resolve(__dirname, './src/core/engine/audio'),
-      config: path.resolve(__dirname, './src/config'),
+      config: path.resolve(__dirname, './src/core/engine/config'),
       game: path.resolve(__dirname, './src/core/engine/game'),
       graphics: path.resolve(__dirname, './src/core/engine/graphics'),
       input: path.resolve(__dirname, './src/core/engine/input'),

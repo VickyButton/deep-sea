@@ -25,7 +25,7 @@
         "./src/core/engine/audio"
       ],
       "config": [
-        "./src/config"
+        "./src/core/engine/config"
       ],
       "game": [
         "./src/core/engine/game"
