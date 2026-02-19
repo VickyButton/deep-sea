@@ -10,13 +10,6 @@ describe('GameNode2D', () => {
     expect(anchor.position.equals(Vector2D.zero)).toBe(true);
   });
 
-  it('should default rotation to zero', () => {
-    const anchor = new GameNode2D();
-
-    // Scenario: Anchor is not rotated by default.
-    expect(anchor.rotation.equals(Vector2D.zero)).toBe(true);
-  });
-
   it('should default scale to one', () => {
     const anchor = new GameNode2D();
 
@@ -42,24 +35,6 @@ describe('GameNode2D', () => {
     expect(nodeC.globalPosition.equals(new Vector2D(2, 2))).toBe(true);
   });
 
-  it('should calculate global rotation', () => {
-    const nodeA = new GameNode2D();
-    const nodeB = new GameNode2D();
-    const nodeC = new GameNode2D();
-
-    // Arrange a node tree with a depth of 2.
-    nodeA.addChild(nodeB);
-    nodeB.addChild(nodeC);
-
-    // Adjust local rotations of each node.
-    nodeA.rotation = Vector2D.zero;
-    nodeB.rotation = Vector2D.one;
-    nodeC.rotation = Vector2D.one;
-
-    // Scenario: Global rotation should be calculated as sum of all ancestor rotations.
-    expect(nodeC.globalRotation.equals(new Vector2D(2, 2))).toBe(true);
-  });
-
   it('should calculate global scale', () => {
     const nodeA = new GameNode2D();
     const nodeB = new GameNode2D();
@@ -69,7 +44,7 @@ describe('GameNode2D', () => {
     nodeA.addChild(nodeB);
     nodeB.addChild(nodeC);
 
-    // Adjust local rotations of each node.
+    // Adjust local scales of each node.
     nodeA.scale = new Vector2D(2, 2);
     nodeB.scale = new Vector2D(2, 2);
     nodeC.scale = new Vector2D(2, 2);
@@ -85,13 +60,5 @@ describe('GameNode2D', () => {
     anchor.move(Vector2D.right);
     anchor.move(Vector2D.down);
     expect(anchor.position.equals(Vector2D.one)).toBe(true);
-  });
-
-  it('should rotate', () => {
-    const anchor = new GameNode2D();
-
-    // Scenario: Anchor rotates one radian.
-    anchor.rotate(Vector2D.one);
-    expect(anchor.rotation.equals(Vector2D.one)).toBe(true);
   });
 });
