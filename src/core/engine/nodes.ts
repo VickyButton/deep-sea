@@ -46,11 +46,13 @@ class NodeParser {
       scriptTasks.push(loadScript);
     }
 
-    const tasks = useTasks();
+    if (scriptTasks.length > 0) {
+      const tasks = useTasks();
 
-    tasks.registerTask(Promise.all(scriptTasks), (scripts) => {
-      for (const script of scripts) node.attachScript(new script());
-    });
+      tasks.registerTask(Promise.all(scriptTasks), (scripts) => {
+        for (const script of scripts) node.attachScript(new script());
+      });
+    }
 
     for (const childConfig of config.children) {
       const child = this.parseNode(childConfig);
@@ -67,7 +69,7 @@ class NodeParser {
 
     this.populateState(node, config);
 
-    return new constructor() as NodeMap[K];
+    return node;
   }
 
   private populateState<K extends NodeType>(node: NodeMap[K], config: NodeConfig<K>) {
