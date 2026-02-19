@@ -1,6 +1,7 @@
 import { CircleNode } from '@core/nodes/CircleNode';
 import { CollisionNode } from '@core/nodes/CollisionNode';
 import { GameNode, Script } from '@core/nodes/GameNode';
+import { GameNode2D } from '@core/nodes/GameNode2D';
 import { RectangleNode } from '@core/nodes/RectangleNode';
 import { Scene } from '@core/nodes/Scene';
 import { SpriteNode } from '@core/nodes/SpriteNode';
@@ -20,19 +21,45 @@ type NodeMap = {
   [K in keyof typeof NodeRegistry]: InstanceType<(typeof NodeRegistry)[K]>;
 };
 type NodeType = keyof NodeMap;
-interface NodeConfig<K extends NodeType, S extends object = object> {
+interface NodeConfig<K extends NodeType> {
   type: K;
   children: NodeConfig<keyof NodeMap>[];
   scripts: string[];
-  state: S;
+  state: object;
 }
 
-type SceneConfig = NodeConfig<
-  'Scene',
-  {
-    title: string;
-  }
->;
+interface GameNode2DState {
+  x: number;
+  y: number;
+  scaleX: number;
+  scaleY: number;
+}
+
+interface GraphicsNode2DState extends GameNode2DState {
+  visible: boolean;
+  layer: number;
+}
+
+interface CircleNodeState extends GraphicsNode2DState {
+  radius: number;
+}
+
+interface RectangleNodeState extends GraphicsNode2DState {
+  width: number;
+  height: number;
+}
+
+interface SpriteNodeState extends GraphicsNode2DState {
+  spriteSheetName: string;
+  spriteRectX: number;
+  spriteRectY: number;
+  spriteRectW: number;
+  spriteRectH: number;
+}
+
+interface SceneState {
+  title: string;
+}
 
 class NodeParser {
   public parseNode<K extends NodeType>(config: NodeConfig<K>) {
@@ -67,20 +94,59 @@ class NodeParser {
     const constructor = NodeRegistry[config.type];
     const node = new constructor() as NodeMap[K];
 
-    this.populateState(node, config);
+    this.populateNode(node, config);
 
     return node;
   }
 
-  private populateState<K extends NodeType>(node: NodeMap[K], config: NodeConfig<K>) {
+  private populateNode<K extends NodeType>(node: NodeMap[K], config: NodeConfig<K>) {
     switch (config.type) {
+      case 'CircleNode':
+        this.populateCircleNode(node as CircleNode, config.state as CircleNodeState);
+        break;
+      case 'RectangleNode':
+        this.populateRectangleNode(node as RectangleNode, config.state as RectangleNodeState);
+        break;
+      case 'SpriteNode':
+        this.populateSpriteNode(node as SpriteNode, config.state as SpriteNodeState);
+        break;
       case 'Scene':
-        this.populateSceneState(node as Scene, config as SceneConfig);
+        this.populateScene(node as Scene, config.state as SceneState);
+        break;
     }
   }
 
-  private populateSceneState(node: Scene, config: SceneConfig) {
-    node.title = config.state.title;
+  private populateGameNode2D(node: GameNode2D, state: GameNode2DState) {
+    node.position.set(state.x, state.y);
+    node.scale.set(state.scaleX, state.scaleY);
+  }
+
+  private populateCircleNode(node: CircleNode, state: CircleNodeState) {
+    this.populateGameNode2D(node, state);
+
+    node.radius = state.radius;
+  }
+
+  private populateRectangleNode(node: RectangleNode, state: RectangleNodeState) {
+    this.populateGameNode2D(node, state);
+
+    node.size.set(state.width, state.height);
+  }
+
+  private populateSpriteNode(node: SpriteNode, state: SpriteNodeState) {
+    this.populateGameNode2D(node, state);
+
+    node.spriteSheetName = state.spriteSheetName;
+    node.spriteRectangle.set(
+      state.spriteRectX,
+      state.spriteRectY,
+      state.spriteRectW,
+      state.spriteRectH,
+    );
+  }
+
+  private populateScene(node: Scene, state: SceneState) {
+    node.title = state.title;
   }
 }
 
