@@ -161,11 +161,11 @@ class ScriptManager extends AssetManager<ScriptConstructor> {
 
     try {
       const loadScript = async () => {
-        const script = (await import(/* @vite-ignore */ url)) as unknown;
+        const result = (await import(/* @vite-ignore */ url)) as unknown;
 
-        if (!this.isScriptImport(script)) throw new Error('Invalid script constructor');
+        if (!this.isScriptImport(result)) throw new Error('Invalid script constructor');
 
-        return script;
+        return result.default;
       };
       const loadAsset = loadScript();
 
@@ -186,13 +186,8 @@ class ScriptManager extends AssetManager<ScriptConstructor> {
     }
   }
 
-  private isScriptImport(value: unknown): value is ScriptConstructor {
-    return (
-      typeof value === 'object' &&
-      value !== null &&
-      'default' in value &&
-      value.default instanceof Script
-    );
+  private isScriptImport(value: unknown): value is { default: ScriptConstructor } {
+    return typeof value === 'object' && value !== null && 'default' in value;
   }
 }
 
