@@ -20,11 +20,19 @@ type NodeMap = {
   [K in keyof typeof NodeRegistry]: InstanceType<(typeof NodeRegistry)[K]>;
 };
 type NodeType = keyof NodeMap;
-interface NodeConfig<K extends NodeType> {
+interface NodeConfig<K extends NodeType, S extends object = object> {
   type: K;
   children: NodeConfig<keyof NodeMap>[];
   scripts: string[];
+  state: S;
 }
+
+type SceneConfig = NodeConfig<
+  'Scene',
+  {
+    title: string;
+  }
+>;
 
 class NodeParser {
   public parseNode<K extends NodeType>(config: NodeConfig<K>) {
@@ -55,8 +63,22 @@ class NodeParser {
 
   private createNode<K extends NodeType>(config: NodeConfig<K>) {
     const constructor = NodeRegistry[config.type];
+    const node = new constructor() as NodeMap[K];
+
+    this.populateState(node, config);
 
     return new constructor() as NodeMap[K];
+  }
+
+  private populateState<K extends NodeType>(node: NodeMap[K], config: NodeConfig<K>) {
+    switch (config.type) {
+      case 'Scene':
+        this.populateSceneState(node as Scene, config as SceneConfig);
+    }
+  }
+
+  private populateSceneState(node: Scene, config: SceneConfig) {
+    node.title = config.state.title;
   }
 }
 

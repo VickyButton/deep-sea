@@ -75,12 +75,13 @@ class ImageManager extends AssetManager<ImageBitmap> {
   }
 }
 
-interface NodeConfig<T extends string> {
-  type: T;
-  children: NodeConfig<T>[];
+interface NodeConfig<K extends string, T extends object = object> {
+  type: K;
+  children: NodeConfig<K>[];
   scripts: string[];
+  state: T;
 }
-type SceneConfig = NodeConfig<'Scene'>;
+type SceneConfig = NodeConfig<'Scene', { title: string }>;
 
 class SceneConfigManager extends AssetManager<SceneConfig> {
   public async load(name: string) {
@@ -131,7 +132,9 @@ class SceneConfigManager extends AssetManager<SceneConfig> {
       'children' in value &&
       Array.isArray(value.children) &&
       'scripts' in value &&
-      Array.isArray(value.scripts);
+      Array.isArray(value.scripts) &&
+      'state' in value &&
+      typeof value.state === 'object';
 
     if (!isNodeConfig || !Array.isArray(value.children)) return false;
 
