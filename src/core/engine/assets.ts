@@ -82,7 +82,7 @@ class ScriptManager extends AssetManager<new () => Script<GameNode>> {
     if (activeTask) return activeTask;
 
     const config = useConfig();
-    const url = `${config.assets.scripts}/${name}`;
+    const url = `${config.assets.scripts}/${name}.ts`;
 
     try {
       const loadScript = async () => {
@@ -168,7 +168,7 @@ let assets = {
   spriteSheets: new SpriteSheetManager(),
 };
 
-export function getAssets() {
+export function useAssets() {
   return assets;
 }
 
