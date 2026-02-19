@@ -75,6 +75,76 @@ class ImageManager extends AssetManager<ImageBitmap> {
   }
 }
 
+interface NodeConfig<T extends string> {
+  type: T;
+  children: NodeConfig<T>[];
+  scripts: string[];
+}
+type SceneConfig = NodeConfig<'Scene'>;
+
+class SceneConfigManager extends AssetManager<SceneConfig> {
+  public async load(name: string) {
+    const activeTask = this.assetTasks.get(name);
+
+    if (activeTask) return activeTask;
+
+    const config = useConfig();
+    const url = `${config.assets.scenes}/${name}.json`;
+
+    try {
+      const loadSceneConfig = async () => {
+        const sceneConfig = await loadJson(url);
+
+        if (!this.isSceneConfig(sceneConfig)) throw new Error('Invalid scene config');
+
+        return sceneConfig;
+      };
+      const loadAsset = loadSceneConfig();
+
+      this.assetTasks.set(name, loadAsset);
+
+      log(LOG_TAG, `Loading "${url}"...`);
+
+      const asset = await loadAsset;
+
+      this.assetTasks.delete(name);
+      this.assets.set(name, asset);
+
+      return asset;
+    } catch {
+      this.assetTasks.delete(name);
+
+      throw new Error(`Unable to load "${url}"`);
+    }
+  }
+
+  private isSceneConfig(value: unknown): value is SceneConfig {
+    return this.isNodeConfig(value) && value.type === 'Scene';
+  }
+
+  private isNodeConfig(value: unknown): value is NodeConfig<string> {
+    const isNodeConfig =
+      typeof value === 'object' &&
+      value !== null &&
+      'type' in value &&
+      typeof value.type === 'string' &&
+      'children' in value &&
+      Array.isArray(value.children) &&
+      'scripts' in value &&
+      Array.isArray(value.scripts);
+
+    if (!isNodeConfig || !Array.isArray(value.children)) return false;
+
+    for (const child of value.children) {
+      const childIsNodeConfig = this.isNodeConfig(child);
+
+      if (!childIsNodeConfig) return false;
+    }
+
+    return true;
+  }
+}
+
 type ScriptConstructor = new () => Script;
 
 class ScriptManager extends AssetManager<ScriptConstructor> {
@@ -166,6 +236,7 @@ class SpriteSheetManager extends AssetManager<SpriteSheet> {
 
 let assets = {
   images: new ImageManager(),
+  sceneConfigs: new SceneConfigManager(),
   scripts: new ScriptManager(),
   spriteSheets: new SpriteSheetManager(),
 };
@@ -177,6 +248,7 @@ export function useAssets() {
 export function resetAssets() {
   assets = {
     images: new ImageManager(),
+    sceneConfigs: new SceneConfigManager(),
     scripts: new ScriptManager(),
     spriteSheets: new SpriteSheetManager(),
   };

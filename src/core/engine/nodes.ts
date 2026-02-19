@@ -7,16 +7,27 @@ import { SpriteNode } from '@core/nodes/SpriteNode';
 import { useAssets } from 'assets';
 import { useTasks } from 'tasks';
 
-interface NodeConfig {
-  type: string;
-  children: NodeConfig[];
+const NodeConstructors = {
+  CircleNode,
+  CollisionNode,
+  GameNode,
+  RectangleNode,
+  Scene,
+  SpriteNode,
+};
+
+type NodeMap = {
+  [K in keyof typeof NodeConstructors]: InstanceType<(typeof NodeConstructors)[K]>;
+};
+type NodeType = keyof NodeMap;
+interface NodeConfig<K extends NodeType> {
+  type: K;
+  children: NodeConfig<keyof NodeMap>[];
   scripts: string[];
 }
 
 class NodeParser {
-  public parseNode(config: unknown) {
-    if (!this.isNodeConfig(config)) throw new Error('Invalid node config');
-
+  public parseNode<K extends NodeType>(config: NodeConfig<K>) {
     const node = this.createNode(config);
     const assets = useAssets();
     const scriptTasks: Promise<new () => Script>[] = [];
@@ -42,36 +53,10 @@ class NodeParser {
     return node;
   }
 
-  private createNode(config: NodeConfig) {
-    switch (config.type) {
-      case 'CircleNode':
-        return new CircleNode();
-      case 'CollisionNode':
-        return new CollisionNode();
-      case 'GameNode':
-        return new GameNode();
-      case 'RectangleNode':
-        return new RectangleNode();
-      case 'Scene':
-        return new Scene();
-      case 'SpriteNode':
-        return new SpriteNode();
-      default:
-        throw new Error('Unable to map node type');
-    }
-  }
+  private createNode<K extends NodeType>(config: NodeConfig<K>) {
+    const constructor = NodeConstructors[config.type];
 
-  private isNodeConfig(value: unknown): value is NodeConfig {
-    return (
-      typeof value === 'object' &&
-      value !== null &&
-      'type' in value &&
-      typeof value.type === 'string' &&
-      'children' in value &&
-      Array.isArray(value.children) &&
-      'scripts' in value &&
-      Array.isArray(value.scripts)
-    );
+    return new constructor() as NodeMap[K];
   }
 }
 
