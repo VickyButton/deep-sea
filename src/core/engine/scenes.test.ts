@@ -2,10 +2,25 @@ import { Scene } from '@core/nodes/Scene';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { useScenes } from './scenes';
 
+vi.mock('assets', () => ({
+  useAssets: () => ({
+    sceneConfigs: {
+      get: () => ({
+        type: 'Scene',
+        scripts: [],
+        state: {
+          title: 'Splash',
+        },
+        children: [],
+      }),
+    },
+  }),
+}));
+
 vi.mock('config', () => ({
   useConfig: () => ({
-    content: {
-      scenes: '/src/scenes',
+    assets: {
+      scenes: '/src/assets/scenes',
     },
     graphics: {
       width: 1,
@@ -60,8 +75,6 @@ describe('scenes', () => {
   });
 
   it('should load scene', async () => {
-    vi.mock('/src/scenes/Scene/Scene', () => ({ default: new Scene() }));
-
     const sceneManager = useScenes();
     const scene = await sceneManager.loadScene('Scene');
 

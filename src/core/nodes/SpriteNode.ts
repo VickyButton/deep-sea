@@ -1,6 +1,6 @@
 import { Rectangle } from '@core/structures/Shapes';
 import { Vector2D } from '@core/structures/Vector2D';
-import { getAssets } from 'assets';
+import { useAssets } from 'assets';
 import { useGraphics } from 'graphics';
 import { useRenderer } from 'renderer';
 import { useTasks } from 'tasks';
@@ -26,7 +26,7 @@ export class SpriteNode extends GraphicsNode2D {
   public setup() {
     super.setup();
 
-    const assets = getAssets();
+    const assets = useAssets();
     const tasks = useTasks();
 
     this.visible = false;
@@ -45,7 +45,7 @@ export class SpriteNode extends GraphicsNode2D {
   }
 
   public draw() {
-    const assets = getAssets();
+    const assets = useAssets();
     const graphics = useGraphics();
     const renderer = useRenderer();
     const image = assets.images.get(this.spriteSheetName);
