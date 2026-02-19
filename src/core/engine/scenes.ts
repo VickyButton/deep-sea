@@ -53,15 +53,6 @@ class SceneManager {
 
     return scene;
   }
-
-  private isScene(value: unknown): value is { default: Scene } {
-    return (
-      value !== null &&
-      typeof value === 'object' &&
-      'default' in value &&
-      value.default instanceof Scene
-    );
-  }
 }
 
 let scenes = new SceneManager();
