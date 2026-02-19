@@ -7,7 +7,7 @@ import { SpriteNode } from '@core/nodes/SpriteNode';
 import { useAssets } from 'assets';
 import { useTasks } from 'tasks';
 
-const NodeConstructors = {
+const NodeRegistry = {
   CircleNode,
   CollisionNode,
   GameNode,
@@ -17,7 +17,7 @@ const NodeConstructors = {
 };
 
 type NodeMap = {
-  [K in keyof typeof NodeConstructors]: InstanceType<(typeof NodeConstructors)[K]>;
+  [K in keyof typeof NodeRegistry]: InstanceType<(typeof NodeRegistry)[K]>;
 };
 type NodeType = keyof NodeMap;
 interface NodeConfig<K extends NodeType> {
@@ -54,7 +54,7 @@ class NodeParser {
   }
 
   private createNode<K extends NodeType>(config: NodeConfig<K>) {
-    const constructor = NodeConstructors[config.type];
+    const constructor = NodeRegistry[config.type];
 
     return new constructor() as NodeMap[K];
   }
