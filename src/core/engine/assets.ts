@@ -84,7 +84,7 @@ class ScriptManager extends AssetManager<ScriptConstructor> {
     if (activeTask) return activeTask;
 
     const config = useConfig();
-    const url = `${config.assets.scripts}/${name}.ts`;
+    const url = `${config.assets.scripts}/${name}`;
 
     try {
       const loadScript = async () => {
