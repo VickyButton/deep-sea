@@ -8,6 +8,13 @@ export class Vector2D {
   }
 
   /**
+   * Calculates the magnitude of the vector.
+   */
+  public get magnitude() {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+  }
+
+  /**
    * Sets components of the vector.
    *
    * @param x The x component of the vector.

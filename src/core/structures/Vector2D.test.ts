@@ -10,6 +10,12 @@ describe('Vector2D', () => {
     expect(vector.equals(new Vector2D(1, 1))).toBe(true);
   });
 
+  it('should calculate magnitude', () => {
+    const vector = new Vector2D(3, 4);
+
+    expect(vector.magnitude).toEqual(5);
+  });
+
   it('should add two vectors', () => {
     const addend1 = new Vector2D(1, 1);
     const addend2 = new Vector2D(1, 1);
