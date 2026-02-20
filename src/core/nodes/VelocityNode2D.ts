@@ -9,6 +9,8 @@ export class VelocityNode2D extends GameNode {
   public velocity = Vector2D.zero;
 
   public update(dt: number) {
+    super.update(dt);
+
     if (!GameNode2D.isGameNode2D(this.parent)) return;
 
     this.parent.move(this.calculateMoveDistance(dt));
