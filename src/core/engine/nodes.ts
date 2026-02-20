@@ -5,15 +5,18 @@ import { GameNode2D } from '@nodes/GameNode2D';
 import { RectangleNode } from '@nodes/RectangleNode';
 import { Scene } from '@nodes/Scene';
 import { SpriteNode } from '@nodes/SpriteNode';
+import { VelocityNode2D } from '@nodes/VelocityNode2D';
 import { useAssets } from 'assets';
 
 const NodeRegistry = {
   CircleNode,
   CollisionNode,
   GameNode,
+  GameNode2D,
   RectangleNode,
   Scene,
   SpriteNode,
+  VelocityNode2D,
 };
 
 type NodeMap = {
@@ -60,6 +63,11 @@ interface SceneState {
   title: string;
 }
 
+interface VelocityNode2DState {
+  velocityX: number;
+  velocityY: number;
+}
+
 class NodeParser {
   public async parseNode<K extends NodeType>(config: NodeConfig<K>) {
     const node = this.createNode(config);
@@ -101,6 +109,9 @@ class NodeParser {
       case 'CircleNode':
         this.populateCircleNode(node as CircleNode, config.state as CircleNodeState);
         break;
+      case 'GameNode2D':
+        this.populateGameNode2D(node as GameNode2D, config.state as GameNode2DState);
+        break;
       case 'RectangleNode':
         this.populateRectangleNode(node as RectangleNode, config.state as RectangleNodeState);
         break;
@@ -109,6 +120,9 @@ class NodeParser {
         break;
       case 'Scene':
         this.populateScene(node as Scene, config.state as SceneState);
+        break;
+      case 'VelocityNode2D':
+        this.populateVelocityNode2D(node as VelocityNode2D, config.state as VelocityNode2DState);
         break;
     }
   }
@@ -144,6 +158,10 @@ class NodeParser {
 
   private populateScene(node: Scene, state: SceneState) {
     node.title = state.title;
+  }
+
+  private populateVelocityNode2D(node: VelocityNode2D, state: VelocityNode2DState) {
+    node.velocity.set(state.velocityX, state.velocityY);
   }
 }
 
