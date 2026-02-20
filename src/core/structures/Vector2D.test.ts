@@ -10,10 +10,18 @@ describe('Vector2D', () => {
     expect(vector.equals(new Vector2D(1, 1))).toBe(true);
   });
 
-  it('should calculate magnitude', () => {
+  it('should calculate magnitude of a vector', () => {
     const vector = new Vector2D(3, 4);
 
     expect(vector.magnitude).toEqual(5);
+  });
+
+  it('should normalize a vector', () => {
+    const vector = new Vector2D(3, 4);
+    const normalized = vector.normalize();
+
+    expect(normalized.x).toBe(3 / 5);
+    expect(normalized.y).toBe(4 / 5);
   });
 
   it('should add two vectors', () => {

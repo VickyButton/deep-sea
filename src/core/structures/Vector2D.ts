@@ -15,6 +15,15 @@ export class Vector2D {
   }
 
   /**
+   * Returns the vector as a normalized vector.
+   */
+  public normalize() {
+    const magnitude = this.magnitude;
+
+    return Vector2D.divide(this, new Vector2D(magnitude, magnitude));
+  }
+
+  /**
    * Sets components of the vector.
    *
    * @param x The x component of the vector.
