@@ -1,3 +1,5 @@
+import { Rectangle } from './Shapes';
+
 export interface SpriteSheetRect {
   x: number;
   y: number;
@@ -18,6 +20,8 @@ export class SpriteSheet {
    * @returns The sprite rectangle.
    */
   public getRect(key: string) {
-    return this.rects[key];
+    const rect = this.rects[key];
+
+    return new Rectangle(rect.x, rect.y, rect.width, rect.height);
   }
 }
