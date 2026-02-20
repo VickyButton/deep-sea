@@ -50,4 +50,13 @@ export class GameNode2D extends GameNode {
 
     this.position = newPosition;
   }
+
+  /**
+   * Checks if a given node is an instance of GameNode2D.
+   * @param node The node to check.
+   * @returns True if an instance of GameNode2D, false if not.
+   */
+  public static isGameNode2D(node: unknown): node is GameNode2D {
+    return node instanceof GameNode2D;
+  }
 }
