@@ -35,7 +35,7 @@ function createGameStartButton() {
   button.style.padding = '16px';
   button.style.border = 'none';
   button.style.borderRadius = '16px';
-  button.style.background = '#2b66aaff';
+  button.style.background = '#2b66aa';
   button.style.color = 'white';
   button.style.fontSize = '1.2rem';
   button.style.fontWeight = 'bold';
