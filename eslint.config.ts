@@ -1,57 +1,75 @@
-import eslint from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
+import { defineConfig } from 'eslint/config';
 import importPlugin from 'eslint-plugin-import';
-import prettierPlugin from 'eslint-plugin-prettier';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
+export default defineConfig([
+  ...tseslint.configs.recommended,
   {
-    ignores: ['dist/**', 'node_modules/**'],
-  },
-  eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  ...tseslint.configs.strictTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
-
-  {
-    files: ['./**/*.ts'],
-    languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        project: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
+    files: ['**/*.ts'],
     plugins: {
       import: importPlugin,
-      prettier: prettierPlugin,
+      '@stylistic': stylistic,
     },
     rules: {
-      'prettier/prettier': [
+      /* Code styling rules */
+      '@stylistic/comma-dangle': ['error', 'always-multiline'],
+      '@stylistic/curly-newline': ['error', 'always'],
+      '@stylistic/eol-last': ['error', 'always'],
+      '@stylistic/indent': ['error', 2],
+      '@stylistic/lines-between-class-members': [
         'error',
         {
-          semi: true,
-          trailingComma: 'all',
-          tabWidth: 2,
-          singleQuote: true,
-          printWidth: 100,
+          enforce: [
+            {
+              blankLine: 'never',
+              prev: 'field',
+              next: 'field',
+            },
+            {
+              blankLine: 'always',
+              prev: '*',
+              next: 'method',
+            },
+          ],
         },
       ],
+      '@stylistic/member-delimiter-style': 'error',
+      '@stylistic/no-multiple-empty-lines': [
+        'error',
+        {
+          max: 1,
+        },
+      ],
+      '@stylistic/object-curly-newline': [
+        'error',
+        {
+          ObjectExpression: 'always',
+          ImportDeclaration: 'never',
+        },
+      ],
+      '@stylistic/object-curly-spacing': ['error', 'always'],
+      '@stylistic/object-property-newline': 'error',
+      '@stylistic/quotes': ['error', 'single'],
+      '@stylistic/semi': 'error',
+      /* Import rules */
       'import/order': [
         'error',
         {
-          groups: ['type', 'builtin', 'external', 'internal', ['parent', 'sibling'], 'index'],
-          pathGroups: [
-            {
-              pattern: '@/**',
-              group: 'internal',
-            },
-          ],
+          groups: ['type', 'index'],
           alphabetize: {
             order: 'asc',
             caseInsensitive: true,
           },
         },
       ],
+      /* TypeScript rules */
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          fixStyle: 'separate-type-imports',
+        },
+      ],
     },
   },
-);
+]);
