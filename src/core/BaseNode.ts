@@ -19,6 +19,10 @@ export class BaseNode implements Node {
     this.isActive = false;
   }
 
+  public getChildren() {
+    return Array.from(this.children);
+  }
+
   public addChild(node: Node) {
     this.children.add(node);
   }

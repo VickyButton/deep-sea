@@ -12,6 +12,8 @@ export interface Node {
   activate(): void;
   /** Deactivates the node. */
   deactivate(): void;
+  /** Returns the node's child nodes. */
+  getChildren(): Node[];
   /**
    * Adds a child node to the node tree.
    * @param node The node to add as a child.
