@@ -12,8 +12,14 @@ export interface Node {
   activate(): void;
   /** Deactivates the node. */
   deactivate(): void;
-  /** Adds a child node to the node tree. */
+  /**
+   * Adds a child node to the node tree.
+   * @param node The node to add as a child.
+   */
   addChild(node: Node): void;
-  /** Removes a child node from the node tree. */
+  /**
+   * Removes a child node from the node tree.
+   * @param node The child node to remove.
+   */
   removeChild(node: Node): void;
 }
