@@ -31,6 +31,23 @@ describe('BaseNode', () => {
     expect(node.isReady).toBe(false);
   });
 
+  it('should ready', () => {
+    const node = new BaseNode('node');
+
+    node.ready();
+
+    expect(node.isReady).toBe(true);
+  });
+
+  it('should unready', () => {
+    const node = new BaseNode('node');
+
+    node.ready();
+    node.unready();
+
+    expect(node.isReady).toBe(false);
+  });
+
   it('should have no parent by default', () => {
     const node = new BaseNode('node');
 

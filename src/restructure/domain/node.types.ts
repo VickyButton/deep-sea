@@ -12,6 +12,10 @@ export interface Node {
   activate(): void;
   /** Deactivates the node. */
   deactivate(): void;
+  /** Readies the node. */
+  ready(): void;
+  /** Unreadies the node. */
+  unready(): void;
   /** Returns the node's parent, or null if the node has no parent. */
   getParent(): Node | null;
   /**

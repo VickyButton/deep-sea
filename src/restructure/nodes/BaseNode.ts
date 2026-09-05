@@ -24,6 +24,14 @@ export class BaseNode implements Node {
     this.isActive = false;
   }
 
+  public ready() {
+    this.isReady = true;
+  }
+
+  public unready() {
+    this.isReady = false;
+  }
+
   public getParent() {
     return this.parent;
   }
