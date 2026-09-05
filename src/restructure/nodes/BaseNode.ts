@@ -1,4 +1,4 @@
-import type { Node } from './types/node.types';
+import type { Node } from '../domain/node.types';
 
 export class BaseNode implements Node {
   public id: string;
