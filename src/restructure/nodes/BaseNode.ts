@@ -36,7 +36,7 @@ export class BaseNode implements Node {
     return this.parent;
   }
 
-  public setParent(node: Node) {
+  public setParent(node: Node | null) {
     this.parent = node;
   }
 
