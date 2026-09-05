@@ -1,5 +1,8 @@
 import type { Node } from '../domain/node.types';
 
+/**
+ * The base implementation of the node interface.
+ */
 export class BaseNode implements Node {
   public id: string;
   public isActive = false;
