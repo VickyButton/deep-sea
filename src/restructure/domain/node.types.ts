@@ -12,6 +12,13 @@ export interface Node {
   activate(): void;
   /** Deactivates the node. */
   deactivate(): void;
+  /** Returns the node's parent, or null if the node has no parent. */
+  getParent(): Node | null;
+  /**
+   * Sets the node's parent.
+   * @param node The parent node.
+   */
+  setParent(node: Node | null): void;
   /** Returns the node's child nodes. */
   getChildren(): Node[];
   /**
