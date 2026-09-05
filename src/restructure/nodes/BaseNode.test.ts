@@ -80,4 +80,27 @@ describe('BaseNode', () => {
     expect(child.getParent()).toBe(null);
     expect(parent.getChildren().length).toBe(0);
   });
+
+  it('should traverse tree in post-order', () => {
+    const root = new BaseNode('1');
+    const rootLeft = new BaseNode('2');
+    const rootRight = new BaseNode('3');
+    const rootLeftLeft = new BaseNode('4');
+    const rootLeftRight = new BaseNode('5');
+    const rootRightRight = new BaseNode('6');
+
+    root.addChild(rootLeft);
+    root.addChild(rootRight);
+    rootLeft.addChild(rootLeftLeft);
+    rootLeft.addChild(rootLeftRight);
+    rootRight.addChild(rootRightRight);
+
+    const order: string[] = [];
+
+    root.traversePostorder((node) => {
+      order.push(node.id);
+    });
+
+    expect(order).toEqual(['4', '5', '2', '6', '3', '1']);
+  });
 });

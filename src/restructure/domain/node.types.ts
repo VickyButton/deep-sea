@@ -35,4 +35,9 @@ export interface Node {
    * @param node The child node to remove.
    */
   removeChild(node: Node): void;
+  /**
+   * Traverses the node tree in post-order.
+   * @param callback The callback to execute on each node.
+   */
+  traversePostorder(callback: (node: Node) => void): void;
 }

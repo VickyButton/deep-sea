@@ -53,4 +53,12 @@ export class BaseNode implements Node {
     this.children.delete(node);
     node.setParent(null);
   }
+
+  public traversePostorder(callback: (node: Node) => void) {
+    for (const child of this.children.values()) {
+      child.traversePostorder(callback);
+    }
+
+    callback(this);
+  }
 }
