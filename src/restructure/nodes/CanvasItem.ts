@@ -1,4 +1,4 @@
-import type { Canvas } from '../domain/canvas.types';
+import type { Canvas } from '../providers/canvas.types';
 import { BaseNode } from './BaseNode';
 
 /**
