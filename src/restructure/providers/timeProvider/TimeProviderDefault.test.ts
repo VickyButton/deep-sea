@@ -12,8 +12,10 @@ describe('TimeProviderDefault', () => {
 
   it('should use system time', () => {
     const timeProvider = new TimeProviderDefault();
-    vi.setSystemTime(0);
+    const time = 0;
 
-    expect(timeProvider.now).toBe(0);
+    vi.setSystemTime(time);
+
+    expect(timeProvider.now).toBe(time);
   });
 });
