@@ -14,7 +14,6 @@ export default defineConfig([
     rules: {
       /* Code styling rules */
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
-      '@stylistic/curly-newline': ['error', 'always'],
       '@stylistic/eol-last': ['error', 'always'],
       '@stylistic/indent': ['error', 2],
       '@stylistic/lines-between-class-members': [
