@@ -24,5 +24,8 @@
   },
   "dependencies": {
     "uuid": "^13.0.0"
+  },
+  "exports": {
+    ".": "./src/restructure/index.ts"
   }
 }
