@@ -17,9 +17,9 @@ export interface FrameLoop {
   /**
    * Starts the frame loop.
    */
-  startLoop(): void;
+  start(): void;
   /**
    * Stops the frame loop.
    */
-  stopLoop(): void;
+  stop(): void;
 }
