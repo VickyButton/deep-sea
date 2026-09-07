@@ -2,64 +2,76 @@ import { SceneTreeDefault } from './SceneTreeDefault';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('SceneTreeDefault', () => {
+  it('should add new scene to root node', () => {
+    const sceneTree = new SceneTreeDefault();
+    const scene = new TestNode();
+
+    sceneTree.switchToScene(scene);
+
+    expect(sceneTree.root.getChildren().length).toBe(1);
+    expect(sceneTree.root.getChildren()[0]).toBe(scene);
+  });
+
+  it('should replace current scene in root node', () => {
+    const sceneTree = new SceneTreeDefault();
+    const scene = new TestNode();
+    const replacementScene = new TestNode();
+
+    sceneTree.switchToScene(scene);
+    sceneTree.switchToScene(replacementScene);
+
+    expect(sceneTree.root.getChildren().length).toBe(1);
+    expect(sceneTree.root.getChildren()[0]).toBe(replacementScene);
+  });
+
   it('should add scene to root node', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new TestNode();
 
-    sceneTree.addScene(scene);
+    sceneTree.switchToScene(scene);
 
     expect(sceneTree.root.getChildren().length).toBe(1);
   });
 
-  it('should remove scene from root node', () => {
-    const sceneTree = new SceneTreeDefault();
-    const scene = new TestNode();
-
-    sceneTree.addScene(scene);
-    sceneTree.removeScene(scene);
-
-    expect(sceneTree.root.getChildren().length).toBe(0);
-  });
-
-  it('should ready scenes in scene tree', () => {
+  it('should ready current scene', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new TestNode();
     scene.isReady = false;
 
-    sceneTree.addScene(scene);
+    sceneTree.switchToScene(scene);
     sceneTree.ready();
 
     expect(scene.isReady).toBe(true);
   });
 
-  it('should unready scenes in scene tree', () => {
+  it('should unready current scene', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new TestNode();
     scene.isReady = true;
 
-    sceneTree.addScene(scene);
+    sceneTree.switchToScene(scene);
     sceneTree.unready();
 
     expect(scene.isReady).toBe(false);
   });
 
-  it('should activate scenes in scene tree', () => {
+  it('should activate current scene', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new TestNode();
     scene.isActive = false;
 
-    sceneTree.addScene(scene);
+    sceneTree.switchToScene(scene);
     sceneTree.activate();
 
     expect(scene.isActive).toBe(true);
   });
 
-  it('should deactivate scenes in scene tree', () => {
+  it('should deactivate current scene', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new TestNode();
     scene.isActive = true;
 
-    sceneTree.addScene(scene);
+    sceneTree.switchToScene(scene);
     sceneTree.deactivate();
 
     expect(scene.isActive).toBe(false);

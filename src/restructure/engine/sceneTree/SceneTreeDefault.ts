@@ -3,22 +3,37 @@ import type { SceneTree } from '../sceneTree.types';
 import { BaseNode } from '../../nodes/BaseNode';
 
 export class SceneTreeDefault implements SceneTree {
+  private currentScene: Node | null = null;
   public root = new BaseNode('root'); // TODO: Replace with Viewport.
 
-  public addScene(scene: Node) {
-    this.addSceneToRoot(scene);
+  public switchToScene(scene: Node) {
+    this.replaceCurrentScene(scene);
   }
 
-  private addSceneToRoot(scene: Node) {
-    this.root.addChild(scene);
+  private replaceCurrentScene(newScene: Node) {
+    this.removeCurrentSceneFromTree();
+    this.currentScene = newScene;
+    this.addCurrentSceneToTree();
   }
 
-  public removeScene(scene: Node) {
-    this.removeSceneFromRoot(scene);
+  private removeCurrentSceneFromTree() {
+    if (this.currentScene) {
+      this.removeSceneFromRoot(this.currentScene);
+    }
   }
 
   private removeSceneFromRoot(scene: Node) {
     this.root.removeChild(scene);
+  }
+
+  private addCurrentSceneToTree() {
+    if (this.currentScene) {
+      this.addSceneToRoot(this.currentScene);
+    }
+  }
+
+  private addSceneToRoot(scene: Node) {
+    this.root.addChild(scene);
   }
 
   public ready() {
