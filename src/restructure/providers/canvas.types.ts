@@ -50,4 +50,6 @@ export interface Canvas {
   setFillColor(color: string): void;
   /** Fills the current path with the current fill color. */
   fill(): void;
+  /** Clears the canvas. */
+  clear(): void;
 }
