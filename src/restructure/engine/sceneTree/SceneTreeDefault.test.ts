@@ -11,26 +11,6 @@ describe('SceneTreeDefault', () => {
     expect(sceneTree.root.getChildren().length).toBe(1);
   });
 
-  it('should ready scene upon adding', () => {
-    const sceneTree = new SceneTreeDefault();
-    const scene = new TestNode();
-    scene.isReady = false;
-
-    sceneTree.addScene(scene);
-
-    expect(scene.isReady).toBe(true);
-  });
-
-  it('should activate scene upon adding', () => {
-    const sceneTree = new SceneTreeDefault();
-    const scene = new TestNode();
-    scene.isActive = false;
-
-    sceneTree.addScene(scene);
-
-    expect(scene.isActive).toBe(true);
-  });
-
   it('should remove scene from root node', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new TestNode();
@@ -41,24 +21,46 @@ describe('SceneTreeDefault', () => {
     expect(sceneTree.root.getChildren().length).toBe(0);
   });
 
-  it('should unready scene upon removing', () => {
+  it('should ready scenes in scene tree', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new TestNode();
     scene.isReady = false;
 
     sceneTree.addScene(scene);
-    sceneTree.removeScene(scene);
+    sceneTree.ready();
+
+    expect(scene.isReady).toBe(true);
+  });
+
+  it('should unready scenes in scene tree', () => {
+    const sceneTree = new SceneTreeDefault();
+    const scene = new TestNode();
+    scene.isReady = true;
+
+    sceneTree.addScene(scene);
+    sceneTree.unready();
 
     expect(scene.isReady).toBe(false);
   });
 
-  it('should deactivate scene upon adding', () => {
+  it('should activate scenes in scene tree', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new TestNode();
     scene.isActive = false;
 
     sceneTree.addScene(scene);
-    sceneTree.removeScene(scene);
+    sceneTree.activate();
+
+    expect(scene.isActive).toBe(true);
+  });
+
+  it('should deactivate scenes in scene tree', () => {
+    const sceneTree = new SceneTreeDefault();
+    const scene = new TestNode();
+    scene.isActive = true;
+
+    sceneTree.addScene(scene);
+    sceneTree.deactivate();
 
     expect(scene.isActive).toBe(false);
   });

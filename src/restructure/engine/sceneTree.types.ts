@@ -16,4 +16,12 @@ export interface SceneTree {
    * @param scene The scene to remove from the scene tree.
    */
   removeScene(scene: Node): void;
+  /** Readies scenes in the scene tree. */
+  ready(): void;
+  /** Unreadies scenes in the scene tree. */
+  unready(): void;
+  /** Activates scenes in the scene tree. */
+  activate(): void;
+  /** Deactivates scenes in the scene tree. */
+  deactivate(): void;
 }
