@@ -18,17 +18,11 @@ export class BaseNode<T extends BaseNodeOptions = BaseNodeOptions> implements No
     this.id = id;
     this.nodeRelationshipManager = new NodeRelationshipManager(this);
 
-    if (options) {
-      this.applyOptions(options);
-    }
-  }
-
-  protected applyOptions(options: BaseNodeOptions) {
-    if (options.isActive !== undefined) {
+    if (options?.isActive !== undefined) {
       this.isActive = options.isActive;
     }
 
-    if (options.isReady !== undefined) {
+    if (options?.isReady !== undefined) {
       this.isReady = options.isReady;
     }
   }

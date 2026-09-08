@@ -29,23 +29,15 @@ export class Node2D<T extends Node2DOptions = Node2DOptions> extends CanvasNode<
   constructor(id: string, options?: T) {
     super(id, options);
 
-    if (options) {
-      this.applyOptions(options);
-    }
-  }
-
-  protected applyOptions(options: T) {
-    super.applyOptions(options);
-
-    if (options.position !== undefined) {
+    if (options?.position !== undefined) {
       this.position = new Vector2D(options.position.x, options.position.y);
     }
 
-    if (options.scale !== undefined) {
+    if (options?.scale !== undefined) {
       this.scale = new Vector2D(options.scale.x, options.scale.y);
     }
 
-    if (options.rotation !== undefined) {
+    if (options?.rotation !== undefined) {
       this.rotation = options.rotation;
     }
   }

@@ -19,19 +19,11 @@ export abstract class CanvasNode<T extends CanvasNodeOptions = CanvasNodeOptions
   constructor(id: string, options?: T) {
     super(id, options);
 
-    if (options) {
-      this.applyOptions(options);
-    }
-  }
-
-  protected applyOptions(options: T) {
-    super.applyOptions(options);
-
-    if (options.isVisible !== undefined) {
+    if (options?.isVisible !== undefined) {
       this.isVisible = options.isVisible;
     }
 
-    if (options.zIndex !== undefined) {
+    if (options?.zIndex !== undefined) {
       this.zIndex = options.zIndex;
     }
   }
