@@ -12,7 +12,7 @@ export interface Node2DOptions extends CanvasNodeOptions {
 /**
  * A node which can be used in a 2D plane.
  */
-export class Node2D<T extends Node2DOptions = Node2DOptions> extends CanvasNode<T> {
+export class Node2D extends CanvasNode {
   /** The node's position relative to its parent. */
   public position = new Vector2D();
   /** The node's scale relative to its parent. */
@@ -20,7 +20,7 @@ export class Node2D<T extends Node2DOptions = Node2DOptions> extends CanvasNode<
   /** The node's rotation, in radians, relative to its parent. */
   public rotation = 0;
 
-  constructor(id: string, options?: T) {
+  constructor(id: string, options?: Node2DOptions) {
     super(id, options);
 
     this.position = options?.position ? new Vector2D(options.position[0], options.position[1]) : new Vector2D();

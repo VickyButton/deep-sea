@@ -8,13 +8,13 @@ export interface BaseNodeOptions {
 /**
  * The base implementation of the node interface.
  */
-export class BaseNode<T extends BaseNodeOptions = BaseNodeOptions> implements Node {
+export class BaseNode implements Node {
   public id: string;
   public isActive: boolean;
   public isReady: boolean;
   protected nodeRelationshipManager: NodeRelationshipManager;
 
-  constructor(id: string, options?: T) {
+  constructor(id: string, options?: BaseNodeOptions) {
     this.id = id;
     this.isActive = options?.isActive ?? false;
     this.isReady = options?.isReady ?? false;

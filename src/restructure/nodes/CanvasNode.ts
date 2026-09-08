@@ -10,13 +10,13 @@ export interface CanvasNodeOptions extends BaseNodeOptions {
 /**
  * Abstract base node for nodes which can be drawn onto a canvas.
  */
-export abstract class CanvasNode<T extends CanvasNodeOptions = CanvasNodeOptions> extends BaseNode<T> {
+export abstract class CanvasNode extends BaseNode {
   /** A flag indicating if the node may be drawn or not. */
   public isVisible: boolean;
   /** The order in which this node is drawn. Nodes with higher z-indices are drawn on top of nodes with lower z-indices. */
   public zIndex: number;
 
-  constructor(id: string, options?: T) {
+  constructor(id: string, options?: CanvasNodeOptions) {
     super(id, options);
 
     this.isVisible = options?.isVisible ?? true;
