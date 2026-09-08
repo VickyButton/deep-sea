@@ -1,4 +1,4 @@
-import { Vector2D } from './vector';
+import { Vector2D } from './Vector2D';
 import { describe, expect, it } from 'vitest';
 
 describe('Vector2D', () => {

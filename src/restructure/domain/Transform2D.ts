@@ -1,4 +1,4 @@
-import { Vector2D } from './vector';
+import { Vector2D } from './Vector2D';
 
 export class Transform2D {
   public position: Vector2D;

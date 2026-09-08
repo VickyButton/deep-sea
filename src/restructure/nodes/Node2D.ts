@@ -3,7 +3,7 @@ import type { Node } from '../domain/node.types';
 import type { Transform2DOptions } from '../domain/Transform2D';
 import { CanvasNode } from './CanvasNode';
 import { Transform2D } from '../domain/Transform2D';
-import { Vector2D } from '../domain/vector';
+import { Vector2D } from '../domain/Vector2D';
 
 /**
  * A node which can be used in a 2D plane.
