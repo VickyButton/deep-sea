@@ -52,8 +52,6 @@ describe('Node2D', () => {
     });
     const child = new Node2D('child', {
       rotation: 1,
-      isActive: true,
-      isVisible: false,
     });
 
     parent.addChild(child);
