@@ -9,12 +9,22 @@ export class Vector2D {
     this.y = y;
   }
 
+  /** The vector's X component. */
   public get 0() {
     return this.x;
   }
 
+  public set 0(x: number) {
+    this.x = x;
+  }
+
+  /** The vector's Y component. */
   public get 1() {
     return this.y;
+  }
+
+  public set 1(y: number) {
+    this.y = y;
   }
 
   /** The length of the vector. */

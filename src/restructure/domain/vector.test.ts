@@ -3,10 +3,19 @@ import { describe, expect, it } from 'vitest';
 
 describe('Vector2D', () => {
   it('should have components accessible via array accessors', () => {
-    const vector = new Vector2D(0, 1);
+    const vector = new Vector2D(1, 2);
 
-    expect(vector[0]).toBe(0);
-    expect(vector[1]).toBe(1);
+    expect(vector[0]).toBe(vector.x);
+    expect(vector[1]).toBe(vector.y);
+  });
+
+  it('should set components via array accessors', () => {
+    const vector = new Vector2D(0, 0);
+    vector[0] = 1;
+    vector[1] = 2;
+
+    expect(vector.x).toBe(vector[0]);
+    expect(vector.y).toBe(vector[1]);
   });
 
   it('should calculate vector length', () => {
