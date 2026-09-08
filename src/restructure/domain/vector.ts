@@ -9,6 +9,14 @@ export class Vector2D {
     this.y = y;
   }
 
+  public get 0() {
+    return this.x;
+  }
+
+  public get 1() {
+    return this.y;
+  }
+
   /** The length of the vector. */
   public get length() {
     return Math.sqrt(this.xSquared + this.ySquared);
