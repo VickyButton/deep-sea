@@ -31,24 +31,40 @@ export class BaseNode implements Node {
   }
 
   public addChild(node: Node) {
-    this.throwIfAddingSelfAsChild(node);
-    this.removeChildFromOriginalParent(node);
-    this.children.add(node);
-    node.parent = this;
+    this.throwIfNodeIsSelf(node);
+    this.removeNodeFromOriginalParent(node);
+    this.addNodeToChildren(node);
+    this.setNodeParentToThis(node);
   }
 
-  private throwIfAddingSelfAsChild(node: Node) {
+  private throwIfNodeIsSelf(node: Node) {
     if (node === this) {
       throw new Error('Cannot add self as a child.');
     }
   }
 
-  private removeChildFromOriginalParent(node: Node) {
+  private removeNodeFromOriginalParent(node: Node) {
     node.parent?.children.delete(node);
   }
 
+  private addNodeToChildren(node: Node) {
+    this.children.add(node);
+  }
+
+  private setNodeParentToThis(node: Node) {
+    node.parent = this;
+  }
+
   public removeChild(node: Node) {
+    this.removeNodeFromChildren(node);
+    this.removeNodeParent(node);
+  }
+
+  private removeNodeFromChildren(node: Node) {
     this.children.delete(node);
+  }
+
+  private removeNodeParent(node: Node) {
     node.parent = null;
   }
 
