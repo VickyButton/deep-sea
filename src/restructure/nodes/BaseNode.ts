@@ -7,7 +7,6 @@ export class BaseNode implements Node {
   public id: string;
   public isActive = false;
   public isReady = false;
-  public parent: Node | null = null;
   protected nodeRelationshipManager: NodeRelationshipManager;
 
   constructor(id: string) {
@@ -15,8 +14,12 @@ export class BaseNode implements Node {
     this.nodeRelationshipManager = new NodeRelationshipManager(this);
   }
 
+  public get parent() {
+    return this.nodeRelationshipManager.getParentNode();
+  }
+
   public get children() {
-    return this.nodeRelationshipManager.getChildren();
+    return this.nodeRelationshipManager.getChildNodes();
   }
 
   public activate() {
@@ -33,6 +36,14 @@ export class BaseNode implements Node {
 
   public unready() {
     this.isReady = false;
+  }
+
+  public setParent(node: Node) {
+    this.nodeRelationshipManager.setParent(node);
+  }
+
+  public removeParent() {
+    this.nodeRelationshipManager.removeParent();
   }
 
   public addChild(node: Node) {
@@ -53,37 +64,51 @@ export class BaseNode implements Node {
 }
 
 class NodeRelationshipManager {
-  private readonly parentNode: Node;
-  private readonly childNodes = new Set<Node>();
+  private readonly node: Node;
+  private parentNode: Node | null = null;
+  private childNodes = new Set<Node>();
 
-  constructor(parentNode: Node) {
-    this.parentNode = parentNode;
+  constructor(node: Node) {
+    this.node = node;
   }
 
-  public getChildren() {
+  public getParentNode() {
+    return this.parentNode;
+  }
+
+  public setParent(parent: Node) {
+    // TODO: Throw error if self.
+    this.parentNode = parent;
+  }
+
+  public removeParent() {
+    this.parentNode = null;
+  }
+
+  public getChildNodes() {
     return Array.from(this.childNodes);
   }
 
-  public addChildNode(node: Node) {
-    this.throwIfNodeIsParent(node);
-    this.removeNodeFromOriginalParent(node);
+  public addChildNode(child: Node) {
+    this.throwIfChildIsNode(child);
+    this.removeChildFromOriginalParent(child);
 
-    this.childNodes.add(node);
-    node.parent = this.parentNode;
+    this.childNodes.add(child);
+    child.setParent(this.node);
   }
 
-  private throwIfNodeIsParent(node: Node) {
-    if (node === this.parentNode) {
+  private throwIfChildIsNode(child: Node) {
+    if (child === this.node) {
       throw new Error('Cannot add self as a child.');
     }
   }
 
-  private removeNodeFromOriginalParent(node: Node) {
-    node.parent?.removeChild(node);
+  private removeChildFromOriginalParent(child: Node) {
+    child.parent?.removeChild(child);
   }
 
-  public removeChildNode(node: Node) {
-    this.childNodes.delete(node);
-    node.parent = null;
+  public removeChildNode(child: Node) {
+    this.childNodes.delete(child);
+    child.removeParent();
   }
 }

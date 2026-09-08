@@ -9,7 +9,7 @@ export interface Node {
   /** A flag indicating if the node is ready or not. */
   isReady: boolean;
   /** The node's parent, or null if the node has no parent. */
-  parent: Node | null;
+  get parent(): Node | null;
   /** The node's child nodes. */
   get children(): Node[];
   /** Activates the node. */
@@ -20,6 +20,13 @@ export interface Node {
   ready(): void;
   /** Unreadies the node. */
   unready(): void;
+  /**
+   * Sets the node's parent.
+   * @param node The node to add as a parent.
+   */
+  setParent(node: Node): void;
+  /** Removes the node's parent. */
+  removeParent(): void;
   /**
    * Adds a child node to the node tree.
    * @param node The node to add as a child.
