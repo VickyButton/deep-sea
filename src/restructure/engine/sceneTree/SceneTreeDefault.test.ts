@@ -1,5 +1,5 @@
 import { SceneTreeDefault } from './SceneTreeDefault';
-import { BaseNode } from '../../nodes';
+import { BaseNode } from '../../nodes/BaseNode';
 import { describe, expect, it } from 'vitest';
 
 describe('SceneTreeDefault', () => {
