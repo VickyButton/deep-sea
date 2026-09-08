@@ -1,17 +1,36 @@
 import type { Node } from '../domain/node.types';
 
+export interface BaseNodeOptions {
+  isActive?: boolean;
+  isReady?: boolean;
+}
+
 /**
  * The base implementation of the node interface.
  */
-export class BaseNode implements Node {
+export class BaseNode<T extends BaseNodeOptions = BaseNodeOptions> implements Node {
   public id: string;
   public isActive = false;
   public isReady = false;
   protected nodeRelationshipManager: NodeRelationshipManager;
 
-  constructor(id: string) {
+  constructor(id: string, options?: T) {
     this.id = id;
     this.nodeRelationshipManager = new NodeRelationshipManager(this);
+
+    if (options) {
+      this.applyOptions(options);
+    }
+  }
+
+  protected applyOptions(options: BaseNodeOptions) {
+    if (options.isActive !== undefined) {
+      this.isActive = options.isActive;
+    }
+
+    if (options.isReady !== undefined) {
+      this.isReady = options.isReady;
+    }
   }
 
   public get parent() {

@@ -1,17 +1,54 @@
+import type { CanvasNodeOptions } from './CanvasNode';
 import type { Node } from '../domain/node.types';
 import { CanvasNode } from './CanvasNode';
 import { Vector2D } from '../domain/vector';
 
+export interface Node2DOptions extends CanvasNodeOptions {
+  position?: {
+    x: number;
+    y: number;
+  };
+  scale?: {
+    x: number;
+    y: number;
+  };
+  rotation?: number;
+}
+
 /**
  * A node which can be used in a 2D plane.
  */
-export class Node2D extends CanvasNode {
+export class Node2D<T extends Node2DOptions = Node2DOptions> extends CanvasNode<T> {
   /** The node's position relative to its parent. */
   public position = new Vector2D();
   /** The node's scale relative to its parent. */
   public scale = new Vector2D(1, 1);
   /** The node's rotation, in radians, relative to its parent. */
   public rotation = 0;
+
+  constructor(id: string, options?: T) {
+    super(id, options);
+
+    if (options) {
+      this.applyOptions(options);
+    }
+  }
+
+  protected applyOptions(options: T) {
+    super.applyOptions(options);
+
+    if (options.position !== undefined) {
+      this.position = new Vector2D(options.position.x, options.position.y);
+    }
+
+    if (options.scale !== undefined) {
+      this.scale = new Vector2D(options.scale.x, options.scale.y);
+    }
+
+    if (options.rotation !== undefined) {
+      this.rotation = options.rotation;
+    }
+  }
 
   /** The node's position relative to the root node. */
   public get globalPosition(): Vector2D {
@@ -54,33 +91,5 @@ export class Node2D extends CanvasNode {
 
   public draw() {
     // TODO: Implement.
-  }
-
-  public static create(id: string, options: {
-    position?: {
-      x: number;
-      y: number;
-    };
-    scale?: {
-      x: number;
-      y: number;
-    };
-    rotation?: number;
-  }) {
-    const node = new Node2D(id);
-
-    if (options.position) {
-      node.position = new Vector2D(options.position.x, options.position.y);
-    }
-
-    if (options.scale) {
-      node.scale = new Vector2D(options.scale.x, options.scale.y);
-    }
-
-    if (options.rotation) {
-      node.rotation = options.rotation;
-    }
-
-    return node;
   }
 }

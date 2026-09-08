@@ -3,13 +3,13 @@ import { describe, expect, it } from 'vitest';
 
 describe('Node2D', () => {
   it('should calculate global position', () => {
-    const parent = Node2D.create('parent', {
+    const parent = new Node2D('parent', {
       position: {
         x: 1,
         y: 1,
       },
     });
-    const child = Node2D.create('child', {
+    const child = new Node2D('child', {
       position: {
         x: 1,
         y: 1,
@@ -25,13 +25,13 @@ describe('Node2D', () => {
   });
 
   it('should calculate global scale', () => {
-    const parent = Node2D.create('parent', {
+    const parent = new Node2D('parent', {
       scale: {
         x: 2,
         y: 2,
       },
     });
-    const child = Node2D.create('child', {
+    const child = new Node2D('child', {
       scale: {
         x: 2,
         y: 2,
@@ -47,11 +47,13 @@ describe('Node2D', () => {
   });
 
   it('should calculate global rotation', () => {
-    const parent = Node2D.create('parent', {
+    const parent = new Node2D('parent', {
       rotation: 1,
     });
-    const child = Node2D.create('child', {
+    const child = new Node2D('child', {
       rotation: 1,
+      isActive: true,
+      isVisible: false,
     });
 
     parent.addChild(child);
