@@ -10,6 +10,8 @@ export interface Node {
   isReady: boolean;
   /** The node's parent, or null if the node has no parent. */
   get parent(): Node | null;
+  /** True if node has a parent, false if not. */
+  get hasParent(): boolean;
   /** The node's child nodes. */
   get children(): Node[];
   /** Activates the node. */
@@ -21,12 +23,13 @@ export interface Node {
   /** Unreadies the node. */
   unready(): void;
   /**
-   * Sets the node's parent.
+   * Assigns a parent to the node. If the node already has a parent, use the `reparent` method
+   * instead.
    * @param node The node to add as a parent.
    */
-  setParent(node: Node): void;
-  /** Removes the node's parent. */
-  removeParent(): void;
+  assignParent(parent: Node): void;
+  /** Unassigns the node's parent from the node. */
+  unassignParent(): void;
   /**
    * Adds a child node to the node tree.
    * @param node The node to add as a child.
@@ -37,6 +40,11 @@ export interface Node {
    * @param node The child node to remove.
    */
   removeChild(node: Node): void;
+  /**
+   * Reparents the node.
+   * @param newParent The new parent to assign to the node.
+   */
+  reparent(newParent: Node): void;
   /**
    * Traverses the node tree in post-order.
    * @param callback The callback to execute on each node.

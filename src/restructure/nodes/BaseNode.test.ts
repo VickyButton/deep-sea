@@ -8,7 +8,7 @@ describe('BaseNode', () => {
     expect(node.isActive).toBe(false);
   });
 
-  it('should activate', () => {
+  it('should activate itself', () => {
     const node = new BaseNode('node');
 
     node.activate();
@@ -16,7 +16,7 @@ describe('BaseNode', () => {
     expect(node.isActive).toBe(true);
   });
 
-  it('should deactivate', () => {
+  it('should deactivate itself', () => {
     const node = new BaseNode('node');
 
     node.activate();
@@ -31,7 +31,7 @@ describe('BaseNode', () => {
     expect(node.isReady).toBe(false);
   });
 
-  it('should ready', () => {
+  it('should ready itself', () => {
     const node = new BaseNode('node');
 
     node.ready();
@@ -39,7 +39,7 @@ describe('BaseNode', () => {
     expect(node.isReady).toBe(true);
   });
 
-  it('should unready', () => {
+  it('should unready itself', () => {
     const node = new BaseNode('node');
 
     node.ready();
@@ -52,6 +52,7 @@ describe('BaseNode', () => {
     const node = new BaseNode('node');
 
     expect(node.parent).toBe(null);
+    expect(node.hasParent).toBe(false);
   });
 
   it('should have no children by default', () => {
@@ -60,13 +61,32 @@ describe('BaseNode', () => {
     expect(node.children.length).toBe(0);
   });
 
-  it('should throw an error if setting self as parent', () => {
-    const node = new BaseNode('node');
+  it('should assign a parent to itself', () => {
+    const parent = new BaseNode('parent');
+    const child = new BaseNode('child');
 
-    expect(() => node.setParent(node)).toThrowError();
+    child.assignParent(parent);
+
+    expect(child.parent).toBe(parent);
   });
 
-  it('should add a child node', () => {
+  it('should throw an error if assigning itself as parent', () => {
+    const node = new BaseNode('node');
+
+    expect(() => node.assignParent(node)).toThrowError();
+  });
+
+  it('should unassign a parent from itself', () => {
+    const parent = new BaseNode('parent');
+    const child = new BaseNode('child');
+
+    child.assignParent(parent);
+    child.unassignParent();
+
+    expect(child.parent).toBe(null);
+  });
+
+  it('should add a child', () => {
     const parent = new BaseNode('parent');
     const child = new BaseNode('child');
 
@@ -76,13 +96,23 @@ describe('BaseNode', () => {
     expect(parent.children[0]).toBe(child);
   });
 
-  it('should not allow self to be added as a child', () => {
+  it('should throw an error if trying to add itself as a child', () => {
     const node = new BaseNode('node');
 
     expect(() => node.addChild(node)).toThrowError();
   });
 
-  it('should remove a child node', () => {
+  it('should throw an error if trying to add a child that already has a parent', () => {
+    const originalParent = new BaseNode('originalParent');
+    const newParent = new BaseNode('newParent');
+    const child = new BaseNode('child');
+
+    originalParent.addChild(child);
+
+    expect(() => newParent.addChild(child)).toThrowError();
+  });
+
+  it('should remove a child', () => {
     const parent = new BaseNode('parent');
     const child = new BaseNode('child');
 
@@ -93,16 +123,17 @@ describe('BaseNode', () => {
     expect(parent.children.length).toBe(0);
   });
 
-  it('should remove node from original parent when setting new parent', () => {
+  it('should reparent itself to a new parent', () => {
     const originalParent = new BaseNode('originalParent');
     const newParent = new BaseNode('newParent');
     const child = new BaseNode('child');
 
     originalParent.addChild(child);
-    newParent.addChild(child);
+    child.reparent(newParent);
 
-    expect(originalParent.children.length).toBe(0);
+    expect(child.parent).toBe(newParent);
     expect(newParent.children[0]).toBe(child);
+    expect(originalParent.children.length).toBe(0);
   });
 
   it('should traverse tree in post-order', () => {

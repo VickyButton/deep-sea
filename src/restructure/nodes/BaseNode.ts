@@ -18,6 +18,10 @@ export class BaseNode implements Node {
     return this.nodeRelationshipManager.getParent();
   }
 
+  public get hasParent() {
+    return this.nodeRelationshipManager.getParent() !== null;
+  }
+
   public get children() {
     return this.nodeRelationshipManager.getChildren();
   }
@@ -38,20 +42,24 @@ export class BaseNode implements Node {
     this.isReady = false;
   }
 
-  public setParent(node: Node) {
-    this.nodeRelationshipManager.setParent(node);
+  public assignParent(parent: Node) {
+    this.nodeRelationshipManager.assignParent(parent);
   }
 
-  public removeParent() {
-    this.nodeRelationshipManager.removeParent();
+  public unassignParent() {
+    this.nodeRelationshipManager.unassignParent();
   }
 
-  public addChild(node: Node) {
-    this.nodeRelationshipManager.addChild(node);
+  public reparent(newParent: Node) {
+    this.nodeRelationshipManager.reparent(newParent);
   }
 
-  public removeChild(node: Node) {
-    this.nodeRelationshipManager.removeChild(node);
+  public addChild(child: Node) {
+    this.nodeRelationshipManager.addChild(child);
+  }
+
+  public removeChild(child: Node) {
+    this.nodeRelationshipManager.removeChild(child);
   }
 
   public traversePostorder(callback: (node: Node) => void) {
@@ -63,20 +71,32 @@ export class BaseNode implements Node {
   }
 }
 
+/**
+ * Manages a node's relationships.
+ */
 class NodeRelationshipManager {
+  /** The node being managed. */
   private readonly self: Node;
+  /** The node's parent node. */
   private parent: Node | null = null;
+  /** The node's child nodes. */
   private children = new Set<Node>();
 
   constructor(self: Node) {
     this.self = self;
   }
 
+  /** Gets the node's parent. */
   public getParent() {
     return this.parent;
   }
 
-  public setParent(parent: Node) {
+  /**
+   * Assigns a parent to the node.
+   * @param parent The parent to assign to the node.
+   * @throws An error if passed parent is the node itself.
+   */
+  public assignParent(parent: Node) {
     this.throwIfParentIsSelf(parent);
     this.parent = parent;
   }
@@ -91,19 +111,34 @@ class NodeRelationshipManager {
     return node === this.self;
   }
 
-  public removeParent() {
+  /** Unassigns the node's parent from the node. */
+  public unassignParent() {
     this.parent = null;
   }
 
+  private removeSelfFromParent() {
+    this.self.parent?.removeChild(this.self);
+  }
+
+  private addSelfToParent(newParent: Node) {
+    newParent.addChild(this.self);
+  }
+
+  /** Gets the node's children. */
   public getChildren() {
     return Array.from(this.children);
   }
 
+  /**
+   * Adds a child to the node.
+   * @param child The child to add to the node.
+   * @throws An error if passed child is self.
+   * @throws An error if pass child already has a parent.
+   */
   public addChild(child: Node) {
     this.throwIfChildIsSelf(child);
-    this.removeChildFromOriginalParent(child);
-    this.children.add(child);
-    child.setParent(this.self);
+    this.throwIfChildAlreadyHasParent(child);
+    this.parentChild(child);
   }
 
   private throwIfChildIsSelf(child: Node) {
@@ -112,12 +147,40 @@ class NodeRelationshipManager {
     }
   }
 
-  private removeChildFromOriginalParent(child: Node) {
-    child.parent?.removeChild(child);
+  private throwIfChildAlreadyHasParent(child: Node) {
+    if (child.hasParent) {
+      throw new Error('Node already has a parent.');
+    }
   }
 
+  private parentChild(child: Node) {
+    this.children.add(child);
+    this.assignSelfAsChildParent(child);
+  }
+
+  private assignSelfAsChildParent(child: Node) {
+    child.assignParent(this.self);
+  }
+
+  /**
+   * Removes child from the node.
+   * @param child The child to remove.
+   */
   public removeChild(child: Node) {
     this.children.delete(child);
-    child.removeParent();
+    this.unassignParentFromChild(child);
+  }
+
+  private unassignParentFromChild(child: Node) {
+    child.unassignParent();
+  }
+
+  /**
+   * Reparents the node.
+   * @param newParent The new parent to assign to the node.
+   */
+  public reparent(newParent: Node) {
+    this.removeSelfFromParent();
+    this.addSelfToParent(newParent);
   }
 }
