@@ -60,6 +60,12 @@ describe('BaseNode', () => {
     expect(node.children.length).toBe(0);
   });
 
+  it('should throw an error if setting self as parent', () => {
+    const node = new BaseNode('node');
+
+    expect(() => node.setParent(node)).toThrowError();
+  });
+
   it('should add a child node', () => {
     const parent = new BaseNode('parent');
     const child = new BaseNode('child');

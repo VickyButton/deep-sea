@@ -39,7 +39,7 @@ export class BaseNode implements Node {
   }
 
   public setParent(node: Node) {
-    this.nodeRelationshipManager.setParent(node);
+    this.nodeRelationshipManager.setParentNode(node);
   }
 
   public removeParent() {
@@ -64,21 +64,31 @@ export class BaseNode implements Node {
 }
 
 class NodeRelationshipManager {
-  private readonly node: Node;
+  private readonly selfNode: Node;
   private parentNode: Node | null = null;
   private childNodes = new Set<Node>();
 
   constructor(node: Node) {
-    this.node = node;
+    this.selfNode = node;
   }
 
   public getParentNode() {
     return this.parentNode;
   }
 
-  public setParent(parent: Node) {
-    // TODO: Throw error if self.
+  public setParentNode(parent: Node) {
+    this.throwIfParentIsSelf(parent);
     this.parentNode = parent;
+  }
+
+  private throwIfParentIsSelf(parent: Node) {
+    if (this.isSelf(parent)) {
+      throw new Error('Cannot set self as parent.');
+    }
+  }
+
+  private isSelf(node: Node) {
+    return node === this.selfNode;
   }
 
   public removeParent() {
@@ -90,15 +100,14 @@ class NodeRelationshipManager {
   }
 
   public addChildNode(child: Node) {
-    this.throwIfChildIsNode(child);
+    this.throwIfChildIsSelf(child);
     this.removeChildFromOriginalParent(child);
-
     this.childNodes.add(child);
-    child.setParent(this.node);
+    child.setParent(this.selfNode);
   }
 
-  private throwIfChildIsNode(child: Node) {
-    if (child === this.node) {
+  private throwIfChildIsSelf(child: Node) {
+    if (this.isSelf(child)) {
       throw new Error('Cannot add self as a child.');
     }
   }
