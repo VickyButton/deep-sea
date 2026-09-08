@@ -15,11 +15,11 @@ export class BaseNode implements Node {
   }
 
   public get parent() {
-    return this.nodeRelationshipManager.getParentNode();
+    return this.nodeRelationshipManager.getParent();
   }
 
   public get children() {
-    return this.nodeRelationshipManager.getChildNodes();
+    return this.nodeRelationshipManager.getChildren();
   }
 
   public activate() {
@@ -39,7 +39,7 @@ export class BaseNode implements Node {
   }
 
   public setParent(node: Node) {
-    this.nodeRelationshipManager.setParentNode(node);
+    this.nodeRelationshipManager.setParent(node);
   }
 
   public removeParent() {
@@ -47,11 +47,11 @@ export class BaseNode implements Node {
   }
 
   public addChild(node: Node) {
-    this.nodeRelationshipManager.addChildNode(node);
+    this.nodeRelationshipManager.addChild(node);
   }
 
   public removeChild(node: Node) {
-    this.nodeRelationshipManager.removeChildNode(node);
+    this.nodeRelationshipManager.removeChild(node);
   }
 
   public traversePostorder(callback: (node: Node) => void) {
@@ -64,21 +64,21 @@ export class BaseNode implements Node {
 }
 
 class NodeRelationshipManager {
-  private readonly selfNode: Node;
-  private parentNode: Node | null = null;
-  private childNodes = new Set<Node>();
+  private readonly self: Node;
+  private parent: Node | null = null;
+  private children = new Set<Node>();
 
   constructor(node: Node) {
-    this.selfNode = node;
+    this.self = node;
   }
 
-  public getParentNode() {
-    return this.parentNode;
+  public getParent() {
+    return this.parent;
   }
 
-  public setParentNode(parent: Node) {
+  public setParent(parent: Node) {
     this.throwIfParentIsSelf(parent);
-    this.parentNode = parent;
+    this.parent = parent;
   }
 
   private throwIfParentIsSelf(parent: Node) {
@@ -88,22 +88,22 @@ class NodeRelationshipManager {
   }
 
   private isSelf(node: Node) {
-    return node === this.selfNode;
+    return node === this.self;
   }
 
   public removeParent() {
-    this.parentNode = null;
+    this.parent = null;
   }
 
-  public getChildNodes() {
-    return Array.from(this.childNodes);
+  public getChildren() {
+    return Array.from(this.children);
   }
 
-  public addChildNode(child: Node) {
+  public addChild(child: Node) {
     this.throwIfChildIsSelf(child);
     this.removeChildFromOriginalParent(child);
-    this.childNodes.add(child);
-    child.setParent(this.selfNode);
+    this.children.add(child);
+    child.setParent(this.self);
   }
 
   private throwIfChildIsSelf(child: Node) {
@@ -116,8 +116,8 @@ class NodeRelationshipManager {
     child.parent?.removeChild(child);
   }
 
-  public removeChildNode(child: Node) {
-    this.childNodes.delete(child);
+  public removeChild(child: Node) {
+    this.children.delete(child);
     child.removeParent();
   }
 }
