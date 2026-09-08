@@ -26,6 +26,7 @@
     "uuid": "^13.0.0"
   },
   "exports": {
-    ".": "./src/restructure/index.ts"
+    ".": "./src/restructure/index.ts",
+    "./nodes": "./src/restructure/nodes/index.ts"
   }
 }
