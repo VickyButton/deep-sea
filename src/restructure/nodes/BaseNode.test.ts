@@ -57,7 +57,7 @@ describe('BaseNode', () => {
   it('should have no children by default', () => {
     const node = new BaseNode('node');
 
-    expect(node.children.size).toBe(0);
+    expect(node.children.length).toBe(0);
   });
 
   it('should add a child node', () => {
@@ -67,7 +67,7 @@ describe('BaseNode', () => {
     parent.addChild(child);
 
     expect(child.parent).toBe(parent);
-    expect(parent.children.has(child)).toEqual(true);
+    expect(parent.children[0]).toBe(child);
   });
 
   it('should not allow self to be added as a child', () => {
@@ -84,7 +84,7 @@ describe('BaseNode', () => {
     parent.removeChild(child);
 
     expect(child.parent).toBe(null);
-    expect(parent.children.has(child)).toBe(false);
+    expect(parent.children.length).toBe(0);
   });
 
   it('should remove node from original parent when setting new parent', () => {
@@ -95,8 +95,8 @@ describe('BaseNode', () => {
     originalParent.addChild(child);
     newParent.addChild(child);
 
-    expect(originalParent.children.has(child)).toBe(false);
-    expect(newParent.children.has(child)).toBe(true);
+    expect(originalParent.children.length).toBe(0);
+    expect(newParent.children[0]).toBe(child);
   });
 
   it('should traverse tree in post-order', () => {

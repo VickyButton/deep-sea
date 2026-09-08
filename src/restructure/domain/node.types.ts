@@ -11,7 +11,7 @@ export interface Node {
   /** The node's parent, or null if the node has no parent. */
   parent: Node | null;
   /** The node's child nodes. */
-  children: Set<Node>;
+  get children(): Node[];
   /** Activates the node. */
   activate(): void;
   /** Deactivates the node. */
