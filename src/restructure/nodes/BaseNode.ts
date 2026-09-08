@@ -10,21 +10,15 @@ export interface BaseNodeOptions {
  */
 export class BaseNode<T extends BaseNodeOptions = BaseNodeOptions> implements Node {
   public id: string;
-  public isActive = false;
-  public isReady = false;
+  public isActive: boolean;
+  public isReady: boolean;
   protected nodeRelationshipManager: NodeRelationshipManager;
 
   constructor(id: string, options?: T) {
     this.id = id;
+    this.isActive = options?.isActive ?? false;
+    this.isReady = options?.isReady ?? false;
     this.nodeRelationshipManager = new NodeRelationshipManager(this);
-
-    if (options?.isActive !== undefined) {
-      this.isActive = options.isActive;
-    }
-
-    if (options?.isReady !== undefined) {
-      this.isReady = options.isReady;
-    }
   }
 
   public get parent() {

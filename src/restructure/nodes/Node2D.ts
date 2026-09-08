@@ -29,17 +29,9 @@ export class Node2D<T extends Node2DOptions = Node2DOptions> extends CanvasNode<
   constructor(id: string, options?: T) {
     super(id, options);
 
-    if (options?.position !== undefined) {
-      this.position = new Vector2D(options.position.x, options.position.y);
-    }
-
-    if (options?.scale !== undefined) {
-      this.scale = new Vector2D(options.scale.x, options.scale.y);
-    }
-
-    if (options?.rotation !== undefined) {
-      this.rotation = options.rotation;
-    }
+    this.position = options?.position ? new Vector2D(options.position.x, options.position.y) : new Vector2D();
+    this.scale = options?.scale ? new Vector2D(options.scale.x, options.scale.y) : new Vector2D(1, 1);
+    this.rotation = options?.rotation ?? 0;
   }
 
   /** The node's position relative to the root node. */
