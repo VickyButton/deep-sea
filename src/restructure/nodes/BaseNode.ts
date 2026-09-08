@@ -7,10 +7,8 @@ export class BaseNode implements Node {
   public id: string;
   public isActive = false;
   public isReady = false;
-  /** The node's parent. */
-  protected parent: Node | null = null;
-  /** The node's child nodes. */
-  protected children = new Set<Node>();
+  public parent: Node | null = null;
+  public children = new Set<Node>();
 
   constructor(id: string) {
     this.id = id;
@@ -32,26 +30,28 @@ export class BaseNode implements Node {
     this.isReady = false;
   }
 
-  public getParent() {
-    return this.parent;
-  }
-
-  public setParent(node: Node | null) {
-    this.parent = node;
-  }
-
-  public getChildren() {
-    return Array.from(this.children);
-  }
-
   public addChild(node: Node) {
+    this.throwIfAddingSelfAsChild(node);
+    this.removeChildFromOriginalParent(node);
     this.children.add(node);
-    node.setParent(this);
+    node.parent = this;
+  }
+
+  private throwIfAddingSelfAsChild(node: Node) {
+    if (node === this) {
+      throw new Error('Cannot add self as a child.');
+    }
+  }
+
+  private removeChildFromOriginalParent(node: Node) {
+    if (node.parent) {
+      node.parent.children.delete(node);
+    }
   }
 
   public removeChild(node: Node) {
     this.children.delete(node);
-    node.setParent(null);
+    node.parent = null;
   }
 
   public traversePostorder(callback: (node: Node) => void) {
