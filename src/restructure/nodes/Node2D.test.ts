@@ -4,16 +4,10 @@ import { describe, expect, it } from 'vitest';
 describe('Node2D', () => {
   it('should calculate global position', () => {
     const parent = new Node2D('parent', {
-      position: {
-        x: 1,
-        y: 1,
-      },
+      position: [1, 1],
     });
     const child = new Node2D('child', {
-      position: {
-        x: 1,
-        y: 1,
-      },
+      position: [1, 1],
     });
 
     parent.addChild(child);
@@ -26,16 +20,10 @@ describe('Node2D', () => {
 
   it('should calculate global scale', () => {
     const parent = new Node2D('parent', {
-      scale: {
-        x: 2,
-        y: 2,
-      },
+      scale: [2, 2],
     });
     const child = new Node2D('child', {
-      scale: {
-        x: 2,
-        y: 2,
-      },
+      scale: [2, 2],
     });
 
     parent.addChild(child);

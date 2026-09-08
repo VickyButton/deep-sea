@@ -4,14 +4,8 @@ import { CanvasNode } from './CanvasNode';
 import { Vector2D } from '../domain/vector';
 
 export interface Node2DOptions extends CanvasNodeOptions {
-  position?: {
-    x: number;
-    y: number;
-  };
-  scale?: {
-    x: number;
-    y: number;
-  };
+  position?: [number, number];
+  scale?: [number, number];
   rotation?: number;
 }
 
@@ -29,8 +23,8 @@ export class Node2D<T extends Node2DOptions = Node2DOptions> extends CanvasNode<
   constructor(id: string, options?: T) {
     super(id, options);
 
-    this.position = options?.position ? new Vector2D(options.position.x, options.position.y) : new Vector2D();
-    this.scale = options?.scale ? new Vector2D(options.scale.x, options.scale.y) : new Vector2D(1, 1);
+    this.position = options?.position ? new Vector2D(options.position[0], options.position[1]) : new Vector2D();
+    this.scale = options?.scale ? new Vector2D(options.scale[0], options.scale[1]) : new Vector2D(1, 1);
     this.rotation = options?.rotation ?? 0;
   }
 
