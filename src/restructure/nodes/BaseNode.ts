@@ -44,9 +44,7 @@ export class BaseNode implements Node {
   }
 
   private removeChildFromOriginalParent(node: Node) {
-    if (node.parent) {
-      node.parent.children.delete(node);
-    }
+    node.parent?.children.delete(node);
   }
 
   public removeChild(node: Node) {
