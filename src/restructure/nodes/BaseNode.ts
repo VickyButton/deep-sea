@@ -68,8 +68,8 @@ class NodeRelationshipManager {
   private parent: Node | null = null;
   private children = new Set<Node>();
 
-  constructor(node: Node) {
-    this.self = node;
+  constructor(self: Node) {
+    this.self = self;
   }
 
   public getParent() {
