@@ -1,6 +1,6 @@
 import type { CanvasNode_Options } from './CanvasNode';
 import type { Node } from './Node';
-import type { Transform2DOptions } from '../domain/Transform2D';
+import type { Transform2D_Options } from '../domain/Transform2D';
 import { CanvasNode } from './CanvasNode';
 import { Transform2D } from '../domain/Transform2D';
 import { Vector2D } from '../domain/Vector2D';
@@ -85,5 +85,5 @@ export interface Node2D_Options extends CanvasNode_Options {
   position?: [number, number];
   scale?: [number, number];
   rotation?: number;
-  transform?: Transform2DOptions;
+  transform?: Transform2D_Options;
 }
