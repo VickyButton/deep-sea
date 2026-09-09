@@ -25,26 +25,19 @@ export class Transform2D {
   }
 
   /**
-   * Applies the transformation matrix to a vector.
-   * @param vector The vector to apply the transformation matrix to.
-   * @returns The resulting vector after being transformed.
+   * Computes a transformation matrix for the transform.
+   * @returns The composite transformation matrix.
    */
-  public apply(vector: Vector2D) {
-    const transformationMatrix = this.calculateTransformationMatrix();
-    const vector3D = new Vector3D(vector.x, vector.y, 1);
+  public computeTransformationMatrix() {
+    const rotationMatrix = this.computeRotationMatrix();
+    const scalingMatrix = this.computeScalingMatrix();
+    const translationMatrix = this.computeTranslationMatrix();
 
-    return transformationMatrix.multiplyVector(vector3D).to2D();
-  }
-
-  private calculateTransformationMatrix() {
-    const rotationMatrix = this.calculateRotationMatrix();
-    const scalingMatrix = this.calculateScalingMatrix();
-    const translationMatrix = this.calculateTranslationMatrix();
-
+    // Rotation is applied first, then scaling, and finally translation.
     return rotationMatrix.multiplyMatrix(scalingMatrix).multiplyMatrix(translationMatrix);
   }
 
-  private calculateRotationMatrix() {
+  private computeRotationMatrix() {
     const cosine = Math.cos(this.rotation);
     const sine = Math.sin(this.rotation);
 
@@ -55,7 +48,7 @@ export class Transform2D {
     ]);
   }
 
-  private calculateScalingMatrix() {
+  private computeScalingMatrix() {
     return new Matrix3D([
       new Vector3D(this.scale.x, 0, 0),
       new Vector3D(0, this.scale.y, 0),
@@ -63,7 +56,7 @@ export class Transform2D {
     ]);
   }
 
-  private calculateTranslationMatrix() {
+  private computeTranslationMatrix() {
     return new Matrix3D([
       new Vector3D(1, 0, 0),
       new Vector3D(0, 1, 0),

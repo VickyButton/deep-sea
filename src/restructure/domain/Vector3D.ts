@@ -142,4 +142,13 @@ export class Vector3D {
   public to2D() {
     return new Vector2D(this.x, this.y);
   }
+
+  /**
+   * Creates a 3D vector from a 2D vector.
+   * @param vector A 2D vector.
+   * @returns A 3D vector with the X and Y components of the 2D vector.
+   */
+  public static from2D(vector2D: Vector2D) {
+    return new Vector3D(vector2D.x, vector2D.y);
+  }
 }
