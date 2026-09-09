@@ -1,10 +1,5 @@
 import type { Node } from '../domain/node.types';
 
-export interface BaseNodeOptions {
-  isActive?: boolean;
-  isReady?: boolean;
-}
-
 /**
  * The base implementation of the node interface.
  */
@@ -14,7 +9,7 @@ export class BaseNode implements Node {
   public isReady: boolean;
   protected nodeRelationshipManager: NodeRelationshipManager;
 
-  constructor(id: string, options?: BaseNodeOptions) {
+  constructor(id: string, options?: BaseNode_Options) {
     this.id = id;
     this.isActive = options?.isActive ?? false;
     this.isReady = options?.isReady ?? false;
@@ -76,6 +71,11 @@ export class BaseNode implements Node {
 
     callback(this);
   }
+}
+
+export interface BaseNode_Options {
+  isActive?: boolean;
+  isReady?: boolean;
 }
 
 /**

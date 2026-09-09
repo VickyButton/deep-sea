@@ -1,4 +1,4 @@
-import type { CanvasNodeOptions } from './CanvasNode';
+import type { CanvasNode_Options } from './CanvasNode';
 import type { Node } from '../domain/node.types';
 import type { Transform2DOptions } from '../domain/Transform2D';
 import { CanvasNode } from './CanvasNode';
@@ -18,7 +18,7 @@ export class Node2D extends CanvasNode {
   /** The node's transform matrix relative to its parent. */
   public transform: Transform2D;
 
-  constructor(id: string, options?: Node2DOptions) {
+  constructor(id: string, options?: Node2D_Options) {
     super(id, options);
 
     this.position = options?.position ? new Vector2D(options.position[0], options.position[1]) : new Vector2D();
@@ -81,7 +81,7 @@ export class Node2D extends CanvasNode {
   }
 }
 
-export interface Node2DOptions extends CanvasNodeOptions {
+export interface Node2D_Options extends CanvasNode_Options {
   position?: [number, number];
   scale?: [number, number];
   rotation?: number;
