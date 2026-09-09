@@ -8,7 +8,7 @@ const ZERO_APPROXIMATION = 6.123233995736766e-17;
 describe('Transform2D', () => {
   it('applies translation to vector', () => {
     const transform = new Transform2D({
-      position: [1, 1],
+      translation: [1, 1],
     });
     const vector = new Vector2D(1, 1);
     const result = transform.applyTransform(vector);
@@ -47,7 +47,7 @@ describe('Transform2D', () => {
 
   it('applies translation and rotation to vector', () => {
     const transform = new Transform2D({
-      position: [1, 1],
+      translation: [1, 1],
       rotation: Math.PI / 2, // 90 degrees
     });
     const vector = new Vector2D(1, 1);
@@ -61,7 +61,7 @@ describe('Transform2D', () => {
 
   it('applies translation, rotation, and scaling to vector', () => {
     const transform = new Transform2D({
-      position: [1, 1],
+      translation: [1, 1],
       rotation: Math.PI / 2, // 90 degrees
       scale: [2, 2],
     });

@@ -2,6 +2,26 @@ import { Node2D } from './Node2D';
 import { describe, expect, it } from 'vitest';
 
 describe('Node2D', () => {
+  it('should use position, scale, and rotation for transform', () => {
+    const node = new Node2D('node', {
+      position: [1, 1],
+      scale: [2, 2],
+      rotation: 1,
+    });
+
+    expect(node.transform).toEqual({
+      translation: {
+        x: 1,
+        y: 1,
+      },
+      scale: {
+        x: 2,
+        y: 2,
+      },
+      rotation: 1,
+    });
+  });
+
   it('should calculate global position', () => {
     const parent = new Node2D('parent', {
       position: [1, 1],
@@ -49,24 +69,20 @@ describe('Node2D', () => {
 
   it('should calculate global transform', () => {
     const parent = new Node2D('parent', {
-      transform: {
-        position: [1, 1],
-        scale: [2, 2],
-        rotation: 1,
-      },
+      position: [1, 1],
+      scale: [2, 2],
+      rotation: 1,
     });
     const child = new Node2D('child', {
-      transform: {
-        position: [1, 1],
-        scale: [2, 2],
-        rotation: 1,
-      },
+      position: [1, 1],
+      scale: [2, 2],
+      rotation: 1,
     });
 
     parent.addChild(child);
 
     expect(child.globalTransform).toEqual({
-      position: {
+      translation: {
         x: 2,
         y: 2,
       },

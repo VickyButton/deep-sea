@@ -1,6 +1,5 @@
 import type { CanvasNode_Options } from './CanvasNode';
 import type { Node } from './Node';
-import type { Transform2D_Options } from '../domain/Transform2D';
 import { CanvasNode } from './CanvasNode';
 import { Transform2D } from '../domain/Transform2D';
 import { Vector2D } from '../domain/Vector2D';
@@ -15,8 +14,6 @@ export class Node2D extends CanvasNode {
   public scale: Vector2D;
   /** The node's rotation, in radians, relative to its parent. */
   public rotation: number;
-  /** The node's transform matrix relative to its parent. */
-  public transform: Transform2D;
 
   constructor(id: string, options?: Node2D_Options) {
     super(id, options);
@@ -24,7 +21,15 @@ export class Node2D extends CanvasNode {
     this.position = options?.position ? new Vector2D(options.position[0], options.position[1]) : new Vector2D();
     this.scale = options?.scale ? new Vector2D(options.scale[0], options.scale[1]) : new Vector2D(1, 1);
     this.rotation = options?.rotation ?? 0;
-    this.transform = options?.transform ? new Transform2D(options.transform) : new Transform2D();
+  }
+
+  /** The node's transform matrix relative to its parent. */
+  public get transform() {
+    return new Transform2D({
+      translation: [this.position.x, this.position.y],
+      scale: [this.scale.x, this.scale.y],
+      rotation: this.rotation,
+    });
   }
 
   /** The node's position relative to the root node. */
@@ -48,14 +53,17 @@ export class Node2D extends CanvasNode {
     return closestNode2DAncestor ? closestNode2DAncestor.globalRotation + this.rotation : this.rotation;
   }
 
+  /** The node's transform relative to the root node. */
   public get globalTransform(): Transform2D {
-    const closestNode2DAncestor = this.getClosestNode2DAncestor();
+    const translation = this.globalPosition;
+    const scale = this.globalScale;
+    const rotation = this.globalRotation;
 
-    return closestNode2DAncestor ? {
-      position: closestNode2DAncestor.transform.position.add(this.transform.position),
-      scale: closestNode2DAncestor.transform.scale.multiply(this.transform.scale),
-      rotation: closestNode2DAncestor.transform.rotation + this.transform.rotation,
-    } : this.transform;
+    return new Transform2D({
+      translation: [translation.x, translation.y],
+      scale: [scale.x, scale.y],
+      rotation: rotation,
+    });
   }
 
   private getClosestNode2DAncestor(): Node2D | null {
@@ -85,5 +93,4 @@ export interface Node2D_Options extends CanvasNode_Options {
   position?: [number, number];
   scale?: [number, number];
   rotation?: number;
-  transform?: Transform2D_Options;
 }

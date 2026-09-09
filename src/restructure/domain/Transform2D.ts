@@ -4,15 +4,15 @@ import { Vector2D } from './Vector2D';
  * A 2D transform matrix.
  */
 export class Transform2D {
-  /** The transform position vector. */
-  public position: Vector2D;
+  /** The transform translation vector. */
+  public translation: Vector2D;
   /** The transform scalar vector. */
   public scale: Vector2D;
   /** The transform rotation in radians. */
   public rotation: number;
 
   constructor(options?: Transform2D_Options) {
-    this.position = options?.position ? new Vector2D(options.position[0], options.position[1]) : new Vector2D();
+    this.translation = options?.translation ? new Vector2D(options.translation[0], options.translation[1]) : new Vector2D();
     this.scale = options?.scale ? new Vector2D(options.scale[0], options.scale[1]) : new Vector2D(1, 1);
     this.rotation = options?.rotation ?? 0;
   }
@@ -31,8 +31,8 @@ export class Transform2D {
   }
 
   private applyTranslation(vector: Vector2D) {
-    const x = vector.x + this.position.x;
-    const y = vector.y + this.position.y;
+    const x = vector.x + this.translation.x;
+    const y = vector.y + this.translation.y;
     return new Vector2D(x, y);
   }
 
@@ -69,7 +69,7 @@ export class Transform2D {
 }
 
 export interface Transform2D_Options {
-  position?: [number, number];
+  translation?: [number, number];
   scale?: [number, number];
   rotation?: number;
 }
