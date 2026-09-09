@@ -1,5 +1,5 @@
 import type { CanvasNode_Options } from './CanvasNode';
-import type { Node } from '../domain/node.types';
+import type { Node } from './Node';
 import type { Transform2DOptions } from '../domain/Transform2D';
 import { CanvasNode } from './CanvasNode';
 import { Transform2D } from '../domain/Transform2D';

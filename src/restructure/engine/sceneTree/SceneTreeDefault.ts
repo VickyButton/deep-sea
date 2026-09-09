@@ -1,10 +1,9 @@
-import type { Node } from '../../domain/node.types';
 import type { SceneTree } from '../sceneTree.types';
-import { BaseNode } from '../../nodes/BaseNode';
+import { Node } from '../../nodes/Node';
 
 export class SceneTreeDefault implements SceneTree {
   private currentScene: Node | null = null;
-  public root = new BaseNode('root'); // TODO: Replace with Viewport.
+  public root = new Node('root'); // TODO: Replace with Viewport.
 
   public switchToScene(scene: Node) {
     this.replaceCurrentScene(scene);

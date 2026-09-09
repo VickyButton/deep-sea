@@ -1,8 +1,8 @@
 /**
  * This file defines node exports for the package.
  */
-import { BaseNode } from './BaseNode';
 import { CanvasNode } from './CanvasNode';
+import { Node } from './Node';
 import { Node2D } from './Node2D';
 
-export { BaseNode, CanvasNode, Node2D };
+export { Node, CanvasNode, Node2D };

@@ -1,15 +1,15 @@
-import { BaseNode } from './BaseNode';
+import { Node } from './Node';
 import { describe, expect, it } from 'vitest';
 
-describe('BaseNode', () => {
+describe('Node', () => {
   it('should not be active by default', () => {
-    const node = new BaseNode('node');
+    const node = new Node('node');
 
     expect(node.isActive).toBe(false);
   });
 
   it('should activate itself', () => {
-    const node = new BaseNode('node');
+    const node = new Node('node');
 
     node.activate();
 
@@ -17,7 +17,7 @@ describe('BaseNode', () => {
   });
 
   it('should deactivate itself', () => {
-    const node = new BaseNode('node');
+    const node = new Node('node');
 
     node.activate();
     node.deactivate();
@@ -26,13 +26,13 @@ describe('BaseNode', () => {
   });
 
   it('should not be ready by default', () => {
-    const node = new BaseNode('node');
+    const node = new Node('node');
 
     expect(node.isReady).toBe(false);
   });
 
   it('should ready itself', () => {
-    const node = new BaseNode('node');
+    const node = new Node('node');
 
     node.ready();
 
@@ -40,7 +40,7 @@ describe('BaseNode', () => {
   });
 
   it('should unready itself', () => {
-    const node = new BaseNode('node');
+    const node = new Node('node');
 
     node.ready();
     node.unready();
@@ -49,21 +49,21 @@ describe('BaseNode', () => {
   });
 
   it('should have no parent by default', () => {
-    const node = new BaseNode('node');
+    const node = new Node('node');
 
     expect(node.parent).toBe(null);
     expect(node.hasParent).toBe(false);
   });
 
   it('should have no children by default', () => {
-    const node = new BaseNode('node');
+    const node = new Node('node');
 
     expect(node.children.length).toBe(0);
   });
 
   it('should assign a parent to itself', () => {
-    const parent = new BaseNode('parent');
-    const child = new BaseNode('child');
+    const parent = new Node('parent');
+    const child = new Node('child');
 
     child.assignParent(parent);
 
@@ -71,14 +71,14 @@ describe('BaseNode', () => {
   });
 
   it('should throw an error if assigning itself as parent', () => {
-    const node = new BaseNode('node');
+    const node = new Node('node');
 
     expect(() => node.assignParent(node)).toThrowError();
   });
 
   it('should unassign a parent from itself', () => {
-    const parent = new BaseNode('parent');
-    const child = new BaseNode('child');
+    const parent = new Node('parent');
+    const child = new Node('child');
 
     child.assignParent(parent);
     child.unassignParent();
@@ -87,8 +87,8 @@ describe('BaseNode', () => {
   });
 
   it('should add a child', () => {
-    const parent = new BaseNode('parent');
-    const child = new BaseNode('child');
+    const parent = new Node('parent');
+    const child = new Node('child');
 
     parent.addChild(child);
 
@@ -97,15 +97,15 @@ describe('BaseNode', () => {
   });
 
   it('should throw an error if trying to add itself as a child', () => {
-    const node = new BaseNode('node');
+    const node = new Node('node');
 
     expect(() => node.addChild(node)).toThrowError();
   });
 
   it('should throw an error if trying to add a child that already has a parent', () => {
-    const originalParent = new BaseNode('originalParent');
-    const newParent = new BaseNode('newParent');
-    const child = new BaseNode('child');
+    const originalParent = new Node('originalParent');
+    const newParent = new Node('newParent');
+    const child = new Node('child');
 
     originalParent.addChild(child);
 
@@ -113,8 +113,8 @@ describe('BaseNode', () => {
   });
 
   it('should remove a child', () => {
-    const parent = new BaseNode('parent');
-    const child = new BaseNode('child');
+    const parent = new Node('parent');
+    const child = new Node('child');
 
     parent.addChild(child);
     parent.removeChild(child);
@@ -124,9 +124,9 @@ describe('BaseNode', () => {
   });
 
   it('should reparent itself to a new parent', () => {
-    const originalParent = new BaseNode('originalParent');
-    const newParent = new BaseNode('newParent');
-    const child = new BaseNode('child');
+    const originalParent = new Node('originalParent');
+    const newParent = new Node('newParent');
+    const child = new Node('child');
 
     originalParent.addChild(child);
     child.reparent(newParent);
@@ -137,12 +137,12 @@ describe('BaseNode', () => {
   });
 
   it('should traverse tree in post-order', () => {
-    const root = new BaseNode('1');
-    const rootLeft = new BaseNode('2');
-    const rootRight = new BaseNode('3');
-    const rootLeftLeft = new BaseNode('4');
-    const rootLeftRight = new BaseNode('5');
-    const rootRightRight = new BaseNode('6');
+    const root = new Node('1');
+    const rootLeft = new Node('2');
+    const rootRight = new Node('3');
+    const rootLeftLeft = new Node('4');
+    const rootLeftRight = new Node('5');
+    const rootRightRight = new Node('6');
 
     root.addChild(rootLeft);
     root.addChild(rootRight);

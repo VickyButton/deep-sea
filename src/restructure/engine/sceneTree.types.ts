@@ -1,4 +1,4 @@
-import type { Node } from '../domain/node.types';
+import type { Node } from '../nodes/Node';
 
 /**
  * A tree consisting of scenes.

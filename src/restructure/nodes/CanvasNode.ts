@@ -1,11 +1,11 @@
-import type { BaseNode_Options } from './BaseNode';
+import type { Node_Options } from './Node';
 import type { Canvas } from '../providers/canvas.types';
-import { BaseNode } from './BaseNode';
+import { Node } from './Node';
 
 /**
  * Abstract base node for nodes which can be drawn onto a canvas.
  */
-export abstract class CanvasNode extends BaseNode {
+export abstract class CanvasNode extends Node {
   /** A flag indicating if the node may be drawn or not. */
   public isVisible: boolean;
   /** The order in which this node is drawn. Nodes with higher z-indices are drawn on top of nodes with lower z-indices. */
@@ -25,7 +25,7 @@ export abstract class CanvasNode extends BaseNode {
   public abstract draw(canvas: Canvas): void;
 }
 
-export interface CanvasNode_Options extends BaseNode_Options {
+export interface CanvasNode_Options extends Node_Options {
   isVisible?: boolean;
   zIndex?: number;
 }

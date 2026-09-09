@@ -1,11 +1,11 @@
 import { SceneTreeDefault } from './SceneTreeDefault';
-import { BaseNode } from '../../nodes/BaseNode';
+import { Node } from '../../nodes/Node';
 import { describe, expect, it } from 'vitest';
 
 describe('SceneTreeDefault', () => {
   it('should add new scene to root node', () => {
     const sceneTree = new SceneTreeDefault();
-    const scene = new BaseNode('scene');
+    const scene = new Node('scene');
 
     sceneTree.switchToScene(scene);
 
@@ -15,8 +15,8 @@ describe('SceneTreeDefault', () => {
 
   it('should replace current scene in root node', () => {
     const sceneTree = new SceneTreeDefault();
-    const scene = new BaseNode('scene');
-    const replacementScene = new BaseNode('replacementScene');
+    const scene = new Node('scene');
+    const replacementScene = new Node('replacementScene');
 
     sceneTree.switchToScene(scene);
     sceneTree.switchToScene(replacementScene);
@@ -27,7 +27,7 @@ describe('SceneTreeDefault', () => {
 
   it('should add scene to root node', () => {
     const sceneTree = new SceneTreeDefault();
-    const scene = new BaseNode('scene');
+    const scene = new Node('scene');
 
     sceneTree.switchToScene(scene);
 
@@ -36,7 +36,7 @@ describe('SceneTreeDefault', () => {
 
   it('should ready current scene', () => {
     const sceneTree = new SceneTreeDefault();
-    const scene = new BaseNode('scene');
+    const scene = new Node('scene');
     scene.isReady = false;
 
     sceneTree.switchToScene(scene);
@@ -47,7 +47,7 @@ describe('SceneTreeDefault', () => {
 
   it('should unready current scene', () => {
     const sceneTree = new SceneTreeDefault();
-    const scene = new BaseNode('scene');
+    const scene = new Node('scene');
     scene.isReady = true;
 
     sceneTree.switchToScene(scene);
@@ -58,7 +58,7 @@ describe('SceneTreeDefault', () => {
 
   it('should activate current scene', () => {
     const sceneTree = new SceneTreeDefault();
-    const scene = new BaseNode('scene');
+    const scene = new Node('scene');
     scene.isActive = false;
 
     sceneTree.switchToScene(scene);
@@ -69,7 +69,7 @@ describe('SceneTreeDefault', () => {
 
   it('should deactivate current scene', () => {
     const sceneTree = new SceneTreeDefault();
-    const scene = new BaseNode('scene');
+    const scene = new Node('scene');
     scene.isActive = true;
 
     sceneTree.switchToScene(scene);
