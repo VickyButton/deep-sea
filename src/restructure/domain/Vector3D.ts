@@ -1,3 +1,5 @@
+import { Vector2D } from './Vector2D';
+
 /**
  * A 3D vector.
  */
@@ -131,5 +133,13 @@ export class Vector3D {
     const normalizedZ = this.z / magnitude;
 
     return new Vector3D(normalizedX, normalizedY, normalizedZ);
+  }
+
+  /**
+   * Creates a 2D copy of the vector.
+   * @returns The 2D copy of the vector.
+   */
+  public to2D() {
+    return new Vector2D(this.x, this.y);
   }
 }

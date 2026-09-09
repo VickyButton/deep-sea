@@ -1,20 +1,27 @@
+import { Matrix3D } from './Matrix3D';
 import { Vector2D } from './Vector2D';
+import { Vector3D } from './Vector3D';
 
 /**
  * A 2D transform matrix.
+ * 
+ * In a 2D transform, transformations are applied in the following order:
+ * 1. Rotation
+ * 2. Scaling
+ * 3. Translation
  */
 export class Transform2D {
-  /** The transform translation vector. */
-  public translation: Vector2D;
-  /** The transform scalar vector. */
-  public scale: Vector2D;
   /** The transform rotation in radians. */
   public rotation: number;
+  /** The transform scalar vector. */
+  public scale: Vector2D;
+  /** The transform translation vector. */
+  public translation: Vector2D;
 
   constructor(options?: Transform2D_Options) {
-    this.translation = options?.translation ? new Vector2D(options.translation[0], options.translation[1]) : new Vector2D();
-    this.scale = options?.scale ? new Vector2D(options.scale[0], options.scale[1]) : new Vector2D(1, 1);
     this.rotation = options?.rotation ?? 0;
+    this.scale = options?.scale ? new Vector2D(options.scale[0], options.scale[1]) : new Vector2D(1, 1);
+    this.translation = options?.translation ? new Vector2D(options.translation[0], options.translation[1]) : new Vector2D();
   }
 
   /**
@@ -22,54 +29,51 @@ export class Transform2D {
    * @param vector The vector to apply the transformation matrix to.
    * @returns The resulting vector after being transformed.
    */
-  public applyTransform(vector: Vector2D) {
-    let result = vector;
-    result = this.applyTranslation(result);
-    result = this.applyRotation(result);
-    result = this.applyScale(result);
-    return result;
+  public apply(vector: Vector2D) {
+    const transformationMatrix = this.calculateTransformationMatrix();
+    const vector3D = new Vector3D(vector.x, vector.y, 1);
+
+    return transformationMatrix.multiplyVector(vector3D).to2D();
   }
 
-  private applyTranslation(vector: Vector2D) {
-    const x = vector.x + this.translation.x;
-    const y = vector.y + this.translation.y;
-    return new Vector2D(x, y);
-  }
-
-  private applyRotation(vector: Vector2D) {
+  private calculateTransformationMatrix() {
     const rotationMatrix = this.calculateRotationMatrix();
-    const x = vector.x * rotationMatrix[0][0] + vector.y * rotationMatrix[1][0];
-    const y = vector.x * rotationMatrix[0][1] + vector.y * rotationMatrix[1][1];
-    return new Vector2D(x, y);
+    const scalingMatrix = this.calculateScalingMatrix();
+    const translationMatrix = this.calculateTranslationMatrix();
+
+    return rotationMatrix.multiplyMatrix(scalingMatrix).multiplyMatrix(translationMatrix);
   }
 
-  private calculateRotationMatrix(): [Vector2D, Vector2D] {
+  private calculateRotationMatrix() {
     const cosine = Math.cos(this.rotation);
     const sine = Math.sin(this.rotation);
 
-    return [
-      new Vector2D(cosine, sine),
-      new Vector2D(-sine, cosine),
-    ];
+    return new Matrix3D([
+      new Vector3D(cosine, sine, 0),
+      new Vector3D(-sine, cosine, 0),
+      new Vector3D(0, 0, 1),
+    ]);
   }
 
-  private applyScale(vector: Vector2D) {
-    const scaleMatrix = this.calculateScalingMatrix();
-    const x = vector.x * scaleMatrix[0][0] + vector.y * scaleMatrix[1][0];
-    const y = vector.x * scaleMatrix[0][1] + vector.y * scaleMatrix[1][1];
-    return new Vector2D(x, y);
+  private calculateScalingMatrix() {
+    return new Matrix3D([
+      new Vector3D(this.scale.x, 0, 0),
+      new Vector3D(0, this.scale.y, 0),
+      new Vector3D(0, 0, 1),
+    ]);
   }
 
-  private calculateScalingMatrix(): [Vector2D, Vector2D] {
-    return [
-      new Vector2D(this.scale.x, 0),
-      new Vector2D(0, this.scale.y),
-    ];
+  private calculateTranslationMatrix() {
+    return new Matrix3D([
+      new Vector3D(1, 0, 0),
+      new Vector3D(0, 1, 0),
+      new Vector3D(this.translation.x, this.translation.y, 1),
+    ]);
   }
 }
 
 export interface Transform2D_Options {
-  translation?: [number, number];
-  scale?: [number, number];
   rotation?: number;
+  scale?: [number, number];
+  translation?: [number, number];
 }

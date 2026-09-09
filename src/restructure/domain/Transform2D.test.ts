@@ -11,12 +11,9 @@ describe('Transform2D', () => {
       translation: [1, 1],
     });
     const vector = new Vector2D(1, 1);
-    const result = transform.applyTransform(vector);
+    const result = transform.apply(vector);
 
-    expect(result).toEqual({
-      x: 2,
-      y: 2,
-    });
+    expect(result).toEqual(new Vector2D(2, 2));
   });
 
   it('applies rotation to vector', () => {
@@ -24,12 +21,9 @@ describe('Transform2D', () => {
       rotation: Math.PI / 2, // 90 degrees
     });
     const vector = new Vector2D(1, 1);
-    const result = transform.applyTransform(vector);
+    const result = transform.apply(vector);
 
-    expect(result).toEqual({
-      x: -1 + ZERO_APPROXIMATION,
-      y: 1,
-    });
+    expect(result).toEqual(new Vector2D(-1 + ZERO_APPROXIMATION, 1));
   });
 
   it('applies scaling to vector', () => {
@@ -37,40 +31,31 @@ describe('Transform2D', () => {
       scale: [2, 2],
     });
     const vector = new Vector2D(1, 1);
-    const result = transform.applyTransform(vector);
+    const result = transform.apply(vector);
 
-    expect(result).toEqual({
-      x: 2,
-      y: 2,
-    });
+    expect(result).toEqual(new Vector2D(2, 2));
   });
 
-  it('applies translation and rotation to vector', () => {
+  it('applies composite rotation and scaling to vector', () => {
     const transform = new Transform2D({
-      translation: [1, 1],
-      rotation: Math.PI / 2, // 90 degrees
-    });
-    const vector = new Vector2D(1, 1);
-    const result = transform.applyTransform(vector);
-
-    expect(result).toEqual({
-      x: 2 * (-1 + ZERO_APPROXIMATION),
-      y: 2,
-    });
-  });
-
-  it('applies translation, rotation, and scaling to vector', () => {
-    const transform = new Transform2D({
-      translation: [1, 1],
       rotation: Math.PI / 2, // 90 degrees
       scale: [2, 2],
     });
-    const vector = new Vector2D(1, 1);
-    const result = transform.applyTransform(vector);
+    const vector = new Vector2D(1, 0);
+    const result = transform.apply(vector);
 
-    expect(result).toEqual({
-      x: 4 * (-1 + ZERO_APPROXIMATION),
-      y: 4,
+    expect(result).toEqual(new Vector2D(2 * ZERO_APPROXIMATION, 2));
+  });
+
+  it('applies composite rotation, scaling, and translation to vector', () => {
+    const transform = new Transform2D({
+      rotation: Math.PI / 2, // 90 degrees
+      scale: [2, 2],
+      translation: [1, 1],
     });
+    const vector = new Vector2D(1, 0);
+    const result = transform.apply(vector);
+
+    expect(result).toEqual(new Vector2D(1 + 2 * ZERO_APPROXIMATION, 3));
   });
 });

@@ -1,4 +1,5 @@
 import { Vector3D } from './Vector3D';
+import { Vector2D } from '@structures/Vector2D';
 import { describe, expect, it } from 'vitest';
 
 describe('Vector3D', () => {
@@ -80,5 +81,11 @@ describe('Vector3D', () => {
     const result = vector.normalize();
 
     expect(result).toEqual(new Vector3D(0, 0, 1));
+  });
+
+  it('should copy to a 2D vector', () => {
+    const vector = new Vector3D(1, 1, 1);
+
+    expect(vector.to2D()).toEqual(new Vector2D(1, 1));
   });
 });
