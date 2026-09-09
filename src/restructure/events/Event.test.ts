@@ -1,15 +1,15 @@
-import { BaseEvent } from './BaseEvent';
+import { Event } from './Event';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('BaseEvent', () => {
+describe('Event', () => {
   it('should have no listeners by default', () => {
-    const event = new BaseEvent();
+    const event = new Event();
 
     expect(event.listenerCount).toBe(0);
   });
 
   it('should add a listener', () => {
-    const event = new BaseEvent();
+    const event = new Event();
 
     event.addListener(vi.fn());
 
@@ -17,7 +17,7 @@ describe('BaseEvent', () => {
   });
 
   it('should remove a listener', () => {
-    const event = new BaseEvent();
+    const event = new Event();
     const listener = vi.fn();
 
     event.addListener(listener);
@@ -27,7 +27,7 @@ describe('BaseEvent', () => {
   });
 
   it('should remove all listeners', () => {
-    const event = new BaseEvent();
+    const event = new Event();
     const listener = vi.fn();
 
     event.addListener(listener);
@@ -37,7 +37,7 @@ describe('BaseEvent', () => {
   });
 
   it('should emit event data to listeners', () => {
-    const event = new BaseEvent();
+    const event = new Event();
     const listener = vi.fn();
     const data = 'EVENT_DATA';
 

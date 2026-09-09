@@ -1,26 +1,42 @@
 /**
  * An event that can be emitted to listeners.
  */
-export interface Event<T> {
+export class Event<T = unknown> {
+  private readonly listeners = new Set<EventListener<T>>();
+
   /** The number of listeners on the event. */
-  get listenerCount(): number;
+  public get listenerCount() {
+    return this.listeners.size;
+  }
+
   /**
    * Adds a listener to the event.
    * @param listener The listener to execute when the event is emitted.
    */
-  addListener(listener: EventListener<T>): void;
+  public addListener(listener: EventListener<T>) {
+    this.listeners.add(listener);
+  }
+
   /**
    * Removes a listener from the event.
    * @param listener The listener being removed.
    */
-  removeListener(listener: EventListener<T>): void;
+  public removeListener(listener: EventListener<T>) {
+    this.listeners.delete(listener);
+  }
+
   /** Removes all listeners from the event. */
-  clear(): void;
+  public clear() {
+    this.listeners.clear();
+  }
+
   /**
    * Emits event data to listeners.
    * @param data The event data being emitted.
    */
-  emit(data: T): void;
+  public emit(data: T) {
+    this.listeners.values().forEach((listener) => listener(data));
+  }
 }
 
 /**
