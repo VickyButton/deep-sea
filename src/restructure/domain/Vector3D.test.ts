@@ -22,7 +22,7 @@ describe('Vector3D', () => {
     expect(vector.z).toBe(vector[2]);
   });
 
-  it('should calculate vector length', () => {
+  it('should compute vector length', () => {
     const vector = new Vector3D(0, 0, 1);
 
     expect(vector.length).toBe(1);

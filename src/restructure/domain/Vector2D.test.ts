@@ -18,13 +18,13 @@ describe('Vector2D', () => {
     expect(vector.y).toBe(vector[1]);
   });
 
-  it('should calculate vector length', () => {
+  it('should compute vector length', () => {
     const vector = new Vector2D(1, 0);
 
     expect(vector.length).toBe(1);
   });
 
-  it('should calculate vector angle', () => {
+  it('should compute vector angle', () => {
     const vector = new Vector2D(1, 1);
 
     expect(vector.angle).toBe(Math.PI / 4);

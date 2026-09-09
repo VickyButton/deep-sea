@@ -49,7 +49,7 @@ export class Vector2D {
   }
 
   /**
-   * Calculates the sum resulting from adding this vector to another vector.
+   * Computes the sum resulting from adding this vector to another vector.
    * @param vector The vector to add to this vector.
    * @returns The sum vector.
    */
@@ -61,7 +61,7 @@ export class Vector2D {
   }
 
   /**
-   * Calculates the difference resulting from subtracting this vector by another vector.
+   * Computes the difference resulting from subtracting this vector by another vector.
    * @param vector The vector to subtract this vector by.
    * @returns The difference vector.
    */
@@ -73,7 +73,7 @@ export class Vector2D {
   }
 
   /**
-   * Calculates the product resulting from multiplying this vector by another vector.
+   * Computes the product resulting from multiplying this vector by another vector.
    * @param vector The vector to multiply this vector by.
    * @returns The product vector.
    */
@@ -85,7 +85,7 @@ export class Vector2D {
   }
 
   /**
-   * Calculates the product resulting from dividing this vector by another vector.
+   * Computes the product resulting from dividing this vector by another vector.
    * @param vector The vector to divide this vector by.
    * @returns The quotient vector.
    */
@@ -106,7 +106,7 @@ export class Vector2D {
   }
 
   /**
-   * Calculates the unit vector for this vector.
+   * Computes the unit vector for this vector.
    * @returns The unit vector for this vector.
    */
   public normalize() {
