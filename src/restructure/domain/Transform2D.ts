@@ -1,8 +1,14 @@
 import { Vector2D } from './Vector2D';
 
+/**
+ * A 2D transform matrix.
+ */
 export class Transform2D {
+  /** The transform position matrix. */
   public position: Vector2D;
+  /** The transform scale matrix. */
   public scale: Vector2D;
+  /** The transform rotation in radians. */
   public rotation: number;
 
   constructor(options?: Transform2D_Options) {
