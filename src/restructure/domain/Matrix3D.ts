@@ -1,5 +1,8 @@
 import { Vector3D } from './Vector3D';
 
+/**
+ * A 3D matrix.
+ */
 export class Matrix3D {
   /** The matrix's columns. */
   public columns: [Vector3D, Vector3D, Vector3D];
