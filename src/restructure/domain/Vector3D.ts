@@ -114,6 +114,19 @@ export class Vector3D {
   }
 
   /**
+   * Computes the sum of the X, Y, and Z components of a vector product.
+   * @param vector The vector to multiply this vector by.
+   * @returns The dot product of the two vectors.
+   */
+  public computeDotProduct(vector: Vector3D) {
+    const productX = this.x * vector.x;
+    const productY = this.y * vector.y;
+    const productZ = this.z * vector.z;
+
+    return productX + productY + productZ;
+  }
+
+  /**
    * Checks if this vector is equal to another vector.
    * @param vector The vector to compare equality to.
    * @returns True if equal, false if not.

@@ -97,6 +97,18 @@ export class Vector2D {
   }
 
   /**
+   * Computes the sum of the X and Y components of a vector product.
+   * @param vector The vector to multiply this vector by.
+   * @returns The dot product of the two vectors.
+   */
+  public computeDotProduct(vector: Vector2D) {
+    const productX = this.x * vector.x;
+    const productY = this.y * vector.y;
+
+    return productX + productY;
+  }
+
+  /**
    * Checks if this vector is equal to another vector.
    * @param vector The vector to compare equality to.
    * @returns True if equal, false if not.
