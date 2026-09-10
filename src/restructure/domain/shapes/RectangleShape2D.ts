@@ -37,6 +37,7 @@ export class RectangleShape2D extends PolygonShape2D {
     return this.transform.rotation % (Math.PI / 2) === 0;
   }
 
+  /** The vertices of the rectangle, in clockwise order. */
   public get vertices() {
     return this.computeVertices();
   }
