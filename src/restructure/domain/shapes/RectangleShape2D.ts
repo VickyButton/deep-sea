@@ -2,6 +2,9 @@ import type { Shape2D_Options } from './Shape2D';
 import { Vector2D } from '../Vector2D';
 import { PolygonShape2D } from './PolygonShape2D';
 
+/**
+ * Representation of a 2D rectangle.
+ */
 export class RectangleShape2D extends PolygonShape2D {
   /** The width and height of the rectangle. */
   public size: Vector2D;

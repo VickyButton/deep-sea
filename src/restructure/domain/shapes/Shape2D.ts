@@ -13,6 +13,9 @@ export abstract class Shape2D {
     this.transform = options?.transform ? new Transform2D(options.transform) : new Transform2D();
   }
 
+  /** The axis-aligned bounding rectangle of the shape. */
+  public abstract get boundingRectangle(): BoundingRectangle2D;
+
   /**
    * Checks whether this shape is colliding with another shape.
    * @param shape The shape to check for collision against.
@@ -29,4 +32,11 @@ export abstract class Shape2D {
 
 export interface Shape2D_Options {
   transform?: Transform2D_Options;
+}
+
+interface BoundingRectangle2D {
+  left: number;
+  right: number;
+  bottom: number;
+  top: number;
 }
