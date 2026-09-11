@@ -1,4 +1,5 @@
-import type { Shape2D_Options } from './Shape2D';
+import type { Shape2D, Shape2D_Options } from './Shape2D';
+import { RectangleCollisionResolver2D } from '../collisionResolvers/RectangleCollisionResolver2D';
 import { Vector2D } from '../Vector2D';
 import { PolygonShape2D } from './PolygonShape2D';
 
@@ -12,7 +13,7 @@ export class RectangleShape2D extends PolygonShape2D {
   constructor(options?: RectangleShape2D_Options) {
     super(options);
 
-    this.size = options?.size ? new Vector2D(options.size[0], options.size[1]) : new Vector2D();
+    this.size = options?.size ? new Vector2D(options.size[0], options.size[1]) : new Vector2D(1, 1);
   }
 
   /** The width of the rectangle. */
@@ -77,9 +78,12 @@ export class RectangleShape2D extends PolygonShape2D {
     return new Vector2D(-this.halfWidth, -this.halfHeight);
   }
 
-  public isCollidingWith() {
-    // TODO: Implement.
-    return false;
+  public isCollidingWith(shape: Shape2D) {
+    return this.createCollisionResolver(shape).resolveCollision();
+  }
+
+  private createCollisionResolver(shape: Shape2D) {
+    return new RectangleCollisionResolver2D(this, shape);
   }
 
   public draw() {
