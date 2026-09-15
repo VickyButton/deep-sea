@@ -15,14 +15,31 @@ describe('AxisAlignedRectanglePairCollisionResolver2D', () => {
     expect(() => collisionResolver.resolveCollision()).toThrowError();
   });
 
-  it('should not detect collision if there is a gap between the rectangles', () => {
+  it.each([
+    {
+      relation: 'to the left of',
+      translation: [-2, 0] as Tuple2,
+    },
+    {
+      relation: 'to the right of',
+      translation: [2, 0] as Tuple2,
+    },
+    {
+      relation: 'above',
+      translation: [0, 2] as Tuple2,
+    },
+    {
+      relation: 'below',
+      translation: [0, -2] as Tuple2,
+    },
+  ])('should not detect collision if one rectangle is $relation the other rectangle ', ({ translation }) => {
     const rectangleA = new RectangleShape2D({
       size: [1, 1],
     });
     const rectangleB = new RectangleShape2D({
       size: [1, 1],
       transform: {
-        translation: [2, 0],
+        translation,
       },
     });
     const collisionResolver = new AxisAlignedRectanglePairCollisionResolver2D(rectangleA, rectangleB);
