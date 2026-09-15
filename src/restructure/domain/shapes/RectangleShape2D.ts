@@ -1,12 +1,12 @@
-import type { Shape2D, Shape2D_Options } from './Shape2D';
+import type { Shape2D_Options } from './Shape2D';
+import { Shape2D } from './Shape2D';
 import { RectangleCollisionResolver2D } from '../collisionResolvers/RectangleCollisionResolver2D';
 import { Vector2D } from '../Vector2D';
-import { PolygonShape2D } from './PolygonShape2D';
 
 /**
  * Representation of a 2D rectangle.
  */
-export class RectangleShape2D extends PolygonShape2D {
+export class RectangleShape2D extends Shape2D {
   /** The width and height of the rectangle. */
   public size: Vector2D;
 
@@ -76,6 +76,23 @@ export class RectangleShape2D extends PolygonShape2D {
 
   private computeBasisBottomLeftVertex() {
     return new Vector2D(-this.halfWidth, -this.halfHeight);
+  }
+
+  public get boundingRectangle() {
+    return this.computeBoundingRectangle();
+  }
+
+  protected computeBoundingRectangle() {
+    const vertices = this.vertices;
+    const xValues = vertices.map((vertex) => vertex.x);
+    const yValues = vertices.map((vertex) => vertex.y);
+
+    return {
+      left: Math.min(...xValues),
+      right: Math.max(...xValues),
+      top: Math.max(...yValues),
+      bottom: Math.min(...yValues),
+    };
   }
 
   public isCollidingWith(shape: Shape2D) {

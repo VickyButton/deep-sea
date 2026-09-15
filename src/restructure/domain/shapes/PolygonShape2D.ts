@@ -1,12 +1,78 @@
-import type { Vector2D } from '../Vector2D';
+import type { Shape2D_Options } from './Shape2D';
+import { Vector2D } from '../Vector2D';
 import { Shape2D } from './Shape2D';
 
 /**
- * Abstract representation of a 2D polygon defined by a set of vertices.
+ * Representation of a 2D polygon defined by a set of vertices.
  */
-export abstract class PolygonShape2D extends Shape2D {
-  /** The vertices that form the polygon, in clockwise order. */
-  public abstract get vertices(): Vector2D[];
+export class PolygonShape2D extends Shape2D {
+  protected _polygon: Vector2D[];
+
+  constructor(options?: PolygonShape2D_Options) {
+    super(options);
+
+    this._polygon = options?.polygon ?? this.createDefaultPolygon();
+    this.throwIfInvalidPolygon(this._polygon);
+  }
+
+  protected createDefaultPolygon() {
+    // Default polygon is a triangle.
+    return this.createRegularPolygonWithNumSides(3);
+  }
+
+  protected createRegularPolygonWithNumSides(numSides: number) {
+    const startAngle = Math.PI / 2;
+    const stepAngle = 2 * Math.PI / numSides;
+    const polygon: Vector2D[] = [];
+
+    for (let i = 0; i < numSides; i++) {
+      const angle = startAngle - i * stepAngle;
+
+      polygon.push(this.computePointAlongUnitCircle(angle));
+    }
+
+    return polygon;
+  }
+
+  protected computePointAlongUnitCircle(angle: number) {
+    const x = Math.cos(angle);
+    const y = Math.sin(angle);
+
+    return new Vector2D(x, y);
+  }
+
+  protected throwIfInvalidPolygon(polygon: Vector2D[]) {
+    if (!this.isValidPolygon(polygon)) {
+      throw new Error('A polygon must have at least 3 vertices.');
+    }
+  }
+
+  protected isValidPolygon(polygon: Vector2D[]) {
+    return polygon.length >= 3;
+  }
+
+  /** The vertices that form the polygon. */
+  public get polygon() {
+    return this._polygon;
+  }
+
+  public set polygon(polygon: Vector2D[]) {
+    this.throwIfInvalidPolygon(polygon);
+    this._polygon = polygon;
+  }
+
+  /**
+   * The post-transformation vertices that form the polygon, in clockwise order.
+   */
+  public get vertices() {
+    return this.computeVertices();
+  }
+
+  protected computeVertices() {
+    const transformationMatrix = this.transform.computeTransformationMatrix();
+
+    return this.polygon.map((vertex) => transformationMatrix.multiplyVector2D(vertex));
+  }
 
   public get boundingRectangle() {
     return this.computeBoundingRectangle();
@@ -20,8 +86,21 @@ export abstract class PolygonShape2D extends Shape2D {
     return {
       left: Math.min(...xValues),
       right: Math.max(...xValues),
-      bottom: Math.min(...yValues),
       top: Math.max(...yValues),
+      bottom: Math.min(...yValues),
     };
   }
+
+  public isCollidingWith() {
+    // TODO: Implement;
+    return false;
+  }
+
+  public draw() {
+    // TODO: Implement.
+  }
+}
+
+export interface PolygonShape2D_Options extends Shape2D_Options {
+  polygon?: Vector2D[];
 }

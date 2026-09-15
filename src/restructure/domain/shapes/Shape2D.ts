@@ -37,6 +37,6 @@ export interface Shape2D_Options {
 interface BoundingRectangle2D {
   left: number;
   right: number;
-  bottom: number;
   top: number;
+  bottom: number;
 }
