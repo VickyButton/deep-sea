@@ -18,23 +18,28 @@ describe('Vector2D', () => {
     expect(vector.y).toBe(vector[1]);
   });
 
-  it('should compute vector length', () => {
+  it('should get vector length', () => {
     const vector = new Vector2D(1, 0);
 
     expect(vector.length).toBe(1);
   });
 
-  it('should compute vector angle', () => {
+  it('should get vector angle', () => {
     const vector = new Vector2D(1, 1);
 
     expect(vector.angle).toBe(Math.PI / 4);
   });
 
-  it('should normalize a vector', () => {
+  it('should get normalized vector', () => {
     const vector = new Vector2D(2, 0);
-    const result = vector.normalized;
 
-    expect(result).toEqual(new Vector2D(1, 0));
+    expect(vector.normalized).toEqual(new Vector2D(1, 0));
+  });
+
+  it('should get a perpendicular vector', () => {
+    const vector = new Vector2D(0, 1);
+
+    expect(vector.perpendicular).toEqual(new Vector2D(-1, 0));
   });
 
   it('should add two vectors', () => {
