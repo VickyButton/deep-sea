@@ -59,6 +59,7 @@ export class Vector2D {
 
   /** The vector perpendicular to this vector. */
   public get perpendicular() {
+    // Swap X and Y components and negate new X-component.
     return new Vector2D(-this.y, this.x);
   }
 
