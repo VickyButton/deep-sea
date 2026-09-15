@@ -1,6 +1,7 @@
+import { RectangleCollisionResolver2D } from '../collisionResolvers/RectangleCollisionResolver2D';
 import { Vector2D } from '../Vector2D';
 import { RectangleShape2D } from './RectangleShape2D';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 // Cosine(90 degrees) does not return 0, but rather a number close to zero.
 const COSINE_90_DEGREES = 6.123233995736766e-17;
@@ -135,5 +136,16 @@ describe('RectangleShape2D', () => {
       new Vector2D(3, 3),
       new Vector2D(3, -1),
     ]);
+  });
+
+  it('should use rectangle collision resolver to resolve collisions', () => {
+    vi.mock('../collisionResolvers/RectangleCollisionResolver2D');
+
+    const rectangleShape = new RectangleShape2D();
+    const otherShape = new RectangleShape2D();
+
+    rectangleShape.isCollidingWith(otherShape);
+
+    expect(RectangleCollisionResolver2D).toHaveBeenCalledWith(rectangleShape, otherShape);
   });
 });
