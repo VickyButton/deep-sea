@@ -28,6 +28,13 @@ describe('Vector3D', () => {
     expect(vector.length).toBe(1);
   });
 
+  it('should normalize a vector', () => {
+    const vector = new Vector3D(0, 0, 2);
+    const result = vector.normalized;
+
+    expect(result).toEqual(new Vector3D(0, 0, 1));
+  });
+
   it('should add two vectors', () => {
     const left = new Vector3D(1, 1, 1);
     const right = new Vector3D(-1, -1, -1);
@@ -82,13 +89,6 @@ describe('Vector3D', () => {
     const result = left.equals(right);
 
     expect(result).toBe(false);
-  });
-
-  it('should normalize a vector', () => {
-    const vector = new Vector3D(0, 0, 2);
-    const result = vector.normalize();
-
-    expect(result).toEqual(new Vector3D(0, 0, 1));
   });
 
   it('should copy to a 2D vector', () => {

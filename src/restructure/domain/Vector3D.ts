@@ -61,6 +61,16 @@ export class Vector3D {
     return Math.pow(this.z, 2);
   }
 
+  /** The vector normalized as a unit vector. */
+  public get normalized() {
+    const magnitude = this.length;
+    const normalizedX = this.x / magnitude;
+    const normalizedY = this.y / magnitude;
+    const normalizedZ = this.z / magnitude;
+
+    return new Vector3D(normalizedX, normalizedY, normalizedZ);
+  }
+
   /**
    * Computes the sum resulting from adding this vector to another vector.
    * @param vector The vector to add to this vector.
@@ -133,19 +143,6 @@ export class Vector3D {
    */
   public equals(vector: Vector3D) {
     return this.x === vector.x && this.y === vector.y && this.z === vector.z;
-  }
-
-  /**
-   * Computes the unit vector for this vector.
-   * @returns The unit vector for this vector.
-   */
-  public normalize() {
-    const magnitude = this.length;
-    const normalizedX = this.x / magnitude;
-    const normalizedY = this.y / magnitude;
-    const normalizedZ = this.z / magnitude;
-
-    return new Vector3D(normalizedX, normalizedY, normalizedZ);
   }
 
   /**

@@ -48,6 +48,15 @@ export class Vector2D {
     return Math.atan(this.y / this.x);
   }
 
+  /** The vector normalized as a unit vector. */
+  public get normalized() {
+    const magnitude = this.length;
+    const normalizedX = this.x / magnitude;
+    const normalizedY = this.y / magnitude;
+
+    return new Vector2D(normalizedX, normalizedY);
+  }
+
   /**
    * Computes the sum resulting from adding this vector to another vector.
    * @param vector The vector to add to this vector.
@@ -115,17 +124,5 @@ export class Vector2D {
    */
   public equals(vector: Vector2D) {
     return this.x === vector.x && this.y === vector.y;
-  }
-
-  /**
-   * Computes the unit vector for this vector.
-   * @returns The unit vector for this vector.
-   */
-  public normalize() {
-    const magnitude = this.length;
-    const normalizedX = this.x / magnitude;
-    const normalizedY = this.y / magnitude;
-
-    return new Vector2D(normalizedX, normalizedY);
   }
 }

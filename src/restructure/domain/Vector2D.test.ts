@@ -30,6 +30,13 @@ describe('Vector2D', () => {
     expect(vector.angle).toBe(Math.PI / 4);
   });
 
+  it('should normalize a vector', () => {
+    const vector = new Vector2D(2, 0);
+    const result = vector.normalized;
+
+    expect(result).toEqual(new Vector2D(1, 0));
+  });
+
   it('should add two vectors', () => {
     const left = new Vector2D(1, 1);
     const right = new Vector2D(-1, -1);
@@ -84,12 +91,5 @@ describe('Vector2D', () => {
     const result = left.equals(right);
 
     expect(result).toBe(false);
-  });
-
-  it('should normalize a vector', () => {
-    const vector = new Vector2D(2, 0);
-    const result = vector.normalize();
-
-    expect(result).toEqual(new Vector2D(1, 0));
   });
 });
