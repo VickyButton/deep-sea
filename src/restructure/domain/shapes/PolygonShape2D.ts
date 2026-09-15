@@ -6,7 +6,7 @@ import { Shape2D } from './Shape2D';
  * Representation of a 2D polygon defined by a set of vertices.
  */
 export class PolygonShape2D extends Shape2D {
-  protected _polygon: Vector2D[];
+  private _polygon: Vector2D[];
 
   constructor(options?: PolygonShape2D_Options) {
     super(options);
@@ -15,18 +15,17 @@ export class PolygonShape2D extends Shape2D {
     this.throwIfInvalidPolygon(this._polygon);
   }
 
-  protected createDefaultPolygon() {
+  private createDefaultPolygon() {
     // Default polygon is a triangle.
     return this.createRegularPolygonWithNumSides(3);
   }
 
-  protected createRegularPolygonWithNumSides(numSides: number) {
-    const startAngle = Math.PI / 2;
-    const stepAngle = 2 * Math.PI / numSides;
+  private createRegularPolygonWithNumSides(numSides: number) {
+    const stepAngle = this.computeStepAngle(numSides);
     const polygon: Vector2D[] = [];
 
     for (let i = 0; i < numSides; i++) {
-      const angle = startAngle - i * stepAngle;
+      const angle = i * stepAngle;
 
       polygon.push(this.computePointAlongUnitCircle(angle));
     }
@@ -34,24 +33,28 @@ export class PolygonShape2D extends Shape2D {
     return polygon;
   }
 
-  protected computePointAlongUnitCircle(angle: number) {
+  private computeStepAngle(numSides: number) {
+    return 2 * Math.PI / numSides;
+  }
+
+  private computePointAlongUnitCircle(angle: number) {
     const x = Math.cos(angle);
     const y = Math.sin(angle);
 
     return new Vector2D(x, y);
   }
 
-  protected throwIfInvalidPolygon(polygon: Vector2D[]) {
+  private throwIfInvalidPolygon(polygon: Vector2D[]) {
     if (!this.isValidPolygon(polygon)) {
       throw new Error('A polygon must have at least 3 vertices.');
     }
   }
 
-  protected isValidPolygon(polygon: Vector2D[]) {
+  private isValidPolygon(polygon: Vector2D[]) {
     return polygon.length >= 3;
   }
 
-  /** The vertices that form the polygon. */
+  /** The vertices that form the polygon, in counterclockwise order. */
   public get polygon() {
     return this._polygon;
   }
@@ -62,13 +65,13 @@ export class PolygonShape2D extends Shape2D {
   }
 
   /**
-   * The post-transformation vertices that form the polygon, in clockwise order.
+   * The post-transformation vertices that form the polygon, in counterclockwise order.
    */
   public get vertices() {
     return this.computeVertices();
   }
 
-  protected computeVertices() {
+  private computeVertices() {
     const transformationMatrix = this.transform.computeTransformationMatrix();
 
     return this.polygon.map((vertex) => transformationMatrix.multiplyVector2D(vertex));
@@ -78,7 +81,7 @@ export class PolygonShape2D extends Shape2D {
     return this.computeBoundingRectangle();
   }
 
-  protected computeBoundingRectangle() {
+  private computeBoundingRectangle() {
     const vertices = this.vertices;
     const xValues = vertices.map((vertex) => vertex.x);
     const yValues = vertices.map((vertex) => vertex.y);

@@ -7,9 +7,9 @@ describe('PolygonShape2D', () => {
     const polygonShape = new PolygonShape2D();
 
     expect(polygonShape.polygon).toEqual([
-      new Vector2D(6.123233995736766e-17, 1),
-      new Vector2D(0.8660254037844387, -0.49999999999999983),
-      new Vector2D(-0.8660254037844385, -0.5000000000000003),
+      new Vector2D(1, 0),
+      new Vector2D(-0.4999999999999998, 0.8660254037844387),
+      new Vector2D(-0.5000000000000004, -0.8660254037844385),
     ]);
   });
 
@@ -25,9 +25,9 @@ describe('PolygonShape2D', () => {
     });
 
     expect(polygonShape.vertices).toEqual([
-      new Vector2D(6.123233995736766e-17, 1),
-      new Vector2D(0.8660254037844387, -0.49999999999999983),
-      new Vector2D(-0.8660254037844385, -0.5000000000000003),
+      new Vector2D(1, 0),
+      new Vector2D(-0.4999999999999998, 0.8660254037844387),
+      new Vector2D(-0.5000000000000004, -0.8660254037844385),
     ]);
   });
 
@@ -37,10 +37,10 @@ describe('PolygonShape2D', () => {
     });
 
     expect(polygonShape.boundingRectangle).toEqual({
-      left: -0.8660254037844385,
-      right: 0.8660254037844387,
-      top: 1,
-      bottom: -0.5000000000000003,
+      left: -0.5000000000000004,
+      right: 1,
+      top: 0.8660254037844387,
+      bottom: -0.8660254037844385,
     });
   });
 
@@ -53,9 +53,9 @@ describe('PolygonShape2D', () => {
     });
 
     expect(polygonShape.vertices).toEqual([
-      new Vector2D(-1.8369701987210297e-16, -1),
-      new Vector2D(-0.8660254037844386, 0.49999999999999994),
-      new Vector2D(0.8660254037844386, 0.5000000000000002),
+      new Vector2D(-1, 1.2246467991473532e-16),
+      new Vector2D(0.49999999999999967, -0.8660254037844388),
+      new Vector2D(0.5000000000000006, 0.8660254037844384),
     ]);
   });
 
@@ -68,9 +68,9 @@ describe('PolygonShape2D', () => {
     });
 
     expect(polygonShape.vertices).toEqual([
-      new Vector2D(1.2246467991473532e-16, 2),
-      new Vector2D(1.7320508075688774, -0.9999999999999997),
-      new Vector2D(-1.732050807568877, -1.0000000000000007),
+      new Vector2D(2, 0),
+      new Vector2D(-0.9999999999999996, 1.7320508075688774),
+      new Vector2D(-1.0000000000000009, -1.732050807568877),
     ]);
   });
 
@@ -83,9 +83,9 @@ describe('PolygonShape2D', () => {
     });
 
     expect(polygonShape.vertices).toEqual([
-      new Vector2D(1, 2),
-      new Vector2D(1.8660254037844388, 0.5000000000000002),
-      new Vector2D(0.13397459621556151, 0.49999999999999967),
+      new Vector2D(2, 1),
+      new Vector2D(0.5000000000000002, 1.8660254037844388),
+      new Vector2D(0.49999999999999956, 0.13397459621556151),
     ]);
   });
 
@@ -100,15 +100,15 @@ describe('PolygonShape2D', () => {
     });
 
     expect(polygonShape.vertices).toEqual([
-      new Vector2D(0.9999999999999997, -1),
-      new Vector2D(-0.7320508075688772, 2),
-      new Vector2D(2.732050807568877, 2.0000000000000004),
+      new Vector2D(-1, 1.0000000000000002),
+      new Vector2D(1.9999999999999993, -0.7320508075688776),
+      new Vector2D(2.000000000000001, 2.7320508075688767),
     ]);
   });
 });
 
 const POLYGON = [
-  new Vector2D(6.123233995736766e-17, 1),
-  new Vector2D(0.8660254037844387, -0.49999999999999983),
-  new Vector2D(-0.8660254037844385, -0.5000000000000003),
+  new Vector2D(1, 0),
+  new Vector2D(-0.4999999999999998, 0.8660254037844387),
+  new Vector2D(-0.5000000000000004, -0.8660254037844385),
 ];
