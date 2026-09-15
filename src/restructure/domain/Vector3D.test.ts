@@ -22,17 +22,16 @@ describe('Vector3D', () => {
     expect(vector.z).toBe(vector[2]);
   });
 
-  it('should compute vector length', () => {
+  it('should get vector length', () => {
     const vector = new Vector3D(0, 0, 1);
 
     expect(vector.length).toBe(1);
   });
 
-  it('should normalize a vector', () => {
+  it('should get normalized vector', () => {
     const vector = new Vector3D(0, 0, 2);
-    const result = vector.normalized;
 
-    expect(result).toEqual(new Vector3D(0, 0, 1));
+    expect(vector.normalized).toEqual(new Vector3D(0, 0, 1));
   });
 
   it('should add two vectors', () => {
