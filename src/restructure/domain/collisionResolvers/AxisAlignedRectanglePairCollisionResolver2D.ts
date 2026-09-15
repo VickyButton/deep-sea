@@ -2,10 +2,6 @@ import type { RectangleShape2D } from '../shapes/RectangleShape2D';
 import { CollisionResolver2D } from './CollisionResolver2D';
 
 export class AxisAlignedRectanglePairCollisionResolver2D extends CollisionResolver2D<RectangleShape2D, RectangleShape2D> {
-  constructor(rectangleA: RectangleShape2D, rectangleB: RectangleShape2D) {
-    super(rectangleA, rectangleB);
-  }
-
   public resolveCollision() {
     this.throwIfNotAxisAligned();
     return this.isNoGapBetweenRectangles();

@@ -7,31 +7,31 @@ describe('RectanglePairCollisionResolver2D', () => {
   it('should use axis-aligned rectangle pair collision resolver if both rectangles are axis-aligned', () => {
     vi.mock('./AxisAlignedRectanglePairCollisionResolver2D');
 
-    const rectA = new RectangleShape2D({
+    const shapeA = new RectangleShape2D({
       transform: {
         rotation: 0,
       },
     });
-    const rectB = new RectangleShape2D({
+    const shapeB = new RectangleShape2D({
       transform: {
         rotation: 0,
       },
     });
-    const resolver = new RectanglePairCollisionResolver2D(rectA, rectB);
+    const resolver = new RectanglePairCollisionResolver2D(shapeA, shapeB);
 
     resolver.resolveCollision();
 
-    expect(AxisAlignedRectanglePairCollisionResolver2D).toHaveBeenCalledWith(rectA, rectB);
+    expect(AxisAlignedRectanglePairCollisionResolver2D).toHaveBeenCalledWith(shapeA, shapeB);
   });
 
-  it('should throw if no collision resolver found for shape pair', () => {
-    const rectA = new RectangleShape2D();
-    const rectB = new RectangleShape2D({
+  it('should throw if no collision resolver found for rectangle pair', () => {
+    const shapeA = new RectangleShape2D();
+    const shapeB = new RectangleShape2D({
       transform: {
         rotation: Math.PI / 4,
       },
     });
-    const resolver = new RectanglePairCollisionResolver2D(rectA, rectB);
+    const resolver = new RectanglePairCollisionResolver2D(shapeA, shapeB);
 
     expect(() => resolver.resolveCollision()).toThrowError();
   });
