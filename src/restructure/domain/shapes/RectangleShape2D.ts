@@ -41,7 +41,7 @@ export class RectangleShape2D extends Shape2D {
     return this.transform.rotation % (Math.PI / 2) === 0;
   }
 
-  /** The vertices of the rectangle, in clockwise order. */
+  /** The vertices of the rectangle, in counterclockwise order. */
   public get vertices() {
     return this.computeVertices();
   }
@@ -55,27 +55,27 @@ export class RectangleShape2D extends Shape2D {
 
   private computeBasisVertices() {
     return [
-      this.computeBasisTopLeftVertex(),
       this.computeBasisTopRightVertex(),
-      this.computeBasisBottomRightVertex(),
+      this.computeBasisTopLeftVertex(),
       this.computeBasisBottomLeftVertex(),
+      this.computeBasisBottomRightVertex(),
     ];
-  }
-
-  private computeBasisTopLeftVertex() {
-    return new Vector2D(-this.halfWidth, this.halfHeight);
   }
 
   private computeBasisTopRightVertex() {
     return new Vector2D(this.halfWidth, this.halfHeight);
   }
 
-  private computeBasisBottomRightVertex() {
-    return new Vector2D(this.halfWidth, -this.halfHeight);
+  private computeBasisTopLeftVertex() {
+    return new Vector2D(-this.halfWidth, this.halfHeight);
   }
 
   private computeBasisBottomLeftVertex() {
     return new Vector2D(-this.halfWidth, -this.halfHeight);
+  }
+
+  private computeBasisBottomRightVertex() {
+    return new Vector2D(this.halfWidth, -this.halfHeight);
   }
 
   public get boundingRectangle() {
