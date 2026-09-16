@@ -57,12 +57,6 @@ export class Vector2D {
     return new Vector2D(normalizedX, normalizedY);
   }
 
-  /** The vector perpendicular to this vector. */
-  public get perpendicular() {
-    // Swap X and Y components and negate new X-component.
-    return new Vector2D(-this.y, this.x);
-  }
-
   /**
    * Computes the sum resulting from adding this vector to another vector.
    * @param vector The vector to add to this vector.

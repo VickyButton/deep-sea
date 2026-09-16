@@ -36,12 +36,6 @@ describe('Vector2D', () => {
     expect(vector.normalized).toEqual(new Vector2D(1, 0));
   });
 
-  it('should get a perpendicular vector', () => {
-    const vector = new Vector2D(0, 1);
-
-    expect(vector.perpendicular).toEqual(new Vector2D(-1, 0));
-  });
-
   it('should add two vectors', () => {
     const left = new Vector2D(1, 1);
     const right = new Vector2D(-1, -1);
