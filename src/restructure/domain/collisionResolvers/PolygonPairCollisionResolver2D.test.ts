@@ -1,43 +1,18 @@
-import { PolygonShape2D } from '../shapes/PolygonShape2D';
-import { Vector2D } from '../Vector2D';
 import { PolygonPairCollisionResolver2D } from './PolygonPairCollisionResolver2D';
-import { describe, expect, it } from 'vitest';
+import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
+import { PolygonShape2D } from '../shapes/PolygonShape2D';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('PolygonPairCollisionResolver2D', () => {
-  it('should not detect collision if polygons do not overlap', () => {
-    const shapeA = new PolygonShape2D({
-      polygon: POLYGON,
-    });
-    const shapeB = new PolygonShape2D({
-      polygon: POLYGON,
-      transform: {
-        rotation: Math.PI,
-        translation: [1, 1],
-      },
-    });
-    const collisionResolver = new PolygonPairCollisionResolver2D(shapeA, shapeB);
+  it('should use Separating Axis Theorem collision resolver', () => {
+    vi.mock('./SeparatingAxisTheoremCollisionResolver2D');
 
-    expect(collisionResolver.resolveCollision()).toBe(false);
-  });
+    const polygonA = new PolygonShape2D();
+    const polygonB = new PolygonShape2D();
+    const collisionResolver = new PolygonPairCollisionResolver2D(polygonA, polygonB);
 
-  it('should detect collision if polygons overlap', () => {
-    const shapeA = new PolygonShape2D({
-      polygon: POLYGON,
-    });
-    const shapeB = new PolygonShape2D({
-      polygon: POLYGON,
-      transform: {
-        rotation: Math.PI,
-      },
-    });
-    const collisionResolver = new PolygonPairCollisionResolver2D(shapeA, shapeB);
+    collisionResolver.resolveCollision();
 
-    expect(collisionResolver.resolveCollision()).toBe(true);
+    expect(SeparatingAxisTheoremCollisionResolver2D).toHaveBeenCalledWith(polygonA.vertices, polygonB.vertices);
   });
 });
-
-const POLYGON = [
-  new Vector2D(1, 0),
-  new Vector2D(-0.4999999999999998, 0.8660254037844387),
-  new Vector2D(-0.5000000000000004, -0.8660254037844385),
-];

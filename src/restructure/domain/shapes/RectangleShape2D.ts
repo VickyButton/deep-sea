@@ -78,11 +78,11 @@ export class RectangleShape2D extends Shape2D {
     return new Vector2D(this.halfWidth, -this.halfHeight);
   }
 
-  public get boundingRectangle() {
-    return this.computeBoundingRectangle();
+  public get boundingBox() {
+    return this.computeBoundingBox();
   }
 
-  protected computeBoundingRectangle() {
+  protected computeBoundingBox() {
     const vertices = this.vertices;
     const xValues = vertices.map((vertex) => vertex.x);
     const yValues = vertices.map((vertex) => vertex.y);
@@ -96,11 +96,7 @@ export class RectangleShape2D extends Shape2D {
   }
 
   public isCollidingWith(shape: Shape2D) {
-    return this.createCollisionResolver(shape).resolveCollision();
-  }
-
-  private createCollisionResolver(shape: Shape2D) {
-    return new RectangleCollisionResolver2D(this, shape);
+    return new RectangleCollisionResolver2D(this, shape).resolveCollision();
   }
 
   public draw() {

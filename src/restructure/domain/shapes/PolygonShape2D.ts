@@ -6,13 +6,13 @@ import { Shape2D } from './Shape2D';
  * Representation of a 2D polygon defined by a set of vertices.
  */
 export class PolygonShape2D extends Shape2D {
-  private _polygon: Vector2D[];
+  private _vertices: Vector2D[];
 
   constructor(options?: PolygonShape2D_Options) {
     super(options);
 
-    this._polygon = options?.polygon ?? this.createDefaultPolygon();
-    this.throwIfInvalidPolygon(this._polygon);
+    this._vertices = options?.vertices ?? this.createDefaultPolygon();
+    this.throwIfInvalidPolygon(this._vertices);
   }
 
   private createDefaultPolygon() {
@@ -56,12 +56,12 @@ export class PolygonShape2D extends Shape2D {
 
   /** The vertices that form the polygon, in counterclockwise order. */
   public get polygon() {
-    return this._polygon;
+    return this._vertices;
   }
 
   public set polygon(polygon: Vector2D[]) {
     this.throwIfInvalidPolygon(polygon);
-    this._polygon = polygon;
+    this._vertices = polygon;
   }
 
   /**
@@ -77,11 +77,11 @@ export class PolygonShape2D extends Shape2D {
     return this.polygon.map((vertex) => transformationMatrix.multiplyVector2D(vertex));
   }
 
-  public get boundingRectangle() {
-    return this.computeBoundingRectangle();
+  public get boundingBox() {
+    return this.computeBoundingBox();
   }
 
-  private computeBoundingRectangle() {
+  private computeBoundingBox() {
     const vertices = this.vertices;
     const xValues = vertices.map((vertex) => vertex.x);
     const yValues = vertices.map((vertex) => vertex.y);
@@ -105,5 +105,5 @@ export class PolygonShape2D extends Shape2D {
 }
 
 export interface PolygonShape2D_Options extends Shape2D_Options {
-  polygon?: Vector2D[];
+  vertices?: Vector2D[];
 }

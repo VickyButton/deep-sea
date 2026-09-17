@@ -1,5 +1,6 @@
 import type { Canvas } from '../../providers/canvas.types';
 import type { Transform2D_Options } from '../Transform2D';
+import type { BoundingBox2D } from './shapes.types';
 import { Transform2D } from '../Transform2D';
 
 /**
@@ -13,8 +14,8 @@ export abstract class Shape2D {
     this.transform = options?.transform ? new Transform2D(options.transform) : new Transform2D();
   }
 
-  /** The axis-aligned bounding rectangle of the shape. */
-  public abstract get boundingRectangle(): BoundingRectangle2D;
+  /** The axis-aligned bounding box of the shape. */
+  public abstract get boundingBox(): BoundingBox2D;
 
   /**
    * Checks whether this shape is colliding with another shape.
@@ -32,11 +33,4 @@ export abstract class Shape2D {
 
 export interface Shape2D_Options {
   transform?: Transform2D_Options;
-}
-
-interface BoundingRectangle2D {
-  left: number;
-  right: number;
-  top: number;
-  bottom: number;
 }

@@ -1,21 +1,41 @@
 import type { RectangleShape2D } from '../shapes/RectangleShape2D';
-import { AxisAlignedRectanglePairCollisionResolver2D } from './AxisAlignedRectanglePairCollisionResolver2D';
-import { CollisionResolver2D } from './CollisionResolver2D';
+import { AxisAlignedBoundingBoxCollisionResolver2D } from './AxisAlignedBoundingBoxCollisionResolver2D';
+import { CollisionResolver } from './CollisionResolver';
 
-export class RectanglePairCollisionResolver2D extends CollisionResolver2D<RectangleShape2D, RectangleShape2D> {
+/**
+ * Used for resolving a collision between two 2D rectangles.
+ */
+export class RectanglePairCollisionResolver2D extends CollisionResolver {
+  private readonly rectangleA: RectangleShape2D;
+  private readonly rectangleB: RectangleShape2D;
+
+  constructor(rectangleA: RectangleShape2D, rectangleB: RectangleShape2D) {
+    super();
+
+    this.rectangleA = rectangleA;
+    this.rectangleB = rectangleB;
+  }
+
   public resolveCollision() {
     return this.getCollisionResolver().resolveCollision();
   }
 
-  private getCollisionResolver(): CollisionResolver2D {
-    if (this.bothShapesAreAxisAligned()) {
-      return new AxisAlignedRectanglePairCollisionResolver2D(this.shapeA, this.shapeB);
+  private getCollisionResolver() {
+    if (this.bothRectanglesAreAxisAligned()) {
+      return this.createAxisAlignedBoundingBoxCollisionResolver();
     }
 
-    throw new Error('No collision resolver available for shape pair.');
+    throw this.createUnableToResolveCollisionError();
   }
 
-  private bothShapesAreAxisAligned() {
-    return this.shapeA.isAxisAligned && this.shapeB.isAxisAligned;
+  private bothRectanglesAreAxisAligned() {
+    return this.rectangleA.isAxisAligned && this.rectangleB.isAxisAligned;
+  }
+
+  private createAxisAlignedBoundingBoxCollisionResolver() {
+    const boundingBoxA = this.rectangleA.boundingBox;
+    const boundingBoxB = this.rectangleB.boundingBox;
+
+    return new AxisAlignedBoundingBoxCollisionResolver2D(boundingBoxA, boundingBoxB);
   }
 }

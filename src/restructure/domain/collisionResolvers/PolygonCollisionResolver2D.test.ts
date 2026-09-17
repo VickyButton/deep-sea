@@ -8,26 +8,26 @@ describe('PolygonCollisionResolver2D', () => {
   it('should use polygon pair collision resolver if both shapes are polygons', () => {
     vi.mock('./PolygonPairCollisionResolver2D');
 
-    const shapeA = new PolygonShape2D();
-    const shapeB = new PolygonShape2D();
-    const resolver = new PolygonCollisionResolver2D(shapeA, shapeB);
+    const polygon = new PolygonShape2D();
+    const shape = new PolygonShape2D();
+    const resolver = new PolygonCollisionResolver2D(polygon, shape);
 
     resolver.resolveCollision();
 
-    expect(PolygonPairCollisionResolver2D).toHaveBeenCalledWith(shapeA, shapeB);
+    expect(PolygonPairCollisionResolver2D).toHaveBeenCalledWith(polygon, shape);
   });
 
   it('should throw if no collision resolver found for shape pair', () => {
-    const shapeA = new PolygonShape2D();
-    const shapeB = new UnknownShape();
-    const resolver = new PolygonCollisionResolver2D(shapeA, shapeB);
+    const polygon = new PolygonShape2D();
+    const shape = new UnknownShape();
+    const resolver = new PolygonCollisionResolver2D(polygon, shape);
 
     expect(() => resolver.resolveCollision()).toThrowError();
   });
 });
 
 class UnknownShape extends Shape2D {
-  public boundingRectangle = {
+  public boundingBox = {
     left: 0,
     right: 0,
     top: 0,

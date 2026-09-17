@@ -1,22 +1,39 @@
 import type { Shape2D } from '../shapes/Shape2D';
-import { CollisionResolver2D } from './CollisionResolver2D';
+import { CollisionResolver } from './CollisionResolver';
 import { PolygonPairCollisionResolver2D } from './PolygonPairCollisionResolver2D';
 import { PolygonShape2D } from '../shapes/PolygonShape2D';
 
-export class PolygonCollisionResolver2D extends CollisionResolver2D<PolygonShape2D, Shape2D> {
+/**
+ * Used to resolve a collision between a 2D polygon and an unknown 2D shape.
+ */
+export class PolygonCollisionResolver2D extends CollisionResolver {
+  private readonly polygon: PolygonShape2D;
+  private readonly shape: Shape2D;
+
+  constructor(polygon: PolygonShape2D, shape: Shape2D) {
+    super();
+
+    this.polygon = polygon;
+    this.shape = shape;
+  }
+
   public resolveCollision() {
     return this.getCollisionResolver().resolveCollision();
   }
 
-  private getCollisionResolver(): CollisionResolver2D {
-    if (this.isPolygon(this.shapeB)) {
-      return new PolygonPairCollisionResolver2D(this.shapeA, this.shapeB);
+  private getCollisionResolver() {
+    if (this.isPolygon(this.shape)) {
+      return this.createPolygonPairCollisionResolver(this.polygon, this.shape);
     }
 
-    throw new Error('No collision resolver available for shape pair.');
+    throw this.createUnableToResolveCollisionError();
   }
 
   private isPolygon(shape: Shape2D): shape is PolygonShape2D {
     return shape instanceof PolygonShape2D;
+  }
+
+  private createPolygonPairCollisionResolver(polygonA: PolygonShape2D, polygonB: PolygonShape2D) {
+    return new PolygonPairCollisionResolver2D(polygonA, polygonB);
   }
 }
