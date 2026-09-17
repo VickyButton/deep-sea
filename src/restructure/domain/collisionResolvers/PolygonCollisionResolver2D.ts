@@ -22,15 +22,11 @@ export class PolygonCollisionResolver2D extends CollisionResolver {
   }
 
   private getCollisionResolver() {
-    if (this.isPolygon(this.shape)) {
+    if (PolygonShape2D.isPolygon(this.shape)) {
       return this.createPolygonPairCollisionResolver(this.polygon, this.shape);
     }
 
     throw this.createUnableToResolveCollisionError();
-  }
-
-  private isPolygon(shape: Shape2D): shape is PolygonShape2D {
-    return shape instanceof PolygonShape2D;
   }
 
   private createPolygonPairCollisionResolver(polygonA: PolygonShape2D, polygonB: PolygonShape2D) {

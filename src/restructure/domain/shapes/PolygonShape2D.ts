@@ -93,6 +93,10 @@ export class PolygonShape2D extends Shape2D {
   public draw() {
     // TODO: Implement.
   }
+
+  public static isPolygon(shape: Shape2D): shape is PolygonShape2D {
+    return shape instanceof PolygonShape2D;
+  }
 }
 
 export interface PolygonShape2D_Options extends Shape2D_Options {

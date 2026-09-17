@@ -117,6 +117,12 @@ describe('PolygonShape2D', () => {
 
     expect(PolygonCollisionResolver2D).toHaveBeenCalledWith(polygonA, polygonB);
   });
+
+  it('should determine if shape is a polygon', () => {
+    const shape = new PolygonShape2D();
+
+    expect(PolygonShape2D.isPolygon(shape)).toBe(true);
+  });
 });
 
 const VERTICES = [
