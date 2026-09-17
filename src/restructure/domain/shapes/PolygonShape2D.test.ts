@@ -1,6 +1,7 @@
+import { PolygonCollisionResolver2D } from '../collisionResolvers/PolygonCollisionResolver2D';
 import { Vector2D } from '../Vector2D';
 import { PolygonShape2D } from './PolygonShape2D';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('PolygonShape2D', () => {
   it('should be a triangle by default', () => {
@@ -104,6 +105,17 @@ describe('PolygonShape2D', () => {
       new Vector2D(1.9999999999999993, -0.7320508075688776),
       new Vector2D(2.000000000000001, 2.7320508075688767),
     ]);
+  });
+
+  it('should use polygon collision resolver to resolve collisions', () => {
+    vi.mock('../collisionResolvers/PolygonCollisionResolver2D');
+
+    const polygonA = new PolygonShape2D();
+    const polygonB = new PolygonShape2D();
+
+    polygonA.isCollidingWith(polygonB);
+
+    expect(PolygonCollisionResolver2D).toHaveBeenCalledWith(polygonA, polygonB);
   });
 });
 
