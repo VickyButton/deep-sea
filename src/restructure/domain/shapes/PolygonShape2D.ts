@@ -11,14 +11,14 @@ export class PolygonShape2D extends Shape2D {
   constructor(options?: PolygonShape2D_Options) {
     super(options);
 
-    if (options?.vertices && !this.areValidVertices(options.vertices)) {
+    if (options?.vertices && !this.isValidVertices(options.vertices)) {
       throw this.createInvalidVerticesError();
     }
 
     this._vertices = options?.vertices ?? this.createDefaultPolygon();
   }
 
-  private areValidVertices(polygon: Vector2D[]) {
+  private isValidVertices(polygon: Vector2D[]) {
     return polygon.length >= 3;
   }
 
