@@ -1,5 +1,5 @@
 import type { BoundingBox2D } from './shapes.types';
-import type { Canvas } from '../../providers/canvas.types';
+import type { GraphicsCanvas } from '../../providers/graphicsCanvas.types';
 import type { Transform2D } from '../Transform2D';
 
 /**
@@ -22,5 +22,5 @@ export abstract class Shape2D {
    * Draws the shape onto a canvas.
    * @param canvas The canvas to draw the shape onto.
    */
-  public abstract draw(canvas: Canvas): void;
+  public abstract draw(canvas: GraphicsCanvas): void;
 }

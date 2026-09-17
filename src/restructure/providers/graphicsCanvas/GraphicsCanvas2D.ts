@@ -1,6 +1,6 @@
-import type { Canvas } from '../canvas.types';
+import type { GraphicsCanvas } from '../graphicsCanvas.types';
 
-export class CanvasDefault implements Canvas {
+export class GraphicsCanvas2D implements GraphicsCanvas {
   private ctx: CanvasRenderingContext2D;
 
   constructor(ctx: CanvasRenderingContext2D) {

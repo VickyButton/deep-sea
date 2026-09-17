@@ -1,7 +1,7 @@
 /**
- * A canvas that can be drawn on and rendered.
+ * A graphics canvas that can be drawn on and rendered.
  */
-export interface Canvas {
+export interface GraphicsCanvas {
   /** The width of the canvas in pixels. */
   width: number;
   /** The height of the canvas in pixels. */

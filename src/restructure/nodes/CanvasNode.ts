@@ -1,5 +1,5 @@
 import type { Node_Options } from './Node';
-import type { Canvas } from '../providers/canvas.types';
+import type { GraphicsCanvas } from '../providers/graphicsCanvas.types';
 import { Node } from './Node';
 
 /**
@@ -22,7 +22,7 @@ export abstract class CanvasNode extends Node {
    * Draws the node onto a canvas.
    * @param canvas The canvas to draw onto.
    */
-  public abstract draw(canvas: Canvas): void;
+  public abstract draw(canvas: GraphicsCanvas): void;
 }
 
 export interface CanvasNode_Options extends Node_Options {
