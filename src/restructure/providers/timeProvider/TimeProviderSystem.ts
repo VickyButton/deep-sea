@@ -1,6 +1,6 @@
 import type { TimeProvider } from '../timeProvider.types';
 
-export class TimeProviderDefault implements TimeProvider {
+export class TimeProviderSystem implements TimeProvider {
   public get now() {
     return Date.now();
   }

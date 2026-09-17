@@ -1,10 +1,10 @@
 import { Engine } from './Engine';
 import { FrameLoopDefault } from './engine/frameLoop/FrameLoopDefault';
 import { SceneTreeDefault } from './engine/sceneTree/SceneTreeDefault';
-import { TimeProviderDefault } from './providers/timeProvider/TimeProviderDefault';
+import { TimeProviderSystem } from './providers/timeProvider/TimeProviderSystem';
 
 export function createGame() {
-  const timeProvider = new TimeProviderDefault();
+  const timeProvider = new TimeProviderSystem();
 
   return new Engine({
     frameLoop: new FrameLoopDefault(timeProvider),

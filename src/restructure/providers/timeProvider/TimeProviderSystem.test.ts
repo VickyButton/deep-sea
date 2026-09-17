@@ -1,7 +1,7 @@
-import { TimeProviderDefault } from './TimeProviderDefault';
+import { TimeProviderSystem } from './TimeProviderSystem';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-describe('TimeProviderDefault', () => {
+describe('TimeProviderSystem', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -11,7 +11,7 @@ describe('TimeProviderDefault', () => {
   });
 
   it('should use system time', () => {
-    const timeProvider = new TimeProviderDefault();
+    const timeProvider = new TimeProviderSystem();
     const time = 0;
 
     vi.setSystemTime(time);
