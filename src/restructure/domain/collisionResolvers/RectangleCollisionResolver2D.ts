@@ -18,12 +18,12 @@ export class RectangleCollisionResolver2D extends CollisionResolver {
   }
 
   public resolveCollision() {
-    return this.getCollisionResolver(this.rectangle, this.shape).resolveCollision();
+    return this.getCollisionResolver().resolveCollision();
   }
 
-  private getCollisionResolver(rectangle: RectangleShape2D, shape: Shape2D) {
-    if (this.isRectangle(shape)) {
-      return this.createRectanglePairCollisionResolver(rectangle, shape);
+  private getCollisionResolver() {
+    if (this.isRectangle(this.shape)) {
+      return this.createRectanglePairCollisionResolver(this.rectangle, this.shape);
     }
 
     throw this.createUnableToResolveCollisionError();
