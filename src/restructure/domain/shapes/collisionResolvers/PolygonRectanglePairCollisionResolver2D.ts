@@ -1,5 +1,5 @@
-import type { PolygonShape2D } from '../shapes/PolygonShape2D';
-import type { RectangleShape2D } from '../shapes/RectangleShape2D';
+import type { PolygonShape2D } from '../PolygonShape2D';
+import type { RectangleShape2D } from '../RectangleShape2D';
 import { CollisionResolver } from './CollisionResolver';
 import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
 

@@ -1,7 +1,7 @@
 import type { Shape2D_Options } from './Shape2D';
 import { Vector2D } from '../Vector2D';
+import { PolygonCollisionResolver2D } from './collisionResolvers/PolygonCollisionResolver2D';
 import { Shape2D } from './Shape2D';
-import { PolygonCollisionResolver2D } from '../collisionResolvers/PolygonCollisionResolver2D';
 
 /**
  * Representation of a 2D polygon defined by a set of vertices.

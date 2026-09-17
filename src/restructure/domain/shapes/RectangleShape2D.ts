@@ -1,6 +1,6 @@
 import type { Shape2D_Options } from './Shape2D';
+import { RectangleCollisionResolver2D } from './collisionResolvers/RectangleCollisionResolver2D';
 import { Shape2D } from './Shape2D';
-import { RectangleCollisionResolver2D } from '../collisionResolvers/RectangleCollisionResolver2D';
 import { Vector2D } from '../Vector2D';
 
 /**

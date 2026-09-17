@@ -1,4 +1,4 @@
-import type { BoundingBox2D } from '../shapes/shapes.types';
+import type { BoundingBox2D } from '../shapes.types';
 import { CollisionResolver } from './CollisionResolver';
 
 /**

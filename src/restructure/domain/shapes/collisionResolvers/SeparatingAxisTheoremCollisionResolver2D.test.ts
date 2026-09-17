@@ -1,5 +1,5 @@
-import { Vector2D } from '../Vector2D';
 import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
+import { Vector2D } from '../../Vector2D';
 import { describe, expect, it } from 'vitest';
 
 describe('SeparatingAxisTheoremCollisionResolver2D', () => {

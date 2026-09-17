@@ -1,4 +1,4 @@
-import type { PolygonShape2D } from '../shapes/PolygonShape2D';
+import type { PolygonShape2D } from '../PolygonShape2D';
 import { CollisionResolver } from './CollisionResolver';
 import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
 

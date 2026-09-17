@@ -1,5 +1,5 @@
-import { RectangleCollisionResolver2D } from '../collisionResolvers/RectangleCollisionResolver2D';
 import { Vector2D } from '../Vector2D';
+import { RectangleCollisionResolver2D } from './collisionResolvers/RectangleCollisionResolver2D';
 import { RectangleShape2D } from './RectangleShape2D';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -149,7 +149,7 @@ describe('RectangleShape2D', () => {
   });
 
   it('should use rectangle collision resolver to resolve collisions', () => {
-    vi.mock('../collisionResolvers/RectangleCollisionResolver2D');
+    vi.mock('./collisionResolvers/RectangleCollisionResolver2D');
 
     const rectangleA = new RectangleShape2D();
     const rectangleB = new RectangleShape2D();

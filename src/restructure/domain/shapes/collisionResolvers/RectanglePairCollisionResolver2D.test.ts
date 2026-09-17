@@ -1,7 +1,7 @@
 import { AxisAlignedBoundingBoxCollisionResolver2D } from './AxisAlignedBoundingBoxCollisionResolver2D';
 import { RectanglePairCollisionResolver2D } from './RectanglePairCollisionResolver2D';
 import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
-import { RectangleShape2D } from '../shapes/RectangleShape2D';
+import { RectangleShape2D } from '../RectangleShape2D';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('RectanglePairCollisionResolver2D', () => {

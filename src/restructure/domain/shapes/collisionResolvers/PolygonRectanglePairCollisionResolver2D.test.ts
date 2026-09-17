@@ -1,7 +1,7 @@
 import { PolygonRectanglePairCollisionResolver2D } from './PolygonRectanglePairCollisionResolver2D';
 import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
-import { PolygonShape2D } from '../shapes/PolygonShape2D';
-import { RectangleShape2D } from '../shapes/RectangleShape2D';
+import { PolygonShape2D } from '../PolygonShape2D';
+import { RectangleShape2D } from '../RectangleShape2D';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('PolygonRectanglePairCollisionResolver2D', () => {

@@ -1,4 +1,4 @@
-import type { RectangleShape2D } from '../shapes/RectangleShape2D';
+import type { RectangleShape2D } from '../RectangleShape2D';
 import { AxisAlignedBoundingBoxCollisionResolver2D } from './AxisAlignedBoundingBoxCollisionResolver2D';
 import { CollisionResolver } from './CollisionResolver';
 import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';

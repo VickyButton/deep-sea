@@ -1,9 +1,9 @@
 import { PolygonCollisionResolver2D } from './PolygonCollisionResolver2D';
 import { PolygonPairCollisionResolver2D } from './PolygonPairCollisionResolver2D';
 import { PolygonRectanglePairCollisionResolver2D } from './PolygonRectanglePairCollisionResolver2D';
-import { PolygonShape2D } from '../shapes/PolygonShape2D';
-import { RectangleShape2D } from '../shapes/RectangleShape2D';
-import { Shape2D } from '../shapes/Shape2D';
+import { PolygonShape2D } from '../PolygonShape2D';
+import { RectangleShape2D } from '../RectangleShape2D';
+import { Shape2D } from '../Shape2D';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('PolygonCollisionResolver2D', () => {

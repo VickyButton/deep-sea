@@ -1,5 +1,5 @@
-import { PolygonCollisionResolver2D } from '../collisionResolvers/PolygonCollisionResolver2D';
 import { Vector2D } from '../Vector2D';
+import { PolygonCollisionResolver2D } from './collisionResolvers/PolygonCollisionResolver2D';
 import { PolygonShape2D } from './PolygonShape2D';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -108,7 +108,7 @@ describe('PolygonShape2D', () => {
   });
 
   it('should use polygon collision resolver to resolve collisions', () => {
-    vi.mock('../collisionResolvers/PolygonCollisionResolver2D');
+    vi.mock('./collisionResolvers/PolygonCollisionResolver2D');
 
     const polygonA = new PolygonShape2D();
     const polygonB = new PolygonShape2D();

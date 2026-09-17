@@ -1,9 +1,9 @@
-import type { Shape2D } from '../shapes/Shape2D';
+import type { Shape2D } from '../Shape2D';
 import { CollisionResolver } from './CollisionResolver';
 import { PolygonPairCollisionResolver2D } from './PolygonPairCollisionResolver2D';
 import { PolygonRectanglePairCollisionResolver2D } from './PolygonRectanglePairCollisionResolver2D';
-import { PolygonShape2D } from '../shapes/PolygonShape2D';
-import { RectangleShape2D } from '../shapes/RectangleShape2D';
+import { PolygonShape2D } from '../PolygonShape2D';
+import { RectangleShape2D } from '../RectangleShape2D';
 
 /**
  * Used to resolve a collision between a 2D polygon and an unknown 2D shape.
