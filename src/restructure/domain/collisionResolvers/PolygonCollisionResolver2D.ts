@@ -21,7 +21,7 @@ export class PolygonCollisionResolver2D extends CollisionResolver {
     return this.getCollisionResolver().resolveCollision();
   }
 
-  private getCollisionResolver() {
+  private getCollisionResolver(): CollisionResolver {
     if (PolygonShape2D.isPolygon(this.shape)) {
       return this.createPolygonPairCollisionResolver(this.polygon, this.shape);
     }

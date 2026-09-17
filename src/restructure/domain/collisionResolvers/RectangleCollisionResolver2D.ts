@@ -21,7 +21,7 @@ export class RectangleCollisionResolver2D extends CollisionResolver {
     return this.getCollisionResolver().resolveCollision();
   }
 
-  private getCollisionResolver() {
+  private getCollisionResolver(): CollisionResolver {
     if (RectangleShape2D.isRectangle(this.shape)) {
       return this.createRectanglePairCollisionResolver(this.rectangle, this.shape);
     }
