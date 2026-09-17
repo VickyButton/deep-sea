@@ -7,33 +7,61 @@ import { Vector2D } from '../Vector2D';
  * Representation of a 2D rectangle.
  */
 export class RectangleShape2D extends Shape2D {
-  /** The width and height of the rectangle. */
-  public size: Vector2D;
+  private _width: number;
+  private _halfWidth: number;
+  private _height: number;
+  private _halfHeight: number;
 
   constructor(options?: RectangleShape2D_Options) {
     super(options);
 
-    this.size = options?.size ? new Vector2D(options.size[0], options.size[1]) : new Vector2D(1, 1);
+    this._width = options?.width ?? 1;
+    this._halfWidth = this.computeHalfWidth();
+    this._height = options?.height ?? 1;
+    this._halfHeight = this.computeHalfHeight();
+  }
+
+  private computeHalfWidth() {
+    return 0.5 * this._width;
+  }
+
+  private computeHalfHeight() {
+    return 0.5 * this._height;
   }
 
   /** The width of the rectangle. */
   public get width() {
-    return this.size.x;
+    return this._width;
+  }
+
+  public set width(width: number) {
+    this._width = width;
+    this._halfWidth = this.computeHalfWidth();
   }
 
   /** The half-width of the rectangle. */
   public get halfWidth() {
-    return this.size.x / 2;
+    return this._halfWidth;
   }
 
   /** The height of the rectangle. */
   public get height() {
-    return this.size.y;
+    return this._height;
+  }
+
+  public set height(height: number) {
+    this._height = height;
+    this._halfHeight = this.computeHalfHeight();
   }
 
   /** The half-height of the rectangle. */
   public get halfHeight() {
-    return this.size.y / 2;
+    return this._halfHeight;
+  }
+
+  /** The width and height of the rectangle. */
+  public get size() {
+    return new Vector2D(this._width, this._height);
   }
 
   /** Whether or not the rectangle's edges are parallel to the coordinate axes. */
@@ -109,5 +137,6 @@ export class RectangleShape2D extends Shape2D {
 }
 
 export interface RectangleShape2D_Options extends Shape2D_Options {
-  size?: [number, number];
+  width?: number;
+  height?: number;
 }

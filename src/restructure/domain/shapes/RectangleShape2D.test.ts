@@ -4,36 +4,71 @@ import { RectangleShape2D } from './RectangleShape2D';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('RectangleShape2D', () => {
-  it('should expose width', () => {
+  it('should get width', () => {
     const rectangle = new RectangleShape2D({
-      size: [1, 1],
+      width: 1,
+      height: 1,
     });
 
     expect(rectangle.width).toBe(1);
   });
 
-  it('should compute half-width', () => {
+  it('should get half-width', () => {
     const rectangle = new RectangleShape2D({
-      size: [1, 1],
+      width: 1,
+      height: 1,
     });
 
     expect(rectangle.halfWidth).toBe(0.5);
   });
 
-  it('should expose height', () => {
+  it('should update half-width when width is updated', () => {
     const rectangle = new RectangleShape2D({
-      size: [1, 1],
+      width: 1,
+      height: 1,
+    });
+
+    rectangle.width = 2;
+
+    expect(rectangle.halfWidth).toBe(1);
+  });
+
+  it('should get height', () => {
+    const rectangle = new RectangleShape2D({
+      width: 1,
+      height: 1,
     });
 
     expect(rectangle.height).toBe(1);
   });
 
-  it('should compute half-height', () => {
+  it('should get half-height', () => {
     const rectangle = new RectangleShape2D({
-      size: [1, 1],
+      width: 1,
+      height: 1,
     });
 
     expect(rectangle.halfHeight).toBe(0.5);
+  });
+
+  it('should update half-height when height is updated', () => {
+    const rectangle = new RectangleShape2D({
+      width: 1,
+      height: 1,
+    });
+
+    rectangle.height = 2;
+
+    expect(rectangle.halfHeight).toBe(1);
+  });
+
+  it('should get size', () => {
+    const rectangle = new RectangleShape2D({
+      width: 1,
+      height: 1,
+    });
+
+    expect(rectangle.size).toEqual(new Vector2D(1, 1));
   });
 
   it('should determine if axis-aligned', () => {
@@ -58,7 +93,8 @@ describe('RectangleShape2D', () => {
 
   it('should compute vertices', () => {
     const rectangle = new RectangleShape2D({
-      size: [1, 1],
+      width: 1,
+      height: 1,
     });
 
     expect(rectangle.vertices).toEqual([
@@ -71,7 +107,8 @@ describe('RectangleShape2D', () => {
 
   it('should compute bounding box', () => {
     const rectangle = new RectangleShape2D({
-      size: [1, 1],
+      width: 1,
+      height: 1,
     });
 
     expect(rectangle.boundingBox).toEqual({
@@ -84,7 +121,8 @@ describe('RectangleShape2D', () => {
 
   it('should apply rotation', () => {
     const rectangle = new RectangleShape2D({
-      size: [1, 1],
+      width: 1,
+      height: 1,
       transform: {
         rotation: Math.PI / 2, // 90 degrees
       },
@@ -100,7 +138,8 @@ describe('RectangleShape2D', () => {
 
   it('should apply scaling', () => {
     const rectangle = new RectangleShape2D({
-      size: [1, 1],
+      width: 1,
+      height: 1,
       transform: {
         scale: [2, 2],
       },
@@ -116,7 +155,8 @@ describe('RectangleShape2D', () => {
 
   it('should apply translation', () => {
     const rectangle = new RectangleShape2D({
-      size: [1, 1],
+      width: 1,
+      height: 1,
       transform: {
         translation: [1, 1],
       },
@@ -132,7 +172,8 @@ describe('RectangleShape2D', () => {
 
   it('should apply composite transformation matrix', () => {
     const rectangle = new RectangleShape2D({
-      size: [1, 1],
+      width: 1,
+      height: 1,
       transform: {
         rotation: Math.PI / 2, // 90 degrees
         scale: [2, 2],
