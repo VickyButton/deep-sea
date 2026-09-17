@@ -1,4 +1,4 @@
-import type { Shape2D_Options } from './Shape2D';
+import type { Transform2D } from '../Transform2D';
 import { RectangleCollisionResolver2D } from './collisionResolvers/RectangleCollisionResolver2D';
 import { Shape2D } from './Shape2D';
 import { Vector2D } from '../Vector2D';
@@ -9,16 +9,24 @@ import { Vector2D } from '../Vector2D';
 export class RectangleShape2D extends Shape2D {
   private _width: number;
   private _halfWidth: number;
+  private isHalfWidthStale: boolean;
   private _height: number;
   private _halfHeight: number;
+  private isHalfHeightStale: boolean;
+  private _vertices: [Vector2D, Vector2D, Vector2D, Vector2D];
+  private isVerticesStale: boolean;
 
   constructor(options?: RectangleShape2D_Options) {
-    super(options);
+    super();
 
     this._width = options?.width ?? 1;
     this._halfWidth = this.computeHalfWidth();
+    this.isHalfWidthStale = false;
     this._height = options?.height ?? 1;
     this._halfHeight = this.computeHalfHeight();
+    this.isHalfHeightStale = false;
+    this._vertices = this.computeVertices();
+    this.isVerticesStale = false;
   }
 
   private computeHalfWidth() {
@@ -29,6 +37,15 @@ export class RectangleShape2D extends Shape2D {
     return 0.5 * this._height;
   }
 
+  private computeVertices(): [Vector2D, Vector2D, Vector2D, Vector2D] {
+    return [
+      this.computeTopRightVertex(),
+      this.computeTopLeftVertex(),
+      this.computeBottomLeftVertex(),
+      this.computeBottomRightVertex(),
+    ];
+  }
+
   /** The width of the rectangle. */
   public get width() {
     return this._width;
@@ -36,12 +53,30 @@ export class RectangleShape2D extends Shape2D {
 
   public set width(width: number) {
     this._width = width;
-    this._halfWidth = this.computeHalfWidth();
+    this.markHalfWidthAsStale();
+    this.markVerticesAsStale();
+  }
+
+  private markHalfWidthAsStale() {
+    this.isHalfWidthStale = true;
+  }
+
+  private markVerticesAsStale() {
+    this.isVerticesStale = true;
   }
 
   /** The half-width of the rectangle. */
   public get halfWidth() {
+    this.updateHalfWidthIfStale();
+
     return this._halfWidth;
+  }
+
+  private updateHalfWidthIfStale() {
+    if (this.isHalfWidthStale) {
+      this._halfWidth = this.computeHalfWidth();
+      this.isHalfWidthStale = false;
+    }
   }
 
   /** The height of the rectangle. */
@@ -51,12 +86,26 @@ export class RectangleShape2D extends Shape2D {
 
   public set height(height: number) {
     this._height = height;
-    this._halfHeight = this.computeHalfHeight();
+    this.markHalfHeightAsStale();
+    this.markVerticesAsStale();
+  }
+
+  private markHalfHeightAsStale() {
+    this.isHalfHeightStale = true;
   }
 
   /** The half-height of the rectangle. */
   public get halfHeight() {
+    this.updateHalfHeightIfStale();
+
     return this._halfHeight;
+  }
+
+  private updateHalfHeightIfStale() {
+    if (this.isHalfHeightStale) {
+      this._halfHeight = this.computeHalfHeight();
+      this.isHalfHeightStale = false;
+    }
   }
 
   /** The width and height of the rectangle. */
@@ -64,67 +113,51 @@ export class RectangleShape2D extends Shape2D {
     return new Vector2D(this._width, this._height);
   }
 
-  /** Whether or not the rectangle's edges are parallel to the coordinate axes. */
-  public get isAxisAligned() {
-    return this.transform.rotation % (Math.PI / 2) === 0;
-  }
-
   /** The vertices of the rectangle, in counterclockwise order. */
   public get vertices() {
-    return this.computeVertices();
+    this.updateVerticesIfStale();
+
+    return this._vertices;
   }
 
-  private computeVertices() {
-    const basisVertices = this.computeBasisVertices();
-    const transformMatrix = this.transform.computeTransformationMatrix();
-
-    return basisVertices.map((vertex) => transformMatrix.multiplyVector2D(vertex));
+  private updateVerticesIfStale() {
+    if (this.isVerticesStale) {
+      this._vertices = this.computeVertices();
+      this.isVerticesStale = false;
+    }
   }
 
-  private computeBasisVertices() {
-    return [
-      this.computeBasisTopRightVertex(),
-      this.computeBasisTopLeftVertex(),
-      this.computeBasisBottomLeftVertex(),
-      this.computeBasisBottomRightVertex(),
-    ];
-  }
-
-  private computeBasisTopRightVertex() {
+  private computeTopRightVertex() {
     return new Vector2D(this.halfWidth, this.halfHeight);
   }
 
-  private computeBasisTopLeftVertex() {
+  private computeTopLeftVertex() {
     return new Vector2D(-this.halfWidth, this.halfHeight);
   }
 
-  private computeBasisBottomLeftVertex() {
+  private computeBottomLeftVertex() {
     return new Vector2D(-this.halfWidth, -this.halfHeight);
   }
 
-  private computeBasisBottomRightVertex() {
+  private computeBottomRightVertex() {
     return new Vector2D(this.halfWidth, -this.halfHeight);
   }
 
   public get boundingBox() {
-    return this.computeBoundingBox();
+    return this.vertices;
   }
 
   protected computeBoundingBox() {
-    const vertices = this.vertices;
-    const xValues = vertices.map((vertex) => vertex.x);
-    const yValues = vertices.map((vertex) => vertex.y);
-
     return {
-      left: Math.min(...xValues),
-      right: Math.max(...xValues),
-      top: Math.max(...yValues),
-      bottom: Math.min(...yValues),
+      left: -this.halfWidth,
+      right: this.halfHeight,
+      top: this.halfHeight,
+      bottom: -this.halfHeight,
     };
   }
 
-  public isCollidingWith(shape: Shape2D) {
-    return new RectangleCollisionResolver2D(this, shape).resolveCollision();
+  public isCollidingWith(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D) {
+    return new RectangleCollisionResolver2D(this, transform, shape, shapeTransform).resolveCollision();
   }
 
   public draw() {
@@ -136,7 +169,7 @@ export class RectangleShape2D extends Shape2D {
   }
 }
 
-export interface RectangleShape2D_Options extends Shape2D_Options {
+export interface RectangleShape2D_Options {
   width?: number;
   height?: number;
 }

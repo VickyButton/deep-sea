@@ -1,36 +1,26 @@
-import type { Canvas } from '../../providers/canvas.types';
-import type { Transform2D_Options } from '../Transform2D';
 import type { BoundingBox2D } from './shapes.types';
-import { Transform2D } from '../Transform2D';
+import type { Canvas } from '../../providers/canvas.types';
+import type { Transform2D } from '../Transform2D';
 
 /**
  * Abstract representation of a 2D shape that can be checked for collision.
  */
 export abstract class Shape2D {
-  /** The shape's transform matrix. */
-  public transform: Transform2D;
-
-  constructor(options?: Shape2D_Options) {
-    this.transform = options?.transform ? new Transform2D(options.transform) : new Transform2D();
-  }
-
   /** The axis-aligned bounding box of the shape. */
   public abstract get boundingBox(): BoundingBox2D;
 
   /**
    * Checks whether this shape is colliding with another shape.
-   * @param shape The shape to check for collision against.
+   * @param transform The 2D transformation matrix to apply to this shape.
+   * @param shape The other shape to check for collision against.
+   * @param shapeTransform The 2D transformation matrix to apply to the other shape.
    * @returns True if the two shapes are colliding, false if not.
    */
-  public abstract isCollidingWith(shape: Shape2D): boolean;
+  public abstract isCollidingWith(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D): boolean;
 
   /**
    * Draws the shape onto a canvas.
    * @param canvas The canvas to draw the shape onto.
    */
   public abstract draw(canvas: Canvas): void;
-}
-
-export interface Shape2D_Options {
-  transform?: Transform2D_Options;
 }

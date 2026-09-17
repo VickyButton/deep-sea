@@ -1,43 +1,44 @@
 import { AxisAlignedBoundingBoxCollisionResolver2D } from './AxisAlignedBoundingBoxCollisionResolver2D';
+import { Vector2D } from '../../Vector2D';
 import { describe, expect, it } from 'vitest';
 
 describe('AxisAlignedBoundingBoxCollisionResolver2D', () => {
   it.each([
     {
       relation: 'to the left of',
-      boundingBoxB: {
-        left: BOX_CENTERED.left - 2 * BOX_WIDTH,
-        right: BOX_CENTERED.right - 2 * BOX_WIDTH,
-        top: BOX_CENTERED.top,
-        bottom: BOX_CENTERED.bottom,
-      },
+      boundingBoxB: [
+        BOX_CENTERED[0].add(new Vector2D(-BOX_DOUBLE_WIDTH, 0)),
+        BOX_CENTERED[1].add(new Vector2D(-BOX_DOUBLE_WIDTH, 0)),
+        BOX_CENTERED[2].add(new Vector2D(-BOX_DOUBLE_WIDTH, 0)),
+        BOX_CENTERED[3].add(new Vector2D(-BOX_DOUBLE_WIDTH, 0)),
+      ],
     },
     {
       relation: 'to the right of',
-      boundingBoxB: {
-        left: BOX_CENTERED.left + 2 * BOX_WIDTH,
-        right: BOX_CENTERED.right + 2 * BOX_WIDTH,
-        top: BOX_CENTERED.top,
-        bottom: BOX_CENTERED.bottom,
-      },
+      boundingBoxB: [
+        BOX_CENTERED[0].add(new Vector2D(BOX_DOUBLE_WIDTH, 0)),
+        BOX_CENTERED[1].add(new Vector2D(BOX_DOUBLE_WIDTH, 0)),
+        BOX_CENTERED[2].add(new Vector2D(BOX_DOUBLE_WIDTH, 0)),
+        BOX_CENTERED[3].add(new Vector2D(BOX_DOUBLE_WIDTH, 0)),
+      ],
     },
     {
       relation: 'above',
-      boundingBoxB: {
-        left: BOX_CENTERED.left,
-        right: BOX_CENTERED.right,
-        top: BOX_CENTERED.top + 2 * BOX_HEIGHT,
-        bottom: BOX_CENTERED.bottom + 2 * BOX_HEIGHT,
-      },
+      boundingBoxB: [
+        BOX_CENTERED[0].add(new Vector2D(0, BOX_DOUBLE_HEIGHT)),
+        BOX_CENTERED[1].add(new Vector2D(0, BOX_DOUBLE_HEIGHT)),
+        BOX_CENTERED[2].add(new Vector2D(0, BOX_DOUBLE_HEIGHT)),
+        BOX_CENTERED[3].add(new Vector2D(0, BOX_DOUBLE_HEIGHT)),
+      ],
     },
     {
       relation: 'below',
-      boundingBoxB: {
-        left: BOX_CENTERED.left,
-        right: BOX_CENTERED.right,
-        top: BOX_CENTERED.top - 2 * BOX_HEIGHT,
-        bottom: BOX_CENTERED.bottom - 2 * BOX_HEIGHT,
-      },
+      boundingBoxB: [
+        BOX_CENTERED[0].add(new Vector2D(0, -BOX_DOUBLE_HEIGHT)),
+        BOX_CENTERED[1].add(new Vector2D(0, -BOX_DOUBLE_HEIGHT)),
+        BOX_CENTERED[2].add(new Vector2D(0, -BOX_DOUBLE_HEIGHT)),
+        BOX_CENTERED[3].add(new Vector2D(0, -BOX_DOUBLE_HEIGHT)),
+      ],
     },
   ])('should not detect collision if one box is $relation the other box ', ({ boundingBoxB }) => {
     const boundingBoxA = BOX_CENTERED;
@@ -49,48 +50,48 @@ describe('AxisAlignedBoundingBoxCollisionResolver2D', () => {
   it.each([
     {
       relation: 'on the left border of',
-      boundingBoxB: {
-        left: BOX_CENTERED.left - BOX_WIDTH,
-        right: BOX_CENTERED.right - BOX_WIDTH,
-        top: BOX_CENTERED.top,
-        bottom: BOX_CENTERED.bottom,
-      },
+      boundingBoxB: [
+        BOX_CENTERED[0].add(new Vector2D(-BOX_WIDTH, 0)),
+        BOX_CENTERED[1].add(new Vector2D(-BOX_WIDTH, 0)),
+        BOX_CENTERED[2].add(new Vector2D(-BOX_WIDTH, 0)),
+        BOX_CENTERED[3].add(new Vector2D(-BOX_WIDTH, 0)),
+      ],
     },
     {
       relation: 'on the right border of',
-      boundingBoxB: {
-        left: BOX_CENTERED.left + BOX_WIDTH,
-        right: BOX_CENTERED.right + BOX_WIDTH,
-        top: BOX_CENTERED.top,
-        bottom: BOX_CENTERED.bottom,
-      },
+      boundingBoxB: [
+        BOX_CENTERED[0].add(new Vector2D(BOX_WIDTH, 0)),
+        BOX_CENTERED[1].add(new Vector2D(BOX_WIDTH, 0)),
+        BOX_CENTERED[2].add(new Vector2D(BOX_WIDTH, 0)),
+        BOX_CENTERED[3].add(new Vector2D(BOX_WIDTH, 0)),
+      ],
     },
     {
       relation: 'on the top border of',
-      boundingBoxB: {
-        left: BOX_CENTERED.left,
-        right: BOX_CENTERED.right,
-        top: BOX_CENTERED.top + BOX_HEIGHT,
-        bottom: BOX_CENTERED.bottom + BOX_HEIGHT,
-      },
+      boundingBoxB: [
+        BOX_CENTERED[0].add(new Vector2D(0, BOX_HEIGHT)),
+        BOX_CENTERED[1].add(new Vector2D(0, BOX_HEIGHT)),
+        BOX_CENTERED[2].add(new Vector2D(0, BOX_HEIGHT)),
+        BOX_CENTERED[3].add(new Vector2D(0, BOX_HEIGHT)),
+      ],
     },
     {
       relation: 'on the bottom border of',
-      boundingBoxB: {
-        left: BOX_CENTERED.left,
-        right: BOX_CENTERED.right,
-        top: BOX_CENTERED.top - BOX_HEIGHT,
-        bottom: BOX_CENTERED.bottom - BOX_HEIGHT,
-      },
+      boundingBoxB: [
+        BOX_CENTERED[0].add(new Vector2D(0, -BOX_HEIGHT)),
+        BOX_CENTERED[1].add(new Vector2D(0, -BOX_HEIGHT)),
+        BOX_CENTERED[2].add(new Vector2D(0, -BOX_HEIGHT)),
+        BOX_CENTERED[3].add(new Vector2D(0, -BOX_HEIGHT)),
+      ],
     },
     {
       relation: 'completely overlapping',
-      boundingBoxB: {
-        left: BOX_CENTERED.left,
-        right: BOX_CENTERED.right,
-        top: BOX_CENTERED.top,
-        bottom: BOX_CENTERED.bottom,
-      },
+      boundingBoxB: [
+        BOX_CENTERED[0],
+        BOX_CENTERED[1],
+        BOX_CENTERED[2],
+        BOX_CENTERED[3],
+      ],
     },
   ])('should detect collision if one box is $relation the other box ', ({ boundingBoxB }) => {
     const boundingBoxA = BOX_CENTERED;
@@ -102,11 +103,13 @@ describe('AxisAlignedBoundingBoxCollisionResolver2D', () => {
 
 const BOX_WIDTH = 1;
 const BOX_HALF_WIDTH = BOX_WIDTH / 2;
+const BOX_DOUBLE_WIDTH = BOX_WIDTH * 2;
 const BOX_HEIGHT = 1;
 const BOX_HALF_HEIGHT = BOX_HEIGHT / 2;
-const BOX_CENTERED = {
-  left: -BOX_HALF_WIDTH,
-  right: BOX_HALF_WIDTH,
-  top: BOX_HALF_HEIGHT,
-  bottom: -BOX_HALF_HEIGHT,
-};
+const BOX_DOUBLE_HEIGHT = BOX_HEIGHT * 2;
+const BOX_CENTERED = [
+  new Vector2D(BOX_HALF_WIDTH, BOX_HALF_HEIGHT),
+  new Vector2D(-BOX_HALF_WIDTH, BOX_HALF_HEIGHT),
+  new Vector2D(-BOX_HALF_WIDTH, -BOX_HALF_HEIGHT),
+  new Vector2D(BOX_HALF_WIDTH, -BOX_HALF_HEIGHT),
+];

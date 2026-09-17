@@ -1,3 +1,4 @@
+import { Transform2D } from '../Transform2D';
 import { Vector2D } from '../Vector2D';
 import { RectangleCollisionResolver2D } from './collisionResolvers/RectangleCollisionResolver2D';
 import { RectangleShape2D } from './RectangleShape2D';
@@ -71,26 +72,6 @@ describe('RectangleShape2D', () => {
     expect(rectangle.size).toEqual(new Vector2D(1, 1));
   });
 
-  it('should determine if axis-aligned', () => {
-    const rectangle = new RectangleShape2D({
-      transform: {
-        rotation: 2 * Math.PI,
-      },
-    });
-
-    expect(rectangle.isAxisAligned).toBe(true);
-  });
-
-  it('should determine if not axis-aligned', () => {
-    const rectangle = new RectangleShape2D({
-      transform: {
-        rotation: Math.PI / 4,
-      },
-    });
-
-    expect(rectangle.isAxisAligned).toBe(false);
-  });
-
   it('should compute vertices', () => {
     const rectangle = new RectangleShape2D({
       width: 1,
@@ -111,81 +92,11 @@ describe('RectangleShape2D', () => {
       height: 1,
     });
 
-    expect(rectangle.boundingBox).toEqual({
-      left: -0.5,
-      right: 0.5,
-      top: 0.5,
-      bottom: -0.5,
-    });
-  });
-
-  it('should apply rotation', () => {
-    const rectangle = new RectangleShape2D({
-      width: 1,
-      height: 1,
-      transform: {
-        rotation: Math.PI / 2, // 90 degrees
-      },
-    });
-
-    expect(rectangle.vertices).toEqual([
-      new Vector2D(-0.49999999999999994, 0.5),
-      new Vector2D(-0.5, -0.49999999999999994),
-      new Vector2D(0.49999999999999994, -0.5),
-      new Vector2D(0.5, 0.49999999999999994),
-    ]);
-  });
-
-  it('should apply scaling', () => {
-    const rectangle = new RectangleShape2D({
-      width: 1,
-      height: 1,
-      transform: {
-        scale: [2, 2],
-      },
-    });
-
-    expect(rectangle.vertices).toEqual([
-      new Vector2D(1, 1),
-      new Vector2D(-1, 1),
-      new Vector2D(-1, -1),
-      new Vector2D(1, -1),
-    ]);
-  });
-
-  it('should apply translation', () => {
-    const rectangle = new RectangleShape2D({
-      width: 1,
-      height: 1,
-      transform: {
-        translation: [1, 1],
-      },
-    });
-
-    expect(rectangle.vertices).toEqual([
-      new Vector2D(1.5, 1.5),
-      new Vector2D(0.5, 1.5),
+    expect(rectangle.boundingBox).toEqual([
       new Vector2D(0.5, 0.5),
-      new Vector2D(1.5, 0.5),
-    ]);
-  });
-
-  it('should apply composite transformation matrix', () => {
-    const rectangle = new RectangleShape2D({
-      width: 1,
-      height: 1,
-      transform: {
-        rotation: Math.PI / 2, // 90 degrees
-        scale: [2, 2],
-        translation: [1, 1],
-      },
-    });
-
-    expect(rectangle.vertices).toEqual([
-      new Vector2D(1.1102230246251565e-16, 2),
-      new Vector2D(0, 1.1102230246251565e-16),
-      new Vector2D(2, 0),
-      new Vector2D(2, 2),
+      new Vector2D(-0.5, 0.5),
+      new Vector2D(-0.5, -0.5),
+      new Vector2D(0.5, -0.5),
     ]);
   });
 
@@ -193,11 +104,13 @@ describe('RectangleShape2D', () => {
     vi.mock('./collisionResolvers/RectangleCollisionResolver2D');
 
     const rectangleA = new RectangleShape2D();
+    const transformA = new Transform2D();
     const rectangleB = new RectangleShape2D();
+    const transformB = new Transform2D();
 
-    rectangleA.isCollidingWith(rectangleB);
+    rectangleA.isCollidingWith(transformA, rectangleB, transformB);
 
-    expect(RectangleCollisionResolver2D).toHaveBeenCalledWith(rectangleA, rectangleB);
+    expect(RectangleCollisionResolver2D).toHaveBeenCalledWith(rectangleA, transformA, rectangleB, transformB);
   });
 
   it('should determine if shape is a rectangle', () => {

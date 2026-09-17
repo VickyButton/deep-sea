@@ -20,8 +20,8 @@ export class AxisAlignedBoundingBoxCollisionResolver2D extends CollisionResolver
   }
 
   private isNoGapBetweenBoxes() {
-    const sidesA = this.boundingBoxA;
-    const sidesB = this.boundingBoxB;
+    const sidesA = this.sidesA;
+    const sidesB = this.sidesB;
 
     return (
       !this.isGapBetweenLeftAndRight(sidesA.left, sidesB.right) &&
@@ -29,6 +29,26 @@ export class AxisAlignedBoundingBoxCollisionResolver2D extends CollisionResolver
       !this.isGapBetweenTopAndBottom(sidesA.top, sidesB.bottom) &&
       !this.isGapBetweenTopAndBottom(sidesB.top, sidesA.bottom)
     );
+  }
+
+  private get sidesA() {
+    return this.getSides(this.boundingBoxA);
+  }
+
+  private getSides(boundingBox: BoundingBox2D) {
+    const xValues = boundingBox.map((vertex) => vertex.x);
+    const yValues = boundingBox.map((vertex) => vertex.y);
+
+    return {
+      left: Math.min(...xValues),
+      right: Math.max(...xValues),
+      top: Math.max(...yValues),
+      bottom: Math.min(...yValues),
+    };
+  }
+
+  private get sidesB() {
+    return this.getSides(this.boundingBoxB);
   }
 
   private isGapBetweenLeftAndRight(left: number, right: number) {

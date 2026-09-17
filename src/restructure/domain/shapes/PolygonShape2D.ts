@@ -1,4 +1,5 @@
-import type { Shape2D_Options } from './Shape2D';
+import type { Transform2D } from '../Transform2D';
+import type { BoundingBox2D } from './shapes.types';
 import { Vector2D } from '../Vector2D';
 import { PolygonCollisionResolver2D } from './collisionResolvers/PolygonCollisionResolver2D';
 import { Shape2D } from './Shape2D';
@@ -8,19 +9,23 @@ import { Shape2D } from './Shape2D';
  */
 export class PolygonShape2D extends Shape2D {
   private _vertices: Vector2D[];
+  private _boundingBox: BoundingBox2D;
+  private isBoundingBoxStale: boolean;
 
   constructor(options?: PolygonShape2D_Options) {
-    super(options);
+    super();
 
     if (options?.vertices && !this.isValidVertices(options.vertices)) {
       throw this.createInvalidVerticesError();
     }
 
     this._vertices = options?.vertices ?? this.createDefaultPolygon();
+    this._boundingBox = this.computeBoundingBox();
+    this.isBoundingBoxStale = false;
   }
 
-  private isValidVertices(polygon: Vector2D[]) {
-    return polygon.length >= 3;
+  private isValidVertices(vertices: Vector2D[]) {
+    return vertices.length >= 3;
   }
 
   private createInvalidVerticesError() {
@@ -56,38 +61,51 @@ export class PolygonShape2D extends Shape2D {
     return new Vector2D(x, y);
   }
 
-  /**
-   * The post-transformation vertices that form the polygon, in counterclockwise order.
-   */
-  public get vertices() {
-    return this.computeVertices();
+  private computeBoundingBox(): [Vector2D, Vector2D, Vector2D, Vector2D] {
+    const vertices = this.vertices;
+    const xValues = vertices.map((vertex) => vertex.x);
+    const xMax = Math.max(...xValues);
+    const xMin = Math.min(...xValues);
+    const yValues = vertices.map((vertex) => vertex.y);
+    const yMax = Math.max(...yValues);
+    const yMin = Math.min(...yValues);
+
+    return [
+      new Vector2D(xMax, yMax),
+      new Vector2D(xMin, yMax),
+      new Vector2D(xMin, yMin),
+      new Vector2D(xMax, yMin),
+    ];
   }
 
-  private computeVertices() {
-    const transformationMatrix = this.transform.computeTransformationMatrix();
+  /** The set of vertices that form the polygon, in counterclockwise order. */
+  public get vertices() {
+    return structuredClone(this._vertices);
+  }
 
-    return this._vertices.map((vertex) => transformationMatrix.multiplyVector2D(vertex));
+  public set vertices(vertices: Vector2D[]) {
+    if (!this.isValidVertices(vertices)) {
+      throw this.createInvalidVerticesError();
+    }
+
+    this._vertices = vertices;
   }
 
   public get boundingBox() {
-    return this.computeBoundingBox();
+    this.updateBoundingBoxIfStale();
+
+    return this._boundingBox;
   }
 
-  private computeBoundingBox() {
-    const vertices = this.vertices;
-    const xValues = vertices.map((vertex) => vertex.x);
-    const yValues = vertices.map((vertex) => vertex.y);
-
-    return {
-      left: Math.min(...xValues),
-      right: Math.max(...xValues),
-      top: Math.max(...yValues),
-      bottom: Math.min(...yValues),
-    };
+  private updateBoundingBoxIfStale() {
+    if (this.isBoundingBoxStale) {
+      this._boundingBox = this.computeBoundingBox();
+      this.isBoundingBoxStale = false;
+    }
   }
 
-  public isCollidingWith(shape: Shape2D) {
-    return new PolygonCollisionResolver2D(this, shape).resolveCollision();
+  public isCollidingWith(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D) {
+    return new PolygonCollisionResolver2D(this, transform, shape, shapeTransform).resolveCollision();
   }
 
   public draw() {
@@ -99,6 +117,6 @@ export class PolygonShape2D extends Shape2D {
   }
 }
 
-export interface PolygonShape2D_Options extends Shape2D_Options {
+export interface PolygonShape2D_Options {
   vertices?: Vector2D[];
 }

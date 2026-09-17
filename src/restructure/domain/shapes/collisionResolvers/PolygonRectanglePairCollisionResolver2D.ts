@@ -1,3 +1,4 @@
+import type { Transform2D } from '../../Transform2D';
 import type { PolygonShape2D } from '../PolygonShape2D';
 import type { RectangleShape2D } from '../RectangleShape2D';
 import { CollisionResolver } from './CollisionResolver';
@@ -5,13 +6,17 @@ import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheore
 
 export class PolygonRectanglePairCollisionResolver2D extends CollisionResolver {
   private readonly polygon: PolygonShape2D;
+  private readonly polygonTransform: Transform2D;
   private readonly rectangle: RectangleShape2D;
+  private readonly rectangleTransform: Transform2D;
 
-  constructor(polygon: PolygonShape2D, rectangle: RectangleShape2D) {
+  constructor(polygon: PolygonShape2D, polygonTransform: Transform2D, rectangle: RectangleShape2D, rectangleTransform: Transform2D) {
     super();
 
     this.polygon = polygon;
+    this.polygonTransform = polygonTransform;
     this.rectangle = rectangle;
+    this.rectangleTransform = rectangleTransform;
   }
 
   public resolveCollision() {
