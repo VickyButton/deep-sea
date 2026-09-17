@@ -1,6 +1,8 @@
 import type { Shape2D } from '../shapes/Shape2D';
 import { CollisionResolver } from './CollisionResolver';
+import { PolygonRectanglePairCollisionResolver2D } from './PolygonRectanglePairCollisionResolver2D';
 import { RectanglePairCollisionResolver2D } from './RectanglePairCollisionResolver2D';
+import { PolygonShape2D } from '../shapes/PolygonShape2D';
 import { RectangleShape2D } from '../shapes/RectangleShape2D';
 
 /**
@@ -24,6 +26,8 @@ export class RectangleCollisionResolver2D extends CollisionResolver {
   private getCollisionResolver(): CollisionResolver {
     if (RectangleShape2D.isRectangle(this.shape)) {
       return this.createRectanglePairCollisionResolver(this.rectangle, this.shape);
+    } else if (PolygonShape2D.isPolygon(this.shape)) {
+      return this.createPolygonRectanglePairCollisionResolver(this.shape, this.rectangle);
     }
 
     throw this.createUnableToResolveCollisionError();
@@ -31,5 +35,9 @@ export class RectangleCollisionResolver2D extends CollisionResolver {
 
   private createRectanglePairCollisionResolver(rectangleA: RectangleShape2D, rectangleB: RectangleShape2D) {
     return new RectanglePairCollisionResolver2D(rectangleA, rectangleB);
+  }
+
+  private createPolygonRectanglePairCollisionResolver(polygon: PolygonShape2D, rectangle: RectangleShape2D) {
+    return new PolygonRectanglePairCollisionResolver2D(polygon, rectangle);
   }
 }

@@ -1,5 +1,7 @@
+import { PolygonRectanglePairCollisionResolver2D } from './PolygonRectanglePairCollisionResolver2D';
 import { RectangleCollisionResolver2D } from './RectangleCollisionResolver2D';
 import { RectanglePairCollisionResolver2D } from './RectanglePairCollisionResolver2D';
+import { PolygonShape2D } from '../shapes/PolygonShape2D';
 import { RectangleShape2D } from '../shapes/RectangleShape2D';
 import { Shape2D } from '../shapes/Shape2D';
 import { describe, expect, it, vi } from 'vitest';
@@ -15,6 +17,18 @@ describe('RectangleCollisionResolver2D', () => {
     resolver.resolveCollision();
 
     expect(RectanglePairCollisionResolver2D).toHaveBeenCalledWith(rectangle, shape);
+  });
+
+  it('should use polygon-rectangle pair collision resolver if polygon-rectangle pair', () => {
+    vi.mock('./PolygonRectanglePairCollisionResolver2D');
+
+    const polygon = new PolygonShape2D();
+    const rectangle = new RectangleShape2D();
+    const resolver = new RectangleCollisionResolver2D(rectangle, polygon);
+
+    resolver.resolveCollision();
+
+    expect(PolygonRectanglePairCollisionResolver2D).toHaveBeenCalledWith(polygon, rectangle);
   });
 
   it('should throw if no collision resolver found for shape pair', () => {
