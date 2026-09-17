@@ -1,6 +1,7 @@
-import type { Node } from './domain/node.types';
+
 import type { FrameLoop } from './engine/frameLoop.types';
 import type { SceneTree } from './engine/sceneTree.types';
+import type { Node } from './nodes';
 
 /** Coordinates all main engine logic. */
 export class Engine {
