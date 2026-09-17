@@ -6,7 +6,7 @@ describe('PolygonShape2D', () => {
   it('should be a triangle by default', () => {
     const polygon = new PolygonShape2D();
 
-    expect(polygon.polygon).toEqual([
+    expect(polygon.vertices).toEqual([
       new Vector2D(1, 0),
       new Vector2D(-0.4999999999999998, 0.8660254037844387),
       new Vector2D(-0.5000000000000004, -0.8660254037844385),

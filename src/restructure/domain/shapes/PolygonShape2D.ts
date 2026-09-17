@@ -11,8 +11,19 @@ export class PolygonShape2D extends Shape2D {
   constructor(options?: PolygonShape2D_Options) {
     super(options);
 
+    if (options?.vertices && !this.areValidVertices(options.vertices)) {
+      throw this.createInvalidVerticesError();
+    }
+
     this._vertices = options?.vertices ?? this.createDefaultPolygon();
-    this.throwIfInvalidPolygon(this._vertices);
+  }
+
+  private areValidVertices(polygon: Vector2D[]) {
+    return polygon.length >= 3;
+  }
+
+  private createInvalidVerticesError() {
+    return new Error('Invalid vertices: a polygon must have at least 3 vertices.');
   }
 
   private createDefaultPolygon() {
@@ -44,26 +55,6 @@ export class PolygonShape2D extends Shape2D {
     return new Vector2D(x, y);
   }
 
-  private throwIfInvalidPolygon(polygon: Vector2D[]) {
-    if (!this.isValidPolygon(polygon)) {
-      throw new Error('A polygon must have at least 3 vertices.');
-    }
-  }
-
-  private isValidPolygon(polygon: Vector2D[]) {
-    return polygon.length >= 3;
-  }
-
-  /** The vertices that form the polygon, in counterclockwise order. */
-  public get polygon() {
-    return this._vertices;
-  }
-
-  public set polygon(polygon: Vector2D[]) {
-    this.throwIfInvalidPolygon(polygon);
-    this._vertices = polygon;
-  }
-
   /**
    * The post-transformation vertices that form the polygon, in counterclockwise order.
    */
@@ -74,7 +65,7 @@ export class PolygonShape2D extends Shape2D {
   private computeVertices() {
     const transformationMatrix = this.transform.computeTransformationMatrix();
 
-    return this.polygon.map((vertex) => transformationMatrix.multiplyVector2D(vertex));
+    return this._vertices.map((vertex) => transformationMatrix.multiplyVector2D(vertex));
   }
 
   public get boundingBox() {
