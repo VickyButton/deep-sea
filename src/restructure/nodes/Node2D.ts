@@ -1,13 +1,13 @@
-import type { CanvasNode_Options } from './CanvasNode';
+import type { GraphicsNode_Options } from './GraphicsNode';
 import type { Node } from './Node';
-import { CanvasNode } from './CanvasNode';
+import { GraphicsNode } from './GraphicsNode';
 import { Transform2D } from '../domain/Transform2D';
 import { Vector2D } from '../domain/Vector2D';
 
 /**
  * A node which can be used in a 2D plane.
  */
-export class Node2D extends CanvasNode {
+export class Node2D extends GraphicsNode {
   /** The node's position relative to its parent. */
   public position: Vector2D;
   /** The node's scale relative to its parent. */
@@ -89,7 +89,7 @@ export class Node2D extends CanvasNode {
   }
 }
 
-export interface Node2D_Options extends CanvasNode_Options {
+export interface Node2D_Options extends GraphicsNode_Options {
   position?: [number, number];
   scale?: [number, number];
   rotation?: number;
