@@ -158,4 +158,10 @@ describe('RectangleShape2D', () => {
 
     expect(RectangleCollisionResolver2D).toHaveBeenCalledWith(rectangleA, rectangleB);
   });
+
+  it('should determine if shape is a rectangle', () => {
+    const shape = new RectangleShape2D();
+
+    expect(RectangleShape2D.isRectangle(shape)).toBe(true);
+  });
 });

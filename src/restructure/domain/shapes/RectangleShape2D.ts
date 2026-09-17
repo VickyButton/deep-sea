@@ -102,6 +102,10 @@ export class RectangleShape2D extends Shape2D {
   public draw() {
     // TODO: Implement.
   }
+
+  public static isRectangle(shape: Shape2D): shape is RectangleShape2D {
+    return shape instanceof RectangleShape2D;
+  }
 }
 
 export interface RectangleShape2D_Options extends Shape2D_Options {

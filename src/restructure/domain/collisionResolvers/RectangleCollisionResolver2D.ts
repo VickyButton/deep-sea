@@ -22,15 +22,11 @@ export class RectangleCollisionResolver2D extends CollisionResolver {
   }
 
   private getCollisionResolver() {
-    if (this.isRectangle(this.shape)) {
+    if (RectangleShape2D.isRectangle(this.shape)) {
       return this.createRectanglePairCollisionResolver(this.rectangle, this.shape);
     }
 
     throw this.createUnableToResolveCollisionError();
-  }
-
-  private isRectangle(shape: Shape2D): shape is RectangleShape2D {
-    return shape instanceof RectangleShape2D;
   }
 
   private createRectanglePairCollisionResolver(rectangleA: RectangleShape2D, rectangleB: RectangleShape2D) {
