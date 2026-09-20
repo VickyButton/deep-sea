@@ -10,12 +10,12 @@ describe('GraphicsEngineDefault', () => {
     };
 
     graphicsEngine.queueDrawCommand(drawCommand);
-    graphicsEngine.draw();
+    graphicsEngine.processDrawCommandQueue();
 
     expect(drawCommand.draw).not.toHaveBeenCalled();
   });
 
-  it('should draw to canvas using draw commands', () => {
+  it('should draw to targetcanvas using draw commands', () => {
     const graphicsEngine = new GraphicsEngineDefault();
     const graphicsCanvas = new GraphicsCanvas();
     const drawCommand = {
@@ -23,9 +23,9 @@ describe('GraphicsEngineDefault', () => {
       zIndex: 0,
     };
 
-    graphicsEngine.setCanvas(graphicsCanvas);
+    graphicsEngine.setTargetCanvas(graphicsCanvas);
     graphicsEngine.queueDrawCommand(drawCommand);
-    graphicsEngine.draw();
+    graphicsEngine.processDrawCommandQueue();
 
     expect(drawCommand.draw).toHaveBeenCalledWith(graphicsCanvas);
   });
@@ -42,10 +42,10 @@ describe('GraphicsEngineDefault', () => {
       zIndex: 1,
     };
 
-    graphicsEngine.setCanvas(graphicsCanvas);
+    graphicsEngine.setTargetCanvas(graphicsCanvas);
     graphicsEngine.queueDrawCommand(drawCommandZ1);
     graphicsEngine.queueDrawCommand(drawCommandZ0);
-    graphicsEngine.draw();
+    graphicsEngine.processDrawCommandQueue();
 
     expect(drawCommandZ0.draw).toHaveBeenCalledBefore(drawCommandZ1.draw);
   });
@@ -58,10 +58,10 @@ describe('GraphicsEngineDefault', () => {
       zIndex: 0,
     };
 
-    graphicsEngine.setCanvas(graphicsCanvas);
+    graphicsEngine.setTargetCanvas(graphicsCanvas);
     graphicsEngine.queueDrawCommand(drawCommand);
-    graphicsEngine.draw();
-    graphicsEngine.draw();
+    graphicsEngine.processDrawCommandQueue();
+    graphicsEngine.processDrawCommandQueue();
 
     expect(drawCommand.draw).toHaveBeenCalledOnce();
   });

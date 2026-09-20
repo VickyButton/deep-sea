@@ -5,7 +5,7 @@ export class GraphicsEngineDefault {
   private canvas: GraphicsCanvas | null = null;
   private queue = new DrawCommandQueue();
 
-  public setCanvas(canvas: GraphicsCanvas | null) {
+  public setTargetCanvas(canvas: GraphicsCanvas | null) {
     this.canvas = canvas;
   }
 
@@ -13,7 +13,7 @@ export class GraphicsEngineDefault {
     this.queue.add(command);
   }
 
-  public draw() {
+  public processDrawCommandQueue() {
     this.processCommandQueue(this.queue.commands);
     this.clearQueue();
   }
