@@ -5,7 +5,7 @@ import type { GraphicsCanvas } from '../providers/graphicsCanvas.types';
  */
 export interface GraphicsEngine {
   /**
-   * Sets the target canvas to draw to.
+   * Sets the target graphics canvas to draw to.
    * @param canvas The target canvas to draw to.
    */
   setTargetCanvas(canvas: GraphicsCanvas | null): void;
