@@ -15,7 +15,7 @@ describe('GraphicsEngineDefault', () => {
     expect(drawCommand.draw).not.toHaveBeenCalled();
   });
 
-  it('should draw to targetcanvas using draw commands', () => {
+  it('should draw to target canvas using draw commands', () => {
     const graphicsEngine = new GraphicsEngineDefault();
     const graphicsCanvas = new GraphicsCanvas();
     const drawCommand = {
