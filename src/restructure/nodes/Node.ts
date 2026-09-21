@@ -1,3 +1,5 @@
+import type { Event, EventListener } from '../events/Event';
+
 /**
  * Core building blocks for scenes. Nodes encapsulate state, functionality, and hierarchy.
  */
@@ -8,12 +10,14 @@ export class Node {
   public isActive: boolean;
   /** A flag indicating if the node is ready or not. */
   public isReady: boolean;
+  protected nodeEventManager: NodeEventManager;
   protected nodeRelationshipManager: NodeRelationshipManager;
 
   constructor(id: string, options?: Node_Options) {
     this.id = id;
     this.isActive = options?.isActive ?? false;
     this.isReady = options?.isReady ?? false;
+    this.nodeEventManager = new NodeEventManager();
     this.nodeRelationshipManager = new NodeRelationshipManager(this);
   }
 
@@ -32,14 +36,34 @@ export class Node {
     return this.nodeRelationshipManager.getChildren();
   }
 
+  /**
+   * Adds a listener to an event. The listener will only execute if the node is active.
+   * @param event The event to add a listener to.
+   * @param listener The listener to execute when an event is emitted.
+   */
+  public addEventListener<T>(event: Event<T>, listener: EventListener<T>) {
+    this.nodeEventManager.addListener(event, listener);
+  }
+
+  /**
+   * Removes a listener for an event.
+   * @param event The event to remove a listener from.
+   * @param listener The listener to remove from the event.
+   */
+  public removeEventListener<T>(event: Event<T>, listener: EventListener<T>) {
+    this.nodeEventManager.removeListener(event, listener);
+  }
+
   /** Activates the node. */
   public activate() {
     this.isActive = true;
+    this.nodeEventManager.startListening();
   }
 
   /** Deactivates the node. */
   public deactivate() {
     this.isActive = false;
+    this.nodeEventManager.stopListening();
   }
 
   /** Readies the node. */
@@ -106,6 +130,130 @@ export class Node {
 export interface Node_Options {
   isActive?: boolean;
   isReady?: boolean;
+}
+
+/**
+ * Manages a node's event listeners.
+ */
+class NodeEventManager {
+  private isListening = false;
+  private delegators = new Map<Event, EventListener>();
+  private callbacks = new Map<Event, Set<EventListener>>();
+
+  /**
+   * Adds a listener to an event. The listener will only execute if the event manager is listening.
+   * @param event The event to add a listener to.
+   * @param listener The listener to execute when an event is emitted.
+   */
+  public addListener<T>(event: Event<T>, listener: EventListener<T>) {
+    if (this.isListening) {
+      this.ensureEventHasDelegator(event as Event);
+    }
+
+    this.addCallbackForEvent(event as Event, listener as EventListener);
+  }
+
+  private ensureEventHasDelegator(event: Event) {
+    if (!this.hasDelegatorForEvent(event)) {
+      this.addDelegatorForEvent(event);
+    }
+  }
+
+  private hasDelegatorForEvent(event: Event) {
+    return this.delegators.has(event);
+  }
+
+  private addDelegatorForEvent(event: Event) {
+    const delegator = this.createDelegatorForEvent(event);
+
+    this.delegators.set(event, delegator);
+
+    event.addListener(delegator);
+  }
+
+  private createDelegatorForEvent(event: Event) {
+    return (data: unknown) => {
+      this.executeCallbacksForEvent(event, data);
+    };
+  }
+
+  private executeCallbacksForEvent(event: Event, data: unknown) {
+    for (const callback of this.getCallbacksForEvent(event)) {
+      callback(data);
+    }
+  }
+
+  private getCallbacksForEvent(event: Event) {
+    return this.callbacks.get(event) ?? new Set();
+  }
+
+  private addCallbackForEvent(event: Event, callback: EventListener) {
+    const eventCallbacks = this.getCallbacksForEvent(event);
+
+    eventCallbacks.add(callback);
+
+    this.callbacks.set(event, eventCallbacks);
+  }
+
+  /**
+   * Removes a listener for an event.
+   * @param event The event to remove a listener from.
+   * @param listener The listener to remove from the event.
+   */
+  public removeListener<T>(event: Event<T>, listener: EventListener<T>) {
+    this.removeCallbackForEvent(event as Event, listener as EventListener);
+
+    if (this.getCallbacksForEvent(event as Event).size === 0) {
+      this.callbacks.delete(event as Event);
+      this.removeDelegatorForEvent(event as Event);
+    }
+  }
+
+  private removeCallbackForEvent(event: Event, callback: EventListener) {
+    const eventCallbacks = this.getCallbacksForEvent(event);
+
+    eventCallbacks.delete(callback);
+
+    this.callbacks.set(event, eventCallbacks);
+  }
+
+  private removeDelegatorForEvent(event: Event) {
+    const delegator = this.delegators.get(event);
+
+    this.delegators.delete(event);
+
+    if (delegator) {
+      event.removeListener(delegator);
+    }
+  }
+
+  /** Starts listening for events, enabling listeners to execute when an event is emitted. */
+  public startListening() {
+    this.isListening = true;
+    this.setupDelegators();
+  }
+
+  private setupDelegators() {
+    for (const event of this.getEventsWithCallbacks()) {
+      this.ensureEventHasDelegator(event);
+    }
+  }
+
+  private getEventsWithCallbacks() {
+    return this.callbacks.keys();
+  }
+
+  /** Stops listening for events, preventing listeners from executing when an event is emitted. This does not remove the event listeners. */
+  public stopListening() {
+    this.isListening = false;
+    this.teardownDelegators();
+  }
+
+  private teardownDelegators() {
+    for (const event of this.getEventsWithCallbacks()) {
+      this.removeDelegatorForEvent(event);
+    }
+  }
 }
 
 /**

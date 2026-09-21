@@ -1,5 +1,6 @@
 import { Node } from './Node';
-import { describe, expect, it } from 'vitest';
+import { Event } from '../events/Event';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('Node', () => {
   it('should not be active by default', () => {
@@ -46,6 +47,83 @@ describe('Node', () => {
     node.unready();
 
     expect(node.isReady).toBe(false);
+  });
+
+  it('should add an event listener before being activated', () => {
+    const node = new Node('node');
+    const event = new Event(Symbol('event'));
+    const listener = vi.fn();
+    const data = -1;
+
+    node.addEventListener(event, listener);
+    node.activate();
+    event.emit(data);
+
+    expect(listener).toHaveBeenCalledWith(data);
+  });
+
+  it('should add an event listener while active', () => {
+    const node = new Node('node');
+    const event = new Event<void>(Symbol('event'));
+    const listener = vi.fn();
+
+    node.activate();
+    node.addEventListener(event, listener);
+    event.emit();
+
+    expect(listener).toHaveBeenCalled();
+  });
+
+  it('should add an event listener while inactive', () => {
+    const node = new Node('node');
+    const event = new Event<void>(Symbol('event'));
+    const listener = vi.fn();
+
+    node.deactivate();
+    node.addEventListener(event, listener);
+    node.activate();
+    event.emit();
+
+    expect(listener).toHaveBeenCalled();
+  });
+
+  it('should not execute event listener if event emitted while inactive', () => {
+    const node = new Node('node');
+    const event = new Event<void>(Symbol('event'));
+    const listener = vi.fn();
+
+    node.addEventListener(event, listener);
+    node.deactivate();
+    event.emit();
+
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it('should keep an event listener after being activated, deactivated, and then activated again', () => {
+    const node = new Node('node');
+    const event = new Event<void>(Symbol('event'));
+    const listener = vi.fn();
+
+    node.addEventListener(event, listener);
+    node.activate();
+    node.deactivate();
+    node.activate();
+    event.emit();
+
+    expect(listener).toHaveBeenCalled();
+  });
+
+  it('should remove an event listener', () => {
+    const node = new Node('node');
+    const event = new Event<void>(Symbol('event'));
+    const listener = vi.fn();
+
+    node.addEventListener(event, listener);
+    node.removeEventListener(event, listener);
+    node.activate();
+    event.emit();
+
+    expect(listener).not.toHaveBeenCalled();
   });
 
   it('should have no parent by default', () => {
