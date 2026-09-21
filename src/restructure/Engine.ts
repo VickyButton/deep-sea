@@ -4,6 +4,7 @@ import type { GraphicsEngine } from './engine/graphicsEngine.types';
 import type { SceneTree } from './engine/sceneTree.types';
 import type { Node } from './nodes';
 import type { GraphicsCanvas } from './providers/graphicsCanvas.types';
+import { EngineEvents } from './events';
 import { NewFrameEvent } from './events/NewFrameEvent';
 
 /**
@@ -13,6 +14,7 @@ export class Engine {
   private readonly frameLoop: FrameLoop;
   private readonly graphicsEngine: GraphicsEngine;
   private readonly sceneTree: SceneTree;
+  private readonly pluginManager = new EnginePluginManager();
 
   constructor(options: {
     frameLoop: FrameLoop;
@@ -22,6 +24,22 @@ export class Engine {
     this.frameLoop = options.frameLoop;
     this.graphicsEngine = options.graphicsEngine;
     this.sceneTree = options.sceneTree;
+  }
+
+  /**
+   * Adds an engine plugin.
+   * @param plugin The plugin to add.
+   */
+  public addPlugin(plugin: EnginePlugin) {
+    this.pluginManager.addPlugin(plugin);
+  }
+
+  /**
+   * Removes an engine plugin.
+   * @param plugin The plugin to remove.
+   */
+  public removePlugin(plugin: EnginePlugin) {
+    this.pluginManager.removePlugin(plugin);
   }
 
   /**
@@ -57,16 +75,23 @@ export class Engine {
   /** Sets up the engine for use. */
   public setup() {
     this.setupEngine();
+    this.emitSetupEvent();
   }
 
   private setupEngine() {
+    this.pluginManager.setup();
     this.graphicsEngine.setup();
+  }
+
+  private emitSetupEvent() {
+    EngineEvents.SetupEvent.emit();
   }
 
   /** Starts the engine. */
   public start() {
     this.addEventListeners();
     this.startFrameLoop();
+    this.emitStartEvent();
   }
 
   private addEventListeners() {
@@ -85,10 +110,15 @@ export class Engine {
     this.frameLoop.start();
   }
 
+  private emitStartEvent() {
+    EngineEvents.StartEvent.emit();
+  }
+
   /** Stops the engine. */
   public stop() {
     this.removeEventListeners();
     this.stopFrameLoop();
+    this.emitStopEvent();
   }
 
   private removeEventListeners() {
@@ -102,4 +132,82 @@ export class Engine {
   private stopFrameLoop() {
     this.frameLoop.stop();
   }
+
+  private emitStopEvent() {
+    EngineEvents.StopEvent.emit();
+  }
+}
+
+/**
+ * Manages the engine's plugins.
+ */
+class EnginePluginManager {
+  private readonly plugins = new Set<EnginePlugin>();
+
+  /**
+   * Adds a plugin.
+   * @param plugin The plugin to add.
+   */
+  public addPlugin(plugin: EnginePlugin) {
+    this.plugins.add(plugin);
+  }
+
+  /**
+   * Removes a plugin.
+   * @param plugin The plugin to remove.
+   */
+  public removePlugin(plugin: EnginePlugin) {
+    this.plugins.delete(plugin);
+  }
+
+  /**
+   * Sets up the event listeners for the plugins.
+   */
+  public setup() {
+    this.setupEventListeners();
+  }
+
+  private setupEventListeners() {
+    EngineEvents.SetupEvent.addListener(this.onSetup);
+    EngineEvents.StartEvent.addListener(this.onStart);
+    EngineEvents.StopEvent.addListener(this.onStop);
+  }
+
+  private onSetup = () => {
+    this.iteratePlugins((plugin) => plugin.setup?.());
+  };
+  private onStart = () => {
+    this.iteratePlugins((plugin) => plugin.start?.());
+  };
+  private onStop = () => {
+    this.iteratePlugins((plugin) => plugin.stop?.());
+  };
+
+  private iteratePlugins(callback: (plugin: EnginePlugin) => void) {
+    for (const plugin of this.plugins) {
+      callback(plugin);
+    }
+  }
+
+  public teardown() {
+    this.teardownEventListeners();
+  }
+
+  private teardownEventListeners() {
+    EngineEvents.SetupEvent.removeListener(this.onSetup);
+    EngineEvents.StartEvent.removeListener(this.onStart);
+    EngineEvents.StopEvent.removeListener(this.onStop);
+  }
+}
+
+/**
+ * A plugin that executes callback at different lifecycle steps of the engine.
+ */
+export class EnginePlugin {
+  /** Callback to execute after the engine is set up. */
+  public setup?: () => void;
+  /** Callback to execute after the engine is started. */
+  public start?: () => void;
+  /** Callback to execute after the engine is stopped. */
+  public stop?: () => void;
 }
