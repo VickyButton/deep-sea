@@ -1,5 +1,3 @@
-export type NewFrameCallback = (dt: number) => void;
-
 /**
  * Responsible for managing new frame timing and executing callback.
  */

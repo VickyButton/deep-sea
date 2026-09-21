@@ -1,5 +1,6 @@
 import type { GraphicsCanvas } from '../../providers/graphicsCanvas.types';
 import type { DrawCommand } from '../graphicsEngine.types';
+import { QueueDrawCommandEvent } from '../../events/QueueDrawCommandEvent';
 
 export class GraphicsEngineDefault {
   private canvas: GraphicsCanvas | null = null;
@@ -35,6 +36,14 @@ export class GraphicsEngineDefault {
   private clearQueue() {
     this.queue.clear();
   }
+
+  public setup() {
+    QueueDrawCommandEvent.addListener(this.onQueueDrawCommand);
+  }
+
+  private onQueueDrawCommand = (event: DrawCommand) => {
+    this.queueDrawCommand(event);
+  };
 }
 
 /**

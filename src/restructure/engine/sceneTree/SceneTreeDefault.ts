@@ -35,12 +35,8 @@ export class SceneTreeDefault implements SceneTree {
     this.root.addChild(scene);
   }
 
-  public ready() {
-    this.root.traversePostorder((node) => node.ready());
-  }
-
-  public unready() {
-    this.root.traversePostorder((node) => node.unready());
+  public setup() {
+    this.root.traversePostorder((node) => node.setup());
   }
 
   public activate() {
@@ -49,5 +45,9 @@ export class SceneTreeDefault implements SceneTree {
 
   public deactivate() {
     this.root.traversePostorder((node) => node.deactivate());
+  }
+
+  public teardown() {
+    this.root.traversePostorder((node) => node.teardown());
   }
 }

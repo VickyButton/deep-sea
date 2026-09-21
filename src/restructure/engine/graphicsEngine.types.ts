@@ -16,6 +16,8 @@ export interface GraphicsEngine {
   queueDrawCommand(command: DrawCommand): void;
   /** Processes the draw command queue, executing each draw command. */
   processDrawCommandQueue(): void;
+  /** Sets up the graphics engine for use. */
+  setup(): void;
 }
 
 /** A command for drawing onto a graphics canvas. */

@@ -11,12 +11,12 @@ export interface SceneTree {
    * @param scene The scene to switch to.
    */
   switchToScene(scene: Node): void;
-  /** Readies the scene tree. */
-  ready(): void;
-  /** Unreadies the scene tree. */
-  unready(): void;
+  /** Sets up the scene tree. */
+  setup(): void;
   /** Activates the scene tree. */
   activate(): void;
   /** Deactivates the scene tree. */
   deactivate(): void;
+  /** Tears down the scene tree. */
+  teardown(): void;
 }

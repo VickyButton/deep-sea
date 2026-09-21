@@ -6,17 +6,17 @@ import type { Event, EventListener } from '../events/Event';
 export class Node {
   /** The node's unique ID. */
   public id: string;
+  /** A flag indicating if the node is ready for activation or not. */
+  public isReady: boolean;
   /** A flag indicating if the node is active or not. */
   public isActive: boolean;
-  /** A flag indicating if the node is ready or not. */
-  public isReady: boolean;
   protected nodeEventManager: NodeEventManager;
   protected nodeRelationshipManager: NodeRelationshipManager;
 
   constructor(id: string, options?: Node_Options) {
     this.id = id;
-    this.isActive = options?.isActive ?? false;
     this.isReady = options?.isReady ?? false;
+    this.isActive = options?.isActive ?? false;
     this.nodeEventManager = new NodeEventManager();
     this.nodeRelationshipManager = new NodeRelationshipManager(this);
   }
@@ -54,25 +54,26 @@ export class Node {
     this.nodeEventManager.removeListener(event, listener);
   }
 
-  /** Activates the node. */
+  /** Sets up the node. Event listeners should be added during setup. This should be called before activating the node. */
+  public setup() {
+    this.isReady = true;
+  }
+
+  /** Activates the node, allowing event listeners to execute. */
   public activate() {
     this.isActive = true;
     this.nodeEventManager.startListening();
   }
 
-  /** Deactivates the node. */
+  /** Deactivates the node, preventing event listeners from executing. */
   public deactivate() {
     this.isActive = false;
     this.nodeEventManager.stopListening();
   }
 
-  /** Readies the node. */
-  public ready() {
-    this.isReady = true;
-  }
-
-  /** Unreadies the node. */
-  public unready() {
+  /** Tears down the node, removing all event listeners. This should be called before deleting the node. */
+  public teardown() {
+    this.nodeEventManager.clearListeners();
     this.isReady = false;
   }
 
@@ -128,8 +129,8 @@ export class Node {
 }
 
 export interface Node_Options {
-  isActive?: boolean;
   isReady?: boolean;
+  isActive?: boolean;
 }
 
 /**
@@ -253,6 +254,16 @@ class NodeEventManager {
     for (const event of this.getEventsWithCallbacks()) {
       this.removeDelegatorForEvent(event);
     }
+  }
+
+  /** Removes all listeners. */
+  public clearListeners() {
+    this.teardownDelegators();
+    this.teardownCallbacks();
+  }
+
+  private teardownCallbacks() {
+    this.callbacks.clear();
   }
 }
 

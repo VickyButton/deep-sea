@@ -34,26 +34,15 @@ describe('SceneTreeDefault', () => {
     expect(sceneTree.root.children.length).toBe(1);
   });
 
-  it('should ready current scene', () => {
+  it('should set up current scene', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new Node('scene');
     scene.isReady = false;
 
     sceneTree.switchToScene(scene);
-    sceneTree.ready();
+    sceneTree.setup();
 
     expect(scene.isReady).toBe(true);
-  });
-
-  it('should unready current scene', () => {
-    const sceneTree = new SceneTreeDefault();
-    const scene = new Node('scene');
-    scene.isReady = true;
-
-    sceneTree.switchToScene(scene);
-    sceneTree.unready();
-
-    expect(scene.isReady).toBe(false);
   });
 
   it('should activate current scene', () => {
@@ -76,5 +65,16 @@ describe('SceneTreeDefault', () => {
     sceneTree.deactivate();
 
     expect(scene.isActive).toBe(false);
+  });
+
+  it('should tear down current scene', () => {
+    const sceneTree = new SceneTreeDefault();
+    const scene = new Node('scene');
+    scene.isReady = true;
+
+    sceneTree.switchToScene(scene);
+    sceneTree.teardown();
+
+    expect(scene.isReady).toBe(false);
   });
 });
