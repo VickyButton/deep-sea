@@ -2,12 +2,7 @@
  * An event that can be emitted to listeners.
  */
 export class Event<T = unknown> {
-  public readonly id: symbol;
   private readonly listeners = new Set<EventListener<T>>();
-
-  constructor(id: symbol) {
-    this.id = id;
-  }
 
   /** The number of listeners on the event. */
   public get listenerCount() {

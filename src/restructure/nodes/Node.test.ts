@@ -50,7 +50,7 @@ describe('Node', () => {
 
   it('should add event listeners before being activated', () => {
     const node = new Node('node');
-    const event = new Event(Symbol('event'));
+    const event = new Event();
     const listener1 = vi.fn();
     const listener2 = vi.fn();
     const data = -1;
@@ -66,7 +66,7 @@ describe('Node', () => {
 
   it('should add event listeners while active', () => {
     const node = new Node('node');
-    const event = new Event<void>(Symbol('event'));
+    const event = new Event<void>();
     const listener = vi.fn();
 
     node.activate();
@@ -78,7 +78,7 @@ describe('Node', () => {
 
   it('should add event listeners while inactive', () => {
     const node = new Node('node');
-    const event = new Event<void>(Symbol('event'));
+    const event = new Event<void>();
     const listener = vi.fn();
 
     node.deactivate();
@@ -91,7 +91,7 @@ describe('Node', () => {
 
   it('should not execute event listeners if event emitted while inactive', () => {
     const node = new Node('node');
-    const event = new Event<void>(Symbol('event'));
+    const event = new Event<void>();
     const listener = vi.fn();
 
     node.addEventListener(event, listener);
@@ -103,7 +103,7 @@ describe('Node', () => {
 
   it('should keep event listeners after being activated, deactivated, and then activated again', () => {
     const node = new Node('node');
-    const event = new Event<void>(Symbol('event'));
+    const event = new Event<void>();
     const listener = vi.fn();
 
     node.addEventListener(event, listener);
@@ -117,7 +117,7 @@ describe('Node', () => {
 
   it('should remove event listeners', () => {
     const node = new Node('node');
-    const event = new Event<void>(Symbol('event'));
+    const event = new Event<void>();
     const listener = vi.fn();
 
     node.addEventListener(event, listener);
@@ -130,7 +130,7 @@ describe('Node', () => {
 
   it('should remove event listeners on teardown', () => {
     const node = new Node('node');
-    const event = new Event<void>(Symbol('event'));
+    const event = new Event<void>();
     const listener = vi.fn();
 
     node.addEventListener(event, listener);
