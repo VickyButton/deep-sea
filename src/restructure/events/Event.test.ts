@@ -3,13 +3,13 @@ import { describe, expect, it, vi } from 'vitest';
 
 describe('Event', () => {
   it('should have no listeners by default', () => {
-    const event = new Event();
+    const event = new Event('event');
 
     expect(event.listenerCount).toBe(0);
   });
 
   it('should add a listener', () => {
-    const event = new Event();
+    const event = new Event('event');
 
     event.addListener(vi.fn());
 
@@ -17,7 +17,7 @@ describe('Event', () => {
   });
 
   it('should remove a listener', () => {
-    const event = new Event();
+    const event = new Event('event');
     const listener = vi.fn();
 
     event.addListener(listener);
@@ -27,7 +27,7 @@ describe('Event', () => {
   });
 
   it('should remove all listeners', () => {
-    const event = new Event();
+    const event = new Event('event');
     const listener = vi.fn();
 
     event.addListener(listener);
@@ -37,7 +37,7 @@ describe('Event', () => {
   });
 
   it('should emit event data to listeners', () => {
-    const event = new Event();
+    const event = new Event('event');
     const listener = vi.fn();
     const data = 'EVENT_DATA';
 
