@@ -1,5 +1,6 @@
 import type { TimeProvider } from '../../providers/timeProvider.types';
-import type { FrameLoop, NewFrameCallback } from '../frameLoop.types';
+import type { FrameLoop } from '../frameLoop.types';
+import { NewFrameEvent } from '../../events/NewFrameEvent';
 
 export class FrameLoopDefault implements FrameLoop {
   private readonly timeProvider: TimeProvider;
@@ -8,7 +9,6 @@ export class FrameLoopDefault implements FrameLoop {
   private lastLoopTimestamp = 0;
   private millisecondsSinceLastFrame = 0;
   private scheduledAnimationFrameRequestId: number | null = null;
-  private newFrameCallback: NewFrameCallback = () => { };
 
   constructor(timeProvider: TimeProvider) {
     this.timeProvider = timeProvider;
@@ -20,10 +20,6 @@ export class FrameLoopDefault implements FrameLoop {
 
   public setFramesPerSecond(fps: number) {
     this.framesPerSecond = fps;
-  }
-
-  public onNewFrame(callback: NewFrameCallback) {
-    this.newFrameCallback = callback;
   }
 
   public start() {
@@ -60,7 +56,7 @@ export class FrameLoopDefault implements FrameLoop {
   private checkIfNewFrameIsDue() {
     if (this.isDueForNewFrame()) {
       this.updateLastFrameTimestamp();
-      this.executeNewFrameCallback();
+      this.emitNewFrameEvent(this.millisecondsSinceLastFrame);
     }
   }
 
@@ -72,8 +68,8 @@ export class FrameLoopDefault implements FrameLoop {
     this.lastFrameTimestamp = this.lastLoopTimestamp;
   }
 
-  private executeNewFrameCallback() {
-    this.newFrameCallback(this.millisecondsSinceLastFrame);
+  private emitNewFrameEvent(dt: number) {
+    NewFrameEvent.emit(dt);
   }
 
   public stop() {

@@ -1,4 +1,5 @@
 import { FrameLoopDefault } from './FrameLoopDefault';
+import { NewFrameEvent } from '../../events/NewFrameEvent';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const FPS = 60;
@@ -27,27 +28,27 @@ describe('FrameLoopDefault', () => {
     timeProvider.now = 0;
   });
 
-  it('should execute new frame callback after interval', () => {
-    const frameLoop = new FrameLoopDefault(timeProvider);
-    const newFrameCallback = vi.fn();
+  it('should emit new frame event after interval', () => {
+    vi.mock('../../events/NewFrameEvent');
 
-    frameLoop.onNewFrame(newFrameCallback);
+    const frameLoop = new FrameLoopDefault(timeProvider);
+
     frameLoop.start();
     advanceTimers(FPS_INTERVAL);
 
-    expect(newFrameCallback).toHaveBeenCalled();
+    expect(NewFrameEvent.emit).toHaveBeenCalledWith(FPS_INTERVAL);
   });
 
-  it('should not execute new frame callback after stopping', () => {
-    const frameLoop = new FrameLoopDefault(timeProvider);
-    const newFrameCallback = vi.fn();
+  it('should not emit new frame callback after stopping', () => {
+    vi.mock('../../events/NewFrameEvent');
 
-    frameLoop.onNewFrame(newFrameCallback);
+    const frameLoop = new FrameLoopDefault(timeProvider);
+
     frameLoop.start();
     frameLoop.stop();
     advanceTimers(FPS_INTERVAL);
 
-    expect(newFrameCallback).not.toHaveBeenCalled();
+    expect(NewFrameEvent.emit).not.toHaveBeenCalled();
   });
 });
 

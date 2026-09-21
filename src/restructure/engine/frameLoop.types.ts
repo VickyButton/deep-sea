@@ -10,11 +10,6 @@ export interface FrameLoop {
    */
   setFramesPerSecond(fps: number): void;
   /**
-   * Sets a callback to be executed when a new frame is created.
-   * @param callback The callback to execute.
-   */
-  onNewFrame(callback: NewFrameCallback): void;
-  /**
    * Starts the frame loop.
    */
   start(): void;
