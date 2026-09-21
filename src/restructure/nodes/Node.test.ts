@@ -51,14 +51,17 @@ describe('Node', () => {
   it('should add event listeners before being activated', () => {
     const node = new Node('node');
     const event = new Event(Symbol('event'));
-    const listener = vi.fn();
+    const listener1 = vi.fn();
+    const listener2 = vi.fn();
     const data = -1;
 
-    node.addEventListener(event, listener);
+    node.addEventListener(event, listener1);
+    node.addEventListener(event, listener2);
     node.activate();
     event.emit(data);
 
-    expect(listener).toHaveBeenCalledWith(data);
+    expect(listener1).toHaveBeenCalledWith(data);
+    expect(listener2).toHaveBeenCalledWith(data);
   });
 
   it('should add event listeners while active', () => {
