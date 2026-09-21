@@ -10,7 +10,9 @@ export class Node {
   public isReady: boolean;
   /** A flag indicating if the node is active or not. */
   public isActive: boolean;
+  /** Manages the node's event listeners. */
   protected nodeEventManager: NodeEventManager;
+  /** Manages the node's relationships. */
   protected nodeRelationshipManager: NodeRelationshipManager;
 
   constructor(id: string, options?: Node_Options) {
