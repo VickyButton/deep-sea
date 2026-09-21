@@ -7,10 +7,10 @@ export interface SceneTree {
   /** The scene tree's root node. */
   root: Node;
   /**
-   * Switches to a new scene.
-   * @param scene The scene to switch to.
+   * Sets the current scene.
+   * @param scene The scene to set as the current scene.
    */
-  switchToScene(scene: Node): void;
+  setScene(scene: Node): void;
   /** Sets up the scene tree. */
   setup(): void;
   /** Activates the scene tree. */

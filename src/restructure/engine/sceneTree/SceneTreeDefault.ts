@@ -5,7 +5,7 @@ export class SceneTreeDefault implements SceneTree {
   private currentScene: Node | null = null;
   public root = new Node('root'); // TODO: Replace with Viewport.
 
-  public switchToScene(scene: Node) {
+  public setScene(scene: Node) {
     this.replaceCurrentScene(scene);
   }
 

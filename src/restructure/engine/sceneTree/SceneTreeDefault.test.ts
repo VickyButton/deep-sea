@@ -7,7 +7,7 @@ describe('SceneTreeDefault', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new Node('scene');
 
-    sceneTree.switchToScene(scene);
+    sceneTree.setScene(scene);
 
     expect(sceneTree.root.children.length).toBe(1);
     expect(sceneTree.root.children[0]).toBe(scene);
@@ -18,20 +18,11 @@ describe('SceneTreeDefault', () => {
     const scene = new Node('scene');
     const replacementScene = new Node('replacementScene');
 
-    sceneTree.switchToScene(scene);
-    sceneTree.switchToScene(replacementScene);
+    sceneTree.setScene(scene);
+    sceneTree.setScene(replacementScene);
 
     expect(sceneTree.root.children.length).toBe(1);
     expect(sceneTree.root.children[0]).toBe(replacementScene);
-  });
-
-  it('should add scene to root node', () => {
-    const sceneTree = new SceneTreeDefault();
-    const scene = new Node('scene');
-
-    sceneTree.switchToScene(scene);
-
-    expect(sceneTree.root.children.length).toBe(1);
   });
 
   it('should set up current scene', () => {
@@ -39,7 +30,7 @@ describe('SceneTreeDefault', () => {
     const scene = new Node('scene');
     scene.isReady = false;
 
-    sceneTree.switchToScene(scene);
+    sceneTree.setScene(scene);
     sceneTree.setup();
 
     expect(scene.isReady).toBe(true);
@@ -50,7 +41,7 @@ describe('SceneTreeDefault', () => {
     const scene = new Node('scene');
     scene.isActive = false;
 
-    sceneTree.switchToScene(scene);
+    sceneTree.setScene(scene);
     sceneTree.activate();
 
     expect(scene.isActive).toBe(true);
@@ -61,7 +52,7 @@ describe('SceneTreeDefault', () => {
     const scene = new Node('scene');
     scene.isActive = true;
 
-    sceneTree.switchToScene(scene);
+    sceneTree.setScene(scene);
     sceneTree.deactivate();
 
     expect(scene.isActive).toBe(false);
@@ -72,7 +63,7 @@ describe('SceneTreeDefault', () => {
     const scene = new Node('scene');
     scene.isReady = true;
 
-    sceneTree.switchToScene(scene);
+    sceneTree.setScene(scene);
     sceneTree.teardown();
 
     expect(scene.isReady).toBe(false);

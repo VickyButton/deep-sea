@@ -36,14 +36,14 @@ export class Engine {
    * Sets the current scene in the scene tree.
    * @param scene The scene to switch to.
    */
-  public setScene(scene: Node) {
-    this.switchToScene(scene);
+  public switchToScene(scene: Node) {
+    this.setScene(scene);
     this.setupSceneTree();
     this.activateSceneTree();
   }
 
-  private switchToScene(scene: Node) {
-    this.sceneTree.switchToScene(scene);
+  private setScene(scene: Node) {
+    this.sceneTree.setScene(scene);
   }
 
   private setupSceneTree() {
