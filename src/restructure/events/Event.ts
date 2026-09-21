@@ -2,10 +2,10 @@
  * An event that can be emitted to listeners.
  */
 export class Event<T = unknown> {
-  public readonly id: string;
+  public readonly id: symbol;
   private readonly listeners = new Set<EventListener<T>>();
 
-  constructor(id: string) {
+  constructor(id: symbol) {
     this.id = id;
   }
 
@@ -47,4 +47,4 @@ export class Event<T = unknown> {
 /**
  * Callback that is executed when an event is emitted.
  */
-export type EventListener<T> = (data: T) => void;
+export type EventListener<T = unknown> = (data: T) => void;
