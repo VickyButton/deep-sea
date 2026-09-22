@@ -20,8 +20,8 @@ export class Transform2D {
 
   constructor(options?: Transform2D_Options) {
     this.rotation = options?.rotation ?? 0;
-    this.scale = options?.scale ? options.scale.copy() : new Vector2D(1, 1);
-    this.translation = options?.translation ? options.translation.copy() : new Vector2D(0, 0);
+    this.scale = options?.scale ?? new Vector2D(1, 1);
+    this.translation = options?.translation ?? new Vector2D(0, 0);
   }
 
   /**

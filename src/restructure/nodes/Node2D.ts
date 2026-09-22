@@ -18,8 +18,8 @@ export class Node2D extends GraphicsNode {
   constructor(id: string, options?: Node2D_Options) {
     super(id, options);
 
-    this.position = options?.position ? options.position.copy() : new Vector2D(0, 0);
-    this.scale = options?.scale ? options.scale.copy() : new Vector2D(1, 1);
+    this.position = options?.position ?? new Vector2D(0, 0);
+    this.scale = options?.scale ?? new Vector2D(1, 1);
     this.rotation = options?.rotation ?? 0;
   }
 
