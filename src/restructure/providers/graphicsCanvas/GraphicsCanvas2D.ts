@@ -1,3 +1,4 @@
+import type { Matrix3D } from '../../domain/Matrix3D';
 import type { GraphicsCanvas } from '../graphicsCanvas.types';
 
 export class GraphicsCanvas2D implements GraphicsCanvas {
@@ -29,6 +30,17 @@ export class GraphicsCanvas2D implements GraphicsCanvas {
 
   public closePath() {
     this.ctx.closePath();
+  }
+
+  public transform(matrix: Matrix3D) {
+    const a = matrix[0][0];
+    const b = matrix[0][1];
+    const c = matrix[1][0];
+    const d = matrix[1][1];
+    const e = matrix[2][0];
+    const f = matrix[2][1];
+
+    this.ctx.setTransform(a, b, c, d, e, f);
   }
 
   public createLine(fromX: number, fromY: number, toX: number, toY: number) {

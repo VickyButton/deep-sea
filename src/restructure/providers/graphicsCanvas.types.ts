@@ -1,3 +1,5 @@
+import type { Matrix3D } from '../domain/Matrix3D';
+
 /**
  * A graphics canvas that can be drawn on and rendered.
  */
@@ -10,6 +12,11 @@ export interface GraphicsCanvas {
   beginPath(): void;
   /** Closes current path. */
   closePath(): void;
+  /**
+   * Applies a transformation matrix to the canvas.
+   * @param matrix The transformation matrix to apply.
+   */
+  transform(matrix: Matrix3D): void;
   /**
    * Creates a line between two points.
    * @param fromX The x-axis coordinate of the line's starting point.
