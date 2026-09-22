@@ -2,9 +2,13 @@ import type { GraphicsCanvas } from '../../providers/graphicsCanvas.types';
 import type { DrawCommand, GraphicsEngine } from '../graphicsEngine.types';
 
 export class GraphicsEngineDefault implements GraphicsEngine {
+  private readonly canvas: GraphicsCanvas;
   private cache = new DrawCommandCache();
-  private canvas: GraphicsCanvas | null = null;
   private queue = new DrawCommandQueue();
+
+  constructor(canvas: GraphicsCanvas) {
+    this.canvas = canvas;
+  }
 
   public deleteCachedDrawCommand(id: string) {
     this.deleteCommandFromCache(id);
@@ -22,9 +26,7 @@ export class GraphicsEngineDefault implements GraphicsEngine {
   }
 
   private clearCanvas() {
-    if (this.canvas) {
-      this.canvas.clear();
-    }
+    this.canvas.clear();
   }
 
   private applyCacheToQueue() {
@@ -54,15 +56,12 @@ export class GraphicsEngineDefault implements GraphicsEngine {
   }
 
   private processCommand(command: DrawCommand) {
-    if (this.canvas) {
-      this.drawToCanvas(this.canvas, command);
-    }
-
+    this.drawToCanvas(command);
     this.cacheCommand(command);
   }
 
-  private drawToCanvas(canvas: GraphicsCanvas, command: DrawCommand) {
-    command.draw(canvas);
+  private drawToCanvas(command: DrawCommand) {
+    command.draw(this.canvas);
   }
 
   private cacheCommand(command: DrawCommand) {
@@ -79,10 +78,6 @@ export class GraphicsEngineDefault implements GraphicsEngine {
 
   public queueDrawCommand(command: DrawCommand) {
     this.addCommandToQueue(command);
-  }
-
-  public setTargetCanvas(canvas: GraphicsCanvas | null) {
-    this.canvas = canvas;
   }
 }
 

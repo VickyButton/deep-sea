@@ -42,18 +42,6 @@ describe('GraphicsEngineEventController', () => {
 
     expect(graphicsEngine.queueDrawCommand).toHaveBeenCalledWith(drawCommand);
   });
-
-  it('should map SetTargetCanvas event', () => {
-    const graphicsEngine = new GraphicsEngine();
-    const graphicsEngineEvents = createGraphicsEngineEvents();
-    const eventMapper = new GraphicsEngineEventController(graphicsEngine, graphicsEngineEvents);
-    const canvas = null;
-
-    eventMapper.setup();
-    graphicsEngineEvents.SetTargetCanvas.emit(canvas);
-
-    expect(graphicsEngine.setTargetCanvas).toHaveBeenCalledWith(canvas);
-  });
 });
 
 const GraphicsEngine = vi.fn(class {
@@ -68,6 +56,5 @@ function createGraphicsEngineEvents(): GraphicsEngineEvents {
     DeleteCachedDrawCommand: new Event(),
     ProcessDrawCommandQueue: new Event(),
     QueueDrawCommand: new Event(),
-    SetTargetCanvas: new Event(),
   };
 };

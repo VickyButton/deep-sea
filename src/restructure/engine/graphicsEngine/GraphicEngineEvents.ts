@@ -5,5 +5,4 @@ export const graphicsEngineEvents: GraphicsEngineEvents = {
   DeleteCachedDrawCommand: new Event(),
   ProcessDrawCommandQueue: new Event(),
   QueueDrawCommand: new Event(),
-  SetTargetCanvas: new Event(),
 };

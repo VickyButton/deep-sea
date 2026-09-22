@@ -1,13 +1,12 @@
-import type { GraphicsCanvas } from '../../providers/graphicsCanvas.types';
 import type { DrawCommand, GraphicsEngine, GraphicsEngineEvents } from '../graphicsEngine.types';
 
 /** Maps Graphics Engine events to their corresponding methods. */
 export class GraphicsEngineEventController {
-  private readonly graphicsEngine: GraphicsEngine;
+  private readonly engine: GraphicsEngine;
   private readonly events: GraphicsEngineEvents;
 
-  constructor(graphicsEngine: GraphicsEngine, events: GraphicsEngineEvents) {
-    this.graphicsEngine = graphicsEngine;
+  constructor(engine: GraphicsEngine, events: GraphicsEngineEvents) {
+    this.engine = engine;
     this.events = events;
   }
 
@@ -19,7 +18,6 @@ export class GraphicsEngineEventController {
     this.addDeleteCachedDrawCommandEventListener();
     this.addProcessDrawCommandQueueEventListener();
     this.addQueueDrawCommandEventListener();
-    this.addSetTargetCanvasEventListener();
   }
 
   private addDeleteCachedDrawCommandEventListener() {
@@ -27,7 +25,7 @@ export class GraphicsEngineEventController {
   }
 
   private onDeleteCachedDrawCommand = (id: string) => {
-    this.graphicsEngine.deleteCachedDrawCommand(id);
+    this.engine.deleteCachedDrawCommand(id);
   };
 
   private addProcessDrawCommandQueueEventListener() {
@@ -35,7 +33,7 @@ export class GraphicsEngineEventController {
   }
 
   private onProcessDrawCommandQueue = () => {
-    this.graphicsEngine.processDrawCommandQueue();
+    this.engine.processDrawCommandQueue();
   };
 
   private addQueueDrawCommandEventListener() {
@@ -43,15 +41,7 @@ export class GraphicsEngineEventController {
   }
 
   private onQueueDrawCommand = (command: DrawCommand) => {
-    this.graphicsEngine.queueDrawCommand(command);
-  };
-
-  private addSetTargetCanvasEventListener() {
-    this.events.SetTargetCanvas.addListener(this.onSetTargetCanvas);
-  }
-
-  private onSetTargetCanvas = (canvas: GraphicsCanvas | null) => {
-    this.graphicsEngine.setTargetCanvas(canvas);
+    this.engine.queueDrawCommand(command);
   };
 
   public teardown() {
@@ -62,7 +52,6 @@ export class GraphicsEngineEventController {
     this.removeDeleteCachedDrawCommandEventListener();
     this.removeProcessDrawCommandQueueEventListener();
     this.removeQueueDrawCommandEventListener();
-    this.removeSetTargetCanvasEventListener();
   }
 
   private removeDeleteCachedDrawCommandEventListener() {
@@ -75,9 +64,5 @@ export class GraphicsEngineEventController {
 
   private removeQueueDrawCommandEventListener() {
     this.events.QueueDrawCommand.removeListener(this.onQueueDrawCommand);
-  }
-
-  private removeSetTargetCanvasEventListener() {
-    this.events.SetTargetCanvas.removeListener(this.onSetTargetCanvas);
   }
 }

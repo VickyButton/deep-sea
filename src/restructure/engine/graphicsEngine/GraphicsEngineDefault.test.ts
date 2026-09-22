@@ -2,39 +2,24 @@ import { GraphicsEngineDefault } from './GraphicsEngineDefault';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('GraphicsEngineDefault', () => {
-  it('should not draw to canvas if no canvas set', () => {
-    const graphicsEngine = new GraphicsEngineDefault();
+  it('should draw onto canvas using draw commands', () => {
+    const canvas = new GraphicsCanvas();
+    const engine = new GraphicsEngineDefault(canvas);
     const drawCommand = {
       id: 'draw-command',
       zIndex: 0,
       draw: vi.fn(),
     };
 
-    graphicsEngine.queueDrawCommand(drawCommand);
-    graphicsEngine.processDrawCommandQueue();
+    engine.queueDrawCommand(drawCommand);
+    engine.processDrawCommandQueue();
 
-    expect(drawCommand.draw).not.toHaveBeenCalled();
-  });
-
-  it('should draw to target canvas using draw commands', () => {
-    const graphicsEngine = new GraphicsEngineDefault();
-    const graphicsCanvas = new GraphicsCanvas();
-    const drawCommand = {
-      id: 'draw-command',
-      zIndex: 0,
-      draw: vi.fn(),
-    };
-
-    graphicsEngine.setTargetCanvas(graphicsCanvas);
-    graphicsEngine.queueDrawCommand(drawCommand);
-    graphicsEngine.processDrawCommandQueue();
-
-    expect(drawCommand.draw).toHaveBeenCalledWith(graphicsCanvas);
+    expect(drawCommand.draw).toHaveBeenCalledWith(canvas);
   });
 
   it('should process queued commands in order of z-index', () => {
-    const graphicsEngine = new GraphicsEngineDefault();
-    const graphicsCanvas = new GraphicsCanvas();
+    const canvas = new GraphicsCanvas();
+    const engine = new GraphicsEngineDefault(canvas);
     const drawCommandZ0 = {
       id: 'draw-command-z0',
       zIndex: 0,
@@ -46,45 +31,42 @@ describe('GraphicsEngineDefault', () => {
       zIndex: 1,
     };
 
-    graphicsEngine.setTargetCanvas(graphicsCanvas);
-    graphicsEngine.queueDrawCommand(drawCommandZ1);
-    graphicsEngine.queueDrawCommand(drawCommandZ0);
-    graphicsEngine.processDrawCommandQueue();
+    engine.queueDrawCommand(drawCommandZ1);
+    engine.queueDrawCommand(drawCommandZ0);
+    engine.processDrawCommandQueue();
 
     expect(drawCommandZ0.draw).toHaveBeenCalledBefore(drawCommandZ1.draw);
   });
 
   it('should cache command after processing', () => {
-    const graphicsEngine = new GraphicsEngineDefault();
-    const graphicsCanvas = new GraphicsCanvas();
+    const canvas = new GraphicsCanvas();
+    const engine = new GraphicsEngineDefault(canvas);
     const drawCommand = {
       id: 'draw-command',
       zIndex: 0,
       draw: vi.fn(),
     };
 
-    graphicsEngine.setTargetCanvas(graphicsCanvas);
-    graphicsEngine.queueDrawCommand(drawCommand);
-    graphicsEngine.processDrawCommandQueue();
-    graphicsEngine.processDrawCommandQueue();
+    engine.queueDrawCommand(drawCommand);
+    engine.processDrawCommandQueue();
+    engine.processDrawCommandQueue();
 
     expect(drawCommand.draw).toHaveBeenCalledTimes(2);
   });
 
   it('should delete cached command', () => {
-    const graphicsEngine = new GraphicsEngineDefault();
-    const graphicsCanvas = new GraphicsCanvas();
+    const canvas = new GraphicsCanvas();
+    const engine = new GraphicsEngineDefault(canvas);
     const drawCommand = {
       id: 'draw-command',
       zIndex: 0,
       draw: vi.fn(),
     };
 
-    graphicsEngine.setTargetCanvas(graphicsCanvas);
-    graphicsEngine.queueDrawCommand(drawCommand);
-    graphicsEngine.processDrawCommandQueue();
-    graphicsEngine.deleteCachedDrawCommand('draw-command');
-    graphicsEngine.processDrawCommandQueue();
+    engine.queueDrawCommand(drawCommand);
+    engine.processDrawCommandQueue();
+    engine.deleteCachedDrawCommand('draw-command');
+    engine.processDrawCommandQueue();
 
     expect(drawCommand.draw).toHaveBeenCalledOnce();
   });

@@ -3,7 +3,6 @@ import type { FrameLoop } from './engine/frameLoop.types';
 import type { GraphicsEngine } from './engine/graphicsEngine.types';
 import type { SceneTree } from './engine/sceneTree.types';
 import type { Node } from './nodes';
-import type { GraphicsCanvas } from './providers/graphicsCanvas.types';
 import { graphicsEngineEvents } from './engine/graphicsEngine/GraphicEngineEvents';
 import { GraphicsEngineEventController } from './engine/graphicsEngine/GraphicsEngineEventController';
 import { EngineEvents } from './events';
@@ -52,14 +51,6 @@ export class Engine {
    */
   public setFramesPerSecond(fps: number) {
     this.frameLoop.framesPerSecond = fps;
-  }
-
-  /**
-   * Sets the target graphics canvas to draw to.
-   * @param canvas The target canvas to draw to.
-   */
-  public setTargetCanvas(canvas: GraphicsCanvas) {
-    this.graphicsEngine.setTargetCanvas(canvas);
   }
 
   /**

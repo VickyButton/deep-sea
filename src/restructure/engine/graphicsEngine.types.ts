@@ -1,7 +1,7 @@
 import type { Event } from '../events';
 import type { GraphicsCanvas } from '../providers/graphicsCanvas.types';
 
-/** Manages the target graphics canvas and exposes functionality for drawing to said canvas. */
+/** Exposes functionality for drawing graphics onto a canvas through draw commands. */
 export interface GraphicsEngine {
   /**
    * Deletes a cached draw command.
@@ -15,11 +15,6 @@ export interface GraphicsEngine {
    * @param command The draw command to add to the queue.
    */
   queueDrawCommand(command: DrawCommand): void;
-  /**
-   * Sets the target graphics canvas to draw to.
-   * @param canvas The target canvas to draw to.
-   */
-  setTargetCanvas(canvas: GraphicsCanvas | null): void;
 }
 
 /** Graphics Engine events. */
@@ -30,8 +25,6 @@ export interface GraphicsEngineEvents {
   ProcessDrawCommandQueue: Event<void>;
   /** Event for queueing a draw command. */
   QueueDrawCommand: Event<DrawCommand>;
-  /** Event for setting a target canvas. */
-  SetTargetCanvas: Event<GraphicsCanvas | null>;
 }
 
 /** A command for drawing onto a graphics canvas. */
