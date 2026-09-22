@@ -29,6 +29,7 @@ export class Transform2D {
    * @returns The composite transformation matrix.
    */
   public computeTransformationMatrix() {
+    // TODO: Cache matrix with a matrix getter.
     const rotationMatrix = this.computeRotationMatrix();
     const scalingMatrix = this.computeScalingMatrix();
     const translationMatrix = this.computeTranslationMatrix();

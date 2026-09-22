@@ -31,7 +31,9 @@ export class CollisionShapeNode2D extends Node2D {
 
   public draw(canvas: GraphicsCanvas) {
     this.beginDrawingPath(canvas);
+    this.setTransformationMatrix(canvas);
     this.drawShape(canvas);
+    this.resetTransformationMatrix(canvas);
     this.setShapeOutlineColor(canvas);
     this.strokeShapeOutline(canvas);
     this.closeDrawingPath(canvas);
@@ -39,6 +41,12 @@ export class CollisionShapeNode2D extends Node2D {
 
   private beginDrawingPath(canvas: GraphicsCanvas) {
     canvas.beginPath();
+  }
+
+  private setTransformationMatrix(canvas: GraphicsCanvas) {
+    const matrix = this.globalTransform.computeTransformationMatrix();
+
+    canvas.setTransform(matrix);
   }
 
   private drawShape(canvas: GraphicsCanvas) {
@@ -51,6 +59,10 @@ export class CollisionShapeNode2D extends Node2D {
 
   private strokeShapeOutline(canvas: GraphicsCanvas) {
     canvas.stroke();
+  }
+
+  private resetTransformationMatrix(canvas: GraphicsCanvas) {
+    canvas.resetTransform();
   }
 
   private closeDrawingPath(canvas: GraphicsCanvas) {
