@@ -25,6 +25,22 @@ export abstract class GraphicsNode extends Node {
    */
   public abstract draw(canvas: GraphicsCanvas): void;
 
+  /**
+   * Begins a new drawing path on the canvas.
+   * @param canvas The canvas to draw onto.
+   */
+  protected beginDrawingPath(canvas: GraphicsCanvas) {
+    canvas.beginPath();
+  }
+
+  /**
+   * Closes the current drawing path on the canvas.
+   * @param canvas The canvas to draw onto.
+   */
+  protected closeDrawingPath(canvas: GraphicsCanvas) {
+    canvas.closePath();
+  }
+
   /** Queues a redraw for the node. */
   protected queueRedraw() {
     QueueDrawCommandEvent.emit(this.createDrawCommand());
