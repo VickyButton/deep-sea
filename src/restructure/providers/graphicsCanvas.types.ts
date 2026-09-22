@@ -16,7 +16,9 @@ export interface GraphicsCanvas {
    * Applies a transformation matrix to the canvas.
    * @param matrix The transformation matrix to apply.
    */
-  transform(matrix: Matrix3D): void;
+  setTransform(matrix: Matrix3D): void;
+  /** Resets the canvas transformation matrix to the identity canvas. */
+  resetTransform(): void;
   /**
    * Creates a line between two points.
    * @param fromX The x-axis coordinate of the line's starting point.

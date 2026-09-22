@@ -32,7 +32,7 @@ export class GraphicsCanvas2D implements GraphicsCanvas {
     this.ctx.closePath();
   }
 
-  public transform(matrix: Matrix3D) {
+  public setTransform(matrix: Matrix3D) {
     const a = matrix[0][0];
     const b = matrix[0][1];
     const c = matrix[1][0];
@@ -41,6 +41,10 @@ export class GraphicsCanvas2D implements GraphicsCanvas {
     const f = matrix[2][1];
 
     this.ctx.setTransform(a, b, c, d, e, f);
+  }
+
+  public resetTransform() {
+    this.ctx.resetTransform();
   }
 
   public createLine(fromX: number, fromY: number, toX: number, toY: number) {
