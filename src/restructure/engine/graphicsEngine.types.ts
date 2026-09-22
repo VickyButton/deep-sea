@@ -1,4 +1,4 @@
-import type { GraphicsCanvas } from '../domain/canvases/GraphicsCanvas';
+import type { Canvas } from '../domain/canvases/Canvas';
 import type { Event } from '../events';
 
 /** Exposes functionality for drawing graphics onto a canvas through draw commands. */
@@ -34,5 +34,5 @@ export interface DrawCommand {
   /** The order in which the command should be executed, with smaller z-indices being drawn first. */
   zIndex: number;
   /** The function for drawing onto the canvas. */
-  draw: (canvas: GraphicsCanvas) => void;
+  draw: (canvas: Canvas) => void;
 }

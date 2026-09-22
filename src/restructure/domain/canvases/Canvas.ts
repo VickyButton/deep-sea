@@ -1,6 +1,6 @@
 import type { Matrix3D } from '../Matrix3D';
 
-export abstract class GraphicsCanvas {
+export abstract class Canvas {
   /** The width of the canvas in pixels. */
   public abstract width: number;
   /** The height of the canvas in pixels. */

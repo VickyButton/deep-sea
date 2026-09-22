@@ -1,10 +1,10 @@
 /**
  * This file defines canvas exports for the package.
  */
-import { GraphicsCanvas } from './GraphicsCanvas';
-import { GraphicsCanvas2D } from './GraphicsCanvas2D';
+import { Canvas } from './Canvas';
+import { Canvas2D } from './Canvas2D';
 
 export {
-  GraphicsCanvas,
-  GraphicsCanvas2D,
+  Canvas,
+  Canvas2D,
 };

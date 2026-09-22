@@ -1,10 +1,10 @@
 import type { Node_Options } from './Node';
-import type { GraphicsCanvas } from '../domain/canvases/GraphicsCanvas';
+import type { Canvas } from '../domain/canvases/Canvas';
 import { Node } from './Node';
 import { graphicsEngineEvents } from '../engine/graphicsEngine/GraphicEngineEvents';
 
 /**
- * Abstract base node for nodes which can be drawn onto a graphics canvas.
+ * Abstract base node for nodes which can be drawn onto a canvas.
  */
 export abstract class GraphicsNode extends Node {
   /** A flag indicating if the node may be drawn or not. */
@@ -23,21 +23,21 @@ export abstract class GraphicsNode extends Node {
    * Draws the node onto a canvas.
    * @param canvas The canvas to draw onto.
    */
-  public abstract draw(canvas: GraphicsCanvas): void;
+  public abstract draw(canvas: Canvas): void;
 
   /**
-   * Begins a new drawing path on the canvas.
+   * Begins a new drawing path on a canvas.
    * @param canvas The canvas to draw onto.
    */
-  protected beginDrawingPath(canvas: GraphicsCanvas) {
+  protected beginDrawingPath(canvas: Canvas) {
     canvas.beginPath();
   }
 
   /**
-   * Closes the current drawing path on the canvas.
+   * Closes the current drawing path on a canvas.
    * @param canvas The canvas to draw onto.
    */
-  protected closeDrawingPath(canvas: GraphicsCanvas) {
+  protected closeDrawingPath(canvas: Canvas) {
     canvas.closePath();
   }
 
@@ -51,7 +51,7 @@ export abstract class GraphicsNode extends Node {
     return {
       id: this.id,
       zIndex: this.zIndex,
-      draw: (canvas: GraphicsCanvas) => this.draw(canvas),
+      draw: (canvas: Canvas) => this.draw(canvas),
     };
   }
 }

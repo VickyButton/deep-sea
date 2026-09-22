@@ -1,6 +1,6 @@
 import type { Transform2D } from '../Transform2D';
 import type { BoundingBox2D } from './shapes.types';
-import type { GraphicsCanvas } from '../canvases/GraphicsCanvas';
+import type { Canvas } from '../canvases/Canvas';
 import { Vector2D } from '../Vector2D';
 import { PolygonCollisionResolver2D } from './collisionResolvers/PolygonCollisionResolver2D';
 import { Shape2D } from './Shape2D';
@@ -85,11 +85,11 @@ export class PolygonShape2D extends Shape2D {
     return new PolygonCollisionResolver2D(this, transform, shape, shapeTransform).resolveCollision();
   }
 
-  public draw(canvas: GraphicsCanvas) {
+  public draw(canvas: Canvas) {
     this.drawPolygon(canvas);
   }
 
-  private drawPolygon(canvas: GraphicsCanvas) {
+  private drawPolygon(canvas: Canvas) {
     const lines = this.getLines();
 
     for (const [from, to] of lines) {
@@ -111,7 +111,7 @@ export class PolygonShape2D extends Shape2D {
     return lines;
   }
 
-  private drawLine(canvas: GraphicsCanvas, from: Vector2D, to: Vector2D) {
+  private drawLine(canvas: Canvas, from: Vector2D, to: Vector2D) {
     canvas.createLine(from.x, from.y, to.x, to.y);
   }
 

@@ -1,6 +1,6 @@
 import type { GraphicsNode_Options } from './GraphicsNode';
 import type { Node } from './Node';
-import type { GraphicsCanvas } from '../domain/canvases/GraphicsCanvas';
+import type { Canvas } from '../domain/canvases/Canvas';
 import { GraphicsNode } from './GraphicsNode';
 import { Transform2D } from '../domain/Transform2D';
 import { Vector2D } from '../domain/Vector2D';
@@ -105,7 +105,7 @@ export class Node2D extends GraphicsNode {
     this.rotation += radians;
   }
 
-  public draw(canvas: GraphicsCanvas) {
+  public draw(canvas: Canvas) {
     // TODO: Temp, replace later.
     console.log(canvas);
   }
@@ -114,7 +114,7 @@ export class Node2D extends GraphicsNode {
    * Sets a transformation matrix onto the canvas.
    * @param canvas The canvas to set the transformation matrix on.
    */
-  protected setTransformationMatrix(canvas: GraphicsCanvas) {
+  protected setTransformationMatrix(canvas: Canvas) {
     const matrix = this.globalTransform.computeTransformationMatrix();
 
     canvas.setTransform(matrix);
@@ -124,7 +124,7 @@ export class Node2D extends GraphicsNode {
    * Resets the current transformation matrix on a canvas to the identity matrix.
    * @param canvas The canvas to reset the transformation matrix on.
    */
-  protected resetTransformationMatrix(canvas: GraphicsCanvas) {
+  protected resetTransformationMatrix(canvas: Canvas) {
     canvas.resetTransform();
   }
 }

@@ -1,11 +1,11 @@
-import type { GraphicsCanvas } from './domain/canvases/GraphicsCanvas';
+import type { Canvas } from './domain/canvases/Canvas';
 import { Engine } from './Engine';
 import { FrameLoopDefault } from './engine/frameLoop/FrameLoopDefault';
 import { GraphicsEngineDefault } from './engine/graphicsEngine/GraphicsEngineDefault';
 import { SceneTreeDefault } from './engine/sceneTree/SceneTreeDefault';
 import { TimeProviderSystem } from './providers/timeProvider/TimeProviderSystem';
 
-export function createEngine(canvas: GraphicsCanvas) {
+export function createEngine(canvas: Canvas) {
   const timeProvider = new TimeProviderSystem();
 
   return new Engine({

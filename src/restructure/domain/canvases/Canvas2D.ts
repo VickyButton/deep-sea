@@ -1,7 +1,7 @@
 import type { Matrix3D } from '../Matrix3D';
-import { GraphicsCanvas } from './GraphicsCanvas';
+import { Canvas } from './Canvas';
 
-export class GraphicsCanvas2D extends GraphicsCanvas {
+export class Canvas2D extends Canvas {
   private ctx: CanvasRenderingContext2D;
 
   constructor(ctx: CanvasRenderingContext2D) {

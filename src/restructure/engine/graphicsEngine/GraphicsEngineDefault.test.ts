@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 describe('GraphicsEngineDefault', () => {
   it('should draw onto canvas using draw commands', () => {
-    const canvas = new GraphicsCanvas();
+    const canvas = new Canvas();
     const engine = new GraphicsEngineDefault(canvas);
     const drawCommand = {
       id: 'draw-command',
@@ -18,7 +18,7 @@ describe('GraphicsEngineDefault', () => {
   });
 
   it('should process queued commands in order of z-index', () => {
-    const canvas = new GraphicsCanvas();
+    const canvas = new Canvas();
     const engine = new GraphicsEngineDefault(canvas);
     const drawCommandZ0 = {
       id: 'draw-command-z0',
@@ -39,7 +39,7 @@ describe('GraphicsEngineDefault', () => {
   });
 
   it('should cache command after processing', () => {
-    const canvas = new GraphicsCanvas();
+    const canvas = new Canvas();
     const engine = new GraphicsEngineDefault(canvas);
     const drawCommand = {
       id: 'draw-command',
@@ -55,7 +55,7 @@ describe('GraphicsEngineDefault', () => {
   });
 
   it('should delete cached command', () => {
-    const canvas = new GraphicsCanvas();
+    const canvas = new Canvas();
     const engine = new GraphicsEngineDefault(canvas);
     const drawCommand = {
       id: 'draw-command',
@@ -72,7 +72,7 @@ describe('GraphicsEngineDefault', () => {
   });
 });
 
-const GraphicsCanvas = vi.fn(class {
+const Canvas = vi.fn(class {
   width = 0;
   height = 0;
   beginPath = vi.fn();
