@@ -99,4 +99,28 @@ describe('Vector2D', () => {
     expect(copy).toEqual(vector);
     expect(copy).not.toBe(vector);
   });
+
+  it('should create a vector pointing up', () => {
+    const vector = Vector2D.UP;
+
+    expect(vector).toEqual(new Vector2D(0, 1));
+  });
+
+  it('should create a vector pointing down', () => {
+    const vector = Vector2D.DOWN;
+
+    expect(vector).toEqual(new Vector2D(0, -1));
+  });
+
+  it('should create a vector pointing right', () => {
+    const vector = Vector2D.RIGHT;
+
+    expect(vector).toEqual(new Vector2D(1, 0));
+  });
+
+  it('should create a vector pointing left', () => {
+    const vector = Vector2D.LEFT;
+
+    expect(vector).toEqual(new Vector2D(-1, 0));
+  });
 });

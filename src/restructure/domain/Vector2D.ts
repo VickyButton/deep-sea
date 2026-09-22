@@ -133,4 +133,24 @@ export class Vector2D {
   public copy() {
     return new Vector2D(this.x, this.y);
   }
+
+  /** Creates a vector pointing up. */
+  public static get UP() {
+    return new Vector2D(0, 1);
+  }
+
+  /** Creates a vector pointing down. */
+  public static get DOWN() {
+    return new Vector2D(0, -1);
+  }
+
+  /** Creates a vector pointing right. */
+  public static get RIGHT() {
+    return new Vector2D(1, 0);
+  }
+
+  /** Creates a vector pointing left. */
+  public static get LEFT() {
+    return new Vector2D(-1, 0);
+  }
 }
