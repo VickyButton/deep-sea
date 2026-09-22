@@ -35,31 +35,7 @@ export class PolygonShape2D extends Shape2D {
 
   private createDefaultPolygon() {
     // Default polygon is a triangle.
-    return this.createRegularPolygonWithNumSides(3);
-  }
-
-  private createRegularPolygonWithNumSides(numSides: number) {
-    const stepAngle = this.computeStepAngle(numSides);
-    const polygon: Vector2D[] = [];
-
-    for (let i = 0; i < numSides; i++) {
-      const angle = i * stepAngle;
-
-      polygon.push(this.computePointAlongUnitCircle(angle));
-    }
-
-    return polygon;
-  }
-
-  private computeStepAngle(numSides: number) {
-    return 2 * Math.PI / numSides;
-  }
-
-  private computePointAlongUnitCircle(angle: number) {
-    const x = Math.cos(angle);
-    const y = Math.sin(angle);
-
-    return new Vector2D(x, y);
+    return computeVerticesForRegularPolygon(3);
   }
 
   private computeBoundingBox(): [Vector2D, Vector2D, Vector2D, Vector2D] {
@@ -142,8 +118,38 @@ export class PolygonShape2D extends Shape2D {
   public static isPolygon(shape: Shape2D): shape is PolygonShape2D {
     return shape instanceof PolygonShape2D;
   }
+
+  public static createRegularPolygon(numSides = 3) {
+    return new PolygonShape2D({
+      vertices: computeVerticesForRegularPolygon(numSides),
+    });
+  }
 }
 
 export interface PolygonShape2D_Options {
   vertices?: Vector2D[];
+}
+
+function computeVerticesForRegularPolygon(numSides: number) {
+  const stepAngle = computeStepAngle(numSides);
+  const polygon: Vector2D[] = [];
+
+  for (let i = 0; i < numSides; i++) {
+    const angle = i * stepAngle;
+
+    polygon.push(computePointAlongUnitCircle(angle));
+  }
+
+  return polygon;
+}
+
+function computeStepAngle(numSides: number) {
+  return 2 * Math.PI / numSides;
+}
+
+function computePointAlongUnitCircle(angle: number) {
+  const x = Math.cos(angle);
+  const y = Math.sin(angle);
+
+  return new Vector2D(x, y);
 }
