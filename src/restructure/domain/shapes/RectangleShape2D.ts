@@ -1,3 +1,4 @@
+import type { GraphicsCanvas } from '../../providers/graphicsCanvas.types';
 import type { Transform2D } from '../Transform2D';
 import { RectangleCollisionResolver2D } from './collisionResolvers/RectangleCollisionResolver2D';
 import { Shape2D } from './Shape2D';
@@ -160,8 +161,34 @@ export class RectangleShape2D extends Shape2D {
     return new RectangleCollisionResolver2D(this, transform, shape, shapeTransform).resolveCollision();
   }
 
-  public draw() {
-    // TODO: Implement.
+  public draw(canvas: GraphicsCanvas) {
+    this.drawRectangle(canvas);
+  }
+
+  private drawRectangle(canvas: GraphicsCanvas) {
+    const lines = this.getLines();
+
+    for (const [from, to] of lines) {
+      this.drawLine(canvas, from, to);
+    }
+  }
+
+  private getLines() {
+    const lines: [Vector2D, Vector2D][] = [];
+    const vertices = this.vertices;
+
+    for (let i = 0; i < vertices.length; i++) {
+      const from = vertices[i];
+      const to = vertices[(i + 1) % vertices.length];
+
+      lines.push([from, to]);
+    }
+
+    return lines;
+  }
+
+  private drawLine(canvas: GraphicsCanvas, from: Vector2D, to: Vector2D) {
+    canvas.createLine(from.x, from.y, to.x, to.y);
   }
 
   public static isRectangle(shape: Shape2D): shape is RectangleShape2D {
