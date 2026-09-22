@@ -27,6 +27,7 @@
   },
   "exports": {
     ".": "./src/restructure/index.ts",
+    "./colors": "./src/restructure/colors/index.ts",
     "./events": "./src/restructure/events/index.ts",
     "./nodes": "./src/restructure/nodes/index.ts",
     "./providers": "./src/restructure/providers/index.ts",
