@@ -4,6 +4,18 @@ import { Event } from '../../events';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('GraphicsEngineEventController', () => {
+  it('should map SetTargetCanvas event', () => {
+    const graphicsEngine = new GraphicsEngine();
+    const graphicsEngineEvents = createGraphicsEngineEvents();
+    const eventMapper = new GraphicsEngineEventController(graphicsEngine, graphicsEngineEvents);
+    const canvas = null;
+
+    eventMapper.setup();
+    graphicsEngineEvents.SetTargetCanvas.emit(canvas);
+
+    expect(graphicsEngine.setTargetCanvas).toHaveBeenCalledWith(canvas);
+  });
+
   it('should map QueueDrawCommand event', () => {
     const graphicsEngine = new GraphicsEngine();
     const graphicsEngineEvents = createGraphicsEngineEvents();
@@ -42,6 +54,7 @@ const GraphicsEngine = vi.fn(class {
 
 function createGraphicsEngineEvents(): GraphicsEngineEvents {
   return {
+    SetTargetCanvas: new Event(),
     QueueDrawCommand: new Event(),
     DeleteCachedDrawCommand: new Event(),
   };

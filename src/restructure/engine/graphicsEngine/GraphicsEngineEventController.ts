@@ -1,3 +1,4 @@
+import type { GraphicsCanvas } from '../../providers/graphicsCanvas.types';
 import type { DrawCommand, GraphicsEngine, GraphicsEngineEvents } from '../graphicsEngine.types';
 
 /**
@@ -17,9 +18,18 @@ export class GraphicsEngineEventController {
   }
 
   private addEventListeners() {
+    this.addSetTargetCanvasEventListener();
     this.addQueueDrawCommandEventListener();
     this.addDeleteCachedDrawCommandEventListener();
   }
+
+  private addSetTargetCanvasEventListener() {
+    this.events.SetTargetCanvas.addListener(this.onSetTargetCanvas);
+  }
+
+  private onSetTargetCanvas = (canvas: GraphicsCanvas | null) => {
+    this.graphicsEngine.setTargetCanvas(canvas);
+  };
 
   private addQueueDrawCommandEventListener() {
     this.events.QueueDrawCommand.addListener(this.onQueueDrawCommand);
@@ -42,8 +52,13 @@ export class GraphicsEngineEventController {
   }
 
   private removeEventListeners() {
+    this.removeSetTargetCanvasEventListener();
     this.removeQueueDrawCommandEventListener();
     this.removeDeleteCachedDrawCommandEventListener();
+  }
+
+  private removeSetTargetCanvasEventListener() {
+    this.events.SetTargetCanvas.removeListener(this.onSetTargetCanvas);
   }
 
   private removeQueueDrawCommandEventListener() {
