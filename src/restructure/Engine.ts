@@ -43,6 +43,14 @@ export class Engine {
   }
 
   /**
+   * Sets the frames per second that the engine loop runs at.
+   * @param fps The number of frames per second to run the engine loop at.
+   */
+  public setFramesPerSecond(fps: number) {
+    this.frameLoop.setFramesPerSecond(fps);
+  }
+
+  /**
    * Sets the target graphics canvas to draw to.
    * @param canvas The target canvas to draw to.
    */
