@@ -90,6 +90,14 @@ describe('Vector3D', () => {
     expect(result).toBe(false);
   });
 
+  it('should create a vector copy', () => {
+    const vector = new Vector3D(1, 1, 1);
+    const copy = vector.copy();
+
+    expect(copy).toEqual(vector);
+    expect(copy).not.toBe(vector);
+  });
+
   it('should copy to a 2D vector', () => {
     const vector = new Vector3D(1, 1, 1);
 

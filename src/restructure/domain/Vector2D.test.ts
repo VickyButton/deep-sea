@@ -91,4 +91,12 @@ describe('Vector2D', () => {
 
     expect(result).toBe(false);
   });
+
+  it('should create a vector copy', () => {
+    const vector = new Vector2D(1, 1);
+    const copy = vector.copy();
+
+    expect(copy).toEqual(vector);
+    expect(copy).not.toBe(vector);
+  });
 });

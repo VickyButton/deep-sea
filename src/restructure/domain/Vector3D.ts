@@ -146,6 +146,14 @@ export class Vector3D {
   }
 
   /**
+   * Creates a copy of this vector.
+   * @returns A copy of this vector.
+   */
+  public copy() {
+    return new Vector3D(this.x, this.y, this.z);
+  }
+
+  /**
    * Creates a 2D copy of the vector.
    * @returns The 2D copy of the vector.
    */

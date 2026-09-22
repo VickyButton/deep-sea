@@ -125,4 +125,12 @@ export class Vector2D {
   public equals(vector: Vector2D) {
     return this.x === vector.x && this.y === vector.y;
   }
+
+  /**
+   * Creates a copy of this vector.
+   * @returns A copy of this vector.
+   */
+  public copy() {
+    return new Vector2D(this.x, this.y);
+  }
 }
