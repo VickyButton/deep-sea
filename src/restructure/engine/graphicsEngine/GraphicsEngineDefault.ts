@@ -117,9 +117,7 @@ class DrawCommandQueue {
   }
 }
 
-/**
- * Manages the draw command cache.
- */
+/** Manages the draw command cache. */
 class DrawCommandCache {
   private readonly _commands = new Map<string, DrawCommand>();
 

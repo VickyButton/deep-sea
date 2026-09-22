@@ -1,9 +1,7 @@
 import type { Event } from '../events';
 import type { GraphicsCanvas } from '../providers/graphicsCanvas.types';
 
-/**
- * Manages the target graphics canvas and exposes functionality for drawing to said canvas.
- */
+/** Manages the target graphics canvas and exposes functionality for drawing to said canvas. */
 export interface GraphicsEngine {
   /**
    * Deletes a cached draw command.
@@ -24,9 +22,7 @@ export interface GraphicsEngine {
   setTargetCanvas(canvas: GraphicsCanvas | null): void;
 }
 
-/**
- * Events specific to the Graphics Engine.
- */
+/** Graphics Engine events. */
 export interface GraphicsEngineEvents {
   /** Event for deleting a cached draw command. */
   DeleteCachedDrawCommand: Event<string>;

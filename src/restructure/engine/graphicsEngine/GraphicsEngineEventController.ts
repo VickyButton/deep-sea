@@ -1,9 +1,7 @@
 import type { GraphicsCanvas } from '../../providers/graphicsCanvas.types';
 import type { DrawCommand, GraphicsEngine, GraphicsEngineEvents } from '../graphicsEngine.types';
 
-/**
- * Maps Graphics Engine events to their corresponding methods.
- */
+/** Maps Graphics Engine events to their corresponding methods. */
 export class GraphicsEngineEventController {
   private readonly graphicsEngine: GraphicsEngine;
   private readonly events: GraphicsEngineEvents;
