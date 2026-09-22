@@ -4,6 +4,8 @@ import type { GraphicsEngine } from './engine/graphicsEngine.types';
 import type { SceneTree } from './engine/sceneTree.types';
 import type { Node } from './nodes';
 import type { GraphicsCanvas } from './providers/graphicsCanvas.types';
+import { graphicsEngineEvents } from './engine/graphicsEngine/GraphicEngineEvents';
+import { GraphicsEngineEventMapper } from './engine/graphicsEngine/GraphicsEngineEventMapper';
 import { EngineEvents } from './events';
 import { NewFrameEvent } from './events/NewFrameEvent';
 
@@ -12,9 +14,10 @@ import { NewFrameEvent } from './events/NewFrameEvent';
  */
 export class Engine {
   private readonly frameLoop: FrameLoop;
-  private readonly graphicsEngine: GraphicsEngine;
+  public readonly graphicsEngine: GraphicsEngine;
   private readonly sceneTree: SceneTree;
   private readonly pluginManager = new EnginePluginManager();
+  private readonly eventMapper: EngineEventMapper;
 
   constructor(options: {
     frameLoop: FrameLoop;
@@ -24,6 +27,7 @@ export class Engine {
     this.frameLoop = options.frameLoop;
     this.graphicsEngine = options.graphicsEngine;
     this.sceneTree = options.sceneTree;
+    this.eventMapper = new EngineEventMapper(this);
   }
 
   /**
@@ -88,7 +92,7 @@ export class Engine {
 
   private setupEngine() {
     this.pluginManager.setup();
-    this.graphicsEngine.setup();
+    this.eventMapper.setup();
   }
 
   private emitSetupEvent() {
@@ -218,4 +222,41 @@ export class EnginePlugin {
   public start?: () => void;
   /** Callback to execute after the engine is stopped. */
   public stop?: () => void;
+}
+
+/**
+ * Maps engine events to their corresponding engine methods.
+ */
+class EngineEventMapper {
+  private readonly graphicsEngineEventMapper: GraphicsEngineEventMapper;
+
+  constructor(engine: Engine) {
+    this.graphicsEngineEventMapper = new GraphicsEngineEventMapper(engine.graphicsEngine, graphicsEngineEvents);
+  }
+
+  /** Sets up the engine event mappers. */
+  public setup() {
+    this.setupEventMappers();
+  }
+
+  private setupEventMappers() {
+    this.setupGraphicsEngineEventMapper();
+  }
+
+  private setupGraphicsEngineEventMapper() {
+    this.graphicsEngineEventMapper.setup();
+  }
+
+  /** Tears down the engine event mappers. */
+  public teardown() {
+    this.teardownEventMappers();
+  }
+
+  private teardownEventMappers() {
+    this.teardownGraphicsEngineEventMapper();
+  }
+
+  private teardownGraphicsEngineEventMapper() {
+    this.graphicsEngineEventMapper.teardown();
+  }
 }

@@ -1,7 +1,7 @@
 import type { Node_Options } from './Node';
 import type { GraphicsCanvas } from '../providers/graphicsCanvas.types';
 import { Node } from './Node';
-import { QueueDrawCommandEvent } from '../events';
+import { graphicsEngineEvents } from '../engine/graphicsEngine/GraphicEngineEvents';
 
 /**
  * Abstract base node for nodes which can be drawn onto a graphics canvas.
@@ -43,7 +43,7 @@ export abstract class GraphicsNode extends Node {
 
   /** Queues a redraw for the node. */
   protected queueRedraw() {
-    QueueDrawCommandEvent.emit(this.createDrawCommand());
+    graphicsEngineEvents.QueueDrawCommandEvent.emit(this.createDrawCommand());
   }
 
   /** Creates a draw command for the node. */

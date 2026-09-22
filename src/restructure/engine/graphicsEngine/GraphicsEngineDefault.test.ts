@@ -5,6 +5,7 @@ describe('GraphicsEngineDefault', () => {
   it('should not draw to canvas if no canvas set', () => {
     const graphicsEngine = new GraphicsEngineDefault();
     const drawCommand = {
+      id: 'draw-command',
       draw: vi.fn(),
       zIndex: 0,
     };
@@ -19,6 +20,7 @@ describe('GraphicsEngineDefault', () => {
     const graphicsEngine = new GraphicsEngineDefault();
     const graphicsCanvas = new GraphicsCanvas();
     const drawCommand = {
+      id: 'draw-command',
       draw: vi.fn(),
       zIndex: 0,
     };
@@ -34,10 +36,12 @@ describe('GraphicsEngineDefault', () => {
     const graphicsEngine = new GraphicsEngineDefault();
     const graphicsCanvas = new GraphicsCanvas();
     const drawCommandZ0 = {
+      id: 'draw-command-z0',
       draw: vi.fn(),
       zIndex: 0,
     };
     const drawCommandZ1 = {
+      id: 'draw-command-z1',
       draw: vi.fn(),
       zIndex: 1,
     };
@@ -50,10 +54,11 @@ describe('GraphicsEngineDefault', () => {
     expect(drawCommandZ0.draw).toHaveBeenCalledBefore(drawCommandZ1.draw);
   });
 
-  it('should clear command queue after processing', () => {
+  it('should cache command after processing', () => {
     const graphicsEngine = new GraphicsEngineDefault();
     const graphicsCanvas = new GraphicsCanvas();
     const drawCommand = {
+      id: 'draw-command',
       draw: vi.fn(),
       zIndex: 0,
     };
@@ -61,6 +66,24 @@ describe('GraphicsEngineDefault', () => {
     graphicsEngine.setTargetCanvas(graphicsCanvas);
     graphicsEngine.queueDrawCommand(drawCommand);
     graphicsEngine.processDrawCommandQueue();
+    graphicsEngine.processDrawCommandQueue();
+
+    expect(drawCommand.draw).toHaveBeenCalledTimes(2);
+  });
+
+  it('should delete cached command', () => {
+    const graphicsEngine = new GraphicsEngineDefault();
+    const graphicsCanvas = new GraphicsCanvas();
+    const drawCommand = {
+      id: 'draw-command',
+      draw: vi.fn(),
+      zIndex: 0,
+    };
+
+    graphicsEngine.setTargetCanvas(graphicsCanvas);
+    graphicsEngine.queueDrawCommand(drawCommand);
+    graphicsEngine.processDrawCommandQueue();
+    graphicsEngine.deleteCachedDrawCommand('draw-command');
     graphicsEngine.processDrawCommandQueue();
 
     expect(drawCommand.draw).toHaveBeenCalledOnce();
@@ -72,6 +95,8 @@ const GraphicsCanvas = vi.fn(class {
   height = 0;
   beginPath = vi.fn();
   closePath = vi.fn();
+  setTransform = vi.fn();
+  resetTransform = vi.fn();
   createLine = vi.fn();
   createArc = vi.fn();
   createRectangle = vi.fn();

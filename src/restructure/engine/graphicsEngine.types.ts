@@ -1,3 +1,4 @@
+import type { Event } from '../events';
 import type { GraphicsCanvas } from '../providers/graphicsCanvas.types';
 
 /**
@@ -16,8 +17,11 @@ export interface GraphicsEngine {
   queueDrawCommand(command: DrawCommand): void;
   /** Processes the draw command queue, executing each draw command. */
   processDrawCommandQueue(): void;
-  /** Sets up the graphics engine for use. */
-  setup(): void;
+  /**
+   * Deletes a cached draw command.
+   * @param id The command's unique identifier.
+   */
+  deleteCachedDrawCommand(id: string): void;
 }
 
 /** A command for drawing onto a graphics canvas. */
@@ -25,8 +29,17 @@ export interface DrawCommand {
   /** The unique identifier for the draw command. */
   id: string;
   /** The function for drawing onto the canvas. */
-  draw: Draw;
+  draw: (canvas: GraphicsCanvas) => void;
   /** The order in which the command should be executed, with smaller z-indices being drawn first. */
   zIndex: number;
 }
-type Draw = (canvas: GraphicsCanvas) => void;
+
+/**
+ * Events specific to the Graphics Engine.
+ */
+export interface GraphicsEngineEvents {
+  /** Event for queueing a draw command. */
+  QueueDrawCommandEvent: Event<DrawCommand>;
+  /** Event for deleting a cached draw command. */
+  DeleteCachedDrawCommandEvent: Event<string>;
+}
