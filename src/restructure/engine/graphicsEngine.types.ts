@@ -22,6 +22,8 @@ export interface GraphicsEngine {
 
 /** A command for drawing onto a graphics canvas. */
 export interface DrawCommand {
+  /** The unique identifier for the draw command. */
+  id: string;
   /** The function for drawing onto the canvas. */
   draw: Draw;
   /** The order in which the command should be executed, with smaller z-indices being drawn first. */

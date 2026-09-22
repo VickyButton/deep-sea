@@ -49,6 +49,7 @@ export abstract class GraphicsNode extends Node {
   /** Creates a draw command for the node. */
   protected createDrawCommand() {
     return {
+      id: this.id,
       draw: (canvas: GraphicsCanvas) => this.draw(canvas),
       zIndex: this.zIndex,
     };
