@@ -81,6 +81,14 @@ export class Node2D extends GraphicsNode {
     return node instanceof Node2D;
   }
 
+  /**
+   * Moves the node.
+   * @param distance The distance to move the node.
+   */
+  public move(distance: Vector2D) {
+    this.position = this.position.add(distance);
+  }
+
   public draw(canvas: GraphicsCanvas) {
     // TODO: Temp, replace later.
     console.log(canvas);

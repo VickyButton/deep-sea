@@ -76,4 +76,15 @@ describe('Node2D', () => {
       rotation: 2,
     });
   });
+
+  it('should move', () => {
+    const node = new Node2D('node', {
+      position: new Vector2D(0, 0),
+    });
+    const distance = new Vector2D(1, 1);
+
+    node.move(distance);
+
+    expect(node.position).toEqual(new Vector2D(1, 1));
+  });
 });
