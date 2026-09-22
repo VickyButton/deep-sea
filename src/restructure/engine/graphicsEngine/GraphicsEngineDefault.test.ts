@@ -6,8 +6,8 @@ describe('GraphicsEngineDefault', () => {
     const graphicsEngine = new GraphicsEngineDefault();
     const drawCommand = {
       id: 'draw-command',
-      draw: vi.fn(),
       zIndex: 0,
+      draw: vi.fn(),
     };
 
     graphicsEngine.queueDrawCommand(drawCommand);
@@ -21,8 +21,8 @@ describe('GraphicsEngineDefault', () => {
     const graphicsCanvas = new GraphicsCanvas();
     const drawCommand = {
       id: 'draw-command',
-      draw: vi.fn(),
       zIndex: 0,
+      draw: vi.fn(),
     };
 
     graphicsEngine.setTargetCanvas(graphicsCanvas);
@@ -37,8 +37,8 @@ describe('GraphicsEngineDefault', () => {
     const graphicsCanvas = new GraphicsCanvas();
     const drawCommandZ0 = {
       id: 'draw-command-z0',
-      draw: vi.fn(),
       zIndex: 0,
+      draw: vi.fn(),
     };
     const drawCommandZ1 = {
       id: 'draw-command-z1',
@@ -59,8 +59,8 @@ describe('GraphicsEngineDefault', () => {
     const graphicsCanvas = new GraphicsCanvas();
     const drawCommand = {
       id: 'draw-command',
-      draw: vi.fn(),
       zIndex: 0,
+      draw: vi.fn(),
     };
 
     graphicsEngine.setTargetCanvas(graphicsCanvas);
@@ -76,8 +76,8 @@ describe('GraphicsEngineDefault', () => {
     const graphicsCanvas = new GraphicsCanvas();
     const drawCommand = {
       id: 'draw-command',
-      draw: vi.fn(),
       zIndex: 0,
+      draw: vi.fn(),
     };
 
     graphicsEngine.setTargetCanvas(graphicsCanvas);

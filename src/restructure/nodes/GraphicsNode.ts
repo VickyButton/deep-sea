@@ -50,8 +50,8 @@ export abstract class GraphicsNode extends Node {
   protected createDrawCommand() {
     return {
       id: this.id,
-      draw: (canvas: GraphicsCanvas) => this.draw(canvas),
       zIndex: this.zIndex,
+      draw: (canvas: GraphicsCanvas) => this.draw(canvas),
     };
   }
 }

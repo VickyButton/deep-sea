@@ -18,26 +18,18 @@ export class GraphicsEngineEventController {
   }
 
   private addEventListeners() {
-    this.addSetTargetCanvasEventListener();
-    this.addQueueDrawCommandEventListener();
-    this.addProcessDrawCommandQueueEventListener();
     this.addDeleteCachedDrawCommandEventListener();
+    this.addProcessDrawCommandQueueEventListener();
+    this.addQueueDrawCommandEventListener();
+    this.addSetTargetCanvasEventListener();
   }
 
-  private addSetTargetCanvasEventListener() {
-    this.events.SetTargetCanvas.addListener(this.onSetTargetCanvas);
+  private addDeleteCachedDrawCommandEventListener() {
+    this.events.DeleteCachedDrawCommand.addListener(this.onDeleteCachedDrawCommand);
   }
 
-  private onSetTargetCanvas = (canvas: GraphicsCanvas | null) => {
-    this.graphicsEngine.setTargetCanvas(canvas);
-  };
-
-  private addQueueDrawCommandEventListener() {
-    this.events.QueueDrawCommand.addListener(this.onQueueDrawCommand);
-  }
-
-  private onQueueDrawCommand = (command: DrawCommand) => {
-    this.graphicsEngine.queueDrawCommand(command);
+  private onDeleteCachedDrawCommand = (id: string) => {
+    this.graphicsEngine.deleteCachedDrawCommand(id);
   };
 
   private addProcessDrawCommandQueueEventListener() {
@@ -48,12 +40,20 @@ export class GraphicsEngineEventController {
     this.graphicsEngine.processDrawCommandQueue();
   };
 
-  private addDeleteCachedDrawCommandEventListener() {
-    this.events.DeleteCachedDrawCommand.addListener(this.onDeleteCachedDrawCommand);
+  private addQueueDrawCommandEventListener() {
+    this.events.QueueDrawCommand.addListener(this.onQueueDrawCommand);
   }
 
-  private onDeleteCachedDrawCommand = (id: string) => {
-    this.graphicsEngine.deleteCachedDrawCommand(id);
+  private onQueueDrawCommand = (command: DrawCommand) => {
+    this.graphicsEngine.queueDrawCommand(command);
+  };
+
+  private addSetTargetCanvasEventListener() {
+    this.events.SetTargetCanvas.addListener(this.onSetTargetCanvas);
+  }
+
+  private onSetTargetCanvas = (canvas: GraphicsCanvas | null) => {
+    this.graphicsEngine.setTargetCanvas(canvas);
   };
 
   public teardown() {
@@ -61,25 +61,25 @@ export class GraphicsEngineEventController {
   }
 
   private removeEventListeners() {
-    this.removeSetTargetCanvasEventListener();
-    this.removeQueueDrawCommandEventListener();
-    this.removeProcessDrawCommandQueueEventListener();
     this.removeDeleteCachedDrawCommandEventListener();
+    this.removeProcessDrawCommandQueueEventListener();
+    this.removeQueueDrawCommandEventListener();
+    this.removeSetTargetCanvasEventListener();
   }
 
-  private removeSetTargetCanvasEventListener() {
-    this.events.SetTargetCanvas.removeListener(this.onSetTargetCanvas);
-  }
-
-  private removeQueueDrawCommandEventListener() {
-    this.events.QueueDrawCommand.removeListener(this.onQueueDrawCommand);
+  private removeDeleteCachedDrawCommandEventListener() {
+    this.events.DeleteCachedDrawCommand.removeListener(this.onDeleteCachedDrawCommand);
   }
 
   private removeProcessDrawCommandQueueEventListener() {
     this.events.ProcessDrawCommandQueue.removeListener(this.onProcessDrawCommandQueue);
   }
 
-  private removeDeleteCachedDrawCommandEventListener() {
-    this.events.DeleteCachedDrawCommand.removeListener(this.onDeleteCachedDrawCommand);
+  private removeQueueDrawCommandEventListener() {
+    this.events.QueueDrawCommand.removeListener(this.onQueueDrawCommand);
+  }
+
+  private removeSetTargetCanvasEventListener() {
+    this.events.SetTargetCanvas.removeListener(this.onSetTargetCanvas);
   }
 }
