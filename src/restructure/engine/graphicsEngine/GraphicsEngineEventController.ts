@@ -3,7 +3,7 @@ import type { DrawCommand, GraphicsEngine, GraphicsEngineEvents } from '../graph
 /**
  * Maps Graphics Engine events to their corresponding methods.
  */
-export class GraphicsEngineEventMapper {
+export class GraphicsEngineEventController {
   private readonly graphicsEngine: GraphicsEngine;
   private readonly events: GraphicsEngineEvents;
 

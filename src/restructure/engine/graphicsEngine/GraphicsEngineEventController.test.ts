@@ -1,13 +1,13 @@
 import type { GraphicsEngineEvents } from '../graphicsEngine.types';
-import { GraphicsEngineEventMapper } from './GraphicsEngineEventMapper';
+import { GraphicsEngineEventController } from './GraphicsEngineEventController';
 import { Event } from '../../events';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('GraphicsEngineEventMapper', () => {
+describe('GraphicsEngineEventController', () => {
   it('should map QueueDrawCommandEvent', () => {
     const graphicsEngine = new GraphicsEngine();
     const graphicsEngineEvents = createGraphicsEngineEvents();
-    const eventMapper = new GraphicsEngineEventMapper(graphicsEngine, graphicsEngineEvents);
+    const eventMapper = new GraphicsEngineEventController(graphicsEngine, graphicsEngineEvents);
     const drawCommand = {
       id: 'draw-command',
       draw: vi.fn(),
@@ -23,7 +23,7 @@ describe('GraphicsEngineEventMapper', () => {
   it('should map DeleteCachedDrawCommandEvent', () => {
     const graphicsEngine = new GraphicsEngine();
     const graphicsEngineEvents = createGraphicsEngineEvents();
-    const eventMapper = new GraphicsEngineEventMapper(graphicsEngine, graphicsEngineEvents);
+    const eventMapper = new GraphicsEngineEventController(graphicsEngine, graphicsEngineEvents);
     const id = 'draw-command';
 
     eventMapper.setup();
