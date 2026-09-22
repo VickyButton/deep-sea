@@ -109,6 +109,24 @@ export class Node2D extends GraphicsNode {
     // TODO: Temp, replace later.
     console.log(canvas);
   }
+
+  /**
+   * Sets a transformation matrix onto the canvas.
+   * @param canvas The canvas to set the transformation matrix on.
+   */
+  protected setTransformationMatrix(canvas: GraphicsCanvas) {
+    const matrix = this.globalTransform.computeTransformationMatrix();
+
+    canvas.setTransform(matrix);
+  }
+
+  /**
+   * Resets the current transformation matrix on a canvas to the identity matrix.
+   * @param canvas The canvas to reset the transformation matrix on.
+   */
+  protected resetTransformationMatrix(canvas: GraphicsCanvas) {
+    canvas.resetTransform();
+  }
 }
 
 export interface Node2D_Options extends GraphicsNode_Options {
