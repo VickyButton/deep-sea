@@ -89,6 +89,14 @@ export class Node2D extends GraphicsNode {
     this.position = this.position.add(distance);
   }
 
+  /**
+   * Scales the node by a scalar.
+   * @param scalar The scalar to scale the node by.
+   */
+  public scaleBy(scalar: Vector2D) {
+    this.scale = this.scale.multiply(scalar);
+  }
+
   public draw(canvas: GraphicsCanvas) {
     // TODO: Temp, replace later.
     console.log(canvas);
