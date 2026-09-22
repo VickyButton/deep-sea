@@ -41,13 +41,13 @@ export class PolygonPairCollisionResolver2D extends CollisionResolver {
     return this.transformVertices(this.polygonA.vertices, this.transformA);
   }
 
+  private get verticesB() {
+    return this.transformVertices(this.polygonB.vertices, this.transformB);
+  }
+
   private transformVertices(vertices: Vector2D[], transform: Transform2D) {
     const transformMatrix = transform.computeTransformationMatrix();
 
     return vertices.map((vertex) => transformMatrix.multiplyVector2D(vertex));
-  }
-
-  private get verticesB() {
-    return this.transformVertices(this.polygonB.vertices, this.transformB);
   }
 }

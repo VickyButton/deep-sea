@@ -43,6 +43,7 @@ export class RectanglePairCollisionResolver2D extends CollisionResolver {
   }
 
   private createAxisAlignedBoundingBoxCollisionResolver() {
+    // TODO: Apply transformation matrix to bounding boxes.
     const boundingBoxA = this.rectangleA.boundingBox;
     const boundingBoxB = this.rectangleB.boundingBox;
 
@@ -50,6 +51,7 @@ export class RectanglePairCollisionResolver2D extends CollisionResolver {
   }
 
   private createSeparatingAxisTheoremCollisionResolver() {
+    // TODO: Apply transformation matrix to vertices.
     const verticesA = this.rectangleA.vertices;
     const verticesB = this.rectangleB.vertices;
 
