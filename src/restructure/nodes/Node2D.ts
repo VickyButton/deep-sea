@@ -82,10 +82,10 @@ export class Node2D extends GraphicsNode {
   }
 
   /**
-   * Moves the node.
+   * Moves the node by a distance.
    * @param distance The distance to move the node.
    */
-  public move(distance: Vector2D) {
+  public moveBy(distance: Vector2D) {
     this.position = this.position.add(distance);
   }
 

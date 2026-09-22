@@ -83,7 +83,7 @@ describe('Node2D', () => {
     });
     const distance = new Vector2D(1, 1);
 
-    node.move(distance);
+    node.moveBy(distance);
 
     expect(node.position).toEqual(new Vector2D(1, 1));
   });
