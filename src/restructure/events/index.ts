@@ -4,11 +4,11 @@
 import { EngineEvents } from './EngineEvents';
 import { Event } from './Event';
 import { NewFrameEvent } from './NewFrameEvent';
-import { QueueDrawCommandEvent } from './QueueDrawCommandEvent';
+import { graphicsEngineEvents } from '../engine/graphicsEngine/GraphicEngineEvents';
 
 export {
   EngineEvents,
   Event,
   NewFrameEvent,
-  QueueDrawCommandEvent,
+  graphicsEngineEvents,
 };

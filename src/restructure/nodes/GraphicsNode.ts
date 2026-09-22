@@ -43,7 +43,7 @@ export abstract class GraphicsNode extends Node {
 
   /** Queues a redraw for the node. */
   protected queueRedraw() {
-    graphicsEngineEvents.QueueDrawCommandEvent.emit(this.createDrawCommand());
+    graphicsEngineEvents.QueueDrawCommand.emit(this.createDrawCommand());
   }
 
   /** Creates a draw command for the node. */

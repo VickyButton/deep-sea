@@ -39,7 +39,7 @@ export interface DrawCommand {
  */
 export interface GraphicsEngineEvents {
   /** Event for queueing a draw command. */
-  QueueDrawCommandEvent: Event<DrawCommand>;
+  QueueDrawCommand: Event<DrawCommand>;
   /** Event for deleting a cached draw command. */
-  DeleteCachedDrawCommandEvent: Event<string>;
+  DeleteCachedDrawCommand: Event<string>;
 }

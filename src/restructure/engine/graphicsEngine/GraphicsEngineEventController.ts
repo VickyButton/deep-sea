@@ -22,7 +22,7 @@ export class GraphicsEngineEventController {
   }
 
   private addQueueDrawCommandEventListener() {
-    this.events.QueueDrawCommandEvent.addListener(this.onQueueDrawCommand);
+    this.events.QueueDrawCommand.addListener(this.onQueueDrawCommand);
   }
 
   private onQueueDrawCommand = (command: DrawCommand) => {
@@ -30,7 +30,7 @@ export class GraphicsEngineEventController {
   };
 
   private addDeleteCachedDrawCommandEventListener() {
-    this.events.DeleteCachedDrawCommandEvent.addListener(this.onDeleteCachedDrawCommand);
+    this.events.DeleteCachedDrawCommand.addListener(this.onDeleteCachedDrawCommand);
   }
 
   private onDeleteCachedDrawCommand = (id: string) => {
@@ -47,10 +47,10 @@ export class GraphicsEngineEventController {
   }
 
   private removeQueueDrawCommandEventListener() {
-    this.events.QueueDrawCommandEvent.removeListener(this.onQueueDrawCommand);
+    this.events.QueueDrawCommand.removeListener(this.onQueueDrawCommand);
   }
 
   private removeDeleteCachedDrawCommandEventListener() {
-    this.events.DeleteCachedDrawCommandEvent.removeListener(this.onDeleteCachedDrawCommand);
+    this.events.DeleteCachedDrawCommand.removeListener(this.onDeleteCachedDrawCommand);
   }
 }
