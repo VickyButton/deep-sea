@@ -1,5 +1,6 @@
 import type { GraphicsNode_Options } from './GraphicsNode';
 import type { Node } from './Node';
+import type { GraphicsCanvas } from '../providers/graphicsCanvas.types';
 import { GraphicsNode } from './GraphicsNode';
 import { Transform2D } from '../domain/Transform2D';
 import { Vector2D } from '../domain/Vector2D';
@@ -80,8 +81,9 @@ export class Node2D extends GraphicsNode {
     return node instanceof Node2D;
   }
 
-  public draw() {
-    // TODO: Implement.
+  public draw(canvas: GraphicsCanvas) {
+    // TODO: Temp, replace later.
+    console.log(canvas);
   }
 }
 
