@@ -1,6 +1,6 @@
 import type { GraphicsNode_Options } from './GraphicsNode';
 import type { Node } from './Node';
-import type { GraphicsCanvas } from '../providers/graphicsCanvas.types';
+import type { GraphicsCanvas } from '../domain/canvases/GraphicsCanvas';
 import { GraphicsNode } from './GraphicsNode';
 import { Transform2D } from '../domain/Transform2D';
 import { Vector2D } from '../domain/Vector2D';

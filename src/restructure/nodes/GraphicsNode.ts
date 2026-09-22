@@ -1,5 +1,5 @@
 import type { Node_Options } from './Node';
-import type { GraphicsCanvas } from '../providers/graphicsCanvas.types';
+import type { GraphicsCanvas } from '../domain/canvases/GraphicsCanvas';
 import { Node } from './Node';
 import { graphicsEngineEvents } from '../engine/graphicsEngine/GraphicEngineEvents';
 

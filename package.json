@@ -27,11 +27,11 @@
   },
   "exports": {
     ".": "./src/restructure/index.ts",
-    "./domain": "./src/restructure/domain/index.ts",
+    "./canvases": "./src/restructure/domain/canvases/index.ts",
     "./colors": "./src/restructure/domain/colors/index.ts",
+    "./domain": "./src/restructure/domain/index.ts",
     "./events": "./src/restructure/events/index.ts",
     "./nodes": "./src/restructure/nodes/index.ts",
-    "./providers": "./src/restructure/providers/index.ts",
     "./shapes": "./src/restructure/domain/shapes/index.ts"
   }
 }

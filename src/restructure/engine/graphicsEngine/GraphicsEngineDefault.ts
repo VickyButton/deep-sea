@@ -1,4 +1,4 @@
-import type { GraphicsCanvas } from '../../providers/graphicsCanvas.types';
+import type { GraphicsCanvas } from '../../domain/canvases/GraphicsCanvas';
 import type { DrawCommand, GraphicsEngine } from '../graphicsEngine.types';
 
 export class GraphicsEngineDefault implements GraphicsEngine {

@@ -1,10 +1,12 @@
-import type { Matrix3D } from '../../domain/Matrix3D';
-import type { GraphicsCanvas } from '../graphicsCanvas.types';
+import type { Matrix3D } from '../Matrix3D';
+import { GraphicsCanvas } from './GraphicsCanvas';
 
-export class GraphicsCanvas2D implements GraphicsCanvas {
+export class GraphicsCanvas2D extends GraphicsCanvas {
   private ctx: CanvasRenderingContext2D;
 
   constructor(ctx: CanvasRenderingContext2D) {
+    super();
+
     this.ctx = ctx;
   }
 

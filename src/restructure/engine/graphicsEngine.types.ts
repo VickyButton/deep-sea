@@ -1,5 +1,5 @@
+import type { GraphicsCanvas } from '../domain/canvases/GraphicsCanvas';
 import type { Event } from '../events';
-import type { GraphicsCanvas } from '../providers/graphicsCanvas.types';
 
 /** Exposes functionality for drawing graphics onto a canvas through draw commands. */
 export interface GraphicsEngine {

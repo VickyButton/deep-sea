@@ -1,7 +1,7 @@
 import type { Node2D_Options } from './Node2D';
+import type { GraphicsCanvas } from '../domain/canvases/GraphicsCanvas';
 import type { Color } from '../domain/colors/Color';
 import type { Shape2D } from '../domain/shapes/Shape2D';
-import type { GraphicsCanvas } from '../providers/graphicsCanvas.types';
 import { Node2D } from './Node2D';
 import { RGBA } from '../domain/colors/RGBA';
 import { RectangleShape2D } from '../domain/shapes/RectangleShape2D';

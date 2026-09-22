@@ -1,4 +1,4 @@
-import type { GraphicsCanvas } from './providers/graphicsCanvas.types';
+import type { GraphicsCanvas } from './domain/canvases/GraphicsCanvas';
 import { Engine } from './Engine';
 import { FrameLoopDefault } from './engine/frameLoop/FrameLoopDefault';
 import { GraphicsEngineDefault } from './engine/graphicsEngine/GraphicsEngineDefault';
