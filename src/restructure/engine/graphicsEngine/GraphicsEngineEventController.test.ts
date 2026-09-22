@@ -32,6 +32,17 @@ describe('GraphicsEngineEventController', () => {
     expect(graphicsEngine.queueDrawCommand).toHaveBeenCalledWith(drawCommand);
   });
 
+  it('should map ProcessDrawCommandQueue event', () => {
+    const graphicsEngine = new GraphicsEngine();
+    const graphicsEngineEvents = createGraphicsEngineEvents();
+    const eventMapper = new GraphicsEngineEventController(graphicsEngine, graphicsEngineEvents);
+
+    eventMapper.setup();
+    graphicsEngineEvents.ProcessDrawCommandQueue.emit();
+
+    expect(graphicsEngine.processDrawCommandQueue).toHaveBeenCalled();
+  });
+
   it('should map DeleteCachedDrawCommand event', () => {
     const graphicsEngine = new GraphicsEngine();
     const graphicsEngineEvents = createGraphicsEngineEvents();
@@ -56,6 +67,7 @@ function createGraphicsEngineEvents(): GraphicsEngineEvents {
   return {
     SetTargetCanvas: new Event(),
     QueueDrawCommand: new Event(),
+    ProcessDrawCommandQueue: new Event(),
     DeleteCachedDrawCommand: new Event(),
   };
 };

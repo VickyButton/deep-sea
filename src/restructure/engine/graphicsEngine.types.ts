@@ -42,6 +42,8 @@ export interface GraphicsEngineEvents {
   SetTargetCanvas: Event<GraphicsCanvas | null>;
   /** Event for queueing a draw command. */
   QueueDrawCommand: Event<DrawCommand>;
+  /** Event for processing the draw command queue. */
+  ProcessDrawCommandQueue: Event<void>;
   /** Event for deleting a cached draw command. */
   DeleteCachedDrawCommand: Event<string>;
 }
