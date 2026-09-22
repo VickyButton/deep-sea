@@ -20,7 +20,7 @@ export class PolygonShape2D extends Shape2D {
       throw this.createInvalidVerticesError();
     }
 
-    this._vertices = options?.vertices ?? this.createDefaultPolygon();
+    this._vertices = options?.vertices ?? this.computeDefaultPolygonVertices();
     this._boundingBox = this.computeBoundingBox();
     this.isBoundingBoxStale = false;
   }
@@ -33,9 +33,9 @@ export class PolygonShape2D extends Shape2D {
     return new Error('Invalid vertices: a polygon must have at least 3 vertices.');
   }
 
-  private createDefaultPolygon() {
+  private computeDefaultPolygonVertices() {
     // Default polygon is a triangle.
-    return computeVerticesForRegularPolygon(3);
+    return computeRegularPolygonVertices(3);
   }
 
   private computeBoundingBox(): [Vector2D, Vector2D, Vector2D, Vector2D] {
@@ -121,7 +121,7 @@ export class PolygonShape2D extends Shape2D {
 
   public static createRegularPolygon(numSides = 3) {
     return new PolygonShape2D({
-      vertices: computeVerticesForRegularPolygon(numSides),
+      vertices: computeRegularPolygonVertices(numSides),
     });
   }
 }
@@ -130,7 +130,7 @@ export interface PolygonShape2D_Options {
   vertices?: Vector2D[];
 }
 
-function computeVerticesForRegularPolygon(numSides: number) {
+function computeRegularPolygonVertices(numSides: number) {
   const stepAngle = computeStepAngle(numSides);
   const polygon: Vector2D[] = [];
 
