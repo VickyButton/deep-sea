@@ -28,6 +28,11 @@ export class GraphicsEngineDefault {
   }
 
   private drawToCanvas(canvas: GraphicsCanvas, commands: DrawCommand[]) {
+    // TODO: Add method for caching draw commands and re-applying if a rerender is needed.
+    if (commands.length > 0) {
+      canvas.clear();
+    }
+
     for (const command of commands) {
       command.draw(canvas);
     }
