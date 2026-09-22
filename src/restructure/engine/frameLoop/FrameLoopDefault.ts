@@ -8,7 +8,7 @@ const FPS_MAX = 120;
 
 export class FrameLoopDefault implements FrameLoop {
   private readonly timeProvider: TimeProvider;
-  private framesPerSecond = 60;
+  private _framesPerSecond = 60;
   private lastFrameTimestamp = 0;
   private lastLoopTimestamp = 0;
   private millisecondsSinceLastFrame = 0;
@@ -18,12 +18,20 @@ export class FrameLoopDefault implements FrameLoop {
     this.timeProvider = timeProvider;
   }
 
-  private get millisecondsPerFrame() {
-    return 1000 / this.framesPerSecond;
+  public get framesPerSecond() {
+    return this._framesPerSecond;
   }
 
-  public setFramesPerSecond(fps: number) {
-    this.framesPerSecond = clamp(fps, FPS_MIN, FPS_MAX);
+  public set framesPerSecond(fps: number) {
+    this._framesPerSecond = this.clampFramesPerSecond(fps);
+  }
+
+  private clampFramesPerSecond(fps: number) {
+    return clamp(fps, FPS_MIN, FPS_MAX);
+  }
+
+  private get millisecondsPerFrame() {
+    return 1000 / this.framesPerSecond;
   }
 
   public start() {

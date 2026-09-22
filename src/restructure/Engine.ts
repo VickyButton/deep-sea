@@ -51,7 +51,7 @@ export class Engine {
    * @param fps The number of frames per second to run the engine loop at.
    */
   public setFramesPerSecond(fps: number) {
-    this.frameLoop.setFramesPerSecond(fps);
+    this.frameLoop.framesPerSecond = fps;
   }
 
   /**
