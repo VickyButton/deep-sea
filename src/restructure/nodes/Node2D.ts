@@ -18,16 +18,16 @@ export class Node2D extends GraphicsNode {
   constructor(id: string, options?: Node2D_Options) {
     super(id, options);
 
-    this.position = options?.position ? new Vector2D(options.position[0], options.position[1]) : new Vector2D();
-    this.scale = options?.scale ? new Vector2D(options.scale[0], options.scale[1]) : new Vector2D(1, 1);
+    this.position = options?.position ? options.position.copy() : new Vector2D(0, 0);
+    this.scale = options?.scale ? options.scale.copy() : new Vector2D(1, 1);
     this.rotation = options?.rotation ?? 0;
   }
 
   /** The node's transform matrix relative to its parent. */
   public get transform() {
     return new Transform2D({
-      translation: [this.position.x, this.position.y],
-      scale: [this.scale.x, this.scale.y],
+      translation: this.position,
+      scale: this.scale,
       rotation: this.rotation,
     });
   }
@@ -55,14 +55,10 @@ export class Node2D extends GraphicsNode {
 
   /** The node's transform relative to the root node. */
   public get globalTransform(): Transform2D {
-    const translation = this.globalPosition;
-    const scale = this.globalScale;
-    const rotation = this.globalRotation;
-
     return new Transform2D({
-      translation: [translation.x, translation.y],
-      scale: [scale.x, scale.y],
-      rotation: rotation,
+      translation: this.globalPosition,
+      scale: this.globalScale,
+      rotation: this.globalRotation,
     });
   }
 
@@ -90,7 +86,7 @@ export class Node2D extends GraphicsNode {
 }
 
 export interface Node2D_Options extends GraphicsNode_Options {
-  position?: [number, number];
-  scale?: [number, number];
+  position?: Vector2D;
+  scale?: Vector2D;
   rotation?: number;
 }

@@ -1,57 +1,46 @@
 import { Node2D } from './Node2D';
+import { Vector2D } from '../domain/Vector2D';
 import { describe, expect, it } from 'vitest';
 
 describe('Node2D', () => {
   it('should use position, scale, and rotation for transform', () => {
     const node = new Node2D('node', {
-      position: [1, 1],
-      scale: [2, 2],
+      position: new Vector2D(1, 1),
+      scale: new Vector2D(2, 2),
       rotation: 1,
     });
 
     expect(node.transform).toEqual({
-      translation: {
-        x: 1,
-        y: 1,
-      },
-      scale: {
-        x: 2,
-        y: 2,
-      },
+      translation: new Vector2D(1, 1),
+      scale: new Vector2D(2, 2),
       rotation: 1,
     });
   });
 
   it('should calculate global position', () => {
     const parent = new Node2D('parent', {
-      position: [1, 1],
+      position: new Vector2D(1, 1),
     });
     const child = new Node2D('child', {
-      position: [1, 1],
+      position: new Vector2D(1, 1),
     });
 
     parent.addChild(child);
 
-    expect(child.globalPosition).toEqual({
-      x: 2,
-      y: 2,
-    });
+    expect(child.globalPosition).toEqual(new Vector2D(2, 2));
   });
 
   it('should calculate global scale', () => {
     const parent = new Node2D('parent', {
-      scale: [2, 2],
+      scale: new Vector2D(2, 2),
     });
     const child = new Node2D('child', {
-      scale: [2, 2],
+      scale: new Vector2D(2, 2),
     });
 
     parent.addChild(child);
 
-    expect(child.globalScale).toEqual({
-      x: 4,
-      y: 4,
-    });
+    expect(child.globalScale).toEqual(new Vector2D(4, 4));
   });
 
   it('should calculate global rotation', () => {
@@ -69,27 +58,21 @@ describe('Node2D', () => {
 
   it('should calculate global transform', () => {
     const parent = new Node2D('parent', {
-      position: [1, 1],
-      scale: [2, 2],
+      position: new Vector2D(1, 1),
+      scale: new Vector2D(2, 2),
       rotation: 1,
     });
     const child = new Node2D('child', {
-      position: [1, 1],
-      scale: [2, 2],
+      position: new Vector2D(1, 1),
+      scale: new Vector2D(2, 2),
       rotation: 1,
     });
 
     parent.addChild(child);
 
     expect(child.globalTransform).toEqual({
-      translation: {
-        x: 2,
-        y: 2,
-      },
-      scale: {
-        x: 4,
-        y: 4,
-      },
+      translation: new Vector2D(2, 2),
+      scale: new Vector2D(4, 4),
       rotation: 2,
     });
   });

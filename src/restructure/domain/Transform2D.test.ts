@@ -8,7 +8,7 @@ const COSINE_90_DEGREES = 6.123233995736766e-17;
 describe('Transform2D', () => {
   it('applies translation to a 2D vector', () => {
     const transform = new Transform2D({
-      translation: [1, 1],
+      translation: new Vector2D(1, 1),
     });
     const vector = new Vector2D(1, 1);
     const matrix = transform.computeTransformationMatrix();
@@ -30,7 +30,7 @@ describe('Transform2D', () => {
 
   it('applies scaling to a 2D vector', () => {
     const transform = new Transform2D({
-      scale: [2, 2],
+      scale: new Vector2D(2, 2),
     });
     const vector = new Vector2D(1, 1);
     const matrix = transform.computeTransformationMatrix();
@@ -42,7 +42,7 @@ describe('Transform2D', () => {
   it('applies composite rotation and scaling to a 2D vector', () => {
     const transform = new Transform2D({
       rotation: Math.PI / 2, // 90 degrees
-      scale: [2, 2],
+      scale: new Vector2D(2, 2),
     });
     const vector = new Vector2D(1, 0);
     const matrix = transform.computeTransformationMatrix();
@@ -54,8 +54,8 @@ describe('Transform2D', () => {
   it('applies composite rotation, scaling, and translation to a 2D vector', () => {
     const transform = new Transform2D({
       rotation: Math.PI / 2, // 90 degrees
-      scale: [2, 2],
-      translation: [1, 1],
+      scale: new Vector2D(2, 2),
+      translation: new Vector2D(1, 1),
     });
     const vector = new Vector2D(1, 0);
     const matrix = transform.computeTransformationMatrix();
