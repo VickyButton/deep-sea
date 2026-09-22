@@ -80,4 +80,49 @@ describe('RGBA', () => {
 
     expect(color.toString()).toEqual('rgba(255,255,255,1)');
   });
+
+  it('should create red color', () => {
+    const color = RGBA.RED;
+
+    expect(color.r).toEqual(255);
+    expect(color.g).toEqual(0);
+    expect(color.b).toEqual(0);
+    expect(color.a).toEqual(1);
+  });
+
+  it('should create green color', () => {
+    const color = RGBA.GREEN;
+
+    expect(color.r).toEqual(0);
+    expect(color.g).toEqual(255);
+    expect(color.b).toEqual(0);
+    expect(color.a).toEqual(1);
+  });
+
+  it('should create blue color', () => {
+    const color = RGBA.BLUE;
+
+    expect(color.r).toEqual(0);
+    expect(color.g).toEqual(0);
+    expect(color.b).toEqual(255);
+    expect(color.a).toEqual(1);
+  });
+
+  it('should create white color', () => {
+    const color = RGBA.WHITE;
+
+    expect(color.r).toEqual(255);
+    expect(color.g).toEqual(255);
+    expect(color.b).toEqual(255);
+    expect(color.a).toEqual(1);
+  });
+
+  it('should create black color', () => {
+    const color = RGBA.BLACK;
+
+    expect(color.r).toEqual(0);
+    expect(color.g).toEqual(0);
+    expect(color.b).toEqual(0);
+    expect(color.a).toEqual(1);
+  });
 });

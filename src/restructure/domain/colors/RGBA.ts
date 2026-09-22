@@ -15,10 +15,10 @@ export class RGBA extends Color {
   constructor(options?: RGBA_Options) {
     super();
 
-    this._r = options?.r ? this.clampColorComponent(options.r) : COLOR_COMPONENT_MAX;
-    this._g = options?.g ? this.clampColorComponent(options.g) : COLOR_COMPONENT_MAX;
-    this._b = options?.b ? this.clampColorComponent(options.b) : COLOR_COMPONENT_MAX;
-    this._a = options?.a ? this.clampAlphaComponent(options.a) : ALPHA_COMPONENT_MAX;
+    this._r = options?.r !== undefined ? this.clampColorComponent(options.r) : COLOR_COMPONENT_MAX;
+    this._g = options?.g !== undefined ? this.clampColorComponent(options.g) : COLOR_COMPONENT_MAX;
+    this._b = options?.b !== undefined ? this.clampColorComponent(options.b) : COLOR_COMPONENT_MAX;
+    this._a = options?.a !== undefined ? this.clampAlphaComponent(options.a) : ALPHA_COMPONENT_MAX;
   }
 
   /** The color's red value, ranging from 0 to 255 inclusive. */
@@ -67,6 +67,51 @@ export class RGBA extends Color {
 
   public toString() {
     return `rgba(${this._r},${this._g},${this._b},${this._a})`;
+  }
+
+  public static get RED() {
+    return new RGBA({
+      r: 255,
+      g: 0,
+      b: 0,
+      a: 1,
+    });
+  }
+
+  public static get GREEN() {
+    return new RGBA({
+      r: 0,
+      g: 255,
+      b: 0,
+      a: 1,
+    });
+  }
+
+  public static get BLUE() {
+    return new RGBA({
+      r: 0,
+      g: 0,
+      b: 255,
+      a: 1,
+    });
+  }
+
+  public static get WHITE() {
+    return new RGBA({
+      r: 255,
+      g: 255,
+      b: 255,
+      a: 1,
+    });
+  }
+
+  public static get BLACK() {
+    return new RGBA({
+      r: 0,
+      g: 0,
+      b: 0,
+      a: 1,
+    });
   }
 }
 
