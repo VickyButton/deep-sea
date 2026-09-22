@@ -71,13 +71,13 @@ export class CollisionShapeNode2D extends Node2D {
 
   public setup() {
     // TODO: Register in Physics Engine.
-    this.addEventListener(NewFrameEvent, this.onNewFrame.bind(this));
+    this.addEventListener(NewFrameEvent, this.onNewFrame);
   }
 
-  private onNewFrame() {
+  private onNewFrame = () => {
     // TODO: Temp, replace later.
     this.queueRedraw();
-  }
+  };
 }
 
 interface CollisionShapeNode2D_Options extends Node2D_Options {
