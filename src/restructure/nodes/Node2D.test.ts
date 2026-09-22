@@ -77,7 +77,7 @@ describe('Node2D', () => {
     });
   });
 
-  it('should move by a distance', () => {
+  it('should move node by a distance', () => {
     const node = new Node2D('node', {
       position: new Vector2D(0, 0),
     });
@@ -88,7 +88,7 @@ describe('Node2D', () => {
     expect(node.position).toEqual(new Vector2D(1, 1));
   });
 
-  it('should scale by a scalar', () => {
+  it('should scale node by a scalar', () => {
     const node = new Node2D('node', {
       scale: new Vector2D(2, 2),
     });
@@ -97,5 +97,16 @@ describe('Node2D', () => {
     node.scaleBy(scalar);
 
     expect(node.scale).toEqual(new Vector2D(4, 4));
+  });
+
+  it('should rotate node by number of radians', () => {
+    const node = new Node2D('node', {
+      rotation: 1,
+    });
+    const radians = 2;
+
+    node.rotateBy(radians);
+
+    expect(node.rotation).toBe(3);
   });
 });

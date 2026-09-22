@@ -97,6 +97,14 @@ export class Node2D extends GraphicsNode {
     this.scale = this.scale.multiply(scalar);
   }
 
+  /**
+   * Rotates the node by a number of radians.
+   * @param radians The number of radians to rotate the node by.
+   */
+  public rotateBy(radians: number) {
+    this.rotation += radians;
+  }
+
   public draw(canvas: GraphicsCanvas) {
     // TODO: Temp, replace later.
     console.log(canvas);
