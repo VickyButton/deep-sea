@@ -7,9 +7,9 @@ describe('GraphicsEngineEventController', () => {
   it('should map ClearCanvas event', () => {
     const engine = new GraphicsEngine();
     const events = createGraphicsEngineEvents();
-    const eventController = new GraphicsEngineEventController(engine, events);
+    const controller = new GraphicsEngineEventController(engine, events);
 
-    eventController.startListening();
+    controller.startListening();
     events.ClearCanvas.emit();
 
     expect(engine.clearCanvas).toHaveBeenCalled();
@@ -18,9 +18,9 @@ describe('GraphicsEngineEventController', () => {
   it('should map ClearDrawCommandQueue event', () => {
     const engine = new GraphicsEngine();
     const events = createGraphicsEngineEvents();
-    const eventController = new GraphicsEngineEventController(engine, events);
+    const controller = new GraphicsEngineEventController(engine, events);
 
-    eventController.startListening();
+    controller.startListening();
     events.ClearDrawCommandQueue.emit();
 
     expect(engine.clearDrawCommandQueue).toHaveBeenCalled();
@@ -29,10 +29,10 @@ describe('GraphicsEngineEventController', () => {
   it('should map DeleteCachedDrawCommand event', () => {
     const engine = new GraphicsEngine();
     const events = createGraphicsEngineEvents();
-    const eventController = new GraphicsEngineEventController(engine, events);
+    const controller = new GraphicsEngineEventController(engine, events);
     const id = 'draw-command';
 
-    eventController.startListening();
+    controller.startListening();
     events.DeleteCachedDrawCommand.emit(id);
 
     expect(engine.deleteCachedDrawCommand).toHaveBeenCalledWith(id);
@@ -41,9 +41,9 @@ describe('GraphicsEngineEventController', () => {
   it('should map ProcessDrawCommandQueue event', () => {
     const engine = new GraphicsEngine();
     const events = createGraphicsEngineEvents();
-    const eventController = new GraphicsEngineEventController(engine, events);
+    const controller = new GraphicsEngineEventController(engine, events);
 
-    eventController.startListening();
+    controller.startListening();
     events.ProcessDrawCommandQueue.emit();
 
     expect(engine.processDrawCommandQueue).toHaveBeenCalled();
@@ -52,14 +52,14 @@ describe('GraphicsEngineEventController', () => {
   it('should map QueueDrawCommand event', () => {
     const engine = new GraphicsEngine();
     const events = createGraphicsEngineEvents();
-    const eventController = new GraphicsEngineEventController(engine, events);
+    const controller = new GraphicsEngineEventController(engine, events);
     const drawCommand = {
       id: 'draw-command',
       zIndex: 0,
       draw: vi.fn(),
     };
 
-    eventController.startListening();
+    controller.startListening();
     events.QueueDrawCommand.emit(drawCommand);
 
     expect(engine.queueDrawCommand).toHaveBeenCalledWith(drawCommand);
