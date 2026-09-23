@@ -2,9 +2,9 @@ import type { Canvas } from '../../domain/canvases/Canvas';
 import type { DrawCommand, GraphicsEngine } from '../graphicsEngine.types';
 
 export class GraphicsEngineDefault implements GraphicsEngine {
+  private readonly cache = new DrawCommandCache();
   private readonly canvas: Canvas;
-  private cache = new DrawCommandCache();
-  private queue = new DrawCommandQueue();
+  private readonly queue = new DrawCommandQueue();
 
   constructor(canvas: Canvas) {
     this.canvas = canvas;
