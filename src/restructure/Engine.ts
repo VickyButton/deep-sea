@@ -13,20 +13,14 @@ import { NewFrameEvent } from './events/NewFrameEvent';
  */
 export class Engine {
   private readonly frameLoop: FrameLoop;
-  public readonly graphicsEngine: GraphicsEngine;
   private readonly sceneTree: SceneTree;
   private readonly pluginManager = new EnginePluginManager();
   private readonly eventController: EngineEventController;
 
-  constructor(options: {
-    frameLoop: FrameLoop;
-    graphicsEngine: GraphicsEngine;
-    sceneTree: SceneTree;
-  }) {
+  constructor(options: EngineOptions) {
     this.frameLoop = options.frameLoop;
-    this.graphicsEngine = options.graphicsEngine;
     this.sceneTree = options.sceneTree;
-    this.eventController = new EngineEventController(this);
+    this.eventController = new EngineEventController(options);
   }
 
   /**
@@ -173,6 +167,12 @@ export class Engine {
   }
 }
 
+interface EngineOptions {
+  frameLoop: FrameLoop;
+  graphicsEngine: GraphicsEngine;
+  sceneTree: SceneTree;
+}
+
 /**
  * Manages the engine's plugins.
  */
@@ -253,8 +253,8 @@ export class EnginePlugin {
 class EngineEventController {
   private readonly graphicsEngineEventController: GraphicsEngineEventController;
 
-  constructor(engine: Engine) {
-    this.graphicsEngineEventController = new GraphicsEngineEventController(engine.graphicsEngine, graphicsEngineEvents);
+  constructor(options: EngineOptions) {
+    this.graphicsEngineEventController = new GraphicsEngineEventController(options.graphicsEngine, graphicsEngineEvents);
   }
 
   /** Sets up the engine event controllers. */
