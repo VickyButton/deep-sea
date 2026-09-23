@@ -10,10 +10,10 @@ export class GraphicsEngineEventController extends EventController {
   }
 
   private assignEventListeners(engine: GraphicsEngine, events: GraphicsEngineEvents) {
-    this.on(events.ClearCanvas, engine.clearCanvas);
-    this.on(events.ClearDrawCommandQueue, engine.clearDrawCommandQueue);
-    this.on(events.DeleteCachedDrawCommand, engine.deleteCachedDrawCommand);
-    this.on(events.ProcessDrawCommandQueue, engine.processDrawCommandQueue);
-    this.on(events.QueueDrawCommand, engine.queueDrawCommand);
+    this.on(events.ClearCanvas, engine.clearCanvas.bind(engine));
+    this.on(events.ClearDrawCommandQueue, engine.clearDrawCommandQueue.bind(engine));
+    this.on(events.DeleteCachedDrawCommand, engine.deleteCachedDrawCommand.bind(engine));
+    this.on(events.ProcessDrawCommandQueue, engine.processDrawCommandQueue.bind(engine));
+    this.on(events.QueueDrawCommand, engine.queueDrawCommand.bind(engine));
   }
 }
