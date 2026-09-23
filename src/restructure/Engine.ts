@@ -13,8 +13,8 @@ import { NewFrameEvent } from './events/NewFrameEvent';
 
 /** Coordinates interactions between engine components. */
 export class Engine {
-  private readonly frameLoop: FrameLoop;
-  private readonly sceneTree: SceneTree;
+  private readonly frameLoop: FrameLoop; // TODO: Remove after implementing Frame Loop controller.
+  private readonly sceneTree: SceneTree; // TODO: Remove after implementing Scene Tree controller.
   private readonly controllerManager: EventControllerManager;
 
   constructor(options: EngineOptions) {
