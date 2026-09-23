@@ -8,9 +8,7 @@ import { GraphicsEngineEventController } from './engine/graphicsEngine/GraphicsE
 import { EngineEvents } from './events';
 import { NewFrameEvent } from './events/NewFrameEvent';
 
-/**
- * Coordinates all main engine logic.
- */
+/** Coordinates interactions between engine components. */
 export class Engine {
   private readonly frameLoop: FrameLoop;
   private readonly sceneTree: SceneTree;
@@ -173,9 +171,7 @@ interface EngineOptions {
   sceneTree: SceneTree;
 }
 
-/**
- * Manages the engine's plugins.
- */
+/** Manages the engine's plugins. */
 class EnginePluginManager {
   private readonly plugins = new Set<EnginePlugin>();
 
@@ -195,9 +191,7 @@ class EnginePluginManager {
     this.plugins.delete(plugin);
   }
 
-  /**
-   * Sets up the event listeners for the plugins.
-   */
+  /** Sets up the event listeners for the plugins. */
   public setup() {
     this.setupEventListeners();
   }
@@ -235,9 +229,7 @@ class EnginePluginManager {
   }
 }
 
-/**
- * A plugin that executes callback at different lifecycle steps of the engine.
- */
+/** A plugin that executes callback at different lifecycle steps of the engine. */
 export class EnginePlugin {
   /** Callback to execute after the engine is set up. */
   public setup?: () => void;
@@ -247,9 +239,7 @@ export class EnginePlugin {
   public stop?: () => void;
 }
 
-/**
- * Maps Engine events to their corresponding methods.
- */
+/** Maps Engine events to their corresponding methods. */
 class EngineEventController {
   private readonly graphicsEngineEventController: GraphicsEngineEventController;
 
