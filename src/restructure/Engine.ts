@@ -113,12 +113,12 @@ export class Engine {
     this.controllerManager.stopListening();
   }
 
-  // TODO: Remove after implementing Scene Tree controller.
   /**
    * Sets the current scene in the scene tree.
    * @param scene The scene to switch to.
    */
   public switchToScene(scene: Node) {
+    // TODO: Move scene teardown/setup logic into Scene Tree.
     this.teardownCurrentScene();
     this.setScene(scene);
     this.setupCurrentScene();
@@ -135,11 +135,11 @@ export class Engine {
   }
 
   private deactivateSceneTree() {
-    this.sceneTree.deactivate();
+    this.sceneTree.deactivate(); // TODO: Replace with event emit after implementing Scene Tree controller.
   }
 
   private teardownSceneTree() {
-    this.sceneTree.teardown();
+    this.sceneTree.teardown(); // TODO: Replace with event emit after implementing Scene Tree controller.
   }
 
   private setScene(scene: Node) {
@@ -152,11 +152,11 @@ export class Engine {
   }
 
   private setupSceneTree() {
-    this.sceneTree.setup();
+    this.sceneTree.setup(); // TODO: Replace with event emit after implementing Scene Tree controller.
   }
 
   private activateSceneTree() {
-    this.sceneTree.activate();
+    this.sceneTree.activate(); // TODO: Replace with event emit after implementing Scene Tree controller.
   }
 }
 
