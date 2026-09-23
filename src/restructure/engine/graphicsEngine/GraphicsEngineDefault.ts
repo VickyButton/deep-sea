@@ -52,7 +52,7 @@ export class GraphicsEngineDefault implements GraphicsEngine {
   }
 
   private processQueue() {
-    this.processCommands(this.getQueuedCommands());
+    this.processCommands(this.queuedCommands);
   }
 
   private processCommands(commands: DrawCommand[]) {
@@ -76,7 +76,7 @@ export class GraphicsEngineDefault implements GraphicsEngine {
     this.cache.set(command.id, command);
   }
 
-  private getQueuedCommands() {
+  private get queuedCommands() {
     return this.queue.commands;
   }
 
