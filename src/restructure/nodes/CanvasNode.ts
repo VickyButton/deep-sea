@@ -54,6 +54,16 @@ export abstract class CanvasNode extends Node {
       draw: (canvas: Canvas) => this.draw(canvas),
     };
   }
+
+  public teardown() {
+    this.deleteCachedDrawCommand();
+
+    super.teardown();
+  }
+
+  private deleteCachedDrawCommand() {
+    graphicsEngineEvents.DeleteCachedDrawCommand.emit(this.id);
+  }
 }
 
 export interface CanvasNode_Options extends Node_Options {

@@ -4,6 +4,17 @@ import { Event } from '../../events';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('GraphicsEngineEventController', () => {
+  it('should map ClearCanvas event', () => {
+    const engine = new GraphicsEngine();
+    const events = createGraphicsEngineEvents();
+    const eventController = new GraphicsEngineEventController(engine, events);
+
+    eventController.setup();
+    events.ClearCanvas.emit();
+
+    expect(engine.clearCanvas).toHaveBeenCalled();
+  });
+
   it('should map ClearDrawCommandQueue event', () => {
     const engine = new GraphicsEngine();
     const events = createGraphicsEngineEvents();
@@ -56,6 +67,7 @@ describe('GraphicsEngineEventController', () => {
 });
 
 const GraphicsEngine = vi.fn(class {
+  clearCanvas = vi.fn();
   clearDrawCommandQueue = vi.fn();
   deleteCachedDrawCommand = vi.fn();
   processDrawCommandQueue = vi.fn();
@@ -64,6 +76,7 @@ const GraphicsEngine = vi.fn(class {
 
 function createGraphicsEngineEvents(): GraphicsEngineEvents {
   return {
+    ClearCanvas: new Event(),
     ClearDrawCommandQueue: new Event(),
     DeleteCachedDrawCommand: new Event(),
     ProcessDrawCommandQueue: new Event(),

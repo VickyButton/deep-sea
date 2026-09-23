@@ -10,6 +10,10 @@ export class GraphicsEngineDefault implements GraphicsEngine {
     this.canvas = canvas;
   }
 
+  public clearCanvas() {
+    this.canvas.clear();
+  }
+
   public clearDrawCommandQueue() {
     this.clearQueue();
   }
@@ -27,14 +31,8 @@ export class GraphicsEngineDefault implements GraphicsEngine {
   }
 
   public processDrawCommandQueue() {
-    this.clearCanvas();
     this.applyCacheToQueue();
     this.processQueue();
-    this.clearQueue();
-  }
-
-  private clearCanvas() {
-    this.canvas.clear();
   }
 
   private applyCacheToQueue() {

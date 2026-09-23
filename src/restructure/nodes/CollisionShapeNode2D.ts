@@ -32,12 +32,12 @@ export class CollisionShapeNode2D extends Node2D {
   public draw(canvas: Canvas) {
     // TODO: Create method for converting world position to canvas position (negating position Y component).
     this.beginDrawingPath(canvas);
+    this.setShapeOutlineColor(canvas);
     this.setTransformationMatrix(canvas);
     this.drawShape(canvas);
     this.resetTransformationMatrix(canvas);
-    this.setShapeOutlineColor(canvas);
-    this.strokeShapeOutline(canvas);
     this.closeDrawingPath(canvas);
+    this.strokeShapeOutline(canvas);
   }
 
   private drawShape(canvas: Canvas) {

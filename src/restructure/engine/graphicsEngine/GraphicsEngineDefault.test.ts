@@ -2,6 +2,15 @@ import { GraphicsEngineDefault } from './GraphicsEngineDefault';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('GraphicsEngineDefault', () => {
+  it('should clear canvas', () => {
+    const canvas = new Canvas();
+    const engine = new GraphicsEngineDefault(canvas);
+
+    engine.clearCanvas();
+
+    expect(canvas.clear).toHaveBeenCalled();
+  });
+
   it('should draw onto canvas using draw commands', () => {
     const canvas = new Canvas();
     const engine = new GraphicsEngineDefault(canvas);

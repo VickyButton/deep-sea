@@ -15,11 +15,20 @@ export class GraphicsEngineEventController {
   }
 
   private addEventListeners() {
+    this.addClearCanvasEventListener();
     this.addClearDrawCommandQueueEventListener();
     this.addDeleteCachedDrawCommandEventListener();
     this.addProcessDrawCommandQueueEventListener();
     this.addQueueDrawCommandEventListener();
   }
+
+  private addClearCanvasEventListener() {
+    this.events.ClearCanvas.addListener(this.onClearCanvas);
+  }
+
+  private onClearCanvas = () => {
+    this.engine.clearCanvas();
+  };
 
   private addClearDrawCommandQueueEventListener() {
     this.events.ClearDrawCommandQueue.addListener(this.onClearDrawCommandQueue);
@@ -58,10 +67,15 @@ export class GraphicsEngineEventController {
   }
 
   private removeEventListeners() {
+    this.removeClearCanvasEventListener();
     this.removeClearDrawCommandQueueEventListener();
     this.removeDeleteCachedDrawCommandEventListener();
     this.removeProcessDrawCommandQueueEventListener();
     this.removeQueueDrawCommandEventListener();
+  }
+
+  private removeClearCanvasEventListener() {
+    this.events.ClearCanvas.removeListener(this.onClearCanvas);
   }
 
   private removeClearDrawCommandQueueEventListener() {

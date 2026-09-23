@@ -58,13 +58,36 @@ export class Engine {
    * @param scene The scene to switch to.
    */
   public switchToScene(scene: Node) {
+    this.teardownCurrentScene();
     this.setScene(scene);
-    this.setupSceneTree();
-    this.activateSceneTree();
+    this.setupCurrentScene();
+  }
+
+  private teardownCurrentScene() {
+    this.clearDrawCommandQueue();
+    this.deactivateSceneTree();
+    this.teardownSceneTree();
+  }
+
+  private clearDrawCommandQueue() {
+    graphicsEngineEvents.ClearDrawCommandQueue.emit();
+  }
+
+  private deactivateSceneTree() {
+    this.sceneTree.deactivate();
+  }
+
+  private teardownSceneTree() {
+    this.sceneTree.teardown();
   }
 
   private setScene(scene: Node) {
     this.sceneTree.setScene(scene);
+  }
+
+  private setupCurrentScene() {
+    this.setupSceneTree();
+    this.activateSceneTree();
   }
 
   private setupSceneTree() {
@@ -106,8 +129,18 @@ export class Engine {
   }
 
   private executeGameLoop = () => {
-    this.graphicsEngine.processDrawCommandQueue();
+    this.clearCanvas();
+    this.processDrawCommandQueue();
+    this.clearDrawCommandQueue();
   };
+
+  private clearCanvas() {
+    graphicsEngineEvents.ClearCanvas.emit();
+  }
+
+  private processDrawCommandQueue() {
+    graphicsEngineEvents.ProcessDrawCommandQueue.emit();
+  }
 
   private startFrameLoop() {
     this.frameLoop.start();
