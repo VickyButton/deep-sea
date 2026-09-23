@@ -1,50 +1,119 @@
 
+import type { EventController } from './domain/EventController';
 import type { FrameLoop } from './engine/frameLoop.types';
 import type { GraphicsEngine } from './engine/graphicsEngine.types';
+import type { PluginManager } from './engine/pluginManager/pluginManager.types';
 import type { SceneTree } from './engine/sceneTree.types';
 import type { Node } from './nodes';
 import { graphicsEngineEvents } from './engine/graphicsEngine/GraphicEngineEvents';
 import { GraphicsEngineEventController } from './engine/graphicsEngine/GraphicsEngineEventController';
-import { EngineEvents } from './events';
+import { PluginManagerEventController } from './engine/pluginManager/PluginManagerEventController';
+import { pluginManagerEvents } from './engine/pluginManager/pluginManagerEvents';
 import { NewFrameEvent } from './events/NewFrameEvent';
 
 /** Coordinates interactions between engine components. */
 export class Engine {
   private readonly frameLoop: FrameLoop;
   private readonly sceneTree: SceneTree;
-  private readonly pluginManager = new EnginePluginManager();
-  private readonly eventController: EngineEventController;
+  private readonly controllerManager: EventControllerManager;
 
   constructor(options: EngineOptions) {
     this.frameLoop = options.frameLoop;
     this.sceneTree = options.sceneTree;
-    this.eventController = new EngineEventController(options);
+    this.controllerManager = this.createControllerManager(options);
   }
 
-  /**
-   * Adds an engine plugin.
-   * @param plugin The plugin to add.
-   */
-  public addPlugin(plugin: EnginePlugin) {
-    this.pluginManager.addPlugin(plugin);
+  private createControllerManager(options: EngineOptions) {
+    const manager = new EventControllerManager();
+
+    this.addControllersToManager(manager, this.createControllers(options));
+
+    return manager;
   }
 
-  /**
-   * Removes an engine plugin.
-   * @param plugin The plugin to remove.
-   */
-  public removePlugin(plugin: EnginePlugin) {
-    this.pluginManager.removePlugin(plugin);
+  private createControllers(options: EngineOptions) {
+    return [
+      new GraphicsEngineEventController(options.graphicsEngine, graphicsEngineEvents),
+      new PluginManagerEventController(options.pluginManager, pluginManagerEvents),
+    ];
   }
 
-  /**
-   * Sets the frames per second that the engine loop runs at.
-   * @param fps The number of frames per second to run the engine loop at.
-   */
-  public setFramesPerSecond(fps: number) {
-    this.frameLoop.framesPerSecond = fps;
+  private addControllersToManager(manager: EventControllerManager, controllers: EventController[]) {
+    for (const controller of controllers) {
+      manager.addController(controller);
+    }
   }
 
+  /** Starts the engine. */
+  public start() {
+    this.startListeningOnControllers();
+    this.startPlugins();
+    this.addEventListeners(); // TODO: Remove after implementing Frame Loop controller.
+    this.startFrameLoop();
+  }
+
+  private startListeningOnControllers() {
+    this.controllerManager.startListening();
+  }
+
+  private startPlugins() {
+    pluginManagerEvents.StartPlugins.emit();
+  }
+
+  private addEventListeners() {
+    this.addNewFrameCallback();
+  }
+
+  private addNewFrameCallback() {
+    NewFrameEvent.addListener(this.executeGameLoop);
+  }
+
+  private executeGameLoop = () => {
+    this.clearCanvas();
+    this.processDrawCommandQueue();
+  };
+
+  private clearCanvas() {
+    graphicsEngineEvents.ClearCanvas.emit();
+  }
+
+  private processDrawCommandQueue() {
+    graphicsEngineEvents.ProcessDrawCommandQueue.emit();
+  }
+
+  private startFrameLoop() {
+    this.frameLoop.start();  // TODO: Replace with event emit after implementing Frame Loop controller. The Frame Loop start even should accept a loop callback to be passed.
+  }
+
+  /** Stops the engine. */
+  public stop() {
+    this.removeEventListeners(); // TODO: Remove after implementing Frame Loop controller.
+    this.stopFrameLoop(); // TODO: Replace after implementing Frame Loop controller.
+    this.stopPlugins();
+    this.stopListeningOnControllers();
+  }
+
+  private removeEventListeners() {
+    this.removeNewFrameCallback();
+  }
+
+  private removeNewFrameCallback() {
+    NewFrameEvent.removeListener(this.executeGameLoop);
+  }
+
+  private stopFrameLoop() {
+    this.frameLoop.stop(); // TODO: Replace with event emit after implementing Frame Loop controller.
+  }
+
+  private stopPlugins() {
+    pluginManagerEvents.StopPlugins.emit();
+  }
+
+  private stopListeningOnControllers() {
+    this.controllerManager.stopListening();
+  }
+
+  // TODO: Remove after implementing Scene Tree controller.
   /**
    * Sets the current scene in the scene tree.
    * @param scene The scene to switch to.
@@ -89,187 +158,46 @@ export class Engine {
   private activateSceneTree() {
     this.sceneTree.activate();
   }
+}
 
-  /** Sets up the engine for use. */
-  public setup() {
-    this.setupEngine();
-    this.emitSetupEvent();
+/** Manages event controllers. */
+class EventControllerManager {
+  private readonly controllers = new Set<EventController>();
+
+  /**
+   * Adds an event controller.
+   * @param controller The controller to add.
+   */
+  public addController(controller: EventController) {
+    this.controllers.add(controller);
   }
 
-  private setupEngine() {
-    this.pluginManager.setup();
-    this.eventController.setup();
+  /**
+   * Removes an event controller.
+   * @param controller The controller to remove.
+   */
+  public removeController(controller: EventController) {
+    this.controllers.delete(controller);
   }
 
-  private emitSetupEvent() {
-    EngineEvents.SetupEvent.emit();
+  /** Starts listening on all event controllers. */
+  public startListening() {
+    for (const controller of this.controllers) {
+      controller.startListening();
+    }
   }
 
-  /** Starts the engine. */
-  public start() {
-    this.addEventListeners();
-    this.startFrameLoop();
-    this.emitStartEvent();
-  }
-
-  private addEventListeners() {
-    this.addNewFrameCallback();
-  }
-
-  private addNewFrameCallback() {
-    NewFrameEvent.addListener(this.executeGameLoop);
-  }
-
-  private executeGameLoop = () => {
-    this.clearCanvas();
-    this.processDrawCommandQueue();
-  };
-
-  private clearCanvas() {
-    graphicsEngineEvents.ClearCanvas.emit();
-  }
-
-  private processDrawCommandQueue() {
-    graphicsEngineEvents.ProcessDrawCommandQueue.emit();
-  }
-
-  private startFrameLoop() {
-    this.frameLoop.start();
-  }
-
-  private emitStartEvent() {
-    EngineEvents.StartEvent.emit();
-  }
-
-  /** Stops the engine. */
-  public stop() {
-    this.removeEventListeners();
-    this.stopFrameLoop();
-    this.emitStopEvent();
-  }
-
-  private removeEventListeners() {
-    this.removeNewFrameCallback();
-  }
-
-  private removeNewFrameCallback() {
-    NewFrameEvent.removeListener(this.executeGameLoop);
-  }
-
-  private stopFrameLoop() {
-    this.frameLoop.stop();
-  }
-
-  private emitStopEvent() {
-    EngineEvents.StopEvent.emit();
+  /** Stops listening on all event controllers. */
+  public stopListening() {
+    for (const controller of this.controllers) {
+      controller.stopListening();
+    }
   }
 }
 
 interface EngineOptions {
   frameLoop: FrameLoop;
   graphicsEngine: GraphicsEngine;
+  pluginManager: PluginManager;
   sceneTree: SceneTree;
-}
-
-/** Manages the engine's plugins. */
-class EnginePluginManager {
-  private readonly plugins = new Set<EnginePlugin>();
-
-  /**
-   * Adds a plugin.
-   * @param plugin The plugin to add.
-   */
-  public addPlugin(plugin: EnginePlugin) {
-    this.plugins.add(plugin);
-  }
-
-  /**
-   * Removes a plugin.
-   * @param plugin The plugin to remove.
-   */
-  public removePlugin(plugin: EnginePlugin) {
-    this.plugins.delete(plugin);
-  }
-
-  /** Sets up the event listeners for the plugins. */
-  public setup() {
-    this.setupEventListeners();
-  }
-
-  private setupEventListeners() {
-    EngineEvents.SetupEvent.addListener(this.onSetup);
-    EngineEvents.StartEvent.addListener(this.onStart);
-    EngineEvents.StopEvent.addListener(this.onStop);
-  }
-
-  private onSetup = () => {
-    this.iteratePlugins((plugin) => plugin.setup?.());
-  };
-  private onStart = () => {
-    this.iteratePlugins((plugin) => plugin.start?.());
-  };
-  private onStop = () => {
-    this.iteratePlugins((plugin) => plugin.stop?.());
-  };
-
-  private iteratePlugins(callback: (plugin: EnginePlugin) => void) {
-    for (const plugin of this.plugins) {
-      callback(plugin);
-    }
-  }
-
-  public teardown() {
-    this.teardownEventListeners();
-  }
-
-  private teardownEventListeners() {
-    EngineEvents.SetupEvent.removeListener(this.onSetup);
-    EngineEvents.StartEvent.removeListener(this.onStart);
-    EngineEvents.StopEvent.removeListener(this.onStop);
-  }
-}
-
-/** A plugin that executes callback at different lifecycle steps of the engine. */
-export class EnginePlugin {
-  /** Callback to execute after the engine is set up. */
-  public setup?: () => void;
-  /** Callback to execute after the engine is started. */
-  public start?: () => void;
-  /** Callback to execute after the engine is stopped. */
-  public stop?: () => void;
-}
-
-/** Maps Engine events to their corresponding methods. */
-class EngineEventController {
-  private readonly graphicsEngineEventController: GraphicsEngineEventController;
-
-  constructor(options: EngineOptions) {
-    this.graphicsEngineEventController = new GraphicsEngineEventController(options.graphicsEngine, graphicsEngineEvents);
-  }
-
-  /** Sets up the engine event controllers. */
-  public setup() {
-    this.setupEventControllers();
-  }
-
-  private setupEventControllers() {
-    this.setupGraphicsEngineEventController();
-  }
-
-  private setupGraphicsEngineEventController() {
-    this.graphicsEngineEventController.startListening();
-  }
-
-  /** Tears down the engine event controllers. */
-  public teardown() {
-    this.teardownEventControllers();
-  }
-
-  private teardownEventControllers() {
-    this.teardownGraphicsEngineEventController();
-  }
-
-  private teardownGraphicsEngineEventController() {
-    this.graphicsEngineEventController.stopListening();
-  }
 }

@@ -2,6 +2,7 @@ import type { Canvas } from './domain/canvases/Canvas';
 import { Engine } from './Engine';
 import { FrameLoopDefault } from './engine/frameLoop/FrameLoopDefault';
 import { GraphicsEngineDefault } from './engine/graphicsEngine/GraphicsEngineDefault';
+import { PluginManagerDefault } from './engine/pluginManager/PluginManagerDefault';
 import { SceneTreeDefault } from './engine/sceneTree/SceneTreeDefault';
 import { TimeProviderSystem } from './providers/timeProvider/TimeProviderSystem';
 
@@ -11,6 +12,7 @@ export function createEngine(canvas: Canvas) {
   return new Engine({
     frameLoop: new FrameLoopDefault(timeProvider),
     graphicsEngine: new GraphicsEngineDefault(canvas),
+    pluginManager: new PluginManagerDefault(),
     sceneTree: new SceneTreeDefault(),
   });
 }
