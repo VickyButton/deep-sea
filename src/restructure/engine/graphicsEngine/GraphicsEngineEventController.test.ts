@@ -1,6 +1,6 @@
 import type { GraphicsEngineEvents } from '../graphicsEngine.types';
 import { GraphicsEngineEventController } from './GraphicsEngineEventController';
-import { Event } from '../../events';
+import { Event } from '../../events/Event';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('GraphicsEngineEventController', () => {
