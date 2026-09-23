@@ -11,11 +11,16 @@ export class FrameLoopDefault implements FrameLoop {
   private _framesPerSecond = 60;
   private lastFrameTimestamp = 0;
   private lastLoopTimestamp = 0;
+  private millisecondsPerFrame = this.computeMillisecondsPerFrame();
   private millisecondsSinceLastFrame = 0;
   private scheduledAnimationFrameRequestId: number | null = null;
 
   constructor(timeProvider: TimeProvider) {
     this.timeProvider = timeProvider;
+  }
+
+  private computeMillisecondsPerFrame() {
+    return 1000 / this._framesPerSecond;
   }
 
   public get framesPerSecond() {
@@ -24,14 +29,15 @@ export class FrameLoopDefault implements FrameLoop {
 
   public set framesPerSecond(fps: number) {
     this._framesPerSecond = this.clampFramesPerSecond(fps);
+    this.updateMillisecondsPerFrame();
+  }
+
+  private updateMillisecondsPerFrame() {
+    this.millisecondsPerFrame = this.computeMillisecondsPerFrame();
   }
 
   private clampFramesPerSecond(fps: number) {
     return clamp(fps, FPS_MIN, FPS_MAX);
-  }
-
-  private get millisecondsPerFrame() {
-    return 1000 / this.framesPerSecond;
   }
 
   public start() {
@@ -39,29 +45,34 @@ export class FrameLoopDefault implements FrameLoop {
   }
 
   private scheduleAnimationFrameRequest() {
-    this.scheduledAnimationFrameRequestId = requestAnimationFrame(this.loop.bind(this));
+    this.scheduledAnimationFrameRequestId = this.requestAnimationFrameForLoop();
   }
 
-  private loop() {
+  private requestAnimationFrameForLoop() {
+    // TODO: Create AnimationFrameProvider to decouple browser implementation details.
+    return requestAnimationFrame(this.loop);
+  }
+
+  private loop = () => {
     this.updateLastLoopTimestamp();
     this.updateMillisecondsSinceLastFrame();
     this.checkIfNewFrameIsDue();
     this.scheduleAnimationFrameRequest();
-  }
+  };
 
   private updateLastLoopTimestamp() {
-    this.lastLoopTimestamp = this.getCurrentTimestamp();
+    this.lastLoopTimestamp = this.currentTimestamp;
   }
 
-  private getCurrentTimestamp() {
+  private get currentTimestamp() {
     return this.timeProvider.now;
   }
 
   private updateMillisecondsSinceLastFrame() {
-    this.millisecondsSinceLastFrame = this.calculateMillisecondsSinceLastFrame();
+    this.millisecondsSinceLastFrame = this.computeMillisecondsSinceLastFrame();
   }
 
-  private calculateMillisecondsSinceLastFrame() {
+  private computeMillisecondsSinceLastFrame() {
     return this.lastLoopTimestamp - this.lastFrameTimestamp;
   }
 
