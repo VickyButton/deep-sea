@@ -59,6 +59,8 @@ export class GraphicsEngineDefault implements GraphicsEngine {
     for (const command of commands) {
       this.processCommand(command);
     }
+
+    this.clearQueue();
   }
 
   private processCommand(command: DrawCommand) {

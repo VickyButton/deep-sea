@@ -131,7 +131,6 @@ export class Engine {
   private executeGameLoop = () => {
     this.clearCanvas();
     this.processDrawCommandQueue();
-    this.clearDrawCommandQueue();
   };
 
   private clearCanvas() {
