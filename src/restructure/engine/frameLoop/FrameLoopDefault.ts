@@ -1,5 +1,5 @@
 import type { TimeProvider } from '../../providers/timeProvider.types';
-import type { FrameLoop } from '../frameLoop.types';
+import type { FrameLoop } from './frameLoop.types';
 import { NewFrameEvent } from '../../events/NewFrameEvent';
 import { clamp } from '../../utils/clamp';
 
