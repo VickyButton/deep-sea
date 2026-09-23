@@ -9,7 +9,7 @@ describe('GraphicsEngineEventController', () => {
     const events = createGraphicsEngineEvents();
     const eventController = new GraphicsEngineEventController(engine, events);
 
-    eventController.setup();
+    eventController.startListening();
     events.ClearCanvas.emit();
 
     expect(engine.clearCanvas).toHaveBeenCalled();
@@ -20,7 +20,7 @@ describe('GraphicsEngineEventController', () => {
     const events = createGraphicsEngineEvents();
     const eventController = new GraphicsEngineEventController(engine, events);
 
-    eventController.setup();
+    eventController.startListening();
     events.ClearDrawCommandQueue.emit();
 
     expect(engine.clearDrawCommandQueue).toHaveBeenCalled();
@@ -32,7 +32,7 @@ describe('GraphicsEngineEventController', () => {
     const eventController = new GraphicsEngineEventController(engine, events);
     const id = 'draw-command';
 
-    eventController.setup();
+    eventController.startListening();
     events.DeleteCachedDrawCommand.emit(id);
 
     expect(engine.deleteCachedDrawCommand).toHaveBeenCalledWith(id);
@@ -43,7 +43,7 @@ describe('GraphicsEngineEventController', () => {
     const events = createGraphicsEngineEvents();
     const eventController = new GraphicsEngineEventController(engine, events);
 
-    eventController.setup();
+    eventController.startListening();
     events.ProcessDrawCommandQueue.emit();
 
     expect(engine.processDrawCommandQueue).toHaveBeenCalled();
@@ -59,7 +59,7 @@ describe('GraphicsEngineEventController', () => {
       draw: vi.fn(),
     };
 
-    eventController.setup();
+    eventController.startListening();
     events.QueueDrawCommand.emit(drawCommand);
 
     expect(engine.queueDrawCommand).toHaveBeenCalledWith(drawCommand);
