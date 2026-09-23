@@ -5,10 +5,12 @@ import { CanvasNode } from './CanvasNode';
 import { CollisionShapeNode2D } from './CollisionShapeNode2D';
 import { Node } from './Node';
 import { Node2D } from './Node2D';
+import { ShapeNode2D } from './ShapeNode2D';
 
 export {
   CanvasNode,
   CollisionShapeNode2D,
   Node,
   Node2D,
+  ShapeNode2D,
 };
