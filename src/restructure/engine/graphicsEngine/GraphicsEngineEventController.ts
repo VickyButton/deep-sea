@@ -1,5 +1,5 @@
 import type { GraphicsEngine, GraphicsEngineEvents } from '../graphicsEngine.types';
-import { EventController } from '../../domain/EventController';
+import { EventController } from '../../events/EventController';
 
 /** Maps Graphics Engine events to their corresponding methods. */
 export class GraphicsEngineEventController extends EventController {

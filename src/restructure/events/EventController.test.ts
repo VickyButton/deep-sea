@@ -1,5 +1,5 @@
+import { Event } from './Event';
 import { EventController } from './EventController';
-import { Event } from '../events/Event';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('EventController', () => {

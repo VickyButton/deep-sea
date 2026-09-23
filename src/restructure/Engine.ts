@@ -1,9 +1,9 @@
 
-import type { EventController } from './domain/EventController';
 import type { FrameLoop } from './engine/frameLoop.types';
 import type { GraphicsEngine } from './engine/graphicsEngine.types';
 import type { PluginManager } from './engine/pluginManager/pluginManager.types';
 import type { SceneTree } from './engine/sceneTree.types';
+import type { EventController } from './events/EventController';
 import type { Node } from './nodes';
 import { graphicsEngineEvents } from './engine/graphicsEngine/GraphicEngineEvents';
 import { GraphicsEngineEventController } from './engine/graphicsEngine/GraphicsEngineEventController';
