@@ -2,6 +2,7 @@ import type { GraphicsEngineEvents } from '../graphicsEngine.types';
 import { Event } from '../../events/Event';
 
 export const graphicsEngineEvents: GraphicsEngineEvents = {
+  ClearDrawCommandQueue: new Event(),
   DeleteCachedDrawCommand: new Event(),
   ProcessDrawCommandQueue: new Event(),
   QueueDrawCommand: new Event(),

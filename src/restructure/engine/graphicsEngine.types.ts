@@ -3,6 +3,8 @@ import type { Event } from '../events';
 
 /** Exposes functionality for drawing graphics onto a canvas through draw commands. */
 export interface GraphicsEngine {
+  /** Clears the draw command queue. */
+  clearDrawCommandQueue(): void;
   /**
    * Deletes a cached draw command.
    * @param id The command's unique identifier.
@@ -19,6 +21,7 @@ export interface GraphicsEngine {
 
 /** Graphics Engine events. */
 export interface GraphicsEngineEvents {
+  ClearDrawCommandQueue: Event<void>;
   /** Event for deleting a cached draw command. */
   DeleteCachedDrawCommand: Event<string>;
   /** Event for processing the draw command queue. */

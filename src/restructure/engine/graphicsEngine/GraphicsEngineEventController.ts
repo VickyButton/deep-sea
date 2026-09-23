@@ -15,10 +15,19 @@ export class GraphicsEngineEventController {
   }
 
   private addEventListeners() {
+    this.addClearDrawCommandQueueEventListener();
     this.addDeleteCachedDrawCommandEventListener();
     this.addProcessDrawCommandQueueEventListener();
     this.addQueueDrawCommandEventListener();
   }
+
+  private addClearDrawCommandQueueEventListener() {
+    this.events.ClearDrawCommandQueue.addListener(this.onClearDrawCommandQueue);
+  }
+
+  private onClearDrawCommandQueue = () => {
+    this.engine.clearDrawCommandQueue();
+  };
 
   private addDeleteCachedDrawCommandEventListener() {
     this.events.DeleteCachedDrawCommand.addListener(this.onDeleteCachedDrawCommand);
@@ -49,9 +58,14 @@ export class GraphicsEngineEventController {
   }
 
   private removeEventListeners() {
+    this.removeClearDrawCommandQueueEventListener();
     this.removeDeleteCachedDrawCommandEventListener();
     this.removeProcessDrawCommandQueueEventListener();
     this.removeQueueDrawCommandEventListener();
+  }
+
+  private removeClearDrawCommandQueueEventListener() {
+    this.events.ClearDrawCommandQueue.removeListener(this.onClearDrawCommandQueue);
   }
 
   private removeDeleteCachedDrawCommandEventListener() {

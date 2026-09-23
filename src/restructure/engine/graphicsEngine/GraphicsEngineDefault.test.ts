@@ -70,6 +70,22 @@ describe('GraphicsEngineDefault', () => {
 
     expect(drawCommand.draw).toHaveBeenCalledOnce();
   });
+
+  it('should clear command queue', () => {
+    const canvas = new Canvas();
+    const engine = new GraphicsEngineDefault(canvas);
+    const drawCommand = {
+      id: 'draw-command',
+      zIndex: 0,
+      draw: vi.fn(),
+    };
+
+    engine.queueDrawCommand(drawCommand);
+    engine.clearDrawCommandQueue();
+    engine.processDrawCommandQueue();
+
+    expect(drawCommand.draw).not.toHaveBeenCalled();
+  });
 });
 
 const Canvas = vi.fn(class {

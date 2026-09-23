@@ -10,6 +10,14 @@ export class GraphicsEngineDefault implements GraphicsEngine {
     this.canvas = canvas;
   }
 
+  public clearDrawCommandQueue() {
+    this.clearQueue();
+  }
+
+  private clearQueue() {
+    this.queue.clear();
+  }
+
   public deleteCachedDrawCommand(id: string) {
     this.deleteCommandFromCache(id);
   }
@@ -70,10 +78,6 @@ export class GraphicsEngineDefault implements GraphicsEngine {
 
   private getQueuedCommands() {
     return this.queue.commands;
-  }
-
-  private clearQueue() {
-    this.queue.clear();
   }
 
   public queueDrawCommand(command: DrawCommand) {
