@@ -1,4 +1,4 @@
-import type { GraphicsEngineEvents } from '../graphicsEngine.types';
+import type { GraphicsEngineEvents } from './graphicsEngine.types';
 import { Event } from '../../events/Event';
 
 export const graphicsEngineEvents: GraphicsEngineEvents = {

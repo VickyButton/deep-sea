@@ -1,6 +1,6 @@
 
 import type { FrameLoop } from './engine/frameLoop.types';
-import type { GraphicsEngine } from './engine/graphicsEngine.types';
+import type { GraphicsEngine } from './engine/graphicsEngine/graphicsEngine.types';
 import type { PluginManager } from './engine/pluginManager/pluginManager.types';
 import type { SceneTree } from './engine/sceneTree.types';
 import type { EventController } from './events/EventController';

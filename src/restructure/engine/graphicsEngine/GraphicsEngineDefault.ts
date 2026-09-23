@@ -1,5 +1,5 @@
 import type { Canvas } from '../../domain/canvases/Canvas';
-import type { DrawCommand, GraphicsEngine } from '../graphicsEngine.types';
+import type { DrawCommand, GraphicsEngine } from './graphicsEngine.types';
 
 export class GraphicsEngineDefault implements GraphicsEngine {
   private readonly cache = new DrawCommandCache();
