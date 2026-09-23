@@ -257,7 +257,7 @@ class EngineEventController {
   }
 
   private setupGraphicsEngineEventController() {
-    this.graphicsEngineEventController.setup();
+    this.graphicsEngineEventController.startListening();
   }
 
   /** Tears down the engine event controllers. */
@@ -270,6 +270,6 @@ class EngineEventController {
   }
 
   private teardownGraphicsEngineEventController() {
-    this.graphicsEngineEventController.teardown();
+    this.graphicsEngineEventController.stopListening();
   }
 }
