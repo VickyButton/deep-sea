@@ -169,6 +169,18 @@ describe('Node', () => {
     expect(originalParent.children.length).toBe(0);
   });
 
+  it('should remove all child relationships on teardown', () => {
+    const node = new Node('node');
+    const child1 = new Node('child1');
+    const child2 = new Node('child2');
+
+    node.addChild(child1);
+    node.addChild(child2);
+    node.teardown();
+
+    expect(node.children.length).toBe(0);
+  });
+
   it('should traverse tree in post-order', () => {
     const root = new Node('1');
     const rootLeft = new Node('2');

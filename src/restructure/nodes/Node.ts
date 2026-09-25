@@ -106,8 +106,14 @@ export class Node {
   }
 
   public teardown() {
-    // TODO: Remove all relationships.
+    // TODO: Remove parent relationship.
+    this.removeAllChildRelationships();
     this.stopListening();
+  }
+
+  /** Removes all child relationships from the node. */
+  private removeAllChildRelationships() {
+    this.relationships.removeAllChildRelationships();
   }
 
   /**
@@ -204,6 +210,13 @@ class NodeRelationships {
   /** Gets the node's parent. */
   public getParent() {
     return this.parent;
+  }
+
+  /** Removes all child relationships from the node. */
+  public removeAllChildRelationships() {
+    for (const child of this.children) {
+      this.self.removeChild(child);
+    }
   }
 
   /**
