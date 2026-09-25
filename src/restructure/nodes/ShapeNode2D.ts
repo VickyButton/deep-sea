@@ -5,7 +5,6 @@ import type { Shape2D } from '../domain/shapes/Shape2D';
 import { Node2D } from './Node2D';
 import { RGBA } from '../domain/colors/RGBA';
 import { RectangleShape2D } from '../domain/shapes/RectangleShape2D';
-import { NewFrameEvent } from '../events';
 
 export class ShapeNode2D extends Node2D {
   /** The node's shape. */
@@ -45,7 +44,7 @@ export class ShapeNode2D extends Node2D {
 
   public setup() {
     // TODO: Register in Physics Engine.
-    this.addEventListener(NewFrameEvent, this.onNewFrame);
+    // TODO: Add new loop event listener to queue redraw.
   }
 
   protected onNewFrame = () => {
