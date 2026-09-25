@@ -1,5 +1,5 @@
 
-import type { FrameLoop } from './engine/frameLoop/frameLoop.types';
+import type { FrameLoop } from './engine/engineLoop/engineLoop.types';
 import type { GraphicsEngine } from './engine/graphicsEngine/graphicsEngine.types';
 import type { PluginManager } from './engine/pluginManager/pluginManager.types';
 import type { SceneTree } from './engine/sceneTree.types';

@@ -1,6 +1,6 @@
 import type { Canvas } from './domain/canvases/Canvas';
 import { Engine } from './Engine';
-import { FrameLoopDefault } from './engine/frameLoop/FrameLoopDefault';
+import { FrameLoopDefault } from './engine/engineLoop/EngineLoopDefault';
 import { GraphicsEngineDefault } from './engine/graphicsEngine/GraphicsEngineDefault';
 import { PluginManagerDefault } from './engine/pluginManager/PluginManagerDefault';
 import { SceneTreeDefault } from './engine/sceneTree/SceneTreeDefault';

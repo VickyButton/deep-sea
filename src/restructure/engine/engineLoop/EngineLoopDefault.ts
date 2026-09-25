@@ -1,4 +1,4 @@
-import type { FrameLoop, LoopCallback } from './frameLoop.types';
+import type { FrameLoop, LoopCallback } from './engineLoop.types';
 import type { TimeProvider } from '../../providers/timeProvider.types';
 import { clamp } from '../../utils/clamp';
 

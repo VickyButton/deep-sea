@@ -1,4 +1,4 @@
-import type { FrameLoop, FrameLoopEvents } from './frameLoop.types';
+import type { FrameLoop, FrameLoopEvents } from './engineLoop.types';
 import { EventController } from '../../events/EventController';
 
 /** Maps Frame Loop events to their corresponding methods. */

@@ -1,4 +1,4 @@
-import { FrameLoopDefault } from './FrameLoopDefault';
+import { FrameLoopDefault } from './EngineLoopDefault';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const FPS = 60;

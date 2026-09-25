@@ -1,4 +1,4 @@
-import type { FrameLoopEvents } from './frameLoop.types';
+import type { FrameLoopEvents } from './engineLoop.types';
 import { Event } from '../../events';
 
 export const frameLoopEvents: FrameLoopEvents = {

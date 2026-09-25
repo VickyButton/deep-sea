@@ -1,5 +1,5 @@
-import type { FrameLoopEvents } from './frameLoop.types';
-import { FrameLoopEventController } from './FrameLoopEventController';
+import type { FrameLoopEvents } from './engineLoop.types';
+import { FrameLoopEventController } from './EngineLoopEventController';
 import { Event } from '../../events/Event';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
