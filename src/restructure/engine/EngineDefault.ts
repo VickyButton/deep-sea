@@ -1,15 +1,15 @@
 
 import type { Engine } from './engine.types';
 import type { EngineLoop } from './engineLoop/engineLoop.types';
-import type { GraphicsEngine } from './graphicsEngine/graphicsEngine.types';
+import type { Graphics } from './graphics/graphics.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
 import type { EventController } from '../events/EventController';
 import type { Node } from '../nodes/Node';
 import { EngineLoopEventController } from './engineLoop/EngineLoopEventController';
 import { engineLoopEvents } from './engineLoop/engineLoopEvents';
-import { GraphicsEngineEventController } from './graphicsEngine/GraphicsEngineEventController';
-import { graphicsEngineEvents } from './graphicsEngine/graphicsEngineEvents';
+import { GraphicsEventController } from './graphics/GraphicsEventController';
+import { graphicsEvents } from './graphics/graphicsEvents';
 import { PluginManagerEventController } from './pluginManager/PluginManagerEventController';
 import { pluginManagerEvents } from './pluginManager/pluginManagerEvents';
 
@@ -34,7 +34,7 @@ export class EngineDefault implements Engine {
   private createControllers(options: EngineOptions) {
     return [
       new EngineLoopEventController(options.engineLoop, engineLoopEvents),
-      new GraphicsEngineEventController(options.graphicsEngine, graphicsEngineEvents),
+      new GraphicsEventController(options.graphicsEngine, graphicsEvents),
       new PluginManagerEventController(options.pluginManager, pluginManagerEvents),
     ];
   }
@@ -55,11 +55,11 @@ export class EngineDefault implements Engine {
   };
 
   private clearCanvas() {
-    graphicsEngineEvents.ClearCanvas.emit();
+    graphicsEvents.ClearCanvas.emit();
   }
 
   private processDrawCommandQueue() {
-    graphicsEngineEvents.ProcessDrawCommandQueue.emit();
+    graphicsEvents.ProcessDrawCommandQueue.emit();
   }
 
   /** Starts the engine. */
@@ -118,7 +118,7 @@ export class EngineDefault implements Engine {
   }
 
   private clearDrawCommandQueue() {
-    graphicsEngineEvents.ClearDrawCommandQueue.emit();
+    graphicsEvents.ClearDrawCommandQueue.emit();
   }
 
   private deactivateSceneTree() {
@@ -184,7 +184,7 @@ class EventControllerManager {
 
 interface EngineOptions {
   engineLoop: EngineLoop;
-  graphicsEngine: GraphicsEngine;
+  graphicsEngine: Graphics;
   pluginManager: PluginManager;
   sceneTree: SceneTree;
 }

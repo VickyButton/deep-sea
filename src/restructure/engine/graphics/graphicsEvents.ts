@@ -1,7 +1,7 @@
-import type { GraphicsEngineEvents } from './graphicsEngine.types';
+import type { GraphicsEvents } from './graphics.types';
 import { Event } from '../../events/Event';
 
-export const graphicsEngineEvents: GraphicsEngineEvents = {
+export const graphicsEvents: GraphicsEvents = {
   ClearCanvas: new Event(),
   ClearDrawCommandQueue: new Event(),
   DeleteCachedDrawCommand: new Event(),

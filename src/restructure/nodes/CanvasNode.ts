@@ -1,7 +1,7 @@
 import type { Node_Options } from './Node';
 import type { Canvas } from '../domain/canvases/Canvas';
 import { Node } from './Node';
-import { graphicsEngineEvents } from '../engine/graphicsEngine/graphicsEngineEvents';
+import { graphicsEvents } from '../engine/graphics/graphicsEvents';
 
 /**
  * Abstract base node for nodes which can be drawn onto a canvas.
@@ -44,7 +44,7 @@ export abstract class CanvasNode extends Node {
 
   /** Queues a redraw for the node. */
   protected queueRedraw() {
-    graphicsEngineEvents.QueueDrawCommand.emit(this.createDrawCommand());
+    graphicsEvents.QueueDrawCommand.emit(this.createDrawCommand());
   }
 
   /** Creates a draw command for the node. */
@@ -63,7 +63,7 @@ export abstract class CanvasNode extends Node {
   }
 
   private deleteCachedDrawCommand() {
-    graphicsEngineEvents.DeleteCachedDrawCommand.emit(this.id);
+    graphicsEvents.DeleteCachedDrawCommand.emit(this.id);
   }
 }
 

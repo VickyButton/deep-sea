@@ -2,7 +2,7 @@ import type { Canvas } from '../../domain/canvases/Canvas';
 import type { Event } from '../../events/Event';
 
 /** Exposes functionality for drawing graphics onto a canvas through draw commands. */
-export interface GraphicsEngine {
+export interface Graphics {
   /** Clears the canvas. */
   clearCanvas(): void;
   /** Clears the draw command queue. */
@@ -21,8 +21,8 @@ export interface GraphicsEngine {
   queueDrawCommand(command: DrawCommand): void;
 }
 
-/** Graphics Engine events. */
-export interface GraphicsEngineEvents {
+/** Graphics events. */
+export interface GraphicsEvents {
   /** Event for clearing the canvas. */
   ClearCanvas: Event<void>;
   /** Event for clearing the draw command queue. */

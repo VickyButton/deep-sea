@@ -3,10 +3,10 @@
  */
 import { Event } from './Event';
 import { NewFrameEvent } from './NewFrameEvent';
-import { graphicsEngineEvents } from '../engine/graphicsEngine/graphicsEngineEvents';
+import { graphicsEvents } from '../engine/graphics/graphicsEvents';
 
 export {
   Event,
   NewFrameEvent,
-  graphicsEngineEvents,
+  graphicsEvents,
 };

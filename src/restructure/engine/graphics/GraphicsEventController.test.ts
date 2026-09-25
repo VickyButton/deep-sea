@@ -1,9 +1,9 @@
-import type { GraphicsEngineEvents } from './graphicsEngine.types';
-import { GraphicsEngineEventController } from './GraphicsEngineEventController';
+import type { GraphicsEvents } from './graphics.types';
+import { GraphicsEventController } from './GraphicsEventController';
 import { Event } from '../../events/Event';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
-describe('GraphicsEngineEventController', () => {
+describe('GraphicsEventController', () => {
   beforeAll(() => controller.startListening());
   afterEach(() => vi.clearAllMocks());
   afterAll(() => controller.stopListening());
@@ -11,13 +11,13 @@ describe('GraphicsEngineEventController', () => {
   it('should map ClearCanvas event', () => {
     events.ClearCanvas.emit();
 
-    expect(engine.clearCanvas).toHaveBeenCalled();
+    expect(graphics.clearCanvas).toHaveBeenCalled();
   });
 
   it('should map ClearDrawCommandQueue event', () => {
     events.ClearDrawCommandQueue.emit();
 
-    expect(engine.clearDrawCommandQueue).toHaveBeenCalled();
+    expect(graphics.clearDrawCommandQueue).toHaveBeenCalled();
   });
 
   it('should map DeleteCachedDrawCommand event', () => {
@@ -25,13 +25,13 @@ describe('GraphicsEngineEventController', () => {
 
     events.DeleteCachedDrawCommand.emit(data);
 
-    expect(engine.deleteCachedDrawCommand).toHaveBeenCalledWith(data);
+    expect(graphics.deleteCachedDrawCommand).toHaveBeenCalledWith(data);
   });
 
   it('should map ProcessDrawCommandQueue event', () => {
     events.ProcessDrawCommandQueue.emit();
 
-    expect(engine.processDrawCommandQueue).toHaveBeenCalled();
+    expect(graphics.processDrawCommandQueue).toHaveBeenCalled();
   });
 
   it('should map QueueDrawCommand event', () => {
@@ -43,22 +43,22 @@ describe('GraphicsEngineEventController', () => {
 
     events.QueueDrawCommand.emit(data);
 
-    expect(engine.queueDrawCommand).toHaveBeenCalledWith(data);
+    expect(graphics.queueDrawCommand).toHaveBeenCalledWith(data);
   });
 });
 
-const engine = {
+const graphics = {
   clearCanvas: vi.fn(),
   clearDrawCommandQueue: vi.fn(),
   deleteCachedDrawCommand: vi.fn(),
   processDrawCommandQueue: vi.fn(),
   queueDrawCommand: vi.fn(),
 };
-const events: GraphicsEngineEvents = {
+const events: GraphicsEvents = {
   ClearCanvas: new Event(),
   ClearDrawCommandQueue: new Event(),
   DeleteCachedDrawCommand: new Event(),
   ProcessDrawCommandQueue: new Event(),
   QueueDrawCommand: new Event(),
 };
-const controller = new GraphicsEngineEventController(engine, events);
+const controller = new GraphicsEventController(graphics, events);
