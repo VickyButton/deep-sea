@@ -1,11 +1,11 @@
-import type { EngineLoop, LoopCallback } from './engineLoop.types';
+import type { Loop, LoopCallback } from './loop.types';
 import type { TimeProvider } from '../../providers/timeProvider.types';
 import { clamp } from '../../utils/clamp';
 
 const LOOPS_PER_SECOND_MIN = 1;
 const LOOPS_PER_SECOND_MAX = 120;
 
-export class EngineLoopDefault implements EngineLoop {
+export class LoopDefault implements Loop {
   private readonly timeProvider: TimeProvider;
   private lastAnimationFrameTimestamp = 0;
   private lastLoopTimestamp = 0;

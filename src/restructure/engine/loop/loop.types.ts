@@ -1,7 +1,7 @@
 import type { Event } from '../../events';
 
-/** Responsible for managing engine loop timing and executing callback. */
-export interface EngineLoop {
+/** Responsible for managing loop timing and executing loop callback. */
+export interface Loop {
   /** Sets the callback to execute on each new loop. */
   setLoopCallback(callback: LoopCallback): void;
   /** Sets the number of loops per second to run at. */
@@ -12,8 +12,8 @@ export interface EngineLoop {
   stop(): void;
 }
 
-/** Engine Loop events. */
-export interface EngineLoopEvents {
+/** Loop events. */
+export interface LoopEvents {
   /** Event for setting the loop callback. */
   SetLoopCallback: Event<LoopCallback>;
   /** Event for setting the number of loops per second. */

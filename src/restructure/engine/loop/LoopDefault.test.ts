@@ -1,4 +1,4 @@
-import { EngineLoopDefault } from './EngineLoopDefault';
+import { LoopDefault } from './LoopDefault';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const timeProvider = {
@@ -13,7 +13,7 @@ global.requestAnimationFrame = (cb: FrameRequestCallback) => {
 };
 global.cancelAnimationFrame = vi.fn();
 
-describe('EngineLoopDefault', () => {
+describe('LoopDefault', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -25,29 +25,29 @@ describe('EngineLoopDefault', () => {
   });
 
   it('should execute loop callback on interval', () => {
-    const engineLoop = new EngineLoopDefault(timeProvider);
+    const loop = new LoopDefault(timeProvider);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
     const loopCallback = vi.fn();
 
-    engineLoop.setLoopsPerSecond(loopsPerSecond);
-    engineLoop.setLoopCallback(loopCallback);
-    engineLoop.start();
+    loop.setLoopsPerSecond(loopsPerSecond);
+    loop.setLoopCallback(loopCallback);
+    loop.start();
     advanceTimers(loopsPerSecondInterval);
 
     expect(loopCallback).toHaveBeenCalledWith(loopsPerSecondInterval);
   });
 
   it('should not execute loop callback after stopping', () => {
-    const engineLoop = new EngineLoopDefault(timeProvider);
+    const loop = new LoopDefault(timeProvider);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
     const loopCallback = vi.fn();
 
-    engineLoop.setLoopsPerSecond(loopsPerSecond);
-    engineLoop.setLoopCallback(loopCallback);
-    engineLoop.start();
-    engineLoop.stop();
+    loop.setLoopsPerSecond(loopsPerSecond);
+    loop.setLoopCallback(loopCallback);
+    loop.start();
+    loop.stop();
     advanceTimers(loopsPerSecondInterval);
 
     expect(loopCallback).not.toHaveBeenCalled();

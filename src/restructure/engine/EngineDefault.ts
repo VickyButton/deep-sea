@@ -1,15 +1,15 @@
 
 import type { Engine } from './engine.types';
-import type { EngineLoop } from './engineLoop/engineLoop.types';
 import type { Graphics } from './graphics/graphics.types';
+import type { Loop } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
 import type { EventController } from '../events/EventController';
 import type { Node } from '../nodes/Node';
-import { EngineLoopEventController } from './engineLoop/EngineLoopEventController';
-import { engineLoopEvents } from './engineLoop/engineLoopEvents';
 import { GraphicsEventController } from './graphics/GraphicsEventController';
 import { graphicsEvents } from './graphics/graphicsEvents';
+import { LoopEventController } from './loop/LoopEventController';
+import { loopEvents } from './loop/loopEvents';
 import { PluginManagerEventController } from './pluginManager/PluginManagerEventController';
 import { pluginManagerEvents } from './pluginManager/pluginManagerEvents';
 
@@ -33,7 +33,7 @@ export class EngineDefault implements Engine {
 
   private createControllers(options: EngineOptions) {
     return [
-      new EngineLoopEventController(options.engineLoop, engineLoopEvents),
+      new LoopEventController(options.loop, loopEvents),
       new GraphicsEventController(options.graphicsEngine, graphicsEvents),
       new PluginManagerEventController(options.pluginManager, pluginManagerEvents),
     ];
@@ -46,7 +46,7 @@ export class EngineDefault implements Engine {
   }
 
   private setLoopCallback() {
-    engineLoopEvents.SetLoopCallback.emit(this.executeLoop);
+    loopEvents.SetLoopCallback.emit(this.executeLoop);
   }
 
   private executeLoop = () => {
@@ -78,7 +78,7 @@ export class EngineDefault implements Engine {
   }
 
   private startLoop() {
-    engineLoopEvents.Start.emit();
+    loopEvents.Start.emit();
   }
 
   /** Stops the engine. */
@@ -89,7 +89,7 @@ export class EngineDefault implements Engine {
   }
 
   private stopLoop() {
-    engineLoopEvents.Stop.emit();
+    loopEvents.Stop.emit();
   }
 
   private stopPlugins() {
@@ -183,7 +183,7 @@ class EventControllerManager {
 }
 
 interface EngineOptions {
-  engineLoop: EngineLoop;
+  loop: Loop;
   graphicsEngine: Graphics;
   pluginManager: PluginManager;
   sceneTree: SceneTree;

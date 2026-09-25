@@ -1,7 +1,7 @@
-import type { EngineLoopEvents } from './engineLoop.types';
+import type { LoopEvents } from './loop.types';
 import { Event } from '../../events';
 
-export const engineLoopEvents: EngineLoopEvents = {
+export const loopEvents: LoopEvents = {
   SetLoopCallback: new Event(),
   SetLoopsPerSecond: new Event(),
   Start: new Event(),
