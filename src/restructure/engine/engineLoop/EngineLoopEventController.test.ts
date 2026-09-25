@@ -8,12 +8,12 @@ describe('EngineLoopEventController', () => {
   afterEach(() => vi.clearAllMocks());
   afterAll(() => controller.stopListening());
 
-  it('should map SetFramesPerSecond event', () => {
-    const fps = 60;
+  it('should map SetLoopsPerSecond event', () => {
+    const loopsPerSecond = 60;
 
-    events.SetFramesPerSecond.emit(fps);
+    events.SetLoopsPerSecond.emit(loopsPerSecond);
 
-    expect(loop.setFramesPerSecond).toHaveBeenCalledWith(fps);
+    expect(loop.setLoopsPerSecond).toHaveBeenCalledWith(loopsPerSecond);
   });
 
   it('should map SetLoopCallback event', () => {
@@ -38,13 +38,13 @@ describe('EngineLoopEventController', () => {
 });
 
 const loop = {
-  setFramesPerSecond: vi.fn(),
+  setLoopsPerSecond: vi.fn(),
   setLoopCallback: vi.fn(),
   start: vi.fn(),
   stop: vi.fn(),
 };
 const events: EngineLoopEvents = {
-  SetFramesPerSecond: new Event(),
+  SetLoopsPerSecond: new Event(),
   SetLoopCallback: new Event(),
   Start: new Event(),
   Stop: new Event(),

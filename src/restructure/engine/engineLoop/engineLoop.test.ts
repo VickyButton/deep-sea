@@ -1,8 +1,8 @@
 import { EngineLoopDefault } from './EngineLoopDefault';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-const FPS = 60;
-const FPS_INTERVAL = 1000 / FPS;
+const LOOPS_PER_SECOND = 60;
+const LOOPS_PER_SECOND_INTERVAL = 1000 / LOOPS_PER_SECOND;
 
 const timeProvider = {
   now: 0,
@@ -33,9 +33,9 @@ describe('EngineLoopDefault', () => {
 
     engineLoop.setLoopCallback(loopCallback);
     engineLoop.start();
-    advanceTimers(FPS_INTERVAL);
+    advanceTimers(LOOPS_PER_SECOND_INTERVAL);
 
-    expect(loopCallback).toHaveBeenCalledWith(FPS_INTERVAL);
+    expect(loopCallback).toHaveBeenCalledWith(LOOPS_PER_SECOND_INTERVAL);
   });
 
   it('should execute loop callback after stopping', () => {
@@ -45,7 +45,7 @@ describe('EngineLoopDefault', () => {
     engineLoop.setLoopCallback(loopCallback);
     engineLoop.start();
     engineLoop.stop();
-    advanceTimers(FPS_INTERVAL);
+    advanceTimers(LOOPS_PER_SECOND_INTERVAL);
 
     expect(loopCallback).not.toHaveBeenCalled();
   });

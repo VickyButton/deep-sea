@@ -2,8 +2,8 @@ import type { EngineLoop, LoopCallback } from './engineLoop.types';
 import type { TimeProvider } from '../../providers/timeProvider.types';
 import { clamp } from '../../utils/clamp';
 
-const FPS_MIN = 1;
-const FPS_MAX = 120;
+const LOOPS_PER_SECOND_MIN = 1;
+const LOOPS_PER_SECOND_MAX = 120;
 
 export class EngineLoopDefault implements EngineLoop {
   private readonly timeProvider: TimeProvider;
@@ -19,14 +19,13 @@ export class EngineLoopDefault implements EngineLoop {
     this.timeProvider = timeProvider;
   }
 
-  // TODO: Rename to setLoopsPerSecond.
-  public setFramesPerSecond(loopsPerSecond: number) {
+  public setLoopsPerSecond(loopsPerSecond: number) {
     this.loopsPerSecond = this.clampLoopsPerSecond(loopsPerSecond);
     this.millisecondsPerLoop = this.computeMillisecondsPerLoop();
   }
 
   private clampLoopsPerSecond(loopsPerSecond: number) {
-    return clamp(loopsPerSecond, FPS_MIN, FPS_MAX);
+    return clamp(loopsPerSecond, LOOPS_PER_SECOND_MIN, LOOPS_PER_SECOND_MAX);
   }
 
   private computeMillisecondsPerLoop() {

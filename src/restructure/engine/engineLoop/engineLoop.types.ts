@@ -1,21 +1,21 @@
 import type { Event } from '../../events';
 
-/** Responsible for managing frame timing and executing callback. */
+/** Responsible for managing engine loop timing and executing callback. */
 export interface EngineLoop {
-  /** Sets the number of frames per second that the frame loop runs at. */
-  setFramesPerSecond(fps: number): void;
-  /** Sets the loop callback to call on each new frame. */
+  /** Sets the number of loops per second to run at. */
+  setLoopsPerSecond(numLoops: number): void;
+  /** Sets the callback to execute on each new loop. */
   setLoopCallback(callback: LoopCallback): void;
-  /** Starts the frame loop. */
+  /** Starts the loop. */
   start(): void;
-  /** Stops the frame loop. */
+  /** Stops the loop. */
   stop(): void;
 }
 
 /** Frame Loop events. */
 export interface EngineLoopEvents {
-  /** Event for setting the frames per second. */
-  SetFramesPerSecond: Event<number>;
+  /** Event for setting the number of loops per second. */
+  SetLoopsPerSecond: Event<number>;
   /** Event for setting the loop callback. */
   SetLoopCallback: Event<LoopCallback>;
   /** Event for starting the loop. */
