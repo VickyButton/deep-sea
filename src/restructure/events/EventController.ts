@@ -2,7 +2,8 @@ import type { Event, EventListener } from '../events/Event';
 
 /** Maps events to their listeners. */
 export class EventController {
-  protected readonly listeners = new Map<Event, EventListener>();
+  private isListening = false;
+  private readonly listeners = new Map<Event, EventListener>();
 
   /**
    * Assigns an event listener to an event.
@@ -11,6 +12,14 @@ export class EventController {
    */
   public on<T>(event: Event<T>, listener: EventListener<T>) {
     this.listeners.set(event as Event, listener as EventListener);
+
+    if (this.isListening) {
+      this.addListenerToEvent(event, listener);
+    }
+  }
+
+  private addListenerToEvent<T>(event: Event<T>, listener: EventListener<T>) {
+    event.addListener(listener);
   }
 
   /**
@@ -20,7 +29,10 @@ export class EventController {
    */
   public remove<T>(event: Event<T>, listener: EventListener<T>) {
     this.listeners.delete(event as Event);
-    this.removeListenerFromEvent(event, listener);
+
+    if (this.isListening) {
+      this.removeListenerFromEvent(event, listener);
+    }
   }
 
   private removeListenerFromEvent<T>(event: Event<T>, listener: EventListener<T>) {
@@ -29,15 +41,27 @@ export class EventController {
 
   /** Starts listening for events. */
   public startListening() {
+    this.listen();
+
     for (const [event, listener] of this.listeners) {
-      event.addListener(listener);
+      this.addListenerToEvent(event, listener);
     }
+  }
+
+  private listen() {
+    this.isListening = true;
   }
 
   /** Stops listening for events. */
   public stopListening() {
+    this.unlisten();
+
     for (const [event, listener] of this.listeners) {
-      event.removeListener(listener);
+      this.removeListenerFromEvent(event, listener);
     }
+  }
+
+  private unlisten() {
+    this.isListening = false;
   }
 }
