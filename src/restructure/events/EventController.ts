@@ -4,7 +4,11 @@ import type { Event, EventListener } from '../events/Event';
 export class EventController {
   private readonly delegators = new Map<Event, EventListener>();
   private readonly callbacks = new Map<Event, Set<EventListener>>();
-  private isListening = false;
+  private _isListening = false;
+
+  public get isListening() {
+    return this._isListening;
+  }
 
   /**
    * Assigns a callback to execute when an event is emitted.
@@ -50,7 +54,7 @@ export class EventController {
   private addDelegator(event: Event, delegator: EventListener) {
     this.delegators.set(event, delegator);
 
-    if (this.isListening) {
+    if (this._isListening) {
       this.addListener(event, delegator);
     }
   }
@@ -93,7 +97,7 @@ export class EventController {
   private removeDelegator(event: Event, delegator: EventListener) {
     this.delegators.delete(event);
 
-    if (this.isListening) {
+    if (this._isListening) {
       this.removeListener(event, delegator);
     }
   }
@@ -112,7 +116,7 @@ export class EventController {
   }
 
   private listen() {
-    this.isListening = true;
+    this._isListening = true;
   }
 
   /** Stops listening for events. */
@@ -125,6 +129,6 @@ export class EventController {
   }
 
   private unlisten() {
-    this.isListening = false;
+    this._isListening = false;
   }
 }

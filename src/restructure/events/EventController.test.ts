@@ -3,6 +3,27 @@ import { EventController } from './EventController';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('EventController', () => {
+  it('should not be listening by default', () => {
+    expect(new EventController().isListening).toBe(false);
+  });
+
+  it('should start listening', () => {
+    const controller = new EventController();
+
+    controller.startListening();
+
+    expect(controller.isListening).toBe(true);
+  });
+
+  it('should stop listening', () => {
+    const controller = new EventController();
+
+    controller.startListening();
+    controller.stopListening();
+
+    expect(controller.isListening).toBe(false);
+  });
+
   it('should listen for event if callback added before listening started', () => {
     const controller = new EventController();
     const event = new Event<void>();
