@@ -26,10 +26,6 @@ export class EventController {
       const delegator = this.createDelegator(event);
 
       this.addDelegator(event, delegator);
-
-      if (this.isListening) {
-        this.addListener(event, delegator);
-      }
     }
   }
 
@@ -53,6 +49,10 @@ export class EventController {
 
   private addDelegator(event: Event, delegator: EventListener) {
     this.delegators.set(event, delegator);
+
+    if (this.isListening) {
+      this.addListener(event, delegator);
+    }
   }
 
   private addListener(event: Event, delegator: EventListener) {
@@ -77,25 +77,25 @@ export class EventController {
 
     eventCallbacks.delete(callback);
 
-    if (eventCallbacks.size === 0) {
-      this.callbacks.delete(event);
+    if (eventCallbacks.size > 0) {
+      return;
+    }
 
-      const delegator = this.delegators.get(event);
+    this.callbacks.delete(event);
 
-      if (delegator === undefined) {
-        return;
-      }
+    const delegator = this.delegators.get(event);
 
-      this.removeDelegator(event);
-
-      if (this.isListening) {
-        this.removeListener(event, delegator);
-      }
+    if (delegator) {
+      this.removeDelegator(event, delegator);
     }
   }
 
-  private removeDelegator(event: Event) {
+  private removeDelegator(event: Event, delegator: EventListener) {
     this.delegators.delete(event);
+
+    if (this.isListening) {
+      this.removeListener(event, delegator);
+    }
   }
 
   private removeListener(event: Event, delegator: EventListener) {
