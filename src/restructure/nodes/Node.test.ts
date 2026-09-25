@@ -85,16 +85,10 @@ describe('Node', () => {
   it('should not have parent by default', () => {
     const node = new Node('node');
 
-    expect(node.hasParent).toBe(false);
-  });
-
-  it('should have null parent by default', () => {
-    const node = new Node('node');
-
     expect(node.parent).toBe(null);
   });
 
-  it('should assign a child relationship', () => {
+  it('should add a node to its children', () => {
     const parent = new Node('parent');
     const child = new Node('child');
 
@@ -120,32 +114,7 @@ describe('Node', () => {
     expect(() => node.addChild(child)).toThrowError();
   });
 
-  it('should assign a parent relationship with another node', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
-
-    child.assignParent(parent);
-
-    expect(child.parent).toBe(parent);
-  });
-
-  it('should throw an error if trying to assign a parent relationship with itself', () => {
-    const self = new Node('self');
-
-    expect(() => self.assignParent(self)).toThrowError();
-  });
-
-  it('should unassign a parent relationship with another node', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
-
-    child.assignParent(parent);
-    child.unassignParent();
-
-    expect(child.parent).toBe(null);
-  });
-
-  it('should unassign a child relationship with another node', () => {
+  it('should remove a child from its children', () => {
     const parent = new Node('parent');
     const child = new Node('child');
 
@@ -156,28 +125,43 @@ describe('Node', () => {
     expect(parent.children.length).toBe(0);
   });
 
-  it('should reparent itself to a new parent', () => {
-    const originalParent = new Node('originalParent');
-    const newParent = new Node('newParent');
+  it('should throw an error if trying to remove a node that belongs to another node', () => {
+    const parent = new Node('parent');
     const child = new Node('child');
+    const stranger = new Node('stranger');
 
-    originalParent.addChild(child);
-    child.reparent(newParent);
+    parent.addChild(child);
 
-    expect(child.parent).toBe(newParent);
-    expect(newParent.children[0]).toBe(child);
-    expect(originalParent.children.length).toBe(0);
+    expect(() => stranger.addChild(child)).toThrowError();
   });
 
-  it('should remove all child relationships on teardown', () => {
-    const node = new Node('node');
-    const child1 = new Node('child1');
-    const child2 = new Node('child2');
+  it('should set a parent', () => {
+    const parent = new Node('parent');
+    const child = new Node('child');
 
-    node.addChild(child1);
-    node.addChild(child2);
+    child.setParent(parent);
+
+    expect(child.parent).toBe(parent);
+  });
+
+  it('should remove a parent', () => {
+    const parent = new Node('parent');
+    const child = new Node('child');
+
+    child.setParent(parent);
+    child.removeParent();
+
+    expect(child.parent).toBe(null);
+  });
+
+  it('should remove self from parent on teardown', () => {
+    const parent = new Node('parent');
+    const node = new Node('node');
+
+    parent.addChild(node);
     node.teardown();
 
+    expect(node.parent).toBe(null);
     expect(node.children.length).toBe(0);
   });
 
