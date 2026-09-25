@@ -2,7 +2,7 @@
 import type { EngineLoop } from './engine/engineLoop/engineLoop.types';
 import type { GraphicsEngine } from './engine/graphicsEngine/graphicsEngine.types';
 import type { PluginManager } from './engine/pluginManager/pluginManager.types';
-import type { SceneTree } from './engine/sceneTree.types';
+import type { SceneTree } from './engine/sceneTree/sceneTree.types';
 import type { EventController } from './events/EventController';
 import type { Node } from './nodes';
 import { EngineLoopEventController } from './engine/engineLoop/EngineLoopEventController';

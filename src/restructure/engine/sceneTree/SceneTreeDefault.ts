@@ -1,4 +1,4 @@
-import type { SceneTree } from '../sceneTree.types';
+import type { SceneTree } from './sceneTree.types';
 import { Node } from '../../nodes/Node';
 
 export class SceneTreeDefault implements SceneTree {
