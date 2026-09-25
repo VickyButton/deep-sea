@@ -1,4 +1,5 @@
 import type { Event, EventListener } from '../events/Event';
+import { EventController } from '../events/EventController';
 
 /**
  * Core building blocks for scenes. Nodes encapsulate state, functionality, and hierarchy.
@@ -6,36 +7,38 @@ import type { Event, EventListener } from '../events/Event';
 export class Node {
   /** The node's unique ID. */
   public id: string;
-  /** A flag indicating if the node is ready for activation or not. */
-  public isReady: boolean;
-  /** A flag indicating if the node is active or not. */
-  public isActive: boolean;
-  /** Manages the node's event listeners. */
-  protected nodeEventManager: NodeEventManager;
+  /** A flag indicating whether or not the node is listening for events. */
+  public isListening = false;
+  /** Maps events to their listeners. */
+  protected controller = new EventController();
   /** Manages the node's relationships. */
-  protected nodeRelationshipManager: NodeRelationshipManager;
+  protected relationships = new NodeRelationships(this);
 
-  constructor(id: string, options?: Node_Options) {
+  constructor(id: string) {
     this.id = id;
-    this.isReady = options?.isReady ?? false;
-    this.isActive = options?.isActive ?? false;
-    this.nodeEventManager = new NodeEventManager();
-    this.nodeRelationshipManager = new NodeRelationshipManager(this);
-  }
-
-  /** The node's parent node, or null if the node has no parent node. */
-  public get parent() {
-    return this.nodeRelationshipManager.getParent();
-  }
-
-  /** True if node has a parent, false if not. */
-  public get hasParent() {
-    return this.nodeRelationshipManager.getParent() !== null;
   }
 
   /** The node's child nodes. */
   public get children() {
-    return this.nodeRelationshipManager.getChildren();
+    return this.relationships.getChildren();
+  }
+
+  /** True if node has a parent, false if not. */
+  public get hasParent() {
+    return this.relationships.getParent() !== null;
+  }
+
+  /** The node's parent node, or null if the node has no parent node. */
+  public get parent() {
+    return this.relationships.getParent();
+  }
+
+  /**
+   * Adds a child node to the node tree.
+   * @param node The node to add as a child.
+   */
+  public addChild(child: Node) {
+    this.relationships.addChild(child);
   }
 
   /**
@@ -44,39 +47,7 @@ export class Node {
    * @param listener The listener to execute when an event is emitted.
    */
   public addEventListener<T>(event: Event<T>, listener: EventListener<T>) {
-    this.nodeEventManager.addListener(event, listener);
-  }
-
-  /**
-   * Removes a listener for an event.
-   * @param event The event to remove a listener from.
-   * @param listener The listener to remove from the event.
-   */
-  public removeEventListener<T>(event: Event<T>, listener: EventListener<T>) {
-    this.nodeEventManager.removeListener(event, listener);
-  }
-
-  /** Sets up the node. Event listeners should be added during setup. This should be called before activating the node. */
-  public setup() {
-    this.isReady = true;
-  }
-
-  /** Activates the node, allowing event listeners to execute. */
-  public activate() {
-    this.isActive = true;
-    this.nodeEventManager.startListening();
-  }
-
-  /** Deactivates the node, preventing event listeners from executing. */
-  public deactivate() {
-    this.isActive = false;
-    this.nodeEventManager.stopListening();
-  }
-
-  /** Tears down the node, removing all event listeners. This should be called before deleting the node. */
-  public teardown() {
-    this.nodeEventManager.clearListeners();
-    this.isReady = false;
+    this.controller.on(event, listener);
   }
 
   /**
@@ -85,28 +56,7 @@ export class Node {
    * @param node The node to add as a parent.
    */
   public assignParent(parent: Node) {
-    this.nodeRelationshipManager.assignParent(parent);
-  }
-
-  /** Unassigns the node's parent from the node. */
-  public unassignParent() {
-    this.nodeRelationshipManager.unassignParent();
-  }
-
-  /**
-   * Reparents the node.
-   * @param newParent The new parent to assign to the node.
-   */
-  public reparent(newParent: Node) {
-    this.nodeRelationshipManager.reparent(newParent);
-  }
-
-  /**
-   * Adds a child node to the node tree.
-   * @param node The node to add as a child.
-   */
-  public addChild(child: Node) {
-    this.nodeRelationshipManager.addChild(child);
+    this.relationships.assignParent(parent);
   }
 
   /**
@@ -114,7 +64,49 @@ export class Node {
    * @param node The child node to remove.
    */
   public removeChild(child: Node) {
-    this.nodeRelationshipManager.removeChild(child);
+    this.relationships.removeChild(child);
+  }
+
+  /**
+   * Removes a listener for an event.
+   * @param event The event to remove a listener from.
+   * @param listener The listener to remove from the event.
+   */
+  public removeEventListener<T>(event: Event<T>, listener: EventListener<T>) {
+    this.controller.remove(event, listener);
+  }
+
+  /**
+   * Reparents the node.
+   * @param newParent The new parent to assign to the node.
+   */
+  public reparent(newParent: Node) {
+    this.relationships.reparent(newParent);
+  }
+
+  /** Starts the node, allowing it to listen for events. */
+  public start() {
+    this.startListening();
+  }
+
+  private startListening() {
+    this.controller.startListening();
+    this.isListening = true;
+  }
+
+  /** Stops the node, preventing it from listening for events. */
+  public stop() {
+    this.stopListening();
+  }
+
+  private stopListening() {
+    this.controller.stopListening();
+    this.isListening = false;
+  }
+
+  public teardown() {
+    // TODO: Remove all relationships.
+    this.stopListening();
   }
 
   /**
@@ -128,203 +120,26 @@ export class Node {
 
     callback(this);
   }
-}
 
-export interface Node_Options {
-  isReady?: boolean;
-  isActive?: boolean;
-}
-
-/**
- * Manages a node's event listeners.
- */
-class NodeEventManager {
-  private isListening = false;
-  private delegators = new Map<Event, EventListener>();
-  private callbacks = new Map<Event, Set<EventListener>>();
-
-  /**
-   * Adds a listener to an event. The listener will only execute if the event manager is listening.
-   * @param event The event to add a listener to.
-   * @param listener The listener to execute when an event is emitted.
-   */
-  public addListener<T>(event: Event<T>, listener: EventListener<T>) {
-    if (this.isListening) {
-      this.ensureEventHasDelegator(event as Event);
-    }
-
-    this.addCallbackForEvent(event as Event, listener as EventListener);
-  }
-
-  private ensureEventHasDelegator(event: Event) {
-    if (!this.hasDelegatorForEvent(event)) {
-      this.addDelegatorForEvent(event);
-    }
-  }
-
-  private hasDelegatorForEvent(event: Event) {
-    return this.delegators.has(event);
-  }
-
-  private addDelegatorForEvent(event: Event) {
-    const delegator = this.createDelegatorForEvent(event);
-
-    this.delegators.set(event, delegator);
-
-    event.addListener(delegator);
-  }
-
-  private createDelegatorForEvent(event: Event) {
-    return (data: unknown) => {
-      this.executeCallbacksForEvent(event, data);
-    };
-  }
-
-  private executeCallbacksForEvent(event: Event, data: unknown) {
-    for (const callback of this.getCallbacksForEvent(event)) {
-      callback(data);
-    }
-  }
-
-  private getCallbacksForEvent(event: Event) {
-    return this.callbacks.get(event) ?? new Set();
-  }
-
-  private addCallbackForEvent(event: Event, callback: EventListener) {
-    const eventCallbacks = this.getCallbacksForEvent(event);
-
-    eventCallbacks.add(callback);
-
-    this.callbacks.set(event, eventCallbacks);
-  }
-
-  /**
-   * Removes a listener for an event.
-   * @param event The event to remove a listener from.
-   * @param listener The listener to remove from the event.
-   */
-  public removeListener<T>(event: Event<T>, listener: EventListener<T>) {
-    this.removeCallbackForEvent(event as Event, listener as EventListener);
-
-    if (this.getCallbacksForEvent(event as Event).size === 0) {
-      this.callbacks.delete(event as Event);
-      this.removeDelegatorForEvent(event as Event);
-    }
-  }
-
-  private removeCallbackForEvent(event: Event, callback: EventListener) {
-    const eventCallbacks = this.getCallbacksForEvent(event);
-
-    eventCallbacks.delete(callback);
-
-    this.callbacks.set(event, eventCallbacks);
-  }
-
-  private removeDelegatorForEvent(event: Event) {
-    const delegator = this.delegators.get(event);
-
-    this.delegators.delete(event);
-
-    if (delegator) {
-      event.removeListener(delegator);
-    }
-  }
-
-  /** Starts listening for events, enabling listeners to execute when an event is emitted. */
-  public startListening() {
-    this.isListening = true;
-    this.setupDelegators();
-  }
-
-  private setupDelegators() {
-    for (const event of this.getEventsWithCallbacks()) {
-      this.ensureEventHasDelegator(event);
-    }
-  }
-
-  private getEventsWithCallbacks() {
-    return this.callbacks.keys();
-  }
-
-  /** Stops listening for events, preventing listeners from executing when an event is emitted. This does not remove the event listeners. */
-  public stopListening() {
-    this.isListening = false;
-    this.teardownDelegators();
-  }
-
-  private teardownDelegators() {
-    for (const event of this.getEventsWithCallbacks()) {
-      this.removeDelegatorForEvent(event);
-    }
-  }
-
-  /** Removes all listeners. */
-  public clearListeners() {
-    this.teardownDelegators();
-    this.teardownCallbacks();
-  }
-
-  private teardownCallbacks() {
-    this.callbacks.clear();
+  /** Unassigns the node's parent from the node. */
+  public unassignParent() {
+    this.relationships.unassignParent();
   }
 }
 
 /**
  * Manages a node's relationships.
  */
-class NodeRelationshipManager {
+class NodeRelationships {
   /** The node being managed. */
   private readonly self: Node;
-  /** The node's parent node. */
-  private parent: Node | null = null;
   /** The node's child nodes. */
   private children = new Set<Node>();
+  /** The node's parent node. */
+  private parent: Node | null = null;
 
   constructor(self: Node) {
     this.self = self;
-  }
-
-  /** Gets the node's parent. */
-  public getParent() {
-    return this.parent;
-  }
-
-  /**
-   * Assigns a parent to the node.
-   * @param parent The parent to assign to the node.
-   * @throws An error if passed parent is the node itself.
-   */
-  public assignParent(parent: Node) {
-    this.throwIfParentIsSelf(parent);
-    this.parent = parent;
-  }
-
-  private throwIfParentIsSelf(parent: Node) {
-    if (this.isSelf(parent)) {
-      throw new Error('Cannot set self as parent.');
-    }
-  }
-
-  private isSelf(node: Node) {
-    return node === this.self;
-  }
-
-  /** Unassigns the node's parent from the node. */
-  public unassignParent() {
-    this.parent = null;
-  }
-
-  private removeSelfFromParent() {
-    this.self.parent?.removeChild(this.self);
-  }
-
-  private addSelfToParent(newParent: Node) {
-    newParent.addChild(this.self);
-  }
-
-  /** Gets the node's children. */
-  public getChildren() {
-    return Array.from(this.children);
   }
 
   /**
@@ -361,6 +176,36 @@ class NodeRelationshipManager {
   }
 
   /**
+   * Assigns a parent to the node.
+   * @param parent The parent to assign to the node.
+   * @throws An error if passed parent is the node itself.
+   */
+  public assignParent(parent: Node) {
+    this.throwIfParentIsSelf(parent);
+    this.parent = parent;
+  }
+
+  private throwIfParentIsSelf(parent: Node) {
+    if (this.isSelf(parent)) {
+      throw new Error('Cannot set self as parent.');
+    }
+  }
+
+  private isSelf(node: Node) {
+    return node === this.self;
+  }
+
+  /** Gets the node's children. */
+  public getChildren() {
+    return Array.from(this.children);
+  }
+
+  /** Gets the node's parent. */
+  public getParent() {
+    return this.parent;
+  }
+
+  /**
    * Removes child from the node.
    * @param child The child to remove.
    */
@@ -380,5 +225,18 @@ class NodeRelationshipManager {
   public reparent(newParent: Node) {
     this.removeSelfFromParent();
     this.addSelfToParent(newParent);
+  }
+
+  private removeSelfFromParent() {
+    this.self.parent?.removeChild(this.self);
+  }
+
+  private addSelfToParent(newParent: Node) {
+    newParent.addChild(this.self);
+  }
+
+  /** Unassigns the node's parent from the node. */
+  public unassignParent() {
+    this.parent = null;
   }
 }

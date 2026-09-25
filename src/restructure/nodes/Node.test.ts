@@ -3,149 +3,56 @@ import { Event } from '../events/Event';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Node', () => {
-  it('should not be ready by default', () => {
-    const node = new Node('node');
-
-    expect(node.isReady).toBe(false);
-  });
-
-  it('should set up node', () => {
-    const node = new Node('node');
-
-    node.setup();
-
-    expect(node.isReady).toBe(true);
-  });
-
-  it('should not be active by default', () => {
-    const node = new Node('node');
-
-    expect(node.isActive).toBe(false);
-  });
-
-  it('should activate', () => {
-    const node = new Node('node');
-
-    node.activate();
-
-    expect(node.isActive).toBe(true);
-  });
-
-  it('should deactivate', () => {
-    const node = new Node('node');
-
-    node.deactivate();
-
-    expect(node.isActive).toBe(false);
-  });
-
-  it('should tear down node', () => {
-    const node = new Node('node');
-
-    node.setup();
-    node.teardown();
-
-    expect(node.isReady).toBe(false);
-  });
-
-  it('should add event listeners before being activated', () => {
-    const node = new Node('node');
-    const event = new Event();
-    const listener1 = vi.fn();
-    const listener2 = vi.fn();
-    const data = -1;
-
-    node.addEventListener(event, listener1);
-    node.addEventListener(event, listener2);
-    node.activate();
-    event.emit(data);
-
-    expect(listener1).toHaveBeenCalledWith(data);
-    expect(listener2).toHaveBeenCalledWith(data);
-  });
-
-  it('should add event listeners while active', () => {
-    const node = new Node('node');
-    const event = new Event<void>();
-    const listener = vi.fn();
-
-    node.activate();
-    node.addEventListener(event, listener);
-    event.emit();
-
-    expect(listener).toHaveBeenCalled();
-  });
-
-  it('should add event listeners while inactive', () => {
-    const node = new Node('node');
-    const event = new Event<void>();
-    const listener = vi.fn();
-
-    node.deactivate();
-    node.addEventListener(event, listener);
-    node.activate();
-    event.emit();
-
-    expect(listener).toHaveBeenCalled();
-  });
-
-  it('should not execute event listeners if event emitted while inactive', () => {
+  it('should not listen for event before starting', () => {
     const node = new Node('node');
     const event = new Event<void>();
     const listener = vi.fn();
 
     node.addEventListener(event, listener);
-    node.deactivate();
     event.emit();
 
+    expect(node.isListening).toBe(false);
     expect(listener).not.toHaveBeenCalled();
   });
 
-  it('should keep event listeners after being activated, deactivated, and then activated again', () => {
+  it('should listen for event after starting', () => {
     const node = new Node('node');
     const event = new Event<void>();
     const listener = vi.fn();
 
     node.addEventListener(event, listener);
-    node.activate();
-    node.deactivate();
-    node.activate();
+    node.start();
     event.emit();
 
+    expect(node.isListening).toBe(true);
     expect(listener).toHaveBeenCalled();
   });
 
-  it('should remove event listeners', () => {
+  it('should not listen for event after stopping', () => {
     const node = new Node('node');
     const event = new Event<void>();
     const listener = vi.fn();
 
     node.addEventListener(event, listener);
+    node.start();
+    node.stop();
+    event.emit();
+
+    expect(node.isListening).toBe(false);
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it('should not listen for event after removing listener', () => {
+    const node = new Node('node');
+    const event = new Event<void>();
+    const listener = vi.fn();
+
+    node.addEventListener(event, listener);
+    node.start();
     node.removeEventListener(event, listener);
-    node.activate();
     event.emit();
 
     expect(listener).not.toHaveBeenCalled();
-  });
-
-  it('should remove event listeners on teardown', () => {
-    const node = new Node('node');
-    const event = new Event<void>();
-    const listener = vi.fn();
-
-    node.addEventListener(event, listener);
-    node.teardown();
-    node.activate();
-    event.emit();
-
-    expect(listener).not.toHaveBeenCalled();
-  });
-
-  it('should have no parent by default', () => {
-    const node = new Node('node');
-
-    expect(node.parent).toBe(null);
-    expect(node.hasParent).toBe(false);
   });
 
   it('should have no children by default', () => {
@@ -154,32 +61,19 @@ describe('Node', () => {
     expect(node.children.length).toBe(0);
   });
 
-  it('should assign a parent to itself', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
-
-    child.assignParent(parent);
-
-    expect(child.parent).toBe(parent);
-  });
-
-  it('should throw an error if assigning itself as parent', () => {
+  it('should not have parent by default', () => {
     const node = new Node('node');
 
-    expect(() => node.assignParent(node)).toThrowError();
+    expect(node.hasParent).toBe(false);
   });
 
-  it('should unassign a parent from itself', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
+  it('should have null parent by default', () => {
+    const node = new Node('node');
 
-    child.assignParent(parent);
-    child.unassignParent();
-
-    expect(child.parent).toBe(null);
+    expect(node.parent).toBe(null);
   });
 
-  it('should add a child', () => {
+  it('should assign a child relationship', () => {
     const parent = new Node('parent');
     const child = new Node('child');
 
@@ -189,23 +83,48 @@ describe('Node', () => {
     expect(parent.children[0]).toBe(child);
   });
 
-  it('should throw an error if trying to add itself as a child', () => {
+  it('should throw an error if trying to assign itself as a child', () => {
     const node = new Node('node');
 
     expect(() => node.addChild(node)).toThrowError();
   });
 
-  it('should throw an error if trying to add a child that already has a parent', () => {
-    const originalParent = new Node('originalParent');
-    const newParent = new Node('newParent');
+  it('should throw an error if trying to assign a child relationship with a child that already has a parent', () => {
+    const parent = new Node('parent');
     const child = new Node('child');
+    const node = new Node('node');
 
-    originalParent.addChild(child);
+    parent.addChild(child);
 
-    expect(() => newParent.addChild(child)).toThrowError();
+    expect(() => node.addChild(child)).toThrowError();
   });
 
-  it('should remove a child', () => {
+  it('should assign a parent relationship with another node', () => {
+    const parent = new Node('parent');
+    const child = new Node('child');
+
+    child.assignParent(parent);
+
+    expect(child.parent).toBe(parent);
+  });
+
+  it('should throw an error if trying to assign a parent relationship with itself', () => {
+    const self = new Node('self');
+
+    expect(() => self.assignParent(self)).toThrowError();
+  });
+
+  it('should unassign a parent relationship with another node', () => {
+    const parent = new Node('parent');
+    const child = new Node('child');
+
+    child.assignParent(parent);
+    child.unassignParent();
+
+    expect(child.parent).toBe(null);
+  });
+
+  it('should unassign a child relationship with another node', () => {
     const parent = new Node('parent');
     const child = new Node('child');
 
