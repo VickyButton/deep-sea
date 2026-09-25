@@ -14,7 +14,7 @@ export class EventController {
   }
 
   /**
-   * Removes an event listene from an event.
+   * Removes an event listener from an event.
    * @param event The event to remove a listener from.
    * @param listener The listener to remove.
    */
