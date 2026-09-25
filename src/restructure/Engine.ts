@@ -5,22 +5,22 @@ import type { PluginManager } from './engine/pluginManager/pluginManager.types';
 import type { SceneTree } from './engine/sceneTree.types';
 import type { EventController } from './events/EventController';
 import type { Node } from './nodes';
+import { EngineLoopEventController } from './engine/engineLoop/EngineLoopEventController';
+import { engineLoopEvents } from './engine/engineLoop/engineLoopEvents';
 import { graphicsEngineEvents } from './engine/graphicsEngine/graphicEngineEvents';
 import { GraphicsEngineEventController } from './engine/graphicsEngine/GraphicsEngineEventController';
 import { PluginManagerEventController } from './engine/pluginManager/PluginManagerEventController';
 import { pluginManagerEvents } from './engine/pluginManager/pluginManagerEvents';
-import { NewFrameEvent } from './events/NewFrameEvent';
 
 /** Coordinates interactions between engine components. */
 export class Engine {
-  private readonly engineLoop: EngineLoop; // TODO: Remove after implementing Frame Loop controller.
   private readonly sceneTree: SceneTree; // TODO: Remove after implementing Scene Tree controller.
   private readonly controllerManager: EventControllerManager;
 
   constructor(options: EngineOptions) {
-    this.engineLoop = options.engineLoop;
     this.sceneTree = options.sceneTree;
     this.controllerManager = this.createControllerManager(options);
+    this.setLoopCallback();
   }
 
   private createControllerManager(options: EngineOptions) {
@@ -33,6 +33,7 @@ export class Engine {
 
   private createControllers(options: EngineOptions) {
     return [
+      new EngineLoopEventController(options.engineLoop, engineLoopEvents),
       new GraphicsEngineEventController(options.graphicsEngine, graphicsEngineEvents),
       new PluginManagerEventController(options.pluginManager, pluginManagerEvents),
     ];
@@ -44,11 +45,28 @@ export class Engine {
     }
   }
 
+  private setLoopCallback() {
+    engineLoopEvents.SetLoopCallback.emit(this.executeLoop);
+  }
+
+  private executeLoop = () => {
+    this.clearCanvas();
+    this.processDrawCommandQueue();
+  };
+
+  private clearCanvas() {
+    graphicsEngineEvents.ClearCanvas.emit();
+  }
+
+  private processDrawCommandQueue() {
+    graphicsEngineEvents.ProcessDrawCommandQueue.emit();
+  }
+
   /** Starts the engine. */
   public start() {
     this.startListeningOnControllers();
     this.startPlugins();
-    this.startFrameLoop();
+    this.startLoop();
   }
 
   private startListeningOnControllers() {
@@ -59,42 +77,19 @@ export class Engine {
     pluginManagerEvents.StartPlugins.emit();
   }
 
-  private clearCanvas() {
-    graphicsEngineEvents.ClearCanvas.emit();
+  private startLoop() {
+    engineLoopEvents.Start.emit();
   }
-
-  private processDrawCommandQueue() {
-    graphicsEngineEvents.ProcessDrawCommandQueue.emit();
-  }
-
-  private startFrameLoop() {
-    this.engineLoop.setLoopCallback(this.executeGameLoop); // TODO: Replace with event emit after implementing Frame Loop controller.
-    this.engineLoop.start();  // TODO: Replace with event emit after implementing Frame Loop controller. The Frame Loop start even should accept a loop callback to be passed.
-  }
-
-  private executeGameLoop = () => {
-    this.clearCanvas();
-    this.processDrawCommandQueue();
-  };
 
   /** Stops the engine. */
   public stop() {
-    this.removeEventListeners(); // TODO: Remove after implementing Frame Loop controller.
-    this.stopFrameLoop(); // TODO: Replace after implementing Frame Loop controller.
+    this.stopLoop();
     this.stopPlugins();
     this.stopListeningOnControllers();
   }
 
-  private removeEventListeners() {
-    this.removeNewFrameCallback();
-  }
-
-  private removeNewFrameCallback() {
-    NewFrameEvent.removeListener(this.executeGameLoop);
-  }
-
-  private stopFrameLoop() {
-    this.engineLoop.stop(); // TODO: Replace with event emit after implementing Frame Loop controller.
+  private stopLoop() {
+    engineLoopEvents.Stop.emit();
   }
 
   private stopPlugins() {
