@@ -1,11 +1,11 @@
-import type { FrameLoop, LoopCallback } from './engineLoop.types';
+import type { EngineLoop, LoopCallback } from './engineLoop.types';
 import type { TimeProvider } from '../../providers/timeProvider.types';
 import { clamp } from '../../utils/clamp';
 
 const FPS_MIN = 1;
 const FPS_MAX = 120;
 
-export class FrameLoopDefault implements FrameLoop {
+export class EngineLoopDefault implements EngineLoop {
   private readonly timeProvider: TimeProvider;
   private lastAnimationFrameTimestamp = 0;
   private lastLoopTimestamp = 0;

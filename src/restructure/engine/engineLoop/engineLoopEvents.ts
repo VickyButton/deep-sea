@@ -1,7 +1,7 @@
-import type { FrameLoopEvents } from './engineLoop.types';
+import type { EngineLoopEvents } from './engineLoop.types';
 import { Event } from '../../events';
 
-export const frameLoopEvents: FrameLoopEvents = {
+export const engineLoopEvents: EngineLoopEvents = {
   SetFramesPerSecond: new Event(),
   SetLoopCallback: new Event(),
   Start: new Event(),

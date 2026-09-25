@@ -1,7 +1,7 @@
 import type { Event } from '../../events';
 
 /** Responsible for managing frame timing and executing callback. */
-export interface FrameLoop {
+export interface EngineLoop {
   /** Sets the number of frames per second that the frame loop runs at. */
   setFramesPerSecond(fps: number): void;
   /** Sets the loop callback to call on each new frame. */
@@ -13,7 +13,7 @@ export interface FrameLoop {
 }
 
 /** Frame Loop events. */
-export interface FrameLoopEvents {
+export interface EngineLoopEvents {
   /** Event for setting the frames per second. */
   SetFramesPerSecond: Event<number>;
   /** Event for setting the loop callback. */

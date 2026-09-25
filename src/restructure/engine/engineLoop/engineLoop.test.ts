@@ -1,4 +1,4 @@
-import { FrameLoopDefault } from './EngineLoopDefault';
+import { EngineLoopDefault } from './EngineLoopDefault';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const FPS = 60;
@@ -16,7 +16,7 @@ global.requestAnimationFrame = (cb: FrameRequestCallback) => {
 };
 global.cancelAnimationFrame = vi.fn();
 
-describe('FrameLoopDefault', () => {
+describe('EngineLoopDefault', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -28,23 +28,23 @@ describe('FrameLoopDefault', () => {
   });
 
   it('should execute loop callback on new loop', () => {
-    const frameLoop = new FrameLoopDefault(timeProvider);
+    const engineLoop = new EngineLoopDefault(timeProvider);
     const loopCallback = vi.fn();
 
-    frameLoop.setLoopCallback(loopCallback);
-    frameLoop.start();
+    engineLoop.setLoopCallback(loopCallback);
+    engineLoop.start();
     advanceTimers(FPS_INTERVAL);
 
     expect(loopCallback).toHaveBeenCalledWith(FPS_INTERVAL);
   });
 
   it('should execute loop callback after stopping', () => {
-    const frameLoop = new FrameLoopDefault(timeProvider);
+    const engineLoop = new EngineLoopDefault(timeProvider);
     const loopCallback = vi.fn();
 
-    frameLoop.setLoopCallback(loopCallback);
-    frameLoop.start();
-    frameLoop.stop();
+    engineLoop.setLoopCallback(loopCallback);
+    engineLoop.start();
+    engineLoop.stop();
     advanceTimers(FPS_INTERVAL);
 
     expect(loopCallback).not.toHaveBeenCalled();

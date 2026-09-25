@@ -1,5 +1,5 @@
 
-import type { FrameLoop } from './engine/engineLoop/engineLoop.types';
+import type { EngineLoop } from './engine/engineLoop/engineLoop.types';
 import type { GraphicsEngine } from './engine/graphicsEngine/graphicsEngine.types';
 import type { PluginManager } from './engine/pluginManager/pluginManager.types';
 import type { SceneTree } from './engine/sceneTree.types';
@@ -13,12 +13,12 @@ import { NewFrameEvent } from './events/NewFrameEvent';
 
 /** Coordinates interactions between engine components. */
 export class Engine {
-  private readonly frameLoop: FrameLoop; // TODO: Remove after implementing Frame Loop controller.
+  private readonly engineLoop: EngineLoop; // TODO: Remove after implementing Frame Loop controller.
   private readonly sceneTree: SceneTree; // TODO: Remove after implementing Scene Tree controller.
   private readonly controllerManager: EventControllerManager;
 
   constructor(options: EngineOptions) {
-    this.frameLoop = options.frameLoop;
+    this.engineLoop = options.engineLoop;
     this.sceneTree = options.sceneTree;
     this.controllerManager = this.createControllerManager(options);
   }
@@ -68,8 +68,8 @@ export class Engine {
   }
 
   private startFrameLoop() {
-    this.frameLoop.setLoopCallback(this.executeGameLoop); // TODO: Replace with event emit after implementing Frame Loop controller.
-    this.frameLoop.start();  // TODO: Replace with event emit after implementing Frame Loop controller. The Frame Loop start even should accept a loop callback to be passed.
+    this.engineLoop.setLoopCallback(this.executeGameLoop); // TODO: Replace with event emit after implementing Frame Loop controller.
+    this.engineLoop.start();  // TODO: Replace with event emit after implementing Frame Loop controller. The Frame Loop start even should accept a loop callback to be passed.
   }
 
   private executeGameLoop = () => {
@@ -94,7 +94,7 @@ export class Engine {
   }
 
   private stopFrameLoop() {
-    this.frameLoop.stop(); // TODO: Replace with event emit after implementing Frame Loop controller.
+    this.engineLoop.stop(); // TODO: Replace with event emit after implementing Frame Loop controller.
   }
 
   private stopPlugins() {
@@ -188,7 +188,7 @@ class EventControllerManager {
 }
 
 interface EngineOptions {
-  frameLoop: FrameLoop;
+  engineLoop: EngineLoop;
   graphicsEngine: GraphicsEngine;
   pluginManager: PluginManager;
   sceneTree: SceneTree;

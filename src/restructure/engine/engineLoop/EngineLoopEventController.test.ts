@@ -1,9 +1,9 @@
-import type { FrameLoopEvents } from './engineLoop.types';
-import { FrameLoopEventController } from './EngineLoopEventController';
+import type { EngineLoopEvents } from './engineLoop.types';
+import { EngineLoopEventController } from './EngineLoopEventController';
 import { Event } from '../../events/Event';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
-describe('FrameLoopEventController', () => {
+describe('EngineLoopEventController', () => {
   beforeAll(() => controller.startListening());
   afterEach(() => vi.clearAllMocks());
   afterAll(() => controller.stopListening());
@@ -43,10 +43,10 @@ const loop = {
   start: vi.fn(),
   stop: vi.fn(),
 };
-const events: FrameLoopEvents = {
+const events: EngineLoopEvents = {
   SetFramesPerSecond: new Event(),
   SetLoopCallback: new Event(),
   Start: new Event(),
   Stop: new Event(),
 };
-const controller = new FrameLoopEventController(loop, events);
+const controller = new EngineLoopEventController(loop, events);
