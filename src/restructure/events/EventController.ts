@@ -13,16 +13,6 @@ export class EventController {
    */
   public on<T>(event: Event<T>, callback: EventListener<T>) {
     this.addCallback(event as Event, callback as EventListener);
-
-    if (!this.hasDelegator(event as Event)) {
-      const delegator = this.createDelegator(event as Event);
-
-      this.addDelegator(event as Event, delegator);
-
-      if (this.isListening) {
-        this.addListener(event as Event, delegator);
-      }
-    }
   }
 
   private addCallback(event: Event, callback: EventListener) {
@@ -31,9 +21,19 @@ export class EventController {
     eventCallbacks.add(callback);
 
     this.setCallbacks(event, eventCallbacks);
+
+    if (!this.hasDelegator(event)) {
+      const delegator = this.createDelegator(event);
+
+      this.addDelegator(event, delegator);
+
+      if (this.isListening) {
+        this.addListener(event, delegator);
+      }
+    }
   }
 
-  private getCallbacks<T>(event: Event<T>) {
+  private getCallbacks(event: Event) {
     return this.callbacks.get(event as Event) ?? new Set();
   }
 
@@ -45,8 +45,8 @@ export class EventController {
     return this.delegators.has(event);
   }
 
-  private createDelegator<T>(event: Event<T>) {
-    return (data: T) => {
+  private createDelegator(event: Event) {
+    return (data: unknown) => {
       this.getCallbacks(event).forEach((callback) => callback(data));
     };
   }
@@ -64,32 +64,34 @@ export class EventController {
    * @param event The event being listened for.
    * @param callback The callback for the event.
    */
-  public remove<T>(event: Event<T>, delegator: EventListener<T>) {
-    this.removeCallback(event as Event, delegator as EventListener);
-
-    if (!this.hasCallbacks(event as Event)) {
-      this.removeDelegator(event as Event);
-
-      if (this.isListening) {
-        this.removeListener(event as Event, delegator as EventListener);
-      }
-    }
+  public remove<T>(event: Event<T>, callback: EventListener<T>) {
+    this.removeCallback(event as Event, callback as EventListener);
   }
 
   private removeCallback(event: Event, callback: EventListener) {
-    const eventCallbacks = this.getCallbacks(event);
+    const eventCallbacks = this.callbacks.get(event);
+
+    if (eventCallbacks === undefined) {
+      return;
+    }
 
     eventCallbacks.delete(callback);
 
     if (eventCallbacks.size === 0) {
       this.callbacks.delete(event);
-    } else {
-      this.callbacks.set(event, eventCallbacks);
-    }
-  }
 
-  private hasCallbacks(event: Event) {
-    return this.callbacks.has(event);
+      const delegator = this.delegators.get(event);
+
+      if (delegator === undefined) {
+        return;
+      }
+
+      this.removeDelegator(event);
+
+      if (this.isListening) {
+        this.removeListener(event, delegator);
+      }
+    }
   }
 
   private removeDelegator(event: Event) {
