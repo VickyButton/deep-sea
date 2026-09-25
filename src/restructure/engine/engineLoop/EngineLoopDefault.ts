@@ -19,6 +19,10 @@ export class EngineLoopDefault implements EngineLoop {
     this.timeProvider = timeProvider;
   }
 
+  public setLoopCallback(callback: LoopCallback) {
+    this.loopCallback = callback;
+  }
+
   public setLoopsPerSecond(loopsPerSecond: number) {
     this.loopsPerSecond = this.clampLoopsPerSecond(loopsPerSecond);
     this.millisecondsPerLoop = this.computeMillisecondsPerLoop();
@@ -30,10 +34,6 @@ export class EngineLoopDefault implements EngineLoop {
 
   private computeMillisecondsPerLoop() {
     return 1000 / this.loopsPerSecond;
-  }
-
-  public setLoopCallback(callback: LoopCallback) {
-    this.loopCallback = callback;
   }
 
   public start() {
