@@ -12,7 +12,7 @@ export interface EngineLoop {
   stop(): void;
 }
 
-/** Frame Loop events. */
+/** Engine Loop events. */
 export interface EngineLoopEvents {
   /** Event for setting the loop callback. */
   SetLoopCallback: Event<LoopCallback>;
