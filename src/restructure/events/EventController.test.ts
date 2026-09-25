@@ -52,4 +52,17 @@ describe('EventController', () => {
 
     expect(listener).toHaveBeenCalledOnce();
   });
+
+  it('should remove a listener', () => {
+    const controller = new EventController();
+    const event = new Event<void>();
+    const listener = vi.fn();
+
+    controller.on(event, listener);
+    controller.remove(event, listener);
+    controller.startListening();
+    event.emit();
+
+    expect(listener).not.toHaveBeenCalled();
+  });
 });

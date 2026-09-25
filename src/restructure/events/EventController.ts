@@ -13,6 +13,20 @@ export class EventController {
     this.listeners.set(event as Event, listener as EventListener);
   }
 
+  /**
+   * Removes an event listene from an event.
+   * @param event The event to remove a listener from.
+   * @param listener The listener to remove.
+   */
+  public remove<T>(event: Event<T>, listener: EventListener<T>) {
+    this.listeners.delete(event as Event);
+    this.removeListenerFromEvent(event, listener);
+  }
+
+  private removeListenerFromEvent<T>(event: Event<T>, listener: EventListener<T>) {
+    event.removeListener(listener);
+  }
+
   /** Starts listening for events. */
   public startListening() {
     for (const [event, listener] of this.listeners) {
