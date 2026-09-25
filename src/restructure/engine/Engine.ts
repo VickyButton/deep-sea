@@ -1,16 +1,16 @@
 
-import type { EngineLoop } from './engine/engineLoop/engineLoop.types';
-import type { GraphicsEngine } from './engine/graphicsEngine/graphicsEngine.types';
-import type { PluginManager } from './engine/pluginManager/pluginManager.types';
-import type { SceneTree } from './engine/sceneTree/sceneTree.types';
-import type { EventController } from './events/EventController';
-import type { Node } from './nodes';
-import { EngineLoopEventController } from './engine/engineLoop/EngineLoopEventController';
-import { engineLoopEvents } from './engine/engineLoop/engineLoopEvents';
-import { graphicsEngineEvents } from './engine/graphicsEngine/graphicEngineEvents';
-import { GraphicsEngineEventController } from './engine/graphicsEngine/GraphicsEngineEventController';
-import { PluginManagerEventController } from './engine/pluginManager/PluginManagerEventController';
-import { pluginManagerEvents } from './engine/pluginManager/pluginManagerEvents';
+import type { EngineLoop } from './engineLoop/engineLoop.types';
+import type { GraphicsEngine } from './graphicsEngine/graphicsEngine.types';
+import type { PluginManager } from './pluginManager/pluginManager.types';
+import type { SceneTree } from './sceneTree/sceneTree.types';
+import type { EventController } from '../events/EventController';
+import type { Node } from '../nodes/Node';
+import { EngineLoopEventController } from './engineLoop/EngineLoopEventController';
+import { engineLoopEvents } from './engineLoop/engineLoopEvents';
+import { graphicsEngineEvents } from './graphicsEngine/graphicEngineEvents';
+import { GraphicsEngineEventController } from './graphicsEngine/GraphicsEngineEventController';
+import { PluginManagerEventController } from './pluginManager/PluginManagerEventController';
+import { pluginManagerEvents } from './pluginManager/pluginManagerEvents';
 
 /** Coordinates interactions between engine components. */
 export class Engine {
