@@ -1,4 +1,5 @@
 
+import type { Engine } from './engine.types';
 import type { EngineLoop } from './engineLoop/engineLoop.types';
 import type { GraphicsEngine } from './graphicsEngine/graphicsEngine.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
@@ -12,8 +13,7 @@ import { GraphicsEngineEventController } from './graphicsEngine/GraphicsEngineEv
 import { PluginManagerEventController } from './pluginManager/PluginManagerEventController';
 import { pluginManagerEvents } from './pluginManager/pluginManagerEvents';
 
-/** Coordinates interactions between engine components. */
-export class Engine {
+export class EngineDefault implements Engine {
   private readonly sceneTree: SceneTree; // TODO: Remove after implementing Scene Tree controller.
   private readonly controllerManager: EventControllerManager;
 

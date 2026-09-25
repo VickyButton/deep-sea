@@ -1,5 +1,5 @@
 import type { Canvas } from './domain/canvases/Canvas';
-import { Engine } from './engine/Engine';
+import { EngineDefault } from './engine/EngineDefault';
 import { EngineLoopDefault } from './engine/engineLoop/EngineLoopDefault';
 import { GraphicsEngineDefault } from './engine/graphicsEngine/GraphicsEngineDefault';
 import { PluginManagerDefault } from './engine/pluginManager/PluginManagerDefault';
@@ -9,7 +9,7 @@ import { TimeProviderSystem } from './providers/timeProvider/TimeProviderSystem'
 export function createEngine(canvas: Canvas) {
   const timeProvider = new TimeProviderSystem();
 
-  return new Engine({
+  return new EngineDefault({
     engineLoop: new EngineLoopDefault(timeProvider),
     graphicsEngine: new GraphicsEngineDefault(canvas),
     pluginManager: new PluginManagerDefault(),
