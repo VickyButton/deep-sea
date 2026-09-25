@@ -1,9 +1,6 @@
 import { EngineLoopDefault } from './EngineLoopDefault';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-const LOOPS_PER_SECOND = 60;
-const LOOPS_PER_SECOND_INTERVAL = 1000 / LOOPS_PER_SECOND;
-
 const timeProvider = {
   now: 0,
 };
@@ -27,25 +24,31 @@ describe('EngineLoopDefault', () => {
     timeProvider.now = 0;
   });
 
-  it('should execute loop callback on new loop', () => {
+  it('should execute loop callback on interval', () => {
     const engineLoop = new EngineLoopDefault(timeProvider);
+    const loopsPerSecond = 1;
+    const loopsPerSecondInterval = 1000;
     const loopCallback = vi.fn();
 
+    engineLoop.setLoopsPerSecond(loopsPerSecond);
     engineLoop.setLoopCallback(loopCallback);
     engineLoop.start();
-    advanceTimers(LOOPS_PER_SECOND_INTERVAL);
+    advanceTimers(loopsPerSecondInterval);
 
-    expect(loopCallback).toHaveBeenCalledWith(LOOPS_PER_SECOND_INTERVAL);
+    expect(loopCallback).toHaveBeenCalledWith(loopsPerSecondInterval);
   });
 
-  it('should execute loop callback after stopping', () => {
+  it('should not execute loop callback after stopping', () => {
     const engineLoop = new EngineLoopDefault(timeProvider);
+    const loopsPerSecond = 1;
+    const loopsPerSecondInterval = 1000;
     const loopCallback = vi.fn();
 
+    engineLoop.setLoopsPerSecond(loopsPerSecond);
     engineLoop.setLoopCallback(loopCallback);
     engineLoop.start();
     engineLoop.stop();
-    advanceTimers(LOOPS_PER_SECOND_INTERVAL);
+    advanceTimers(loopsPerSecondInterval);
 
     expect(loopCallback).not.toHaveBeenCalled();
   });
