@@ -7,6 +7,7 @@ import { graphicsEngineEvents } from '../engine/graphicsEngine/graphicEngineEven
  * Abstract base node for nodes which can be drawn onto a canvas.
  */
 export abstract class CanvasNode extends Node {
+  // TODO: Add flag for indicating if node should redraw next frame.
   /** A flag indicating if the node may be drawn or not. */
   public isVisible: boolean;
   /** The order in which this node is drawn. Nodes with higher z-indices are drawn on top of nodes with lower z-indices. */
