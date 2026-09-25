@@ -3,6 +3,27 @@ import { Event } from '../events/Event';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Node', () => {
+  it('should not be listening by default', () => {
+    expect(new Node('node').isListening).toBe(false);
+  });
+
+  it('should start listening', () => {
+    const node = new Node('node');
+
+    node.start();
+
+    expect(node.isListening).toBe(true);
+  });
+
+  it('should stop listening', () => {
+    const node = new Node('node');
+
+    node.start();
+    node.stop();
+
+    expect(node.isListening).toBe(false);
+  });
+
   it('should not listen for event before starting', () => {
     const node = new Node('node');
     const event = new Event<void>();

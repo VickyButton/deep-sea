@@ -7,8 +7,6 @@ import { EventController } from '../events/EventController';
 export class Node {
   /** The node's unique ID. */
   public id: string;
-  /** A flag indicating whether or not the node is listening for events. */
-  public isListening = false;
   /** Maps events to their listeners. */
   protected controller = new EventController();
   /** Manages the node's relationships. */
@@ -26,6 +24,11 @@ export class Node {
   /** True if node has a parent, false if not. */
   public get hasParent() {
     return this.relationships.getParent() !== null;
+  }
+
+  /** A flag indicating whether or not the node is listening for events. */
+  public get isListening() {
+    return this.controller.isListening;
   }
 
   /** The node's parent node, or null if the node has no parent node. */
@@ -91,7 +94,6 @@ export class Node {
 
   private startListening() {
     this.controller.startListening();
-    this.isListening = true;
   }
 
   /** Stops the node, preventing it from listening for events. */
@@ -101,7 +103,6 @@ export class Node {
 
   private stopListening() {
     this.controller.stopListening();
-    this.isListening = false;
   }
 
   public teardown() {
