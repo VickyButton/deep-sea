@@ -48,7 +48,6 @@ export class Engine {
   public start() {
     this.startListeningOnControllers();
     this.startPlugins();
-    this.addEventListeners(); // TODO: Remove after implementing Frame Loop controller.
     this.startFrameLoop();
   }
 
@@ -60,19 +59,6 @@ export class Engine {
     pluginManagerEvents.StartPlugins.emit();
   }
 
-  private addEventListeners() {
-    this.addNewFrameCallback();
-  }
-
-  private addNewFrameCallback() {
-    NewFrameEvent.addListener(this.executeGameLoop);
-  }
-
-  private executeGameLoop = () => {
-    this.clearCanvas();
-    this.processDrawCommandQueue();
-  };
-
   private clearCanvas() {
     graphicsEngineEvents.ClearCanvas.emit();
   }
@@ -82,8 +68,14 @@ export class Engine {
   }
 
   private startFrameLoop() {
+    this.frameLoop.setLoopCallback(this.executeGameLoop); // TODO: Replace with event emit after implementing Frame Loop controller.
     this.frameLoop.start();  // TODO: Replace with event emit after implementing Frame Loop controller. The Frame Loop start even should accept a loop callback to be passed.
   }
+
+  private executeGameLoop = () => {
+    this.clearCanvas();
+    this.processDrawCommandQueue();
+  };
 
   /** Stops the engine. */
   public stop() {

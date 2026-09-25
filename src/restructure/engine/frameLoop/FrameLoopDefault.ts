@@ -1,43 +1,40 @@
+import type { FrameLoop, LoopCallback } from './frameLoop.types';
 import type { TimeProvider } from '../../providers/timeProvider.types';
-import type { FrameLoop } from './frameLoop.types';
-import { NewFrameEvent } from '../../events/NewFrameEvent';
 import { clamp } from '../../utils/clamp';
 
-const FPS_MIN = 0;
+const FPS_MIN = 1;
 const FPS_MAX = 120;
 
 export class FrameLoopDefault implements FrameLoop {
   private readonly timeProvider: TimeProvider;
-  private _framesPerSecond = 60;
-  private lastFrameTimestamp = 0;
+  private lastAnimationFrameTimestamp = 0;
   private lastLoopTimestamp = 0;
-  private millisecondsPerFrame = this.computeMillisecondsPerFrame();
-  private millisecondsSinceLastFrame = 0;
+  private loopCallback: LoopCallback = () => { };
+  private loopsPerSecond = 60;
+  private millisecondsPerLoop = this.computeMillisecondsPerLoop();
+  private millisecondsSinceLastLoop = 0;
   private scheduledAnimationFrameRequestId: number | null = null;
 
   constructor(timeProvider: TimeProvider) {
     this.timeProvider = timeProvider;
   }
 
-  private computeMillisecondsPerFrame() {
-    return 1000 / this._framesPerSecond;
+  // TODO: Rename to setLoopsPerSecond.
+  public setFramesPerSecond(loopsPerSecond: number) {
+    this.loopsPerSecond = this.clampLoopsPerSecond(loopsPerSecond);
+    this.millisecondsPerLoop = this.computeMillisecondsPerLoop();
   }
 
-  public get framesPerSecond() {
-    return this._framesPerSecond;
+  private clampLoopsPerSecond(loopsPerSecond: number) {
+    return clamp(loopsPerSecond, FPS_MIN, FPS_MAX);
   }
 
-  public set framesPerSecond(fps: number) {
-    this._framesPerSecond = this.clampFramesPerSecond(fps);
-    this.updateMillisecondsPerFrame();
+  private computeMillisecondsPerLoop() {
+    return 1000 / this.loopsPerSecond;
   }
 
-  private updateMillisecondsPerFrame() {
-    this.millisecondsPerFrame = this.computeMillisecondsPerFrame();
-  }
-
-  private clampFramesPerSecond(fps: number) {
-    return clamp(fps, FPS_MIN, FPS_MAX);
+  public setLoopCallback(callback: LoopCallback) {
+    this.loopCallback = callback;
   }
 
   public start() {
@@ -50,49 +47,45 @@ export class FrameLoopDefault implements FrameLoop {
 
   private requestAnimationFrameForLoop() {
     // TODO: Create AnimationFrameProvider to decouple browser implementation details.
-    return requestAnimationFrame(this.loop);
+    return requestAnimationFrame(this.onAnimationFrame);
   }
 
-  private loop = () => {
-    this.updateLastLoopTimestamp();
-    this.updateMillisecondsSinceLastFrame();
+  private onAnimationFrame = () => {
+    this.updateLastAnimationFrameTimestamp();
+    this.updateMillisecondsSinceLastLoop();
     this.checkIfNewFrameIsDue();
     this.scheduleAnimationFrameRequest();
   };
 
-  private updateLastLoopTimestamp() {
-    this.lastLoopTimestamp = this.currentTimestamp;
+  private updateLastAnimationFrameTimestamp() {
+    this.lastAnimationFrameTimestamp = this.currentTimestamp;
   }
 
   private get currentTimestamp() {
     return this.timeProvider.now;
   }
 
-  private updateMillisecondsSinceLastFrame() {
-    this.millisecondsSinceLastFrame = this.computeMillisecondsSinceLastFrame();
+  private updateMillisecondsSinceLastLoop() {
+    this.millisecondsSinceLastLoop = this.computeMillisecondsSinceLastLoop();
   }
 
-  private computeMillisecondsSinceLastFrame() {
-    return this.lastLoopTimestamp - this.lastFrameTimestamp;
+  private computeMillisecondsSinceLastLoop() {
+    return this.lastAnimationFrameTimestamp - this.lastLoopTimestamp;
   }
 
   private checkIfNewFrameIsDue() {
     if (this.isDueForNewFrame()) {
-      this.updateLastFrameTimestamp();
-      this.emitNewFrameEvent(this.millisecondsSinceLastFrame);
+      this.updateLastLoopTimestamp();
+      this.loopCallback(this.millisecondsSinceLastLoop);
     }
   }
 
   private isDueForNewFrame() {
-    return this.millisecondsSinceLastFrame >= this.millisecondsPerFrame;
+    return this.millisecondsSinceLastLoop >= this.millisecondsPerLoop;
   }
 
-  private updateLastFrameTimestamp() {
-    this.lastFrameTimestamp = this.lastLoopTimestamp;
-  }
-
-  private emitNewFrameEvent(dt: number) {
-    NewFrameEvent.emit(dt);
+  private updateLastLoopTimestamp() {
+    this.lastLoopTimestamp = this.lastAnimationFrameTimestamp;
   }
 
   public stop() {
