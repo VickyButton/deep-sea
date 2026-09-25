@@ -62,6 +62,10 @@ export class Engine {
     graphicsEngineEvents.ProcessDrawCommandQueue.emit();
   }
 
+  public setLoopsPerSecond(loopsPerSecond: number) {
+    engineLoopEvents.SetLoopsPerSecond.emit(loopsPerSecond);
+  }
+
   /** Starts the engine. */
   public start() {
     this.startListeningOnControllers();
