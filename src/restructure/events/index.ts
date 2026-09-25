@@ -2,9 +2,9 @@
  * This file defines event exports for the package.
  */
 import { Event } from './Event';
-import { graphicsEvents } from '../engine/graphics/graphicsEvents';
+import { EventController } from './EventController';
 
 export {
   Event,
-  graphicsEvents,
+  EventController,
 };
