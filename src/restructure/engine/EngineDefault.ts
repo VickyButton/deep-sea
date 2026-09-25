@@ -34,7 +34,7 @@ export class EngineDefault implements Engine {
   private createControllers(options: EngineOptions) {
     return [
       new LoopEventController(options.loop, loopEvents),
-      new GraphicsEventController(options.graphicsEngine, graphicsEvents),
+      new GraphicsEventController(options.graphics, graphicsEvents),
       new PluginManagerEventController(options.pluginManager, pluginManagerEvents),
     ];
   }
@@ -184,7 +184,7 @@ class EventControllerManager {
 
 interface EngineOptions {
   loop: Loop;
-  graphicsEngine: Graphics;
+  graphics: Graphics;
   pluginManager: PluginManager;
   sceneTree: SceneTree;
 }
