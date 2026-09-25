@@ -8,8 +8,8 @@ import type { EventController } from '../events/EventController';
 import type { Node } from '../nodes/Node';
 import { EngineLoopEventController } from './engineLoop/EngineLoopEventController';
 import { engineLoopEvents } from './engineLoop/engineLoopEvents';
-import { graphicsEngineEvents } from './graphicsEngine/graphicEngineEvents';
 import { GraphicsEngineEventController } from './graphicsEngine/GraphicsEngineEventController';
+import { graphicsEngineEvents } from './graphicsEngine/graphicsEngineEvents';
 import { PluginManagerEventController } from './pluginManager/PluginManagerEventController';
 import { pluginManagerEvents } from './pluginManager/pluginManagerEvents';
 

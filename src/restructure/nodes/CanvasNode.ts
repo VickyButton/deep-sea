@@ -1,7 +1,7 @@
 import type { Node_Options } from './Node';
 import type { Canvas } from '../domain/canvases/Canvas';
 import { Node } from './Node';
-import { graphicsEngineEvents } from '../engine/graphicsEngine/graphicEngineEvents';
+import { graphicsEngineEvents } from '../engine/graphicsEngine/graphicsEngineEvents';
 
 /**
  * Abstract base node for nodes which can be drawn onto a canvas.

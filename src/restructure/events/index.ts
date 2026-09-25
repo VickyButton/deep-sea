@@ -3,7 +3,7 @@
  */
 import { Event } from './Event';
 import { NewFrameEvent } from './NewFrameEvent';
-import { graphicsEngineEvents } from '../engine/graphicsEngine/graphicEngineEvents';
+import { graphicsEngineEvents } from '../engine/graphicsEngine/graphicsEngineEvents';
 
 export {
   Event,
