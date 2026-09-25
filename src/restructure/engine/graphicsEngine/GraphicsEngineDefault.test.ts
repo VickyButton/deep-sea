@@ -63,6 +63,29 @@ describe('GraphicsEngineDefault', () => {
     expect(drawCommand.draw).toHaveBeenCalledTimes(2);
   });
 
+  it('should delete cached command after queueing redraw', () => {
+    const canvas = new Canvas();
+    const engine = new GraphicsEngineDefault(canvas);
+    const drawCommand1 = {
+      id: 'draw-command',
+      zIndex: 0,
+      draw: vi.fn(),
+    };
+    const drawCommand2 = {
+      id: 'draw-command',
+      zIndex: 0,
+      draw: vi.fn(),
+    };
+
+    engine.queueDrawCommand(drawCommand1);
+    engine.processDrawCommandQueue();
+    engine.queueDrawCommand(drawCommand2);
+    engine.processDrawCommandQueue();
+
+    expect(drawCommand1.draw).toHaveBeenCalledOnce();
+    expect(drawCommand2.draw).toHaveBeenCalledOnce();
+  });
+
   it('should delete cached command', () => {
     const canvas = new Canvas();
     const engine = new GraphicsEngineDefault(canvas);

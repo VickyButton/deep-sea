@@ -1,5 +1,5 @@
-import type { Canvas } from '../../domain/canvases/Canvas';
 import type { DrawCommand, GraphicsEngine } from './graphicsEngine.types';
+import type { Canvas } from '../../domain/canvases/Canvas';
 
 export class GraphicsEngineDefault implements GraphicsEngine {
   private readonly cache = new DrawCommandCache();
@@ -81,6 +81,7 @@ export class GraphicsEngineDefault implements GraphicsEngine {
   }
 
   public queueDrawCommand(command: DrawCommand) {
+    this.deleteCommandFromCache(command.id);
     this.addCommandToQueue(command);
   }
 }
