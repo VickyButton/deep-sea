@@ -1,4 +1,3 @@
-import type { Node_Options } from './Node';
 import type { Canvas } from '../domain/canvases/Canvas';
 import { Node } from './Node';
 import { graphicsEvents } from '../engine/graphics/graphicsEvents';
@@ -14,7 +13,7 @@ export abstract class CanvasNode extends Node {
   public zIndex: number;
 
   constructor(id: string, options?: CanvasNode_Options) {
-    super(id, options);
+    super(id);
 
     this.isVisible = options?.isVisible ?? true;
     this.zIndex = options?.zIndex ?? 0;
@@ -67,7 +66,7 @@ export abstract class CanvasNode extends Node {
   }
 }
 
-export interface CanvasNode_Options extends Node_Options {
+export interface CanvasNode_Options {
   isVisible?: boolean;
   zIndex?: number;
 }
