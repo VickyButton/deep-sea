@@ -196,6 +196,19 @@ describe('Node', () => {
     expect(node.isListening).toBe(false);
   });
 
+  it('should not listen for event after teardown', () => {
+    const node = new Node('node');
+    const event = new Event<void>();
+    const listener = vi.fn();
+
+    node.addEventListener(event, listener);
+    node.start();
+    node.teardown();
+    event.emit();
+
+    expect(listener).not.toHaveBeenCalled();
+  });
+
   it('should remove self from parent on teardown', () => {
     const parent = new Node('parent');
     const node = new Node('node');

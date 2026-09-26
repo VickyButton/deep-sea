@@ -110,7 +110,11 @@ export class Node {
     }
 
     this.removeFromParent();
-    this.stopListening();
+    this.teardownController();
+  }
+
+  private teardownController() {
+    this.controller.teardown();
   }
 
   private removeFromParent() {
