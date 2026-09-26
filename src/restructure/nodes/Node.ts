@@ -80,6 +80,10 @@ export class Node {
 
   /** Starts the node, allowing it to listen for events. */
   public start() {
+    for (const child of this.children) {
+      child.start();
+    }
+
     this.startListening();
   }
 
@@ -89,6 +93,10 @@ export class Node {
 
   /** Stops the node, preventing it from listening for events. */
   public stop() {
+    for (const child of this.children) {
+      child.stop();
+    }
+
     this.stopListening();
   }
 
@@ -102,7 +110,7 @@ export class Node {
     }
 
     this.removeFromParent();
-    this.stop();
+    this.stopListening();
   }
 
   private removeFromParent() {

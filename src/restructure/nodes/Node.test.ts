@@ -7,32 +7,6 @@ describe('Node', () => {
     expect(new Node('node').isListening).toBe(false);
   });
 
-  it('should start listening', () => {
-    const node = new Node('node');
-
-    node.start();
-
-    expect(node.isListening).toBe(true);
-  });
-
-  it('should stop listening', () => {
-    const node = new Node('node');
-
-    node.start();
-    node.stop();
-
-    expect(node.isListening).toBe(false);
-  });
-
-  it('should stop listening on teardown', () => {
-    const node = new Node('node');
-
-    node.start();
-    node.teardown();
-
-    expect(node.isListening).toBe(false);
-  });
-
   it('should not listen for event before starting', () => {
     const node = new Node('node');
     const event = new Event<void>();
@@ -42,46 +16,6 @@ describe('Node', () => {
     event.emit();
 
     expect(node.isListening).toBe(false);
-    expect(listener).not.toHaveBeenCalled();
-  });
-
-  it('should listen for event after starting', () => {
-    const node = new Node('node');
-    const event = new Event<void>();
-    const listener = vi.fn();
-
-    node.addEventListener(event, listener);
-    node.start();
-    event.emit();
-
-    expect(node.isListening).toBe(true);
-    expect(listener).toHaveBeenCalled();
-  });
-
-  it('should not listen for event after stopping', () => {
-    const node = new Node('node');
-    const event = new Event<void>();
-    const listener = vi.fn();
-
-    node.addEventListener(event, listener);
-    node.start();
-    node.stop();
-    event.emit();
-
-    expect(node.isListening).toBe(false);
-    expect(listener).not.toHaveBeenCalled();
-  });
-
-  it('should not listen for event after removing listener', () => {
-    const node = new Node('node');
-    const event = new Event<void>();
-    const listener = vi.fn();
-
-    node.addEventListener(event, listener);
-    node.start();
-    node.removeEventListener(event, listener);
-    event.emit();
-
     expect(listener).not.toHaveBeenCalled();
   });
 
@@ -163,6 +97,105 @@ describe('Node', () => {
     expect(child.parent).toBe(null);
   });
 
+  it('should start children on start', () => {
+    const parent = new Node('parent');
+    const child = new Node('child');
+    const startSpy = vi.spyOn(child, 'start');
+
+    parent.addChild(child);
+    parent.start();
+
+    expect(startSpy).toHaveBeenCalled();
+  });
+
+  it('should start listening on start', () => {
+    const node = new Node('node');
+
+    node.start();
+
+    expect(node.isListening).toBe(true);
+  });
+
+  it('should listen for event after starting', () => {
+    const node = new Node('node');
+    const event = new Event<void>();
+    const listener = vi.fn();
+
+    node.addEventListener(event, listener);
+    node.start();
+    event.emit();
+
+    expect(node.isListening).toBe(true);
+    expect(listener).toHaveBeenCalled();
+  });
+
+  it('should not listen for event after removing listener', () => {
+    const node = new Node('node');
+    const event = new Event<void>();
+    const listener = vi.fn();
+
+    node.addEventListener(event, listener);
+    node.start();
+    node.removeEventListener(event, listener);
+    event.emit();
+
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it('should stop children on stop', () => {
+    const parent = new Node('parent');
+    const child = new Node('child');
+    const stopSpy = vi.spyOn(child, 'stop');
+
+    parent.addChild(child);
+    parent.stop();
+
+    expect(stopSpy).toHaveBeenCalled();
+  });
+
+  it('should stop listening on stop', () => {
+    const node = new Node('node');
+
+    node.start();
+    node.stop();
+
+    expect(node.isListening).toBe(false);
+  });
+
+  it('should not listen for event after stopping', () => {
+    const node = new Node('node');
+    const event = new Event<void>();
+    const listener = vi.fn();
+
+    node.addEventListener(event, listener);
+    node.start();
+    node.stop();
+    event.emit();
+
+    expect(node.isListening).toBe(false);
+    expect(listener).not.toHaveBeenCalled();
+  });
+
+  it('should teardown children on teardown', () => {
+    const parent = new Node('parent');
+    const child = new Node('child');
+    const teardownSpy = vi.spyOn(child, 'teardown');
+
+    parent.addChild(child);
+    parent.teardown();
+
+    expect(teardownSpy).toHaveBeenCalled();
+  });
+
+  it('should stop listening on teardown', () => {
+    const node = new Node('node');
+
+    node.start();
+    node.teardown();
+
+    expect(node.isListening).toBe(false);
+  });
+
   it('should remove self from parent on teardown', () => {
     const parent = new Node('parent');
     const node = new Node('node');
@@ -172,17 +205,6 @@ describe('Node', () => {
 
     expect(node.parent).toBe(null);
     expect(parent.children.length).toBe(0);
-  });
-
-  it('should remove children from self on teardown', () => {
-    const node = new Node('node');
-    const child = new Node('child');
-
-    node.addChild(child);
-    node.teardown();
-
-    expect(child.parent).toBe(null);
-    expect(node.children.length).toBe(0);
   });
 
   it('should traverse tree in post-order', () => {
