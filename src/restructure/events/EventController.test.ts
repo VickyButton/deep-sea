@@ -114,6 +114,19 @@ describe('EventController', () => {
     expect(callback).not.toHaveBeenCalled();
   });
 
+  it('should not create duplicate listener', () => {
+    const controller = new EventController();
+    const event = new Event<void>();
+    const callback = vi.fn();
+
+    controller.on(event, callback);
+    controller.startListening();
+    controller.startListening();
+    event.emit();
+
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
   it('should not listen for event if callback is removed after starting', () => {
     const controller = new EventController();
     const event = new Event<void>();
@@ -122,6 +135,28 @@ describe('EventController', () => {
     controller.startListening();
     controller.on(event, callback);
     controller.remove(event, callback);
+    event.emit();
+
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('should stop listening after teardown', () => {
+    const controller = new EventController();
+
+    controller.startListening();
+    controller.teardown();
+
+    expect(controller.isListening).toBe(false);
+  });
+
+  it('should not listen for event after teardown', () => {
+    const controller = new EventController();
+    const event = new Event<void>();
+    const callback = vi.fn();
+
+    controller.on(event, callback);
+    controller.startListening();
+    controller.teardown();
     event.emit();
 
     expect(callback).not.toHaveBeenCalled();

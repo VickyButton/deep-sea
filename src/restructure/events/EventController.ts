@@ -109,26 +109,45 @@ export class EventController {
   /** Starts listening for events. */
   public startListening() {
     this.listen();
+  }
+
+  private listen() {
+    this._isListening = true;
 
     for (const [event, delegator] of this.delegators) {
       this.addListener(event, delegator);
     }
   }
 
-  private listen() {
-    this._isListening = true;
-  }
-
   /** Stops listening for events. */
   public stopListening() {
     this.unlisten();
+  }
+
+  private unlisten() {
+    this._isListening = false;
 
     for (const [event, delegator] of this.delegators) {
       this.removeListener(event, delegator);
     }
   }
 
-  private unlisten() {
-    this._isListening = false;
+  /** Tears down the controller, removing all event listeners. */
+  public teardown() {
+    this.unlisten();
+    this.clear();
+  }
+
+  private clear() {
+    this.clearDelegators();
+    this.clearCallbacks();
+  }
+
+  private clearDelegators() {
+    this.delegators.clear();
+  }
+
+  private clearCallbacks() {
+    this.callbacks.clear();
   }
 }
