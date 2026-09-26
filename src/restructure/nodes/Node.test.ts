@@ -24,6 +24,15 @@ describe('Node', () => {
     expect(node.isListening).toBe(false);
   });
 
+  it('should stop listening on teardown', () => {
+    const node = new Node('node');
+
+    node.start();
+    node.teardown();
+
+    expect(node.isListening).toBe(false);
+  });
+
   it('should not listen for event before starting', () => {
     const node = new Node('node');
     const event = new Event<void>();
@@ -104,7 +113,7 @@ describe('Node', () => {
     expect(() => node.addChild(node)).toThrowError();
   });
 
-  it('should throw an error if trying to assign a child relationship with a child that already has a parent', () => {
+  it('should throw an error if trying to add a node that belongs to another node as a child', () => {
     const parent = new Node('parent');
     const child = new Node('child');
     const node = new Node('node');
@@ -132,7 +141,7 @@ describe('Node', () => {
 
     parent.addChild(child);
 
-    expect(() => stranger.addChild(child)).toThrowError();
+    expect(() => stranger.removeChild(child)).toThrowError();
   });
 
   it('should set a parent', () => {
@@ -162,6 +171,17 @@ describe('Node', () => {
     node.teardown();
 
     expect(node.parent).toBe(null);
+    expect(parent.children.length).toBe(0);
+  });
+
+  it('should remove children from self on teardown', () => {
+    const node = new Node('node');
+    const child = new Node('child');
+
+    node.addChild(child);
+    node.teardown();
+
+    expect(child.parent).toBe(null);
     expect(node.children.length).toBe(0);
   });
 

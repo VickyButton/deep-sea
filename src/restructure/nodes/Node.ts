@@ -97,8 +97,12 @@ export class Node {
   }
 
   public teardown() {
+    for (const child of this.children) {
+      child.teardown();
+    }
+
     this.removeFromParent();
-    this.stopListening();
+    this.stop();
   }
 
   private removeFromParent() {
@@ -110,7 +114,7 @@ export class Node {
    * @param callback The callback to execute on each node.
    */
   public traversePostorder(callback: (node: Node) => void) {
-    for (const child of this.children.values()) {
+    for (const child of this.children) {
       child.traversePostorder(callback);
     }
 
