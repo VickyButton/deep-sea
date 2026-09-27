@@ -1,24 +1,24 @@
 
 import type { Engine } from './engine.types';
+import type { Node } from '../nodes';
 import type { Graphics } from './graphics/graphics.types';
 import type { Loop } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
 import type { EventController } from '../events/EventController';
-import type { Node } from '../nodes/Node';
 import { GraphicsEventController } from './graphics/GraphicsEventController';
 import { graphicsEvents } from './graphics/graphicsEvents';
 import { LoopEventController } from './loop/LoopEventController';
 import { loopEvents } from './loop/loopEvents';
 import { PluginManagerEventController } from './pluginManager/PluginManagerEventController';
 import { pluginManagerEvents } from './pluginManager/pluginManagerEvents';
+import { SceneTreeEventController } from './sceneTree/SceneTreeEventController';
+import { sceneTreeEvents } from './sceneTree/sceneTreeEvents';
 
 export class EngineDefault implements Engine {
-  private readonly sceneTree: SceneTree; // TODO: Remove after implementing Scene Tree controller.
   private readonly controllerManager: EventControllerManager;
 
   constructor(options: EngineOptions) {
-    this.sceneTree = options.sceneTree;
     this.controllerManager = this.createControllerManager(options);
     this.setLoopCallback();
   }
@@ -36,6 +36,7 @@ export class EngineDefault implements Engine {
       new LoopEventController(options.loop, loopEvents),
       new GraphicsEventController(options.graphics, graphicsEvents),
       new PluginManagerEventController(options.pluginManager, pluginManagerEvents),
+      new SceneTreeEventController(options.sceneTree, sceneTreeEvents),
     ];
   }
 
@@ -66,7 +67,6 @@ export class EngineDefault implements Engine {
   public start() {
     this.startListeningOnControllers();
     this.startPlugins();
-    this.startLoop();
   }
 
   private startListeningOnControllers() {
@@ -75,10 +75,6 @@ export class EngineDefault implements Engine {
 
   private startPlugins() {
     pluginManagerEvents.StartPlugins.emit();
-  }
-
-  private startLoop() {
-    loopEvents.Start.emit();
   }
 
   /** Stops the engine. */
@@ -101,49 +97,20 @@ export class EngineDefault implements Engine {
   }
 
   /**
-   * Sets the current scene in the scene tree.
+   * Switches to a scene and starts that scene.
    * @param scene The scene to switch to.
    */
   public switchToScene(scene: Node) {
-    // TODO: Move scene teardown/setup logic into Scene Tree.
-    this.teardownCurrentScene();
-    this.setScene(scene);
-    this.setupCurrentScene();
+    this.setCurrentScene(scene);
+    this.startCurrentScene();
   }
 
-  private teardownCurrentScene() {
-    this.clearDrawCommandQueue();
-    this.deactivateSceneTree();
-    this.teardownSceneTree();
+  private setCurrentScene(scene: Node) {
+    sceneTreeEvents.SetCurrentScene.emit(scene);
   }
 
-  private clearDrawCommandQueue() {
-    graphicsEvents.ClearDrawCommandQueue.emit();
-  }
-
-  private deactivateSceneTree() {
-    this.sceneTree.deactivate(); // TODO: Replace with event emit after implementing Scene Tree controller.
-  }
-
-  private teardownSceneTree() {
-    this.sceneTree.teardown(); // TODO: Replace with event emit after implementing Scene Tree controller.
-  }
-
-  private setScene(scene: Node) {
-    this.sceneTree.setScene(scene);
-  }
-
-  private setupCurrentScene() {
-    this.setupSceneTree();
-    this.activateSceneTree();
-  }
-
-  private setupSceneTree() {
-    this.sceneTree.setup(); // TODO: Replace with event emit after implementing Scene Tree controller.
-  }
-
-  private activateSceneTree() {
-    this.sceneTree.activate(); // TODO: Replace with event emit after implementing Scene Tree controller.
+  private startCurrentScene() {
+    sceneTreeEvents.StartCurrentScene.emit();
   }
 }
 

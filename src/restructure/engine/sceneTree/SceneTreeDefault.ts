@@ -3,51 +3,56 @@ import { Node } from '../../nodes/Node';
 
 export class SceneTreeDefault implements SceneTree {
   private currentScene: Node | null = null;
-  public root = new Node('root'); // TODO: Replace with Viewport.
+  private root = new Node('root'); // TODO: Replace with Viewport.
 
-  public setScene(scene: Node) {
+  public setCurrentScene(scene: Node) {
     this.replaceCurrentScene(scene);
   }
 
   private replaceCurrentScene(newScene: Node) {
-    this.removeCurrentSceneFromTree();
+    if (this.currentScene) {
+      this.removeSceneFromTree(this.currentScene);
+    }
+
     this.currentScene = newScene;
-    this.addCurrentSceneToTree();
+    this.addSceneToTree(newScene);
   }
 
-  private removeCurrentSceneFromTree() {
-    if (this.currentScene) {
-      this.removeSceneFromRoot(this.currentScene);
-    }
+  private removeSceneFromTree(scene: Node) {
+    this.removeSceneFromRoot(scene);
+    this.stopScene(scene);
+    this.teardownScene(scene);
+  }
+
+  private stopScene(scene: Node) {
+    scene.stop();
+  }
+
+  private teardownScene(scene: Node) {
+    scene.teardown();
   }
 
   private removeSceneFromRoot(scene: Node) {
     this.root.removeChild(scene);
   }
 
-  private addCurrentSceneToTree() {
-    if (this.currentScene) {
-      this.addSceneToRoot(this.currentScene);
-    }
+  private addSceneToTree(scene: Node) {
+    this.addSceneToRoot(scene);
   }
 
   private addSceneToRoot(scene: Node) {
     this.root.addChild(scene);
   }
 
-  public setup() {
-    this.root.traversePostorder((node) => node.setup());
+  private startScene(scene: Node) {
+    scene.start();
   }
 
-  public activate() {
-    this.root.traversePostorder((node) => node.activate());
+  public startCurrentScene() {
+    this.currentScene?.start();
   }
 
-  public deactivate() {
-    this.root.traversePostorder((node) => node.deactivate());
-  }
-
-  public teardown() {
-    this.root.traversePostorder((node) => node.teardown());
+  public stopCurrentScene() {
+    this.currentScene?.stop();
   }
 }

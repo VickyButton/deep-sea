@@ -1,71 +1,42 @@
 import { SceneTreeDefault } from './SceneTreeDefault';
 import { Node } from '../../nodes/Node';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('SceneTreeDefault', () => {
-  it('should add new scene to root node', () => {
+  it('should stop and then teardown current scene when setting a new scene', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new Node('scene');
+    const stopSpy = vi.spyOn(scene, 'stop');
+    const teardownSpy = vi.spyOn(scene, 'teardown');
+    const newScene = new Node('new-scene');
 
-    sceneTree.setScene(scene);
+    sceneTree.setCurrentScene(scene);
+    sceneTree.setCurrentScene(newScene);
 
-    expect(sceneTree.root.children.length).toBe(1);
-    expect(sceneTree.root.children[0]).toBe(scene);
+    expect(stopSpy).toHaveBeenCalled();
+    expect(stopSpy).toHaveBeenCalledBefore(teardownSpy);
+    expect(teardownSpy).toHaveBeenCalled();
   });
 
-  it('should replace current scene in root node', () => {
+  it('should start the current scene', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new Node('scene');
-    const replacementScene = new Node('replacementScene');
+    const startSpy = vi.spyOn(scene, 'start');
 
-    sceneTree.setScene(scene);
-    sceneTree.setScene(replacementScene);
+    sceneTree.setCurrentScene(scene);
+    sceneTree.startCurrentScene();
 
-    expect(sceneTree.root.children.length).toBe(1);
-    expect(sceneTree.root.children[0]).toBe(replacementScene);
+    expect(startSpy).toHaveBeenCalled();
   });
 
-  it('should set up current scene', () => {
+  it('should stop the current scene', () => {
     const sceneTree = new SceneTreeDefault();
     const scene = new Node('scene');
-    scene.isReady = false;
+    const stopSpy = vi.spyOn(scene, 'stop');
 
-    sceneTree.setScene(scene);
-    sceneTree.setup();
+    sceneTree.setCurrentScene(scene);
+    sceneTree.stopCurrentScene();
 
-    expect(scene.isReady).toBe(true);
-  });
-
-  it('should activate current scene', () => {
-    const sceneTree = new SceneTreeDefault();
-    const scene = new Node('scene');
-    scene.isActive = false;
-
-    sceneTree.setScene(scene);
-    sceneTree.activate();
-
-    expect(scene.isActive).toBe(true);
-  });
-
-  it('should deactivate current scene', () => {
-    const sceneTree = new SceneTreeDefault();
-    const scene = new Node('scene');
-    scene.isActive = true;
-
-    sceneTree.setScene(scene);
-    sceneTree.deactivate();
-
-    expect(scene.isActive).toBe(false);
-  });
-
-  it('should tear down current scene', () => {
-    const sceneTree = new SceneTreeDefault();
-    const scene = new Node('scene');
-    scene.isReady = true;
-
-    sceneTree.setScene(scene);
-    sceneTree.teardown();
-
-    expect(scene.isReady).toBe(false);
+    expect(stopSpy).toHaveBeenCalled();
   });
 });
