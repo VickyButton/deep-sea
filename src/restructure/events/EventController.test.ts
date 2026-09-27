@@ -140,23 +140,14 @@ describe('EventController', () => {
     expect(callback).not.toHaveBeenCalled();
   });
 
-  it('should stop listening after teardown', () => {
-    const controller = new EventController();
-
-    controller.startListening();
-    controller.teardown();
-
-    expect(controller.isListening).toBe(false);
-  });
-
-  it('should not listen for event after teardown', () => {
+  it('should not listen for event if started after teardown', () => {
     const controller = new EventController();
     const event = new Event<void>();
     const callback = vi.fn();
 
     controller.on(event, callback);
-    controller.startListening();
     controller.teardown();
+    controller.startListening();
     event.emit();
 
     expect(callback).not.toHaveBeenCalled();

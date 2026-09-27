@@ -132,9 +132,12 @@ export class EventController {
     }
   }
 
-  /** Tears down the controller, removing all event listeners. */
+  /**
+   * Tears down the controller.
+   * 
+   * Note: The controller should be stopped before teardown.
+   */
   public teardown() {
-    this.unlisten();
     this.clear();
   }
 

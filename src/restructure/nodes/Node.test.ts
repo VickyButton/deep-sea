@@ -187,15 +187,6 @@ describe('Node', () => {
     expect(teardownSpy).toHaveBeenCalled();
   });
 
-  it('should stop listening on teardown', () => {
-    const node = new Node('node');
-
-    node.start();
-    node.teardown();
-
-    expect(node.isListening).toBe(false);
-  });
-
   it('should not listen for event after teardown', () => {
     const node = new Node('node');
     const event = new Event<void>();
