@@ -6,14 +6,14 @@ import type { Loop } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
 import type { EventController } from '../events/EventController';
-import { GraphicsEventController } from './graphics/GraphicsEventController';
-import { graphicsEvents } from './graphics/graphicsEvents';
 import { LoopEventController } from './loop/LoopEventController';
 import { loopEvents } from './loop/loopEvents';
 import { PluginManagerEventController } from './pluginManager/PluginManagerEventController';
 import { pluginManagerEvents } from './pluginManager/pluginManagerEvents';
 import { SceneTreeEventController } from './sceneTree/SceneTreeEventController';
 import { sceneTreeEvents } from './sceneTree/sceneTreeEvents';
+import { GraphicsEventController } from '../controllers/graphics/GraphicsEventController';
+import { graphicsEvents } from '../events/graphics/graphicsEvents';
 
 export class EngineDefault implements Engine {
   private readonly controllerManager: EventControllerManager;

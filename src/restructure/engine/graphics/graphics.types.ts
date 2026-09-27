@@ -1,5 +1,4 @@
 import type { Canvas } from '../../domain/canvases/Canvas';
-import type { Event } from '../../events/Event';
 
 /** Exposes functionality for drawing graphics onto a canvas through draw commands. */
 export interface Graphics {
@@ -19,20 +18,6 @@ export interface Graphics {
    * @param command The draw command to add to the queue.
    */
   queueDrawCommand(command: DrawCommand): void;
-}
-
-/** Graphics events. */
-export interface GraphicsEvents {
-  /** Event for clearing the canvas. */
-  ClearCanvas: Event<void>;
-  /** Event for clearing the draw command queue. */
-  ClearDrawCommandQueue: Event<void>;
-  /** Event for deleting a cached draw command. */
-  DeleteCachedDrawCommand: Event<string>;
-  /** Event for processing the draw command queue. */
-  ProcessDrawCommandQueue: Event<void>;
-  /** Event for queueing a draw command. */
-  QueueDrawCommand: Event<DrawCommand>;
 }
 
 /** A command for drawing onto a graphics canvas. */
