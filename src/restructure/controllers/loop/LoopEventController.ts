@@ -1,5 +1,6 @@
-import type { Loop, LoopEvents } from './loop.types';
-import { EventController } from '../../controllers/EventController';
+import type { Loop } from '../../engine/loop/loop.types';
+import type { LoopEvents } from '../../events/loop/LoopEvents';
+import { EventController } from '../EventController';
 
 /** Maps Engine Loop events to their corresponding methods. */
 export class LoopEventController extends EventController {

@@ -1,4 +1,4 @@
-import type { LoopEvents } from './loop.types';
+import type { LoopEvents } from '../../events/loop/LoopEvents';
 import { LoopEventController } from './LoopEventController';
 import { Event } from '../../events/Event';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';

@@ -7,13 +7,13 @@ import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
 import type { EventController } from '../controllers/EventController';
 import type { GraphicsEvents } from '../events/graphics/GraphicsEvents';
-import { LoopEventController } from './loop/LoopEventController';
-import { loopEvents } from './loop/loopEvents';
+import type { LoopEvents } from '../events/loop/LoopEvents';
 import { PluginManagerEventController } from './pluginManager/PluginManagerEventController';
 import { pluginManagerEvents } from './pluginManager/pluginManagerEvents';
 import { SceneTreeEventController } from './sceneTree/SceneTreeEventController';
 import { sceneTreeEvents } from './sceneTree/sceneTreeEvents';
 import { GraphicsController } from '../controllers/graphics/GraphicsController';
+import { LoopEventController } from '../controllers/loop/LoopEventController';
 
 export class EngineDefault implements Engine {
   private readonly controllerManager: EventControllerManager;
@@ -35,11 +35,15 @@ export class EngineDefault implements Engine {
 
   private createControllers(options: EngineOptions, events: EngineEvents) {
     return [
-      new LoopEventController(options.loop, loopEvents),
+      this.createLoopController(options.loop, events.loop),
       this.createGraphicsController(options.graphics, events.graphics),
       new PluginManagerEventController(options.pluginManager, pluginManagerEvents),
       new SceneTreeEventController(options.sceneTree, sceneTreeEvents),
     ];
+  }
+
+  private createLoopController(loop: Loop, events: LoopEvents) {
+    return new LoopEventController(loop, events);
   }
 
   private createGraphicsController(graphics: Graphics, events: GraphicsEvents) {
@@ -53,7 +57,7 @@ export class EngineDefault implements Engine {
   }
 
   private setLoopCallback() {
-    loopEvents.SetLoopCallback.emit(this.executeLoop);
+    this.events.loop.SetLoopCallback.emit(this.executeLoop);
   }
 
   private executeLoop = () => {
@@ -91,7 +95,7 @@ export class EngineDefault implements Engine {
   }
 
   private stopLoop() {
-    loopEvents.Stop.emit();
+    this.events.loop.Stop.emit();
   }
 
   private stopPlugins() {
@@ -156,12 +160,13 @@ class EventControllerManager {
 }
 
 interface EngineOptions {
-  loop: Loop;
   graphics: Graphics;
+  loop: Loop;
   pluginManager: PluginManager;
   sceneTree: SceneTree;
 }
 
 interface EngineEvents {
   graphics: GraphicsEvents;
+  loop: LoopEvents;
 }
