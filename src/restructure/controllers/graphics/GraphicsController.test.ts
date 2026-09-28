@@ -1,10 +1,10 @@
 
 import type { GraphicsEvents } from '../../events/graphics/GraphicsEvents';
-import { GraphicsEventController } from './GraphicsEventController';
+import { GraphicsController } from './GraphicsController';
 import { Event } from '../../events/Event';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
-describe('GraphicsEventController', () => {
+describe('GraphicsController', () => {
   beforeAll(() => controller.startListening());
   afterEach(() => vi.clearAllMocks());
   afterAll(() => controller.stopListening());
@@ -62,4 +62,4 @@ const events: GraphicsEvents = {
   ProcessDrawCommandQueue: new Event(),
   QueueDrawCommand: new Event(),
 };
-const controller = new GraphicsEventController(graphics, events);
+const controller = new GraphicsController(graphics, events);

@@ -3,7 +3,7 @@ import type { GraphicsEvents } from '../../events/graphics/GraphicsEvents';
 import { EventController } from '../EventController';
 
 /** Maps Graphics Engine events to their corresponding methods. */
-export class GraphicsEventController extends EventController {
+export class GraphicsController extends EventController {
   constructor(graphics: Graphics, events: GraphicsEvents) {
     super();
 
