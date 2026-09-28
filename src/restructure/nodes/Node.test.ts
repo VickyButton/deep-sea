@@ -4,11 +4,11 @@ import { describe, expect, it, vi } from 'vitest';
 
 describe('Node', () => {
   it('should not be listening by default', () => {
-    expect(new Node('node').isListening).toBe(false);
+    expect(new Node('node', events).isListening).toBe(false);
   });
 
   it('should not listen for event before starting', () => {
-    const node = new Node('node');
+    const node = new Node('node', events);
     const event = new Event<void>();
     const listener = vi.fn();
 
@@ -20,20 +20,20 @@ describe('Node', () => {
   });
 
   it('should have no children by default', () => {
-    const node = new Node('node');
+    const node = new Node('node', events);
 
     expect(node.children.length).toBe(0);
   });
 
   it('should not have parent by default', () => {
-    const node = new Node('node');
+    const node = new Node('node', events);
 
     expect(node.parent).toBe(null);
   });
 
   it('should add a node to its children', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
+    const parent = new Node('parent', events);
+    const child = new Node('child', events);
 
     parent.addChild(child);
 
@@ -42,15 +42,15 @@ describe('Node', () => {
   });
 
   it('should throw an error if trying to assign itself as a child', () => {
-    const node = new Node('node');
+    const node = new Node('node', events);
 
     expect(() => node.addChild(node)).toThrowError();
   });
 
   it('should throw an error if trying to add a node that belongs to another node as a child', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
-    const node = new Node('node');
+    const parent = new Node('parent', events);
+    const child = new Node('child', events);
+    const node = new Node('node', events);
 
     parent.addChild(child);
 
@@ -58,8 +58,8 @@ describe('Node', () => {
   });
 
   it('should remove a child from its children', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
+    const parent = new Node('parent', events);
+    const child = new Node('child', events);
 
     parent.addChild(child);
     parent.removeChild(child);
@@ -69,9 +69,9 @@ describe('Node', () => {
   });
 
   it('should throw an error if trying to remove a node that belongs to another node', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
-    const stranger = new Node('stranger');
+    const parent = new Node('parent', events);
+    const child = new Node('child', events);
+    const stranger = new Node('stranger', events);
 
     parent.addChild(child);
 
@@ -79,8 +79,8 @@ describe('Node', () => {
   });
 
   it('should set a parent', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
+    const parent = new Node('parent', events);
+    const child = new Node('child', events);
 
     child.setParent(parent);
 
@@ -88,8 +88,8 @@ describe('Node', () => {
   });
 
   it('should remove a parent', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
+    const parent = new Node('parent', events);
+    const child = new Node('child', events);
 
     child.setParent(parent);
     child.removeParent();
@@ -98,8 +98,8 @@ describe('Node', () => {
   });
 
   it('should start children on start', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
+    const parent = new Node('parent', events);
+    const child = new Node('child', events);
     const startSpy = vi.spyOn(child, 'start');
 
     parent.addChild(child);
@@ -109,7 +109,7 @@ describe('Node', () => {
   });
 
   it('should start listening on start', () => {
-    const node = new Node('node');
+    const node = new Node('node', events);
 
     node.start();
 
@@ -117,7 +117,7 @@ describe('Node', () => {
   });
 
   it('should listen for event after starting', () => {
-    const node = new Node('node');
+    const node = new Node('node', events);
     const event = new Event<void>();
     const listener = vi.fn();
 
@@ -130,7 +130,7 @@ describe('Node', () => {
   });
 
   it('should not listen for event after removing listener', () => {
-    const node = new Node('node');
+    const node = new Node('node', events);
     const event = new Event<void>();
     const listener = vi.fn();
 
@@ -143,8 +143,8 @@ describe('Node', () => {
   });
 
   it('should stop children on stop', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
+    const parent = new Node('parent', events);
+    const child = new Node('child', events);
     const stopSpy = vi.spyOn(child, 'stop');
 
     parent.addChild(child);
@@ -154,7 +154,7 @@ describe('Node', () => {
   });
 
   it('should stop listening on stop', () => {
-    const node = new Node('node');
+    const node = new Node('node', events);
 
     node.start();
     node.stop();
@@ -163,7 +163,7 @@ describe('Node', () => {
   });
 
   it('should not listen for event after stopping', () => {
-    const node = new Node('node');
+    const node = new Node('node', events);
     const event = new Event<void>();
     const listener = vi.fn();
 
@@ -177,8 +177,8 @@ describe('Node', () => {
   });
 
   it('should teardown children on teardown', () => {
-    const parent = new Node('parent');
-    const child = new Node('child');
+    const parent = new Node('parent', events);
+    const child = new Node('child', events);
     const teardownSpy = vi.spyOn(child, 'teardown');
 
     parent.addChild(child);
@@ -188,7 +188,7 @@ describe('Node', () => {
   });
 
   it('should not listen for event after teardown', () => {
-    const node = new Node('node');
+    const node = new Node('node', events);
     const event = new Event<void>();
     const listener = vi.fn();
 
@@ -201,8 +201,8 @@ describe('Node', () => {
   });
 
   it('should remove self from parent on teardown', () => {
-    const parent = new Node('parent');
-    const node = new Node('node');
+    const parent = new Node('parent', events);
+    const node = new Node('node', events);
 
     parent.addChild(node);
     node.teardown();
@@ -212,12 +212,12 @@ describe('Node', () => {
   });
 
   it('should traverse tree in post-order', () => {
-    const root = new Node('1');
-    const rootLeft = new Node('2');
-    const rootRight = new Node('3');
-    const rootLeftLeft = new Node('4');
-    const rootLeftRight = new Node('5');
-    const rootRightRight = new Node('6');
+    const root = new Node('1', events);
+    const rootLeft = new Node('2', events);
+    const rootRight = new Node('3', events);
+    const rootLeftLeft = new Node('4', events);
+    const rootLeftRight = new Node('5', events);
+    const rootRightRight = new Node('6', events);
 
     root.addChild(rootLeft);
     root.addChild(rootRight);
@@ -234,3 +234,6 @@ describe('Node', () => {
     expect(order).toEqual(['4', '5', '2', '6', '3', '1']);
   });
 });
+
+const events = {
+};

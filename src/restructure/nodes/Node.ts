@@ -1,19 +1,20 @@
 import type { Event, EventListener } from '../events/Event';
 import { EventController } from '../events/EventController';
 
-/**
- * Core building blocks for scenes. Nodes encapsulate state, functionality, and hierarchy.
- */
-export class Node {
+/** Core building blocks for scenes. Nodes encapsulate state, functionality, and hierarchy. */
+export class Node<Events extends NodeEvents = NodeEvents> {
   /** The node's unique ID. */
   public id: string;
   /** Maps events to their listeners. */
   protected controller = new EventController();
+  /** Events that the node can emit. */
+  protected events: Events;
   /** Manages the node's relationships. */
   protected relationships = new NodeRelationships(this);
 
-  constructor(id: string) {
+  constructor(id: string, events: Events) {
     this.id = id;
+    this.events = events;
   }
 
   /** The node's child nodes. */
@@ -134,9 +135,9 @@ export class Node {
   }
 }
 
-/**
- * Manages a node's relationships.
- */
+export type NodeEvents = object;
+
+/** Manages a node's relationships. */
 class NodeRelationships {
   private readonly self: Node;
   private _children = new Set<Node>();

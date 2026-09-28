@@ -1,5 +1,5 @@
 import type { Graphics } from '../../engine/graphics/graphics.types';
-import type { GraphicsEvents } from '../../events/graphics/graphicsEvents.types';
+import type { GraphicsEvents } from '../../events/graphics/GraphicsEvents';
 import { EventController } from '../../events/EventController';
 
 /** Maps Graphics Engine events to their corresponding methods. */

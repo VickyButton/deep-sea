@@ -1,5 +1,5 @@
 
-import type { GraphicsEvents } from '../../events/graphics/graphicsEvents.types';
+import type { GraphicsEvents } from '../../events/graphics/GraphicsEvents';
 import { GraphicsEventController } from './GraphicsEventController';
 import { Event } from '../../events/Event';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';

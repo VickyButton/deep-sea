@@ -6,6 +6,7 @@ import type { Loop } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
 import type { EventController } from '../events/EventController';
+import type { GraphicsEvents } from '../events/graphics/GraphicsEvents';
 import { LoopEventController } from './loop/LoopEventController';
 import { loopEvents } from './loop/loopEvents';
 import { PluginManagerEventController } from './pluginManager/PluginManagerEventController';
@@ -13,31 +14,36 @@ import { pluginManagerEvents } from './pluginManager/pluginManagerEvents';
 import { SceneTreeEventController } from './sceneTree/SceneTreeEventController';
 import { sceneTreeEvents } from './sceneTree/sceneTreeEvents';
 import { GraphicsEventController } from '../controllers/graphics/GraphicsEventController';
-import { graphicsEvents } from '../events/graphics/graphicsEvents';
 
 export class EngineDefault implements Engine {
   private readonly controllerManager: EventControllerManager;
+  private readonly events: EngineEvents;
 
-  constructor(options: EngineOptions) {
-    this.controllerManager = this.createControllerManager(options);
+  constructor(options: EngineOptions, events: EngineEvents) {
+    this.controllerManager = this.createControllerManager(options, events);
+    this.events = events;
     this.setLoopCallback();
   }
 
-  private createControllerManager(options: EngineOptions) {
+  private createControllerManager(options: EngineOptions, events: EngineEvents) {
     const manager = new EventControllerManager();
 
-    this.addControllersToManager(manager, this.createControllers(options));
+    this.addControllersToManager(manager, this.createControllers(options, events));
 
     return manager;
   }
 
-  private createControllers(options: EngineOptions) {
+  private createControllers(options: EngineOptions, events: EngineEvents) {
     return [
       new LoopEventController(options.loop, loopEvents),
-      new GraphicsEventController(options.graphics, graphicsEvents),
+      this.createGraphicsEventController(options.graphics, events.graphics),
       new PluginManagerEventController(options.pluginManager, pluginManagerEvents),
       new SceneTreeEventController(options.sceneTree, sceneTreeEvents),
     ];
+  }
+
+  private createGraphicsEventController(graphics: Graphics, events: GraphicsEvents) {
+    return new GraphicsEventController(graphics, events);
   }
 
   private addControllersToManager(manager: EventControllerManager, controllers: EventController[]) {
@@ -56,11 +62,11 @@ export class EngineDefault implements Engine {
   };
 
   private clearCanvas() {
-    graphicsEvents.ClearCanvas.emit();
+    this.events.graphics.ClearCanvas.emit();
   }
 
   private processDrawCommandQueue() {
-    graphicsEvents.ProcessDrawCommandQueue.emit();
+    this.events.graphics.ProcessDrawCommandQueue.emit();
   }
 
   /** Starts the engine. */
@@ -154,4 +160,8 @@ interface EngineOptions {
   graphics: Graphics;
   pluginManager: PluginManager;
   sceneTree: SceneTree;
+}
+
+interface EngineEvents {
+  graphics: GraphicsEvents;
 }

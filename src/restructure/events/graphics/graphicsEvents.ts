@@ -1,10 +1,10 @@
-import type { GraphicsEvents } from './graphicsEvents.types';
-import { Event } from '../../events/Event';
+import type { DrawCommand } from '../../engine/graphics/graphics.types';
+import { Event } from '../Event';
 
-export const graphicsEvents: GraphicsEvents = {
-  ClearCanvas: new Event(),
-  ClearDrawCommandQueue: new Event(),
-  DeleteCachedDrawCommand: new Event(),
-  ProcessDrawCommandQueue: new Event(),
-  QueueDrawCommand: new Event(),
-};
+export class GraphicsEvents {
+  public readonly ClearCanvas = new Event<void>();
+  public readonly ClearDrawCommandQueue = new Event<void>();
+  public readonly DeleteCachedDrawCommand = new Event<string>();
+  public readonly ProcessDrawCommandQueue = new Event<void>();
+  public readonly QueueDrawCommand = new Event<DrawCommand>();
+}

@@ -1,28 +1,18 @@
-import type { CanvasNode_Options } from './CanvasNode';
+import type { CanvasNodeEvents } from './CanvasNode';
 import type { Node } from './Node';
 import type { Canvas } from '../domain/canvases/Canvas';
 import { CanvasNode } from './CanvasNode';
 import { Transform2D } from '../domain/Transform2D';
 import { Vector2D } from '../domain/Vector2D';
 
-/**
- * A node which can be used in a 2D plane.
- */
-export class Node2D extends CanvasNode {
+/** A node which can be used in 2D space. */
+export class Node2D<Events extends Node2DEvents = Node2DEvents> extends CanvasNode<Events> {
   /** The node's position relative to its parent. */
-  public position: Vector2D;
+  public position = new Vector2D(0, 0);
   /** The node's scale relative to its parent. */
-  public scale: Vector2D;
+  public scale = new Vector2D(1, 1);
   /** The node's rotation, in radians, relative to its parent. */
-  public rotation: number;
-
-  constructor(id: string, options?: Node2D_Options) {
-    super(id, options);
-
-    this.position = options?.position ?? new Vector2D(0, 0);
-    this.scale = options?.scale ?? new Vector2D(1, 1);
-    this.rotation = options?.rotation ?? 0;
-  }
+  public rotation = 0;
 
   /** The node's transform matrix relative to its parent. */
   public get transform() {
@@ -129,8 +119,4 @@ export class Node2D extends CanvasNode {
   }
 }
 
-export interface Node2D_Options extends CanvasNode_Options {
-  position?: Vector2D;
-  scale?: Vector2D;
-  rotation?: number;
-}
+export type Node2DEvents = CanvasNodeEvents;

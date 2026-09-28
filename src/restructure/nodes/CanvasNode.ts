@@ -1,23 +1,15 @@
+import type { NodeEvents } from './Node';
 import type { Canvas } from '../domain/canvases/Canvas';
+import type { GraphicsEvents } from '../events/graphics/GraphicsEvents';
 import { Node } from './Node';
-import { graphicsEvents } from '../events/graphics/graphicsEvents';
 
-/**
- * Abstract base node for nodes which can be drawn onto a canvas.
- */
-export abstract class CanvasNode extends Node {
+/** Abstract base node for nodes which can be drawn onto a canvas. */
+export abstract class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents> extends Node<Events> {
   // TODO: Add flag for indicating if node should redraw next frame.
   /** A flag indicating if the node may be drawn or not. */
-  public isVisible: boolean;
+  public isVisible = true;
   /** The order in which this node is drawn. Nodes with higher z-indices are drawn on top of nodes with lower z-indices. */
-  public zIndex: number;
-
-  constructor(id: string, options?: CanvasNode_Options) {
-    super(id);
-
-    this.isVisible = options?.isVisible ?? true;
-    this.zIndex = options?.zIndex ?? 0;
-  }
+  public zIndex = 0;
 
   /**
    * Draws the node onto a canvas.
@@ -43,7 +35,7 @@ export abstract class CanvasNode extends Node {
 
   /** Queues a redraw for the node. */
   protected queueRedraw() {
-    graphicsEvents.QueueDrawCommand.emit(this.createDrawCommand());
+    this.events.graphics.QueueDrawCommand.emit(this.createDrawCommand());
   }
 
   /** Creates a draw command for the node. */
@@ -62,11 +54,10 @@ export abstract class CanvasNode extends Node {
   }
 
   private deleteCachedDrawCommand() {
-    graphicsEvents.DeleteCachedDrawCommand.emit(this.id);
+    this.events.graphics.DeleteCachedDrawCommand.emit(this.id);
   }
 }
 
-export interface CanvasNode_Options {
-  isVisible?: boolean;
-  zIndex?: number;
+export interface CanvasNodeEvents extends NodeEvents {
+  graphics: GraphicsEvents;
 }

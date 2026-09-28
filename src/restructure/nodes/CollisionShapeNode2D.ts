@@ -1,13 +1,10 @@
-import type { ShapeNode2D_Options } from './ShapeNode2D';
+import type { ShapeNode2DEvents } from './ShapeNode2D';
+import type { Color } from '../domain/colors';
 import { ShapeNode2D } from './ShapeNode2D';
 import { RGBA } from '../domain/colors/RGBA';
 
-export class CollisionShapeNode2D extends ShapeNode2D {
-  constructor(id: string, options?: ShapeNode2D_Options) {
-    super(id, options);
-
-    this.outlineColor = options?.outlineColor ?? RGBA.RED;
-  }
+export class CollisionShapeNode2D<Events extends CollisionShapeNode2DEvents = CollisionShapeNode2DEvents> extends ShapeNode2D<Events> {
+  public outlineColor: Color = RGBA.RED;
 
   /**
    * Checks if this node's collision shape is colliding with another node's collision shape.
@@ -23,3 +20,5 @@ export class CollisionShapeNode2D extends ShapeNode2D {
     super.setup();
   }
 }
+
+export type CollisionShapeNode2DEvents = ShapeNode2DEvents;

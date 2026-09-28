@@ -1,4 +1,4 @@
-import type { Node2D_Options } from './Node2D';
+import type { Node2DEvents } from './Node2D';
 import type { Canvas } from '../domain/canvases/Canvas';
 import type { Color } from '../domain/colors/Color';
 import type { Shape2D } from '../domain/shapes/Shape2D';
@@ -6,18 +6,11 @@ import { Node2D } from './Node2D';
 import { RGBA } from '../domain/colors/RGBA';
 import { RectangleShape2D } from '../domain/shapes/RectangleShape2D';
 
-export class ShapeNode2D extends Node2D {
+export class ShapeNode2D<Events extends ShapeNode2DEvents = ShapeNode2DEvents> extends Node2D<Events> {
   /** The node's shape. */
-  public shape: Shape2D;
+  public shape: Shape2D = new RectangleShape2D();
   /** The shape's outline color. */
-  public outlineColor: Color;
-
-  constructor(id: string, options?: ShapeNode2D_Options) {
-    super(id, options);
-
-    this.shape = options?.shape ?? new RectangleShape2D();
-    this.outlineColor = options?.outlineColor ?? RGBA.BLACK;
-  }
+  public outlineColor: Color = RGBA.BLACK;
 
   public draw(canvas: Canvas) {
     // TODO: Create method for converting world position to canvas position (negating position Y component).
@@ -53,7 +46,4 @@ export class ShapeNode2D extends Node2D {
   };
 }
 
-export interface ShapeNode2D_Options extends Node2D_Options {
-  shape?: Shape2D;
-  outlineColor?: Color;
-}
+export type ShapeNode2DEvents = Node2DEvents;
