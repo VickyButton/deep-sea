@@ -5,7 +5,7 @@ import type { Graphics } from './graphics/graphics.types';
 import type { Loop } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
-import type { EventController } from '../events/EventController';
+import type { EventController } from '../controllers/EventController';
 import type { GraphicsEvents } from '../events/graphics/GraphicsEvents';
 import { LoopEventController } from './loop/LoopEventController';
 import { loopEvents } from './loop/loopEvents';

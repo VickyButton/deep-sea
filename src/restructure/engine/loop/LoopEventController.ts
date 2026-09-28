@@ -1,5 +1,5 @@
 import type { Loop, LoopEvents } from './loop.types';
-import { EventController } from '../../events/EventController';
+import { EventController } from '../../controllers/EventController';
 
 /** Maps Engine Loop events to their corresponding methods. */
 export class LoopEventController extends EventController {

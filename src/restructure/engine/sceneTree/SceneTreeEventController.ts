@@ -1,5 +1,5 @@
 import type { SceneTree, SceneTreeEvents } from './sceneTree.types';
-import { EventController } from '../../events/EventController';
+import { EventController } from '../../controllers/EventController';
 
 /** Maps Scene Tree events to their corresponding methods. */
 export class SceneTreeEventController extends EventController {

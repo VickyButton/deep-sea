@@ -2,7 +2,7 @@
  * This file defines event exports for the package.
  */
 import { Event } from './Event';
-import { EventController } from './EventController';
+import { EventController } from '../controllers/EventController';
 
 export {
   Event,

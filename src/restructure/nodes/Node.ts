@@ -1,5 +1,5 @@
 import type { Event, EventListener } from '../events/Event';
-import { EventController } from '../events/EventController';
+import { EventController } from '../controllers/EventController';
 
 /** Core building blocks for scenes. Nodes encapsulate state, functionality, and hierarchy. */
 export class Node<Events extends NodeEvents = NodeEvents> {
