@@ -3,7 +3,7 @@ import type { LoopEvents } from '../../events/loop/LoopEvents';
 import { EventController } from '../EventController';
 
 /** Maps Engine Loop events to their corresponding methods. */
-export class LoopEventController extends EventController {
+export class LoopController extends EventController {
   constructor(loop: Loop, events: LoopEvents) {
     super();
 

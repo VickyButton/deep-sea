@@ -1,9 +1,9 @@
 import type { LoopEvents } from '../../events/loop/LoopEvents';
-import { LoopEventController } from './LoopEventController';
+import { LoopController } from './LoopController';
 import { Event } from '../../events/Event';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
-describe('LoopEventController', () => {
+describe('LoopController', () => {
   beforeAll(() => controller.startListening());
   afterEach(() => vi.clearAllMocks());
   afterAll(() => controller.stopListening());
@@ -49,4 +49,4 @@ const events: LoopEvents = {
   Start: new Event(),
   Stop: new Event(),
 };
-const controller = new LoopEventController(loop, events);
+const controller = new LoopController(loop, events);

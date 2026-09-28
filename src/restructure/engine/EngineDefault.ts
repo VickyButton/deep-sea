@@ -13,7 +13,7 @@ import { pluginManagerEvents } from './pluginManager/pluginManagerEvents';
 import { SceneTreeEventController } from './sceneTree/SceneTreeEventController';
 import { sceneTreeEvents } from './sceneTree/sceneTreeEvents';
 import { GraphicsController } from '../controllers/graphics/GraphicsController';
-import { LoopEventController } from '../controllers/loop/LoopEventController';
+import { LoopController } from '../controllers/loop/LoopController';
 
 export class EngineDefault implements Engine {
   private readonly controllerManager: EventControllerManager;
@@ -35,19 +35,19 @@ export class EngineDefault implements Engine {
 
   private createControllers(options: EngineOptions, events: EngineEvents) {
     return [
-      this.createLoopController(options.loop, events.loop),
       this.createGraphicsController(options.graphics, events.graphics),
+      this.createLoopController(options.loop, events.loop),
       new PluginManagerEventController(options.pluginManager, pluginManagerEvents),
       new SceneTreeEventController(options.sceneTree, sceneTreeEvents),
     ];
   }
 
-  private createLoopController(loop: Loop, events: LoopEvents) {
-    return new LoopEventController(loop, events);
-  }
-
   private createGraphicsController(graphics: Graphics, events: GraphicsEvents) {
     return new GraphicsController(graphics, events);
+  }
+
+  private createLoopController(loop: Loop, events: LoopEvents) {
+    return new LoopController(loop, events);
   }
 
   private addControllersToManager(manager: EventControllerManager, controllers: EventController[]) {
