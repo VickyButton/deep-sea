@@ -1,9 +1,9 @@
 import type { PluginManagerEvents } from './pluginManager.types';
-import { PluginManagerEventController } from './PluginManagerEventController';
+import { PluginManagerController } from './PluginManagerController';
 import { Event } from '../../events/Event';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
-describe('PluginManagerEventController', () => {
+describe('PluginManagerController', () => {
   beforeAll(() => controller.startListening());
   afterEach(() => vi.clearAllMocks());
   afterAll(() => controller.stopListening());
@@ -50,7 +50,7 @@ const events: PluginManagerEvents = {
   StartPlugins: new Event(),
   StopPlugins: new Event(),
 };
-const controller = new PluginManagerEventController(manager, events);
+const controller = new PluginManagerController(manager, events);
 
 const Plugin = vi.fn(class {
   start = vi.fn();

@@ -1,9 +1,9 @@
 import type { PluginManager } from '../../engine/pluginManager/pluginManager.types';
 import type { PluginManagerEvents } from '../../events/pluginManager/PluginManagerEvents';
-import { EventController } from '../../controllers/EventController';
+import { EventController } from '../EventController';
 
 /** Maps Plugin Manager events to their corresponding methods. */
-export class PluginManagerEventController extends EventController {
+export class PluginManagerController extends EventController {
   constructor(manager: PluginManager, events: PluginManagerEvents) {
     super();
 

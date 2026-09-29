@@ -13,7 +13,7 @@ import { SceneTreeEventController } from './sceneTree/SceneTreeEventController';
 import { sceneTreeEvents } from './sceneTree/sceneTreeEvents';
 import { GraphicsController } from '../controllers/graphics/GraphicsController';
 import { LoopController } from '../controllers/loop/LoopController';
-import { PluginManagerEventController } from '../controllers/pluginManager/PluginManagerEventController';
+import { PluginManagerController } from '../controllers/pluginManager/PluginManagerController';
 
 export class EngineDefault implements Engine {
   private readonly controllerManager: EventControllerManager;
@@ -51,7 +51,7 @@ export class EngineDefault implements Engine {
   }
 
   private createPluginManagerController(manager: PluginManager, events: PluginManagerEvents) {
-    return new PluginManagerEventController(manager, events);
+    return new PluginManagerController(manager, events);
   }
 
   private addControllersToManager(manager: EventControllerManager, controllers: EventController[]) {
