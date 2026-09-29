@@ -15,17 +15,17 @@ import { PluginManagerController } from '../controllers/pluginManager/PluginMana
 import { SceneTreeEventController } from '../controllers/sceneTree/SceneTreeController';
 
 export class EngineDefault implements Engine {
-  private readonly controllerManager: EventControllerManager;
+  private readonly controllers: ControllerManager;
   private readonly events: EngineEvents;
 
   constructor(components: EngineComponents, events: EngineEvents) {
-    this.controllerManager = this.createControllerManager(components, events);
+    this.controllers = this.createControllerManager(components, events);
     this.events = events;
     this.setLoopCallback();
   }
 
   private createControllerManager(components: EngineComponents, events: EngineEvents) {
-    const manager = new EventControllerManager();
+    const manager = new ControllerManager();
 
     this.addControllersToManager(manager, this.createControllers(components, events));
 
@@ -57,7 +57,7 @@ export class EngineDefault implements Engine {
     return new SceneTreeEventController(tree, events);
   }
 
-  private addControllersToManager(manager: EventControllerManager, controllers: EventController[]) {
+  private addControllersToManager(manager: ControllerManager, controllers: EventController[]) {
     for (const controller of controllers) {
       manager.addController(controller);
     }
@@ -87,7 +87,7 @@ export class EngineDefault implements Engine {
   }
 
   private startListeningOnControllers() {
-    this.controllerManager.startListening();
+    this.controllers.startListening();
   }
 
   private startPlugins() {
@@ -110,7 +110,7 @@ export class EngineDefault implements Engine {
   }
 
   private stopListeningOnControllers() {
-    this.controllerManager.stopListening();
+    this.controllers.stopListening();
   }
 
   /**
@@ -132,7 +132,7 @@ export class EngineDefault implements Engine {
 }
 
 /** Manages event controllers. */
-class EventControllerManager {
+class ControllerManager {
   private readonly controllers = new Set<EventController>();
 
   /**
