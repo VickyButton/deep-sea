@@ -1,7 +1,5 @@
 /** A signal that can emit data to registered listeners. */
 export interface Signal<CallbackData = void> {
-  /** The name of the signal. */
-  readonly name: string;
   /** The number of listener callbacks currently registered. */
   get callbackCount(): number;
   /** Clears all registered listener callbacks from the signal. */
