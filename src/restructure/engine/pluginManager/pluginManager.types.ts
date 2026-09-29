@@ -1,5 +1,3 @@
-import type { Event } from '../../events';
-
 /** Manages engine plugins. */
 export interface PluginManager {
   /**
@@ -16,18 +14,6 @@ export interface PluginManager {
   startPlugins(): void;
   /** Stops the engine plugins. */
   stopPlugins(): void;
-}
-
-/** Plugin Manager events. */
-export interface PluginManagerEvents {
-  /** Event for adding a plugin. */
-  AddPlugin: Event<Plugin>;
-  /** Event for removing a plugin. */
-  RemovePlugin: Event<Plugin>;
-  /** Event for starting the plugins. */
-  StartPlugins: Event<void>;
-  /** Event for stopping the plugins. */
-  StopPlugins: Event<void>;
 }
 
 /** An engine plugin. */

@@ -1,4 +1,5 @@
-import type { PluginManager, PluginManagerEvents } from './pluginManager.types';
+import type { PluginManager } from '../../engine/pluginManager/pluginManager.types';
+import type { PluginManagerEvents } from '../../events/pluginManager/PluginManagerEvents';
 import { EventController } from '../../controllers/EventController';
 
 /** Maps Plugin Manager events to their corresponding methods. */

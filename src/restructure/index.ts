@@ -6,6 +6,7 @@ import { PluginManagerDefault } from './engine/pluginManager/PluginManagerDefaul
 import { SceneTreeDefault } from './engine/sceneTree/SceneTreeDefault';
 import { GraphicsEvents } from './events/graphics/GraphicsEvents';
 import { LoopEvents } from './events/loop/LoopEvents';
+import { PluginManagerEvents } from './events/pluginManager/PluginManagerEvents';
 import { TimeProviderSystem } from './providers/timeProvider/TimeProviderSystem';
 
 export function createEngine(canvas: Canvas) {
@@ -19,6 +20,7 @@ export function createEngine(canvas: Canvas) {
   const events = {
     graphics: new GraphicsEvents(),
     loop: new LoopEvents(),
+    pluginManager: new PluginManagerEvents(),
   };
 
   return new EngineDefault(options, events);
