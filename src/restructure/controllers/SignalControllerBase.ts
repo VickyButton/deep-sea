@@ -12,7 +12,9 @@ export class SignalControllerBase implements SignalController {
     return this._isListening;
   }
 
-  // TODO: Implement `deregister` method.
+  public deregister<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>) {
+    this.manager.remove(signal, callback);
+  }
 
   public register<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>) {
     this.manager.add(signal, callback);
@@ -88,8 +90,12 @@ class CallbackGroupManager {
   /** Deregisters group delegators from their respective signals. */
   public deregisterDelegators() {
     for (const [signal, group] of this.groups) {
-      signal.unlisten(group.delegator);
+      this.deregisterDelegator(signal, group.delegator);
     }
+  }
+
+  private deregisterDelegator<CallbackData>(signal: Signal<CallbackData>, delegator: SignalCallback<CallbackData>) {
+    signal.unlisten(delegator);
   }
 
   /** Registers group delegators to their respective signals. */
@@ -99,7 +105,36 @@ class CallbackGroupManager {
     }
   }
 
-  // TODO: Implement `remove` method for removing callback.
+  /**
+   * Removes a callback from its signal-specific callback group.
+   * @param signal The signal the callback is grouped under.
+   * @param callback The callback to add.
+   */
+  public remove<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>) {
+    this.removeFromGroup(signal, callback);
+  }
+
+  private removeFromGroup<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>) {
+    const group = this.getGroup<CallbackData>(signal);
+
+    if (group === undefined) {
+      return;
+    }
+
+    group.remove(callback);
+
+    if (group.isEmpty) {
+      this.removeGroup(signal, group);
+    }
+  }
+
+  private removeGroup<CallbackData>(signal: Signal<CallbackData>, group: CallbackGroup<CallbackData>) {
+    this.groups.delete(signal);
+
+    if (this.isListening) {
+      this.deregisterDelegator(signal, group.delegator);
+    }
+  }
 }
 
 /** A group of callbacks for an individual signal. */

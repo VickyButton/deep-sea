@@ -1,14 +1,19 @@
 import type { Signal, SignalCallback } from '../signals/signal.types';
 
-/** A controller used to group signal callbacks and toggle listening. */
+/** A controller used to delegate signal callbacks and toggle listening. */
 export interface SignalController {
   /** A flag indicating if the controller is listening for signals. */
   get isListening(): boolean;
-  // TODO: Add `deregister` method.
   /**
-   * Registers a callback to execute when a signal is emitted.
-   * @param signal The signal to listen for.
-   * @param callback The callback to execute when the controller is listening and the signal is emitted.
+   * Deregisters a callback from a signal delegator.
+   * @param signal The signal the callback is grouped under.
+   * @param callback The callback to deregister.
+   */
+  deregister<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>): void;
+  /**
+   * Registers a callback to a signal delegator.
+   * @param signal The signal the callback should be grouped under.
+   * @param callback The callback to register.
    */
   register<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>): void;
   /** Starts listening for signals. */
