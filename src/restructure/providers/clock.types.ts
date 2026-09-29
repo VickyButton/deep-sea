@@ -1,7 +1,7 @@
 /**
- * Provides the current timestamp.
+ * Provides the current time.
  */
-export interface TimeProvider {
+export interface Clock {
   /** The current Unix timestamp in milliseconds. */
   get now(): number;
 }

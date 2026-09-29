@@ -8,12 +8,12 @@ import { GraphicsEvents } from './events/graphics/GraphicsEvents';
 import { LoopEvents } from './events/loop/LoopEvents';
 import { PluginManagerEvents } from './events/pluginManager/PluginManagerEvents';
 import { SceneTreeEvents } from './events/sceneTree/SceneTreeEvents';
-import { TimeProviderSystem } from './providers/timeProvider/TimeProviderSystem';
+import { ClockSystem } from './providers/clock/ClockSystem';
 
 export function createEngine(canvas: Canvas) {
-  const timeProvider = new TimeProviderSystem();
+  const clock = new ClockSystem();
   const options = {
-    loop: new LoopDefault(timeProvider),
+    loop: new LoopDefault(clock),
     graphics: new GraphicsDefault(canvas),
     pluginManager: new PluginManagerDefault(),
     sceneTree: new SceneTreeDefault(),

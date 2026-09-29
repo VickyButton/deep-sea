@@ -1,7 +1,7 @@
 import { LoopDefault } from './LoopDefault';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-const timeProvider = {
+const clock = {
   now: 0,
 };
 
@@ -21,11 +21,11 @@ describe('LoopDefault', () => {
   afterEach(() => {
     vi.clearAllMocks();
     vi.useRealTimers();
-    timeProvider.now = 0;
+    clock.now = 0;
   });
 
   it('should execute loop callback on interval', () => {
-    const loop = new LoopDefault(timeProvider);
+    const loop = new LoopDefault(clock);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
     const loopCallback = vi.fn();
@@ -39,7 +39,7 @@ describe('LoopDefault', () => {
   });
 
   it('should not execute loop callback after stopping', () => {
-    const loop = new LoopDefault(timeProvider);
+    const loop = new LoopDefault(clock);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
     const loopCallback = vi.fn();
@@ -55,6 +55,6 @@ describe('LoopDefault', () => {
 });
 
 function advanceTimers(ms: number) {
-  timeProvider.now += ms;
+  clock.now += ms;
   vi.advanceTimersByTime(ms);
 }

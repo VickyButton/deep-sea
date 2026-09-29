@@ -1,12 +1,12 @@
 import type { Loop, LoopCallback } from './loop.types';
-import type { TimeProvider } from '../../providers/timeProvider.types';
+import type { Clock } from '../../providers/clock.types';
 import { clamp } from '../../utils/clamp';
 
 const LOOPS_PER_SECOND_MIN = 1;
 const LOOPS_PER_SECOND_MAX = 120;
 
 export class LoopDefault implements Loop {
-  private readonly timeProvider: TimeProvider;
+  private readonly clock: Clock;
   private lastAnimationFrameTimestamp = 0;
   private lastLoopTimestamp = 0;
   private loopCallback: LoopCallback = () => { };
@@ -15,8 +15,8 @@ export class LoopDefault implements Loop {
   private millisecondsSinceLastLoop = 0;
   private scheduledAnimationFrameRequestId: number | null = null;
 
-  constructor(timeProvider: TimeProvider) {
-    this.timeProvider = timeProvider;
+  constructor(clock: Clock) {
+    this.clock = clock;
   }
 
   public setLoopCallback(callback: LoopCallback) {
@@ -61,7 +61,7 @@ export class LoopDefault implements Loop {
   }
 
   private get currentTimestamp() {
-    return this.timeProvider.now;
+    return this.clock.now;
   }
 
   private updateMillisecondsSinceLastLoop() {
