@@ -12,16 +12,16 @@ import { SceneTreeEvents } from './events/sceneTree/SceneTreeEvents';
 import { ClockSystem } from './providers/clock/ClockSystem';
 
 export function createEngine(canvas: Canvas) {
-  const options = createOptions({
+  const components = createComponents({
     canvas,
     clock: new ClockSystem(),
   });
   const events = createEvents();
 
-  return new EngineDefault(options, events);
+  return new EngineDefault(components, events);
 }
 
-function createOptions(dependencies: {
+function createComponents(dependencies: {
   canvas: Canvas;
   clock: Clock;
 }) {

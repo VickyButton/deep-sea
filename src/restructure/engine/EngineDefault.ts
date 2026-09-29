@@ -18,26 +18,26 @@ export class EngineDefault implements Engine {
   private readonly controllerManager: EventControllerManager;
   private readonly events: EngineEvents;
 
-  constructor(options: EngineOptions, events: EngineEvents) {
-    this.controllerManager = this.createControllerManager(options, events);
+  constructor(components: EngineComponents, events: EngineEvents) {
+    this.controllerManager = this.createControllerManager(components, events);
     this.events = events;
     this.setLoopCallback();
   }
 
-  private createControllerManager(options: EngineOptions, events: EngineEvents) {
+  private createControllerManager(components: EngineComponents, events: EngineEvents) {
     const manager = new EventControllerManager();
 
-    this.addControllersToManager(manager, this.createControllers(options, events));
+    this.addControllersToManager(manager, this.createControllers(components, events));
 
     return manager;
   }
 
-  private createControllers(options: EngineOptions, events: EngineEvents) {
+  private createControllers(components: EngineComponents, events: EngineEvents) {
     return [
-      this.createGraphicsController(options.graphics, events.graphics),
-      this.createLoopController(options.loop, events.loop),
-      this.createPluginManagerController(options.pluginManager, events.pluginManager),
-      this.createSceneTreeController(options.sceneTree, events.sceneTree),
+      this.createGraphicsController(components.graphics, events.graphics),
+      this.createLoopController(components.loop, events.loop),
+      this.createPluginManagerController(components.pluginManager, events.pluginManager),
+      this.createSceneTreeController(components.sceneTree, events.sceneTree),
     ];
   }
 
@@ -166,7 +166,7 @@ class EventControllerManager {
   }
 }
 
-interface EngineOptions {
+interface EngineComponents {
   graphics: Graphics;
   loop: Loop;
   pluginManager: PluginManager;
