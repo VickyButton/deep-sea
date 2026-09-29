@@ -5,10 +5,10 @@ import { describe, expect, it, vi } from 'vitest';
 describe('SceneTreeDefault', () => {
   it('should stop and then teardown current scene when setting a new scene', () => {
     const sceneTree = new SceneTreeDefault();
-    const scene = new Node('scene');
+    const scene = new Node('scene', events);
     const stopSpy = vi.spyOn(scene, 'stop');
     const teardownSpy = vi.spyOn(scene, 'teardown');
-    const newScene = new Node('new-scene');
+    const newScene = new Node('new-scene', events);
 
     sceneTree.setCurrentScene(scene);
     sceneTree.setCurrentScene(newScene);
@@ -20,7 +20,7 @@ describe('SceneTreeDefault', () => {
 
   it('should start the current scene', () => {
     const sceneTree = new SceneTreeDefault();
-    const scene = new Node('scene');
+    const scene = new Node('scene', events);
     const startSpy = vi.spyOn(scene, 'start');
 
     sceneTree.setCurrentScene(scene);
@@ -31,7 +31,7 @@ describe('SceneTreeDefault', () => {
 
   it('should stop the current scene', () => {
     const sceneTree = new SceneTreeDefault();
-    const scene = new Node('scene');
+    const scene = new Node('scene', events);
     const stopSpy = vi.spyOn(scene, 'stop');
 
     sceneTree.setCurrentScene(scene);
@@ -40,3 +40,6 @@ describe('SceneTreeDefault', () => {
     expect(stopSpy).toHaveBeenCalled();
   });
 });
+
+const events = {
+};

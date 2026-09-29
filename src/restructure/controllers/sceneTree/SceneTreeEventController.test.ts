@@ -1,4 +1,4 @@
-import type { SceneTreeEvents } from './sceneTree.types';
+import type { SceneTreeEvents } from '../../events/sceneTree/SceneTreeEvents';
 import { SceneTreeEventController } from './SceneTreeEventController';
 import { Event } from '../../events/Event';
 import { Node } from '../../nodes';
@@ -10,7 +10,8 @@ describe('SceneTreeEventController', () => {
   afterAll(() => controller.stopListening());
 
   it('should map SetCurrentScene event', () => {
-    const data = new Node('node');
+    const data = new Node('node', {
+    });
 
     events.SetCurrentScene.emit(data);
 

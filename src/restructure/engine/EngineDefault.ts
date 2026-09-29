@@ -1,4 +1,3 @@
-
 import type { Engine } from './engine.types';
 import type { Node } from '../nodes';
 import type { Graphics } from './graphics/graphics.types';
@@ -9,11 +8,11 @@ import type { EventController } from '../controllers/EventController';
 import type { GraphicsEvents } from '../events/graphics/GraphicsEvents';
 import type { LoopEvents } from '../events/loop/LoopEvents';
 import type { PluginManagerEvents } from '../events/pluginManager/PluginManagerEvents';
-import { SceneTreeEventController } from './sceneTree/SceneTreeEventController';
-import { sceneTreeEvents } from './sceneTree/sceneTreeEvents';
+import type { SceneTreeEvents } from '../events/sceneTree/SceneTreeEvents';
 import { GraphicsController } from '../controllers/graphics/GraphicsController';
 import { LoopController } from '../controllers/loop/LoopController';
 import { PluginManagerController } from '../controllers/pluginManager/PluginManagerController';
+import { SceneTreeEventController } from '../controllers/sceneTree/SceneTreeEventController';
 
 export class EngineDefault implements Engine {
   private readonly controllerManager: EventControllerManager;
@@ -38,7 +37,7 @@ export class EngineDefault implements Engine {
       this.createGraphicsController(options.graphics, events.graphics),
       this.createLoopController(options.loop, events.loop),
       this.createPluginManagerController(options.pluginManager, events.pluginManager),
-      new SceneTreeEventController(options.sceneTree, sceneTreeEvents),
+      this.createSceneTreeController(options.sceneTree, events.sceneTree),
     ];
   }
 
@@ -52,6 +51,10 @@ export class EngineDefault implements Engine {
 
   private createPluginManagerController(manager: PluginManager, events: PluginManagerEvents) {
     return new PluginManagerController(manager, events);
+  }
+
+  private createSceneTreeController(tree: SceneTree, events: SceneTreeEvents) {
+    return new SceneTreeEventController(tree, events);
   }
 
   private addControllersToManager(manager: EventControllerManager, controllers: EventController[]) {
@@ -120,11 +123,11 @@ export class EngineDefault implements Engine {
   }
 
   private setCurrentScene(scene: Node) {
-    sceneTreeEvents.SetCurrentScene.emit(scene);
+    this.events.sceneTree.SetCurrentScene.emit(scene);
   }
 
   private startCurrentScene() {
-    sceneTreeEvents.StartCurrentScene.emit();
+    this.events.sceneTree.StartCurrentScene.emit();
   }
 }
 
@@ -174,4 +177,5 @@ interface EngineEvents {
   graphics: GraphicsEvents;
   loop: LoopEvents;
   pluginManager: PluginManagerEvents;
+  sceneTree: SceneTreeEvents;
 }
