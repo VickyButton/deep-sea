@@ -80,7 +80,6 @@ export class EngineDefault implements Engine {
     this.events.graphics.ProcessDrawCommandQueue.emit();
   }
 
-  /** Starts the engine. */
   public start() {
     this.startListeningOnControllers();
     this.startPlugins();
@@ -94,7 +93,6 @@ export class EngineDefault implements Engine {
     this.events.pluginManager.StartPlugins.emit();
   }
 
-  /** Stops the engine. */
   public stop() {
     this.stopLoop();
     this.stopPlugins();
@@ -113,10 +111,6 @@ export class EngineDefault implements Engine {
     this.controllers.stopListening();
   }
 
-  /**
-   * Switches to a scene and starts that scene.
-   * @param scene The scene to switch to.
-   */
   public switchToScene(scene: Node) {
     this.setCurrentScene(scene);
     this.startCurrentScene();
