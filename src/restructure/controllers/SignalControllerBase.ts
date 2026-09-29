@@ -12,6 +12,10 @@ export class SignalControllerBase implements SignalController {
     return this._isListening;
   }
 
+  public clear() {
+    this.manager.clear();
+  }
+
   public deregister<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>) {
     this.manager.remove(signal, callback);
   }
@@ -87,6 +91,20 @@ class CallbackGroupManager {
     this.groups.set(signal, group as CallbackGroup<unknown>);
   }
 
+  public clear() {
+    for (const [signal, group] of this.groups) {
+      this.removeGroup(signal, group);
+    }
+  }
+
+  private removeGroup<CallbackData>(signal: Signal<CallbackData>, group: CallbackGroup<CallbackData>) {
+    this.groups.delete(signal);
+
+    if (this.isListening) {
+      this.deregisterDelegator(signal, group.delegator);
+    }
+  }
+
   /** Deregisters group delegators from their respective signals. */
   public deregisterDelegators() {
     for (const [signal, group] of this.groups) {
@@ -125,14 +143,6 @@ class CallbackGroupManager {
 
     if (group.isEmpty) {
       this.removeGroup(signal, group);
-    }
-  }
-
-  private removeGroup<CallbackData>(signal: Signal<CallbackData>, group: CallbackGroup<CallbackData>) {
-    this.groups.delete(signal);
-
-    if (this.isListening) {
-      this.deregisterDelegator(signal, group.delegator);
     }
   }
 }

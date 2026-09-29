@@ -121,6 +121,18 @@ describe('SignalControllerBase', () => {
 
     expect(signal.callbackCount).toBe(1);
   });
+
+  it('should clear all signal delegators', () => {
+    const controller = new SignalControllerBase();
+    const signal = new Signal();
+    const callback = vi.fn();
+
+    controller.register(signal, callback);
+    controller.startListening();
+    controller.clear();
+
+    expect(signal.callbackCount).toBe(0);
+  });
 });
 
 class Signal<T = void> {

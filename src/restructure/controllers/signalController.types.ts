@@ -4,6 +4,8 @@ import type { Signal, SignalCallback } from '../signals/signal.types';
 export interface SignalController {
   /** A flag indicating if the controller is listening for signals. */
   get isListening(): boolean;
+  /** Clears all signal delegators. */
+  clear(): void;
   /**
    * Deregisters a callback from a signal delegator.
    * @param signal The signal the callback is grouped under.
