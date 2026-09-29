@@ -12,7 +12,7 @@ import type { SceneTreeEvents } from '../events/sceneTree/SceneTreeEvents';
 import { GraphicsController } from '../controllers/graphics/GraphicsController';
 import { LoopController } from '../controllers/loop/LoopController';
 import { PluginManagerController } from '../controllers/pluginManager/PluginManagerController';
-import { SceneTreeEventController } from '../controllers/sceneTree/SceneTreeEventController';
+import { SceneTreeEventController } from '../controllers/sceneTree/SceneTreeController';
 
 export class EngineDefault implements Engine {
   private readonly controllerManager: EventControllerManager;

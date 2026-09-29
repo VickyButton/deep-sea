@@ -1,5 +1,5 @@
 import type { SceneTreeEvents } from '../../events/sceneTree/SceneTreeEvents';
-import { SceneTreeEventController } from './SceneTreeEventController';
+import { SceneTreeEventController } from './SceneTreeController';
 import { Event } from '../../events/Event';
 import { Node } from '../../nodes';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
