@@ -1,7 +1,7 @@
-import type { CanvasNodeEvents } from './CanvasNode';
+import type { CanvasNodeEvents } from './canvasNode/CanvasNode';
 import type { Node } from './Node';
 import type { Canvas } from '../domain/canvases/Canvas';
-import { CanvasNode } from './CanvasNode';
+import { CanvasNode } from './canvasNode/CanvasNode';
 import { Transform2D } from '../domain/Transform2D';
 import { Vector2D } from '../domain/Vector2D';
 

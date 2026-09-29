@@ -1,7 +1,7 @@
-import type { NodeEvents } from './Node';
-import type { Canvas } from '../domain/canvases/Canvas';
-import type { GraphicsEvents } from '../events/graphics/GraphicsEvents';
-import { Node } from './Node';
+import type { Canvas } from '../../domain/canvases/Canvas';
+import type { GraphicsEvents } from '../../events/graphics/GraphicsEvents';
+import type { NodeEvents } from '../Node';
+import { Node } from '../Node';
 
 /** Abstract base node for nodes which can be drawn onto a canvas. */
 export abstract class CanvasNode<Events extends CanvasNodeEvents = CanvasNodeEvents> extends Node<Events> {
