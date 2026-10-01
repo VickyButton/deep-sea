@@ -81,8 +81,8 @@ export class Node_Base implements Node {
       throw new Error('Node does not belong to tree.');
     }
 
-    this.setTree(null);
     this.removeChildrenFromTree(tree);
+    this.setTree(null);
     this.emitTreeExitedSignal(tree);
   }
 
