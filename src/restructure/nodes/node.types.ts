@@ -2,20 +2,20 @@ import type { Signal } from '../signals/signal.types';
 
 /** A node that encapsulate state, emits signals, and can be added to a node tree. */
 export interface Node {
-  /** Signal that is emitted when a child node is added to this node. */
-  readonly child_added: Node_ChildAdded_Signal;
-  /** Signal that is emitted when a child node is removed from this node. */
-  readonly child_removed: Node_ChildRemoved_Signal;
+  /** Emitted when the node has a child added to it. The added child is passed to callbacks. */
+  readonly child_added: Signal<Node>;
+  /** Emitted when the node has a child removed from it. The removed child is passed to callbacks. */
+  readonly child_removed: Signal<Node>;
   /** The node's unique ID. */
   readonly id: string;
-  /** Signal that is emitted when this node enters a node tree. */
-  readonly tree_entered: Node_TreeEntered_Signal;
-  /** Signal that is emitted when this node exits a node tree. */
-  readonly tree_exited: Node_TreeExited_Signal;
-  /** Signal that is emitted when this node is stopped. */
-  readonly started: Node_Started_Signal;
-  /** Signal that is emitted when this node is stopped. */
-  readonly stopped: Node_Stopped_Signal;
+  /** Emitted when the node is started. */
+  readonly started: Signal;
+  /** Emitted when the node is stopped. */
+  readonly stopped: Signal;
+  /** Emitted when the node enters a tree. The entered tree is passed to callbacks. */
+  readonly tree_entered: Signal<NodeTree>;
+  /** Emitted when the node exits a tree. The exited tree is passed to callbacks. */
+  readonly tree_exited: Signal<NodeTree>;
   /** The node's children. */
   get children(): Node[];
   /** Whether or not the node is active. A node is considered active while part of a node tree. */
@@ -54,19 +54,6 @@ export interface Node {
   /** Stops the node and its children, preventing processing and signal listening. */
   stop(): void;
 }
-
-/** Emitted when a node has a child node added to it. The added child node is passed to callbacks. */
-export type Node_ChildAdded_Signal = Signal<Node>;
-/** Emitted when a node has a child removed added from it. The removed child node is passed to callbacks. */
-export type Node_ChildRemoved_Signal = Signal<Node>;
-/** Emitted when a node is started. */
-export type Node_Started_Signal = Signal;
-/** Emitted when a node is stopped. */
-export type Node_Stopped_Signal = Signal;
-/** Emitted when a node enters a node tree. The node tree entered is passed to callbacks. */
-export type Node_TreeEntered_Signal = Signal<NodeTree>;
-/** Emitted when a node exits a node tree. The node tree exited is passed to callbacks. */
-export type Node_TreeExited_Signal = Signal<NodeTree>;
 
 /** A tree comprising of nodes */
 export interface NodeTree {

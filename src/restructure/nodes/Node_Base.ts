@@ -3,13 +3,13 @@ import { Signal_Base } from '../signals/Signal_Base';
 
 /** The base implementation of the Node interface. */
 export class Node_Base implements Node {
-  public readonly child_added = new Node_ChildAdded_Signal_Base();
-  public readonly child_removed = new Node_ChildRemoved_Signal_Base();
+  public readonly child_added = new Signal_Base<Node>();
+  public readonly child_removed = new Signal_Base<Node>();
   public readonly id: string;
-  public readonly started = new Node_Started_Signal_Base();
-  public readonly stopped = new Node_Stopped_Signal_Base();
-  public readonly tree_entered = new Node_TreeEntered_Signal_Base();
-  public readonly tree_exited = new Node_TreeExited_Signal_Base();
+  public readonly started = new Signal_Base();
+  public readonly stopped = new Signal_Base();
+  public readonly tree_entered = new Signal_Base<NodeTree>();
+  public readonly tree_exited = new Signal_Base<NodeTree>();
   private readonly relationships = new NodeRelationships();
   private _tree: NodeTree | null = null;
 
@@ -130,19 +130,6 @@ export class Node_Base implements Node {
     this.stopped.emit();
   }
 }
-
-/** The base implementation of the Node_ChildAdded_Signal interface. */
-const Node_ChildAdded_Signal_Base = Signal_Base<Node>;
-/** The base implementation of the Node_ChildRemoved_Signal interface. */
-const Node_ChildRemoved_Signal_Base = Signal_Base<Node>;
-/** The base implementation of the Node_Started_Signal interface. */
-const Node_Started_Signal_Base = Signal_Base;
-/** The base implementation of the Node_Stopped_Signal interface. */
-const Node_Stopped_Signal_Base = Signal_Base;
-/** The base implementation of the Node_TreeEntered_Signal interface. */
-const Node_TreeEntered_Signal_Base = Signal_Base<NodeTree>;
-/** The base implementation of the Node_TreeExited_Signal interface. */
-const Node_TreeExited_Signal_Base = Signal_Base<NodeTree>;
 
 class NodeRelationships {
   private _children = new Set<Node>();
