@@ -1,5 +1,5 @@
 import type { Node, NodeTree } from './node.types';
-import { Node_ChildAdded_Signal_Base, Node_ChildRemoved_Signal_Base, Node_TreeEntered_Signal_Base, Node_TreeExited_Signal_Base, Node_Started_Signal_Base, Node_Stopped_Signal_Base } from '../signals/nodes/NodeSignals_Base';
+import { Signal_Base } from '../signals/Signal_Base';
 
 /** The base implementation of the Node interface. */
 export class Node_Base implements Node {
@@ -130,6 +130,19 @@ export class Node_Base implements Node {
     this.stopped.emit();
   }
 }
+
+/** The base implementation of the Node_ChildAdded_Signal interface. */
+const Node_ChildAdded_Signal_Base = Signal_Base<Node>;
+/** The base implementation of the Node_ChildRemoved_Signal interface. */
+const Node_ChildRemoved_Signal_Base = Signal_Base<Node>;
+/** The base implementation of the Node_Started_Signal interface. */
+const Node_Started_Signal_Base = Signal_Base;
+/** The base implementation of the Node_Stopped_Signal interface. */
+const Node_Stopped_Signal_Base = Signal_Base;
+/** The base implementation of the Node_TreeEntered_Signal interface. */
+const Node_TreeEntered_Signal_Base = Signal_Base<NodeTree>;
+/** The base implementation of the Node_TreeExited_Signal interface. */
+const Node_TreeExited_Signal_Base = Signal_Base<NodeTree>;
 
 class NodeRelationships {
   private _children = new Set<Node>();

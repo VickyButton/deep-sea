@@ -1,4 +1,4 @@
-import type { Node_ChildAdded_Signal, Node_ChildRemoved_Signal, Node_TreeEntered_Signal, Node_TreeExited_Signal, Node_Started_Signal, Node_Stopped_Signal } from '../signals/nodes/nodeSignals.types';
+import type { Signal } from '../signals/signal.types';
 
 /** A node that encapsulate state, emits signals, and can be added to a node tree. */
 export interface Node {
@@ -54,6 +54,19 @@ export interface Node {
   /** Stops the node and its children, preventing processing and signal listening. */
   stop(): void;
 }
+
+/** Emitted when a node has a child node added to it. The added child node is passed to callbacks. */
+export type Node_ChildAdded_Signal = Signal<Node>;
+/** Emitted when a node has a child removed added from it. The removed child node is passed to callbacks. */
+export type Node_ChildRemoved_Signal = Signal<Node>;
+/** Emitted when a node is started. */
+export type Node_Started_Signal = Signal;
+/** Emitted when a node is stopped. */
+export type Node_Stopped_Signal = Signal;
+/** Emitted when a node enters a node tree. The node tree entered is passed to callbacks. */
+export type Node_TreeEntered_Signal = Signal<NodeTree>;
+/** Emitted when a node exits a node tree. The node tree exited is passed to callbacks. */
+export type Node_TreeExited_Signal = Signal<NodeTree>;
 
 /** A tree comprising of nodes */
 export interface NodeTree {
