@@ -35,50 +35,50 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
     return this._visible;
   }
 
-  public set visible(newValue: boolean) {
-    if (this.equalsCurrentVisible(newValue)) {
+  public set visible(visible: boolean) {
+    if (this.equalsCurrentVisible(visible)) {
       return;
     }
 
-    this.setVisibile(newValue);
-    this.emitVisibilityChangedSignal(newValue);
+    this.setVisibile(visible);
+    this.emitVisibilityChangedSignal(visible);
   }
 
   private equalsCurrentVisible(visible: boolean) {
     return this.visible === visible;
   }
 
-  private setVisibile(newValue: boolean) {
-    this._visible = newValue;
+  private setVisibile(visible: boolean) {
+    this._visible = visible;
   }
 
-  private emitVisibilityChangedSignal(newValue: boolean) {
-    this.visibility_changed.emit(newValue);
+  private emitVisibilityChangedSignal(visible: boolean) {
+    this.visibility_changed.emit(visible);
   }
 
   public get zIndex() {
     return this._zIndex;
   }
 
-  public set zIndex(newValue: number) {
-    if (this.equalsCurrentZIndex(newValue)) {
+  public set zIndex(zIndex: number) {
+    if (this.equalsCurrentZIndex(zIndex)) {
       return;
     }
 
-    this.setZIndex(newValue);
-    this.emitZIndexChangedSignal(newValue);
+    this.setZIndex(zIndex);
+    this.emitZIndexChangedSignal(zIndex);
   }
 
   private equalsCurrentZIndex(zIndex: number) {
     return this.zIndex === zIndex;
   }
 
-  private setZIndex(newValue: number) {
-    this._zIndex = newValue;
+  private setZIndex(zIndex: number) {
+    this._zIndex = zIndex;
   }
 
-  private emitZIndexChangedSignal(newValue: number) {
-    this.z_index_changed.emit(newValue);
+  private emitZIndexChangedSignal(zIndex: number) {
+    this.z_index_changed.emit(zIndex);
   }
 
   public draw() {
