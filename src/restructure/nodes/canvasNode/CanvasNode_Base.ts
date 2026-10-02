@@ -27,7 +27,7 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
     return closestAncestor ? this.calculateGlobalZIndexFromNode(closestAncestor) : this.zIndex;
   }
 
-  private calculateGlobalZIndexFromNode(node: CanvasNode_Base) {
+  private calculateGlobalZIndexFromNode(node: CanvasNode) {
     return this.zIndex + node.zIndex;
   }
 
