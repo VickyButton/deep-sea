@@ -32,10 +32,16 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
   }
 
   public set visible(newValue: boolean) {
-    if (this.visible !== newValue) {
-      this.setVisibile(newValue);
-      this.emitVisibilityChangedSignal(newValue);
+    if (this.equalsCurrentVisible(newValue)) {
+      return;
     }
+
+    this.setVisibile(newValue);
+    this.emitVisibilityChangedSignal(newValue);
+  }
+
+  private equalsCurrentVisible(visible: boolean) {
+    return this.visible === visible;
   }
 
   private setVisibile(newValue: boolean) {
@@ -51,10 +57,16 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
   }
 
   public set zIndex(newValue: number) {
-    if (this.zIndex !== newValue) {
-      this.setZIndex(newValue);
-      this.emitZIndexChangedSignal(newValue);
+    if (this.equalsCurrentZIndex(newValue)) {
+      return;
     }
+
+    this.setZIndex(newValue);
+    this.emitZIndexChangedSignal(newValue);
+  }
+
+  private equalsCurrentZIndex(zIndex: number) {
+    return this.zIndex === zIndex;
   }
 
   private setZIndex(newValue: number) {
@@ -78,10 +90,12 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
   }
 
   public requestRedraw() {
-    if (!this.hasActiveRedrawRequest) {
-      this.hasActiveRedrawRequest = true;
-      this.emitRedrawRequestedSignal();
+    if (this.hasActiveRedrawRequest) {
+      return;
     }
+
+    this.hasActiveRedrawRequest = true;
+    this.emitRedrawRequestedSignal();
   }
 
   private emitRedrawRequestedSignal() {
