@@ -9,7 +9,7 @@ describe('CanvasNode_Base', () => {
     expect(node.visible).toBe(true);
   });
 
-  it('should not emit "visibility_changed" signal if value has not changed', () => {
+  it('should not emit "visibility_changed" signal if visibility has not changed', () => {
     const node = new CanvasNode_Base('node');
     const newValue = node.visible;
     const emitSpy = vi.spyOn(node.visibility_changed, 'emit');
@@ -19,7 +19,7 @@ describe('CanvasNode_Base', () => {
     expect(emitSpy).not.toHaveBeenCalled();
   });
 
-  it('should emit "visibility_changed" signal if value has changed', () => {
+  it('should emit "visibility_changed" signal if visibility has changed', () => {
     const node = new CanvasNode_Base('node');
     const newValue = !node.visible;
     const emitSpy = vi.spyOn(node.visibility_changed, 'emit');
@@ -35,7 +35,7 @@ describe('CanvasNode_Base', () => {
     expect(node.zIndex).toBe(0);
   });
 
-  it('should not emit "z_index_changed" signal if value has not changed', () => {
+  it('should not emit "z_index_changed" signal if z-index has not changed', () => {
     const node = new CanvasNode_Base('node');
     const newValue = node.zIndex;
     const emitSpy = vi.spyOn(node.z_index_changed, 'emit');
@@ -45,7 +45,7 @@ describe('CanvasNode_Base', () => {
     expect(emitSpy).not.toHaveBeenCalled();
   });
 
-  it('should emit "z_index_changed" signal if value has changed', () => {
+  it('should emit "z_index_changed" signal if z-index has changed', () => {
     const node = new CanvasNode_Base('node');
     const newValue = node.zIndex + 1;
     const emitSpy = vi.spyOn(node.z_index_changed, 'emit');
