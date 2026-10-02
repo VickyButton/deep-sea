@@ -129,6 +129,20 @@ export class Node_Base implements Node {
   private emitStoppedSignal() {
     this.stopped.emit();
   }
+
+  protected getClosestAncestorOfType<T extends Node>(type: NodeConstructor<T>) {
+    let parent = this.parent;
+
+    while (parent !== null) {
+      if (parent instanceof type) {
+        return parent;
+      }
+
+      parent = parent.parent;
+    }
+
+    return null;
+  }
 }
 
 class NodeRelationships {
@@ -221,3 +235,7 @@ class NodeRelationships {
     this.self = node;
   }
 }
+
+type NodeConstructor<NodeType extends Node> = AbstractConstructor<NodeType, string> | Constructor<NodeType, string>;
+type AbstractConstructor<Type, Args> = abstract new (args: Args) => Type;
+type Constructor<Type, Args> = new (args: Args) => Type;
