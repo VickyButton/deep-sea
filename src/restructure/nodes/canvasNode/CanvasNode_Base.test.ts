@@ -61,12 +61,6 @@ describe('CanvasNode_Base', () => {
     expect(node.globalVisible).toBe(true);
   });
 
-  it('should have global z-index of 0 by default', () => {
-    const node = new CanvasNode_Base('node');
-
-    expect(node.globalZIndex).toBe(0);
-  });
-
   it('should determine global visibility from closest ancestor', () => {
     const node = new CanvasNode_Base('node');
     const parent = new Node_Base('parent');
@@ -77,6 +71,12 @@ describe('CanvasNode_Base', () => {
     ancestor.addChild(parent);
 
     expect(node.globalVisible).toBe(false);
+  });
+
+  it('should have global z-index of 0 by default', () => {
+    const node = new CanvasNode_Base('node');
+
+    expect(node.globalZIndex).toBe(0);
   });
 
   it('should determine global z-index from closest ancestor', () => {
