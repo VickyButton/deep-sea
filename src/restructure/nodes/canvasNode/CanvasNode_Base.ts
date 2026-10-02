@@ -12,8 +12,8 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
   private _zIndex = 0;
 
   public get globalVisible(): boolean {
-    if (!this._visible) {
-      return this._visible;
+    if (!this.visible) {
+      return this.visible;
     }
 
     const closestAncestor = this.getClosestAncestorOfType(CanvasNode_Base);
@@ -24,7 +24,7 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
   public get globalZIndex(): number {
     const closestAncestor = this.getClosestAncestorOfType(CanvasNode_Base);
 
-    return closestAncestor ? this._zIndex + closestAncestor.globalZIndex : this._zIndex;
+    return closestAncestor ? this.zIndex + closestAncestor.globalZIndex : this.zIndex;
   }
 
   public get visible() {
@@ -32,14 +32,14 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
   }
 
   public set visible(newValue: boolean) {
-    this.setVisibile(newValue);
+    if (this.visible !== newValue) {
+      this.setVisibile(newValue);
+      this.emitVisibilityChangedSignal(newValue);
+    }
   }
 
   private setVisibile(newValue: boolean) {
-    if (this._visible !== newValue) {
-      this._visible = newValue;
-      this.emitVisibilityChangedSignal(newValue);
-    }
+    this._visible = newValue;
   }
 
   private emitVisibilityChangedSignal(newValue: boolean) {
@@ -51,14 +51,14 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
   }
 
   public set zIndex(newValue: number) {
-    this.setZIndex(newValue);
+    if (this.zIndex !== newValue) {
+      this.setZIndex(newValue);
+      this.emitZIndexChangedSignal(newValue);
+    }
   }
 
   private setZIndex(newValue: number) {
-    if (this._zIndex !== newValue) {
-      this._zIndex = newValue;
-      this.emitZIndexChangedSignal(newValue);
-    }
+    this._zIndex = newValue;
   }
 
   private emitZIndexChangedSignal(newValue: number) {
@@ -74,7 +74,7 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
   }
 
   public hide() {
-    this.setVisibile(false);
+    this.visible = false;
   }
 
   public requestRedraw() {
@@ -89,6 +89,6 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
   }
 
   public show() {
-    this.setVisibile(true);
+    this.visible = true;
   }
 }
