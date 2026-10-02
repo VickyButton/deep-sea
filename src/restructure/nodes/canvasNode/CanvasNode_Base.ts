@@ -18,13 +18,17 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
 
     const closestAncestor = this.getClosestAncestorOfType(CanvasNode_Base);
 
-    return closestAncestor ? closestAncestor.globalVisible : this._visible;
+    return closestAncestor ? closestAncestor.globalVisible : this.visible;
   }
 
   public get globalZIndex(): number {
     const closestAncestor = this.getClosestAncestorOfType(CanvasNode_Base);
 
-    return closestAncestor ? this.zIndex + closestAncestor.globalZIndex : this.zIndex;
+    return closestAncestor ? this.calculateGlobalZIndexFromNode(closestAncestor) : this.zIndex;
+  }
+
+  private calculateGlobalZIndexFromNode(node: CanvasNode_Base) {
+    return this.zIndex + node.zIndex;
   }
 
   public get visible() {
