@@ -54,7 +54,7 @@ describe('PolygonShape2D', () => {
     const polygonB = new PolygonShape2D();
     const transformB = new Transform2D;
 
-    polygonA.isCollidingWith(transformA, polygonB, transformB);
+    polygonA.overlaps(transformA, polygonB, transformB);
 
     expect(PolygonCollisionResolver2D).toHaveBeenCalledWith(polygonA, transformA, polygonB, transformB);
   });

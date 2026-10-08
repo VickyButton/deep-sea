@@ -56,7 +56,7 @@ class UnknownShape extends Shape2D {
     new Vector2D(),
     new Vector2D(),
   ];
-  public isCollidingWith = vi.fn();
+  public overlaps = vi.fn();
   public draw = vi.fn();
 }
 

@@ -108,7 +108,7 @@ describe('RectangleShape2D', () => {
     const rectangleB = new RectangleShape2D();
     const transformB = new Transform2D();
 
-    rectangleA.isCollidingWith(transformA, rectangleB, transformB);
+    rectangleA.overlaps(transformA, rectangleB, transformB);
 
     expect(RectangleCollisionResolver2D).toHaveBeenCalledWith(rectangleA, transformA, rectangleB, transformB);
   });

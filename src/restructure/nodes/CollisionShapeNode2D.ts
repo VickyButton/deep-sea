@@ -11,8 +11,8 @@ export class CollisionShapeNode2D<Events extends CollisionShapeNode2DEvents = Co
    * @param node The node to check collision against.
    * @returns True if the the nodes' collision shapes are colliding, false if not.
    */
-  public isCollidingWith(node: CollisionShapeNode2D) {
-    return this.shape.isCollidingWith(this.globalTransform, node.shape, node.globalTransform);
+  public overlaps(node: CollisionShapeNode2D) {
+    return this.shape.overlaps(this.globalTransform, node.shape, node.globalTransform);
   }
 
   public setup() {

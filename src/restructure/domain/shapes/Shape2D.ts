@@ -10,13 +10,13 @@ export abstract class Shape2D {
   public abstract get boundingBox(): BoundingBox2D;
 
   /**
-   * Checks whether this shape is colliding with another shape.
+   * Checks whether this shape overlaps another shape.
    * @param transform The 2D transformation matrix to apply to this shape.
-   * @param shape The other shape to check for collision against.
+   * @param shape The other shape to check for an overlap against.
    * @param shapeTransform The 2D transformation matrix to apply to the other shape.
-   * @returns True if the two shapes are colliding, false if not.
+   * @returns True if the two shapes overlap, false if not.
    */
-  public abstract isCollidingWith(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D): boolean;
+  public abstract overlaps(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D): boolean;
 
   /**
    * Draws the shape onto a canvas.

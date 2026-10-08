@@ -81,7 +81,7 @@ export class PolygonShape2D extends Shape2D {
     }
   }
 
-  public isCollidingWith(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D) {
+  public overlaps(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D) {
     return new PolygonCollisionResolver2D(this, transform, shape, shapeTransform).resolveCollision();
   }
 
