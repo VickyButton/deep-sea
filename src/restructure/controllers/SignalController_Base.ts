@@ -1,10 +1,8 @@
 import type { SignalController } from './signalController.types';
 import type { Signal, SignalCallback } from '../signals/signal/signal.types';
 
-// TODO: Write unit tests.
-
 /** The base implementation of the SignalController interface. */
-export class SignalControllerBase implements SignalController {
+export class SignalController_Base implements SignalController {
   private readonly manager = new CallbackGroupManager(() => this.isListening);
   private _isListening = false;
 

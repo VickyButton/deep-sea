@@ -1,13 +1,13 @@
-import { SignalControllerBase } from './SignalControllerBase';
+import { SignalController_Base } from './SignalController_Base';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('SignalControllerBase', () => {
+describe('SignalController_Base', () => {
   it('should not be listening by default', () => {
-    expect(new SignalControllerBase().isListening).toBe(false);
+    expect(new SignalController_Base().isListening).toBe(false);
   });
 
   it('should start listening', () => {
-    const controller = new SignalControllerBase();
+    const controller = new SignalController_Base();
 
     controller.startListening();
 
@@ -15,7 +15,7 @@ describe('SignalControllerBase', () => {
   });
 
   it('should stop listening', () => {
-    const controller = new SignalControllerBase();
+    const controller = new SignalController_Base();
 
     controller.stopListening();
 
@@ -23,7 +23,7 @@ describe('SignalControllerBase', () => {
   });
 
   it('should register a signal delegator before listening started', () => {
-    const controller = new SignalControllerBase();
+    const controller = new SignalController_Base();
     const signal = new Signal();
     const callback = vi.fn();
 
@@ -34,7 +34,7 @@ describe('SignalControllerBase', () => {
   });
 
   it('should register a signal delegator after listening started', () => {
-    const controller = new SignalControllerBase();
+    const controller = new SignalController_Base();
     const signal = new Signal();
     const callback = vi.fn();
 
@@ -45,7 +45,7 @@ describe('SignalControllerBase', () => {
   });
 
   it('should deregister a signal delegator for a signal after listening stopped', () => {
-    const controller = new SignalControllerBase();
+    const controller = new SignalController_Base();
     const signal = new Signal();
     const callback = vi.fn();
 
@@ -57,7 +57,7 @@ describe('SignalControllerBase', () => {
   });
 
   it('should execute callbacks under a signal delegator', () => {
-    const controller = new SignalControllerBase();
+    const controller = new SignalController_Base();
     const signal = new Signal();
     const callback = vi.fn();
 
@@ -69,7 +69,7 @@ describe('SignalControllerBase', () => {
   });
 
   it('should only register one delegator per signal', () => {
-    const controller = new SignalControllerBase();
+    const controller = new SignalController_Base();
     const signal = new Signal();
     const callback1 = vi.fn();
     const callback2 = vi.fn();
@@ -85,7 +85,7 @@ describe('SignalControllerBase', () => {
   });
 
   it('should deregister a callback from a signal delegator before starting', () => {
-    const controller = new SignalControllerBase();
+    const controller = new SignalController_Base();
     const signal = new Signal();
     const callback = vi.fn();
 
@@ -97,7 +97,7 @@ describe('SignalControllerBase', () => {
   });
 
   it('should deregister a callback from a signal delegator after starting', () => {
-    const controller = new SignalControllerBase();
+    const controller = new SignalController_Base();
     const signal = new Signal();
     const callback = vi.fn();
 
@@ -109,7 +109,7 @@ describe('SignalControllerBase', () => {
   });
 
   it('should not deregister a signal delegator while listening if callbacks still registered under delegator', () => {
-    const controller = new SignalControllerBase();
+    const controller = new SignalController_Base();
     const signal = new Signal();
     const callback1 = vi.fn();
     const callback2 = vi.fn();
@@ -123,7 +123,7 @@ describe('SignalControllerBase', () => {
   });
 
   it('should clear all signal delegators', () => {
-    const controller = new SignalControllerBase();
+    const controller = new SignalController_Base();
     const signal = new Signal();
     const callback = vi.fn();
 
