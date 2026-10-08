@@ -1,10 +1,12 @@
 import type { Node, NodeTree } from './node.types';
-import { Signal_Base } from '../../signals/Signal_Base';
+import { SignalController_Base } from '../../controllers/SignalController_Base';
+import { Signal_Base } from '../../signals/signal/Signal_Base';
 
 /** The base implementation of the Node interface. */
 export class Node_Base implements Node {
   public readonly child_added = new Signal_Base<Node>();
   public readonly child_removed = new Signal_Base<Node>();
+  public readonly controller = new SignalController_Base();
   public readonly id: string;
   public readonly started = new Signal_Base();
   public readonly stopped = new Signal_Base();
@@ -101,8 +103,13 @@ export class Node_Base implements Node {
   }
 
   public start() {
+    this.startListening();
     this.startChildren();
     this.emitStartedSignal();
+  }
+
+  private startListening() {
+    this.controller.startListening();
   }
 
   private startChildren() {
@@ -117,6 +124,7 @@ export class Node_Base implements Node {
 
   public stop() {
     this.stopChildren();
+    this.stopListening();
     this.emitStoppedSignal();
   }
 
@@ -124,6 +132,10 @@ export class Node_Base implements Node {
     for (const child of this.children) {
       child.stop();
     }
+  }
+
+  private stopListening() {
+    this.controller.stopListening();
   }
 
   private emitStoppedSignal() {

@@ -1,3 +1,4 @@
+import type { SignalController } from '../../controllers/signalController.types';
 import type { Signal } from '../../signals/signal/signal.types';
 
 /** A node that encapsulate state, emits signals, and can be added to a node tree. */
@@ -6,6 +7,8 @@ export interface Node {
   readonly child_added: Signal<Node>;
   /** Emitted when the node has a child removed from it. The removed child is passed to callbacks. */
   readonly child_removed: Signal<Node>;
+  /** The node's signal controller used for delegating signal callbacks. */
+  readonly controller: SignalController;
   /** The node's unique ID. */
   readonly id: string;
   /** Emitted when the node is started. */

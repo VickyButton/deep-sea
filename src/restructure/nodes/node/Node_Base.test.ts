@@ -205,6 +205,15 @@ describe('Node_Base', () => {
     expect(node.parent).toBe(null);
   });
 
+  it('should start listening for signals on start', () => {
+    const node = new Node_Base('node');
+    const startListeningSpy = vi.spyOn(node.controller, 'startListening');
+
+    node.start();
+
+    expect(startListeningSpy).toHaveBeenCalled();
+  });
+
   it('should start children on start', () => {
     const node = new Node_Base('node');
     const child = new Node_Base('child');
@@ -234,6 +243,15 @@ describe('Node_Base', () => {
     node.stop();
 
     expect(emitSpy).toHaveBeenCalled();
+  });
+
+  it('should stop listening for signals on stop', () => {
+    const node = new Node_Base('node');
+    const stopListeningSpy = vi.spyOn(node.controller, 'stopListening');
+
+    node.stop();
+
+    expect(stopListeningSpy).toHaveBeenCalled();
   });
 
   it('should emit "stopped" signal after starting', () => {
