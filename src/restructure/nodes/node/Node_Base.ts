@@ -37,8 +37,12 @@ export class Node_Base implements Node {
   }
 
   public addChild(node: Node) {
-    this.relationships.addChild(node);
+    this.addChildRelationship(node);
     this.emitChildAddedSignal(node);
+  }
+
+  private addChildRelationship(node: Node) {
+    this.relationships.addChild(node);
   }
 
   private emitChildAddedSignal(node: Node) {
@@ -70,8 +74,12 @@ export class Node_Base implements Node {
   }
 
   public removeChild(node: Node) {
-    this.relationships.removeChild(node);
+    this.removeChildRelationship(node);
     this.emitChildRemovedSignal(node);
+  }
+
+  private removeChildRelationship(node: Node) {
+    this.relationships.removeChild(node);
   }
 
   private emitChildRemovedSignal(node: Node) {
