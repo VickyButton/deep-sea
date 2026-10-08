@@ -1,16 +1,15 @@
 /**
  * This file defines node exports for the package.
  */
-import { CanvasNode } from './canvasNode/CanvasNode';
-import { CollisionShapeNode2D } from './CollisionShapeNode2D';
-import { Node } from './Node';
-import { Node2D } from './Node2D';
-import { ShapeNode2D } from './ShapeNode2D';
+
+import { CanvasNode_Base } from './canvasNode/CanvasNode_Base';
+import { Node_Base } from './node/Node_Base';
+import { Node2D_Base } from './node2D/Node2D_Base';
+import { ShapeNode2D_Base } from './shapeNode2D/ShapeNode2D_Base';
 
 export {
-  CanvasNode,
-  CollisionShapeNode2D,
-  Node,
-  Node2D,
-  ShapeNode2D,
+  CanvasNode_Base as CanvasNode,
+  Node_Base as Node,
+  Node2D_Base as Node2D,
+  ShapeNode2D_Base as ShapeNode2D,
 };

@@ -1,5 +1,5 @@
 import type { SignalController } from './signalController.types';
-import type { Signal, SignalCallback } from '../signals/signal.types';
+import type { Signal, SignalCallback } from '../signals/signal/signal.types';
 
 // TODO: Write unit tests.
 
