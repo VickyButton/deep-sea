@@ -1,5 +1,5 @@
 import type { Node, NodeTree } from './node.types';
-import { Signal_Base } from '../signals/Signal_Base';
+import { Signal_Base } from '../../signals/Signal_Base';
 
 /** The base implementation of the Node interface. */
 export class Node_Base implements Node {

@@ -1,4 +1,4 @@
-import type { Signal } from '../signals/signal.types';
+import type { Signal } from '../../signals/signal.types';
 
 /** A node that encapsulate state, emits signals, and can be added to a node tree. */
 export interface Node {

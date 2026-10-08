@@ -1,5 +1,5 @@
-import { Node_Base } from '../Node_Base';
 import { CanvasNode_Base } from './CanvasNode_Base';
+import { Node_Base } from '../node/Node_Base';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('CanvasNode_Base', () => {

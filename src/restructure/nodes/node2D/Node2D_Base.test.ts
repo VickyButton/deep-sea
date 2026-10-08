@@ -1,7 +1,7 @@
 import { Node2D_Base } from './Node2D_Base';
 import { Vector2D } from '../../domain';
 import { Transform2D } from '../../domain/Transform2D';
-import { Node_Base } from '../Node_Base';
+import { Node_Base } from '../node/Node_Base';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Node2D_Base', () => {

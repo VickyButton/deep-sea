@@ -1,6 +1,6 @@
 import type { Canvas } from '../../domain/canvases';
 import type { Signal } from '../../signals/signal.types';
-import type { Node } from '../node.types';
+import type { Node } from '../node/node.types';
 
 /** A node that can be drawn onto a canvas. */
 export interface CanvasNode extends Node {
