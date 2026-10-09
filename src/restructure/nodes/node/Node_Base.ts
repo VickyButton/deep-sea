@@ -69,7 +69,7 @@ export class Node_Base implements Node {
 
     this.setTree(tree);
     this.emitTreeEnteredSignal(tree);
-    this.addChildrenToTree(tree);
+    this.enterChildrenIntoTree(tree);
   }
 
   private setTree(tree: NodeTree | null) {
@@ -80,9 +80,9 @@ export class Node_Base implements Node {
     this.tree_entered.emit(tree);
   }
 
-  private addChildrenToTree(tree: NodeTree) {
+  private enterChildrenIntoTree(tree: NodeTree) {
     for (const child of this.children) {
-      tree.addNode(child);
+      this.enterNodeIntoTree(child, tree);
     }
   }
 
@@ -113,7 +113,7 @@ export class Node_Base implements Node {
       throw new Error('Node does not belong to tree.');
     }
 
-    this.removeChildrenFromTree(tree);
+    this.exitChildrenFromTree(tree);
     this.setTree(null);
     this.emitTreeExitedSignal(tree);
   }
@@ -122,9 +122,9 @@ export class Node_Base implements Node {
     this.tree_exited.emit(tree);
   }
 
-  private removeChildrenFromTree(tree: NodeTree) {
+  private exitChildrenFromTree(tree: NodeTree) {
     for (const child of this.children) {
-      tree.removeNode(child);
+      this.exitNodeFromTree(child, tree);
     }
   }
 

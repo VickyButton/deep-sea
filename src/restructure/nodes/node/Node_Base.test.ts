@@ -135,7 +135,7 @@ describe('Node_Base', () => {
     node.addChild(child);
     node.enterTree(tree);
 
-    expect(tree.addNode).toHaveBeenCalledWith(child);
+    expect(child.tree).toBe(tree);
   });
 
   it('should throw an error if trying to remove a child that does not belong to it', () => {
@@ -210,7 +210,7 @@ describe('Node_Base', () => {
     node.enterTree(tree);
     node.exitTree(tree);
 
-    expect(tree.removeNode).toHaveBeenCalledWith(child);
+    expect(child.tree).toBe(null);
   });
 
   it('should emit "tree_exited" signal after exiting a tree', () => {
