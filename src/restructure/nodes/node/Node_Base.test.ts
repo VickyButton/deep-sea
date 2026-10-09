@@ -14,6 +14,12 @@ describe('Node_Base', () => {
     expect(node.isActive).toBe(false);
   });
 
+  it('should not be inside a tree by default', () => {
+    const node = new Node_Base('node');
+
+    expect(node.isInsideTree).toBe(false);
+  });
+
   it('should have no parent by default', () => {
     const node = new Node_Base('node');
 
@@ -89,6 +95,15 @@ describe('Node_Base', () => {
     node.enterTree(tree);
 
     expect(node.isActive).toBe(true);
+  });
+
+  it('should be inside a tree after entering a tree', () => {
+    const node = new Node_Base('node');
+    const tree = new NodeTree();
+
+    node.enterTree(tree);
+
+    expect(node.isInsideTree).toBe(true);
   });
 
   it('should emit "tree_entered" signal after entering a tree', () => {

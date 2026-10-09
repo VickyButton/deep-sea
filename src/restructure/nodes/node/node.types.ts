@@ -23,6 +23,8 @@ export interface Node {
   get children(): Node[];
   /** Whether or not the node is active. A node is considered active while part of a node tree. */
   get isActive(): boolean;
+  /** Whether or not the node is inside a node tree. */
+  get isInsideTree(): boolean;
   /** The node's parent, or null if the node does not have a parent. */
   get parent(): Node | null;
   /** The node tree which the node belongs to, or null if the node does not belong to a tree. */

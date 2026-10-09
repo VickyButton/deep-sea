@@ -28,6 +28,10 @@ export class Node_Base implements Node {
     return this.tree !== null;
   }
 
+  public get isInsideTree() {
+    return this.tree !== null;
+  }
+
   public get parent() {
     return this.relationships.parent;
   }
