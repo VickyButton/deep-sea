@@ -1,5 +1,5 @@
 import type { CanvasNode } from './canvasNode.types';
-import { Signal_Base } from '../../signals/Signal_Base';
+import { Signal_Base } from '../../signals/signal/Signal_Base';
 import { Node_Base } from '../node/Node_Base';
 
 /** The base implementation of the CanvasNode interface. */
