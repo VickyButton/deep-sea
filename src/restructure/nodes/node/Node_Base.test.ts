@@ -265,7 +265,17 @@ describe('Node_Base', () => {
 });
 
 const NodeTree = vi.fn(class {
+  public readonly node_added = new Signal();
+  public readonly node_removed = new Signal();
   public readonly root = new Node_Base('root');
   public addNode = vi.fn();
   public removeNode = vi.fn();
 });
+
+class Signal {
+  public callbackCount = 0;
+  public clear = vi.fn();
+  public emit = vi.fn();
+  public listen = vi.fn();
+  public unlisten = vi.fn();
+}
