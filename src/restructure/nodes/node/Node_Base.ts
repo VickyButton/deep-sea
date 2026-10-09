@@ -42,11 +42,20 @@ export class Node_Base implements Node {
 
   public addChild(node: Node) {
     this.addChildRelationship(node);
+
+    if (this.tree) {
+      this.enterNodeIntoTree(node, this.tree);
+    }
+
     this.emitChildAddedSignal(node);
   }
 
   private addChildRelationship(node: Node) {
     this.relationships.addChild(node);
+  }
+
+  private enterNodeIntoTree(node: Node, tree: NodeTree) {
+    node.enterTree(tree);
   }
 
   private emitChildAddedSignal(node: Node) {
@@ -79,11 +88,20 @@ export class Node_Base implements Node {
 
   public removeChild(node: Node) {
     this.removeChildRelationship(node);
+
+    if (this.tree) {
+      this.exitNodeFromTree(node, this.tree);
+    }
+
     this.emitChildRemovedSignal(node);
   }
 
   private removeChildRelationship(node: Node) {
     this.relationships.removeChild(node);
+  }
+
+  private exitNodeFromTree(node: Node, tree: NodeTree) {
+    node.exitTree(tree);
   }
 
   private emitChildRemovedSignal(node: Node) {

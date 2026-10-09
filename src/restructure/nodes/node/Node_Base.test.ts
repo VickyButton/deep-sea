@@ -59,6 +59,17 @@ describe('Node_Base', () => {
     expect(child.parent).toBe(node);
   });
 
+  it('should enter a node into node tree when adding as a child', () => {
+    const node = new Node_Base('node');
+    const tree = new NodeTree();
+    const child = new Node_Base('child');
+
+    node.enterTree(tree);
+    node.addChild(child);
+
+    expect(child.tree).toBe(tree);
+  });
+
   it('should emit "child_added" signal after adding a child', () => {
     const node = new Node_Base('node');
     const child = new Node_Base('child');
@@ -156,6 +167,18 @@ describe('Node_Base', () => {
     node.enterTree(tree);
 
     expect(() => node.exitTree(otherTree)).toThrowError();
+  });
+
+  it('should exit a node from node tree when removing as a child', () => {
+    const node = new Node_Base('node');
+    const tree = new NodeTree();
+    const child = new Node_Base('child');
+
+    node.enterTree(tree);
+    node.addChild(child);
+    node.removeChild(child);
+
+    expect(child.tree).toBe(null);
   });
 
   it('should exit a tree', () => {
