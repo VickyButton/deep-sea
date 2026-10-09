@@ -60,6 +60,10 @@ export interface Node {
 
 /** A tree comprising of nodes */
 export interface NodeTree {
+  /** Emitted when a node has been added to the tree. The added node is passed to callbacks. */
+  readonly node_added: Signal<Node>;
+  /** Emitted when a node has been removed from the tree. The removed node is passed to callbacks. */
+  readonly node_removed: Signal<Node>;
   /** The root node of the tree. */
   readonly root: Node;
   /**
