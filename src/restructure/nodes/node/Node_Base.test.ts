@@ -332,10 +332,10 @@ const SceneTree = vi.fn(class {
   public stop = vi.fn();
 });
 
-class Signal {
+const Signal = vi.fn(class {
   public callbackCount = 0;
   public clear = vi.fn();
   public emit = vi.fn();
   public listen = vi.fn();
   public unlisten = vi.fn();
-}
+});
