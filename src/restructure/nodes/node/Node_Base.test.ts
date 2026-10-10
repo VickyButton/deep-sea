@@ -324,6 +324,7 @@ const SceneTree = vi.fn(class {
   public readonly node_deregistered = new Signal();
   public readonly node_registered = new Signal();
   public readonly root = new Node_Base('root');
+  public nodeCount = 1;
   public deregisterNode = vi.fn();
   public addScene = vi.fn();
   public removeScene = vi.fn();

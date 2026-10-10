@@ -11,6 +11,8 @@ export interface SceneTree {
   readonly node_registered: Signal<Node>;
   /** The root node of the tree. */
   readonly root: Node;
+  /** The number of nodes registered with the tree, including the root node. */
+  get nodeCount(): number;
   /**
    * Adds a scene to the tree, adding it as a child of the root node.
    * @param scene The scene to add to the tree.
