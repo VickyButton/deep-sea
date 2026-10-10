@@ -8,7 +8,7 @@ export class Node_Base implements Node {
   public readonly child_added = new Signal_Base<Node>();
   public readonly child_removed = new Signal_Base<Node>();
   public readonly controller = new SignalController_Base();
-  public readonly id: string;
+  public readonly id;
   public readonly started = new Signal_Base();
   public readonly stopped = new Signal_Base();
   public readonly tree_entered = new Signal_Base<SceneTree>();
