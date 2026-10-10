@@ -1,6 +1,6 @@
-import type { SignalController } from '../../controllers/signalController.types';
+import type { SignalController, SignalControllerConstructor } from '../../controllers/signalController.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
-import type { Signal } from '../../signals/signal/signal.types';
+import type { Signal, SignalConstructor } from '../../signals/signal/signal.types';
 
 /** A node that encapsulate state, emits signals, and can be added to a scene tree. */
 export interface Node {
@@ -59,4 +59,13 @@ export interface Node {
   start(): void;
   /** Stops the node and its children, preventing it from listening for signals. */
   stop(): void;
+}
+
+/** A constructor for a Node. */
+export type NodeConstructor = new (id: string, dependencies: NodeDependencies) => Node;
+
+/** Dependencies that need to be injected into a Node. */
+export interface NodeDependencies {
+  Signal: SignalConstructor;
+  SignalController: SignalControllerConstructor;
 }

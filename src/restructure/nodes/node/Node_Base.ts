@@ -1,22 +1,28 @@
-import type { Node } from './node.types';
+import type { Node, NodeDependencies } from './node.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
-import { SignalController_Base } from '../../controllers/SignalController_Base';
-import { Signal_Base } from '../../signals/signal/Signal_Base';
 
 /** The base implementation of the Node interface. */
 export class Node_Base implements Node {
-  public readonly child_added = new Signal_Base<Node>();
-  public readonly child_removed = new Signal_Base<Node>();
-  public readonly controller = new SignalController_Base();
+  public readonly child_added;
+  public readonly child_removed;
+  public readonly controller;
   public readonly id;
-  public readonly started = new Signal_Base();
-  public readonly stopped = new Signal_Base();
-  public readonly tree_entered = new Signal_Base<SceneTree>();
-  public readonly tree_exited = new Signal_Base<SceneTree>();
+  public readonly started;
+  public readonly stopped;
+  public readonly tree_entered;
+  public readonly tree_exited;
   private readonly relationships = new NodeRelationships();
   private _tree: SceneTree | null = null;
 
-  constructor(id: string) {
+  constructor(id: string, { Signal, SignalController }: NodeDependencies) {
+    this.child_added = new Signal<Node>();
+    this.child_removed = new Signal<Node>();
+    this.controller = new SignalController();
+    this.started = new Signal();
+    this.stopped = new Signal();
+    this.tree_entered = new Signal<SceneTree>();
+    this.tree_exited = new Signal<SceneTree>();
+
     this.id = id;
     this.relationships.setSelf(this);
   }
@@ -201,7 +207,7 @@ export class Node_Base implements Node {
     this.stopped.emit();
   }
 
-  protected getClosestAncestorOfType<T extends Node>(type: NodeConstructor<T>) {
+  protected getClosestAncestorOfType<T extends Node>(type: NodeConstructorGeneric<T>) {
     let parent = this.parent;
 
     while (parent !== null) {
@@ -307,6 +313,6 @@ class NodeRelationships {
   }
 }
 
-type NodeConstructor<NodeType extends Node> = AbstractConstructor<NodeType, string> | Constructor<NodeType, string>;
-type AbstractConstructor<Type, Args> = abstract new (args: Args) => Type;
-type Constructor<Type, Args> = new (args: Args) => Type;
+type NodeConstructorGeneric<NodeType extends Node> = NodeConstructorAbstract<NodeType> | NodeConstructor<NodeType>;
+type NodeConstructorAbstract<NodeType extends Node> = abstract new (id: string, dependencies: NodeDependencies) => NodeType;
+type NodeConstructor<NodeType extends Node> = new (id: string, dependencies: NodeDependencies) => NodeType;

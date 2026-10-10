@@ -25,4 +25,4 @@ export interface Signal<CallbackData = void> {
 export type SignalCallback<CallbackData> = (data: CallbackData) => void;
 
 /** A constructor for a Signal. */
-export type SignalConstructor = new <CallbackData>() => Signal<CallbackData>;
+export type SignalConstructor = new <CallbackData = void>() => Signal<CallbackData>;

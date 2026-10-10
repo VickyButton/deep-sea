@@ -1,20 +1,30 @@
 import type { Node2D } from './node2D.types';
+import type { NodeDependencies } from '../node/node.types';
 import { Vector2D } from '../../domain';
 import { Transform2D } from '../../domain/Transform2D';
-import { Signal_Base } from '../../signals/signal/Signal_Base';
 import { CanvasNode_Base } from '../canvasNode/CanvasNode_Base';
 
 /** The base implementation of the Node2D interface. */
 export class Node2D_Base extends CanvasNode_Base implements Node2D {
-  public readonly position_changed = new Signal_Base<Vector2D>();
-  public readonly rotation_changed = new Signal_Base<number>();
-  public readonly scale_changed = new Signal_Base<Vector2D>();
-  public readonly transform_changed = new Signal_Base<Transform2D>();
+  public readonly position_changed;
+  public readonly rotation_changed;
+  public readonly scale_changed;
+  public readonly transform_changed;
   private _transform = new Transform2D({
     scale: new Vector2D(1, 1),
     rotation: 0,
     translation: new Vector2D(0, 0),
   });
+
+  constructor(id: string, dependencies: NodeDependencies) {
+    super(id, dependencies);
+
+    const { Signal } = dependencies;
+    this.position_changed = new Signal<Vector2D>();
+    this.rotation_changed = new Signal<number>();
+    this.scale_changed = new Signal<Vector2D>();
+    this.transform_changed = new Signal<Transform2D>();
+  }
 
   public get globalPosition(): Vector2D {
     const closestAncestor = this.getClosestAncestorOfType(Node2D_Base);
