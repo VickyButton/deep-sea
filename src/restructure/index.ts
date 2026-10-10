@@ -18,18 +18,21 @@ import { Signal_Base } from './signals/signal/Signal_Base';
  * @returns The instantiated engine.
  */
 export function createEngine(canvas: Canvas): Engine {
-  return new Engine_Base(createComponents(canvas), {
-    SignalController: SignalController_Base,
-  });
+  return new Engine_Base(createComponents(canvas));
 }
 
 function createComponents(canvas: Canvas) {
   return {
+    controller: createController(),
     graphics: createGraphics(canvas),
     loop: createLoop(),
     pluginManager: createPluginManager(),
     sceneTree: createSceneTree(),
   };
+}
+
+function createController() {
+  return new SignalController_Base();
 }
 
 function createGraphics(canvas: Canvas) {
