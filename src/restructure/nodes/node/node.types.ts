@@ -1,7 +1,8 @@
 import type { SignalController } from '../../controllers/signalController.types';
+import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
 import type { Signal } from '../../signals/signal/signal.types';
 
-/** A node that encapsulate state, emits signals, and can be added to a node tree. */
+/** A node that encapsulate state, emits signals, and can be added to a scene tree. */
 export interface Node {
   /** Emitted when the node has a child added to it. The added child is passed to callbacks. */
   readonly child_added: Signal<Node>;
@@ -15,40 +16,40 @@ export interface Node {
   readonly started: Signal;
   /** Emitted when the node is stopped. */
   readonly stopped: Signal;
-  /** Emitted when the node enters a tree. The entered tree is passed to callbacks. */
-  readonly tree_entered: Signal<NodeTree>;
-  /** Emitted when the node exits a tree. The exited tree is passed to callbacks. */
-  readonly tree_exited: Signal<NodeTree>;
+  /** Emitted when the node enters a scene tree. The entered tree is passed to callbacks. */
+  readonly tree_entered: Signal<SceneTree>;
+  /** Emitted when the node exits a scene tree. The exited tree is passed to callbacks. */
+  readonly tree_exited: Signal<SceneTree>;
   /** The node's children. */
   get children(): Node[];
   /** Whether or not the node is listening for signals. Starting a node activates it and stopping a node deactivates it. */
   get isActive(): boolean;
-  /** Whether or not the node is inside a node tree. */
+  /** Whether or not the node is inside a scene tree. */
   get isInsideTree(): boolean;
   /** The node's parent, or null if the node does not have a parent. */
   get parent(): Node | null;
-  /** The node tree which the node belongs to, or null if the node does not belong to a tree. */
-  get tree(): NodeTree | null;
+  /** The scene tree which the node belongs to, or null if the node does not belong to a tree. */
+  get tree(): SceneTree | null;
   /**
    * Adds a node to the node's children.
    * @param node The node to add to the node's children.
    */
   addChild(node: Node): void;
   /**
-   * Enters the node and its children into a node tree.
+   * Enters the node and its children into a scene tree.
    * @param tree The tree to enter.
    */
-  enterTree(tree: NodeTree): void;
+  enterTree(tree: SceneTree): void;
+  /**
+   * Exits the node and its children from a scene tree.
+   * @param tree The tree to exit.
+   */
+  exitTree(tree: SceneTree): void;
   /**
    * Removes a node from the node's children.
    * @param node The node to remove from the node's children.
    */
   removeChild(node: Node): void;
-  /**
-   * Exits the node and its children from a node tree.
-   * @param tree The tree to exit.
-   */
-  exitTree(tree: NodeTree): void;
   /**
    * Sets the node's parent.
    * @param node The node to set as the node's parent, or null if removing a parent.
@@ -58,24 +59,4 @@ export interface Node {
   start(): void;
   /** Stops the node and its children, preventing it from listening for signals. */
   stop(): void;
-}
-
-/** A tree comprising of nodes */
-export interface NodeTree {
-  /** Emitted when a node has been added to the tree. The added node is passed to callbacks. */
-  readonly node_added: Signal<Node>;
-  /** Emitted when a node has been removed from the tree. The removed node is passed to callbacks. */
-  readonly node_removed: Signal<Node>;
-  /** The root node of the tree. */
-  readonly root: Node;
-  /**
-   * Adds a node to the tree.
-   * @param node The node to add to the tree.
-   */
-  addNode(node: Node): void;
-  /**
-   * Removes a node from the tree.
-   * @param node The node to remove from the tree.
-   */
-  removeNode(node: Node): void;
 }

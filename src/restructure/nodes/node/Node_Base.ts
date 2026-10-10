@@ -1,4 +1,5 @@
-import type { Node, NodeTree } from './node.types';
+import type { Node } from './node.types';
+import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
 import { SignalController_Base } from '../../controllers/SignalController_Base';
 import { Signal_Base } from '../../signals/signal/Signal_Base';
 
@@ -10,10 +11,10 @@ export class Node_Base implements Node {
   public readonly id: string;
   public readonly started = new Signal_Base();
   public readonly stopped = new Signal_Base();
-  public readonly tree_entered = new Signal_Base<NodeTree>();
-  public readonly tree_exited = new Signal_Base<NodeTree>();
+  public readonly tree_entered = new Signal_Base<SceneTree>();
+  public readonly tree_exited = new Signal_Base<SceneTree>();
   private readonly relationships = new NodeRelationships();
-  private _tree: NodeTree | null = null;
+  private _tree: SceneTree | null = null;
 
   constructor(id: string) {
     this.id = id;
@@ -57,7 +58,7 @@ export class Node_Base implements Node {
     this.relationships.addChild(node);
   }
 
-  private enterNodeIntoTree(node: Node, tree: NodeTree) {
+  private enterNodeIntoTree(node: Node, tree: SceneTree) {
     node.enterTree(tree);
   }
 
@@ -65,13 +66,14 @@ export class Node_Base implements Node {
     this.child_added.emit(node);
   }
 
-  public enterTree(tree: NodeTree) {
+  public enterTree(tree: SceneTree) {
     // Assert that node does not already belong to a tree.
     if (this.tree !== null) {
       throw new Error('Node already belongs to a tree.');
     }
 
     // Enter self into tree.
+    this.registerWithTree(tree);
     this.setTree(tree);
     this.emitTreeEnteredSignal(tree);
 
@@ -79,18 +81,51 @@ export class Node_Base implements Node {
     this.enterChildrenIntoTree(tree);
   }
 
-  private setTree(tree: NodeTree | null) {
+  private registerWithTree(tree: SceneTree) {
+    tree.registerNode(this);
+  }
+
+  private setTree(tree: SceneTree | null) {
     this._tree = tree;
   }
 
-  private emitTreeEnteredSignal(tree: NodeTree) {
+  private emitTreeEnteredSignal(tree: SceneTree) {
     this.tree_entered.emit(tree);
   }
 
-  private enterChildrenIntoTree(tree: NodeTree) {
+  private enterChildrenIntoTree(tree: SceneTree) {
     for (const child of this.children) {
       this.enterNodeIntoTree(child, tree);
     }
+  }
+
+  public exitTree(tree: SceneTree) {
+    // Assert that self belongs to tree being exited.
+    if (this.tree !== tree) {
+      throw new Error('Node does not belong to tree.');
+    }
+
+    // Exit children from tree.
+    this.exitChildrenFromTree(tree);
+
+    // Exit self from tree.
+    this.deregisterFromTree(tree);
+    this.setTree(null);
+    this.emitTreeExitedSignal(tree);
+  }
+
+  private exitChildrenFromTree(tree: SceneTree) {
+    for (const child of this.children) {
+      this.exitNodeFromTree(child, tree);
+    }
+  }
+
+  private deregisterFromTree(tree: SceneTree) {
+    tree.deregisterNode(this);
+  }
+
+  private emitTreeExitedSignal(tree: SceneTree) {
+    this.tree_exited.emit(tree);
   }
 
   public removeChild(node: Node) {
@@ -110,36 +145,12 @@ export class Node_Base implements Node {
     this.relationships.removeChild(node);
   }
 
-  private exitNodeFromTree(node: Node, tree: NodeTree) {
+  private exitNodeFromTree(node: Node, tree: SceneTree) {
     node.exitTree(tree);
   }
 
   private emitChildRemovedSignal(node: Node) {
     this.child_removed.emit(node);
-  }
-
-  public exitTree(tree: NodeTree) {
-    // Assert that self belongs to tree being exited.
-    if (this.tree !== tree) {
-      throw new Error('Node does not belong to tree.');
-    }
-
-    // Exit children from tree.
-    this.exitChildrenFromTree(tree);
-
-    // Exit self from tree.
-    this.setTree(null);
-    this.emitTreeExitedSignal(tree);
-  }
-
-  private emitTreeExitedSignal(tree: NodeTree) {
-    this.tree_exited.emit(tree);
-  }
-
-  private exitChildrenFromTree(tree: NodeTree) {
-    for (const child of this.children) {
-      this.exitNodeFromTree(child, tree);
-    }
   }
 
   public setParent(node: Node | null) {
