@@ -1,4 +1,4 @@
-import { LoopDefault } from './LoopDefault';
+import { Loop_Base } from './Loop_Base';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const clock = {
@@ -13,7 +13,7 @@ global.requestAnimationFrame = (cb: FrameRequestCallback) => {
 };
 global.cancelAnimationFrame = vi.fn();
 
-describe('LoopDefault', () => {
+describe('Loop_Base', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -25,7 +25,7 @@ describe('LoopDefault', () => {
   });
 
   it('should execute loop callback on interval', () => {
-    const loop = new LoopDefault(clock);
+    const loop = new Loop_Base(clock);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
     const loopCallback = vi.fn();
@@ -39,7 +39,7 @@ describe('LoopDefault', () => {
   });
 
   it('should not execute loop callback after stopping', () => {
-    const loop = new LoopDefault(clock);
+    const loop = new Loop_Base(clock);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
     const loopCallback = vi.fn();
