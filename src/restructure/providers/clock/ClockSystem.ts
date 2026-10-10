@@ -1,4 +1,4 @@
-import type { Clock } from '../clock.types';
+import type { Clock } from './clock.types';
 
 export class ClockSystem implements Clock {
   public get now() {
