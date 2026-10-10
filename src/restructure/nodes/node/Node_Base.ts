@@ -25,7 +25,7 @@ export class Node_Base implements Node {
   }
 
   public get isActive() {
-    return this.tree !== null;
+    return this.controller.isListening;
   }
 
   public get isInsideTree() {

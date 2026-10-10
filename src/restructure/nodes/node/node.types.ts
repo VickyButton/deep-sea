@@ -21,7 +21,7 @@ export interface Node {
   readonly tree_exited: Signal<NodeTree>;
   /** The node's children. */
   get children(): Node[];
-  /** Whether or not the node is active. A node is considered active while part of a node tree. */
+  /** Whether or not the node is listening for signals. Starting a node activates it and stopping a node deactivates it. */
   get isActive(): boolean;
   /** Whether or not the node is inside a node tree. */
   get isInsideTree(): boolean;
@@ -54,9 +54,9 @@ export interface Node {
    * @param node The node to set as the node's parent, or null if removing a parent.
    */
   setParent(node: Node | null): void;
-  /** Starts the node and its children, allowing processing and signal listening. */
+  /** Starts the node and its children, allowing it to listen for signals. */
   start(): void;
-  /** Stops the node and its children, preventing processing and signal listening. */
+  /** Stops the node and its children, preventing it from listening for signals. */
   stop(): void;
 }
 

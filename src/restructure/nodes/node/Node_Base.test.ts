@@ -99,15 +99,6 @@ describe('Node_Base', () => {
     expect(node.tree).toBe(tree);
   });
 
-  it('should be active after entering a tree', () => {
-    const node = new Node_Base('node');
-    const tree = new NodeTree();
-
-    node.enterTree(tree);
-
-    expect(node.isActive).toBe(true);
-  });
-
   it('should be inside a tree after entering a tree', () => {
     const node = new Node_Base('node');
     const tree = new NodeTree();
@@ -191,16 +182,6 @@ describe('Node_Base', () => {
     expect(node.tree).toBe(null);
   });
 
-  it('should not be active after exiting a tree', () => {
-    const node = new Node_Base('node');
-    const tree = new NodeTree();
-
-    node.enterTree(tree);
-    node.exitTree(tree);
-
-    expect(node.isActive).toBe(false);
-  });
-
   it('should exit children from a tree after exiting a tree', () => {
     const node = new Node_Base('node');
     const child = new Node_Base('child');
@@ -243,7 +224,7 @@ describe('Node_Base', () => {
     expect(node.parent).toBe(null);
   });
 
-  it('should start listening for signals on start', () => {
+  it('should start listening for signals after starting', () => {
     const node = new Node_Base('node');
     const startListeningSpy = vi.spyOn(node.controller, 'startListening');
 
@@ -252,7 +233,15 @@ describe('Node_Base', () => {
     expect(startListeningSpy).toHaveBeenCalled();
   });
 
-  it('should start children on start', () => {
+  it('should be active after starting', () => {
+    const node = new Node_Base('node');
+
+    node.start();
+
+    expect(node.isActive).toBe(true);
+  });
+
+  it('should start children after starting', () => {
     const node = new Node_Base('node');
     const child = new Node_Base('child');
     const emitSpy = vi.spyOn(child.started, 'emit');
@@ -272,7 +261,7 @@ describe('Node_Base', () => {
     expect(emitSpy).toHaveBeenCalled();
   });
 
-  it('should stop children on stop', () => {
+  it('should stop children after stopping', () => {
     const node = new Node_Base('node');
     const child = new Node_Base('child');
     const emitSpy = vi.spyOn(child.stopped, 'emit');
@@ -283,7 +272,7 @@ describe('Node_Base', () => {
     expect(emitSpy).toHaveBeenCalled();
   });
 
-  it('should stop listening for signals on stop', () => {
+  it('should stop listening for signals after stopping', () => {
     const node = new Node_Base('node');
     const stopListeningSpy = vi.spyOn(node.controller, 'stopListening');
 
@@ -292,7 +281,15 @@ describe('Node_Base', () => {
     expect(stopListeningSpy).toHaveBeenCalled();
   });
 
-  it('should emit "stopped" signal after starting', () => {
+  it('should not be active after stopping', () => {
+    const node = new Node_Base('node');
+
+    node.stop();
+
+    expect(node.isActive).toBe(false);
+  });
+
+  it('should emit "stopped" signal after stopping', () => {
     const node = new Node_Base('node');
     const emitSpy = vi.spyOn(node.stopped, 'emit');
 
