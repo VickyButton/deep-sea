@@ -1,9 +1,7 @@
 import type { Node } from '../../nodes/node/node.types';
 import type { Signal, SignalConstructor } from '../../signals/signal/signal.types';
 
-/**
- * A tree of scenes that share a root node.
- */
+/** A tree of scenes that share a root node. */
 export interface SceneTree {
   /** Emitted when a node has been deregistered from the tree. The deregistered node is passed to callbacks. */
   readonly node_deregistered: Signal<Node>;
