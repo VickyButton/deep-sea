@@ -12,25 +12,25 @@ export interface SceneTree {
   /** The root node of the tree. */
   readonly root: Node;
   /**
+   * Adds a scene to the tree, adding it as a child of the root node.
+   * @param scene The scene to add to the tree.
+   */
+  addScene(scene: Node): void;
+  /**
    * Deregisters a node from the tree, preventing the node from being processed.
    * @param node The node to deregister from the tree.
    */
   deregisterNode(node: Node): void;
   /**
-   * Enters a scene into the tree, adding it to the root as a child.
-   * @param scene The scene to enter into the tree.
-   */
-  enterSceneIntoTree(scene: Node): void;
-  /**
-   * Exits a scene from the tree, removing it from the root as a child.
-   * @param scene The scene to exit from the tree.
-   */
-  exitSceneFromTree(scene: Node): void;
-  /**
    * Registers a node with the tree, allowing the node to be processed.
    * @param node The node to register with the tree.
    */
   registerNode(node: Node): void;
+  /**
+   * Removes a scene from the tree, removing it as a child of the root node.
+   * @param scene The scene to remove from the tree.
+   */
+  removeScene(scene: Node): void;
   /** Starts the tree nodes, starting from the root. */
   start(): void;
   /** Stops the tree nodes, starting from the root. */
