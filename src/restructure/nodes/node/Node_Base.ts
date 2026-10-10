@@ -129,6 +129,10 @@ export class Node_Base implements Node {
   }
 
   public setParent(node: Node | null) {
+    this.setParentRelationship(node);
+  }
+
+  private setParentRelationship(node: Node | null) {
     this.relationships.setParent(node);
   }
 
