@@ -41,12 +41,15 @@ export class Node_Base implements Node {
   }
 
   public addChild(node: Node) {
+    // Add child relationship to self.
     this.addChildRelationship(node);
 
+    // If self is in tree, enter new child into tree.
     if (this.tree) {
       this.enterNodeIntoTree(node, this.tree);
     }
 
+    // Emit "child_added" signal.
     this.emitChildAddedSignal(node);
   }
 
@@ -63,12 +66,16 @@ export class Node_Base implements Node {
   }
 
   public enterTree(tree: NodeTree) {
+    // Assert that node does not already belong to a tree.
     if (this.tree !== null) {
       throw new Error('Node already belongs to a tree.');
     }
 
+    // Enter self into tree.
     this.setTree(tree);
     this.emitTreeEnteredSignal(tree);
+
+    // Enter children into tree.
     this.enterChildrenIntoTree(tree);
   }
 
@@ -87,12 +94,15 @@ export class Node_Base implements Node {
   }
 
   public removeChild(node: Node) {
+    // Remove child relationship from self.
     this.removeChildRelationship(node);
 
+    // If self is in tree, exit child from tree.
     if (this.tree) {
       this.exitNodeFromTree(node, this.tree);
     }
 
+    // Emit "child_removed" signal.
     this.emitChildRemovedSignal(node);
   }
 
@@ -109,11 +119,15 @@ export class Node_Base implements Node {
   }
 
   public exitTree(tree: NodeTree) {
+    // Assert that self belongs to tree being exited.
     if (this.tree !== tree) {
       throw new Error('Node does not belong to tree.');
     }
 
+    // Exit children from tree.
     this.exitChildrenFromTree(tree);
+
+    // Exit self from tree.
     this.setTree(null);
     this.emitTreeExitedSignal(tree);
   }
