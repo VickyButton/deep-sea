@@ -1,5 +1,5 @@
 import type { Node } from '../../nodes/node/node.types';
-import type { Signal, SignalConstructor } from '../../signals/signal/signal.types';
+import type { Signal } from '../../signals/signal/signal.types';
 
 /** A tree of scenes that share a root node. */
 export interface SceneTree {
@@ -35,12 +35,4 @@ export interface SceneTree {
   start(): void;
   /** Stops the tree nodes, starting from the root. */
   stop(): void;
-}
-
-/** A constructor for a SceneTree. */
-export type SceneTreeConstructor = new (root: Node, dependencies: SceneTreeDependencies) => SceneTree;
-
-/** Dependencies that need to be injected into a SceneTree. */
-export interface SceneTreeDependencies {
-  Signal: SignalConstructor;
 }

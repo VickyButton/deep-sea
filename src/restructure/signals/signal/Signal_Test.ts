@@ -2,7 +2,7 @@ import type { Signal } from './signal.types';
 import { vi } from 'vitest';
 
 /** The test implementation of the Signal interface. */
-export class Signal_Test implements Signal {
+export class Signal_Test<CallbackData = void> implements Signal<CallbackData> {
   public get callbackCount() {
     return 0;
   }

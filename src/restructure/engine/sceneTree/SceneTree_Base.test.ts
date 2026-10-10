@@ -1,18 +1,21 @@
+import type { Node } from '../../nodes/node/node.types';
 import { SceneTree_Base } from './SceneTree_Base';
+import { Node_Test } from '../../nodes/node/Node_Test';
+import { Signal_Test } from '../../signals/signal/Signal_Test';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('SceneTree_Base', () => {
   it('should have 1 registered node by default', () => {
-    const root = new Node('root');
-    const tree = new SceneTree_Base(root, dependencies);
+    const root = createNode('root');
+    const tree = new SceneTree_Base(root, createSignals());
 
     expect(tree.nodeCount).toBe(1);
   });
 
   it('should add scene to root node as a child upon adding scene', () => {
-    const root = new Node('root');
-    const tree = new SceneTree_Base(root, dependencies);
-    const scene = new Node('scene');
+    const root = createNode('root');
+    const tree = new SceneTree_Base(root, createSignals());
+    const scene = createNode('scene');
     const addChildSpy = vi.spyOn(tree.root, 'addChild');
 
     tree.addScene(scene);
@@ -21,9 +24,9 @@ describe('SceneTree_Base', () => {
   });
 
   it('should enter scene into self upon adding scene', () => {
-    const root = new Node('root');
-    const tree = new SceneTree_Base(root, dependencies);
-    const scene = new Node('scene');
+    const root = createNode('root');
+    const tree = new SceneTree_Base(root, createSignals());
+    const scene = createNode('scene');
 
     tree.addScene(scene);
 
@@ -31,9 +34,9 @@ describe('SceneTree_Base', () => {
   });
 
   it('should deregister node from self upon deregistering node', () => {
-    const root = new Node('root');
-    const tree = new SceneTree_Base(root, dependencies);
-    const node = new Node('node');
+    const root = createNode('root');
+    const tree = new SceneTree_Base(root, createSignals());
+    const node = createNode('node');
 
     tree.registerNode(node);
     tree.deregisterNode(node);
@@ -42,9 +45,9 @@ describe('SceneTree_Base', () => {
   });
 
   it('should emit "node_deregistered" signal upon deregistering node', () => {
-    const root = new Node('root');
-    const tree = new SceneTree_Base(root, dependencies);
-    const node = new Node('node');
+    const root = createNode('root');
+    const tree = new SceneTree_Base(root, createSignals());
+    const node = createNode('node');
     const emitSpy = vi.spyOn(tree.node_deregistered, 'emit');
 
     tree.registerNode(node);
@@ -54,9 +57,9 @@ describe('SceneTree_Base', () => {
   });
 
   it('should register node with self upon registering node', () => {
-    const root = new Node('root');
-    const tree = new SceneTree_Base(root, dependencies);
-    const node = new Node('node');
+    const root = createNode('root');
+    const tree = new SceneTree_Base(root, createSignals());
+    const node = createNode('node');
 
     tree.registerNode(node);
 
@@ -64,9 +67,9 @@ describe('SceneTree_Base', () => {
   });
 
   it('should emit "node_registered" signal upon registering node', () => {
-    const root = new Node('root');
-    const tree = new SceneTree_Base(root, dependencies);
-    const node = new Node('node');
+    const root = createNode('root');
+    const tree = new SceneTree_Base(root, createSignals());
+    const node = createNode('node');
     const emitSpy = vi.spyOn(tree.node_registered, 'emit');
 
     tree.registerNode(node);
@@ -76,9 +79,9 @@ describe('SceneTree_Base', () => {
   });
 
   it('should remove scene from root node as a child upon removing scene', () => {
-    const root = new Node('root');
-    const tree = new SceneTree_Base(root, dependencies);
-    const scene = new Node('scene');
+    const root = createNode('root');
+    const tree = new SceneTree_Base(root, createSignals());
+    const scene = createNode('scene');
     const removeChildSpy = vi.spyOn(tree.root, 'removeChild');
 
     tree.addScene(scene);
@@ -88,9 +91,9 @@ describe('SceneTree_Base', () => {
   });
 
   it('should exit scene from self upon removing scene', () => {
-    const root = new Node('root');
-    const tree = new SceneTree_Base(root, dependencies);
-    const scene = new Node('scene');
+    const root = createNode('root');
+    const tree = new SceneTree_Base(root, createSignals());
+    const scene = createNode('scene');
 
     tree.addScene(scene);
     tree.removeScene(scene);
@@ -99,8 +102,8 @@ describe('SceneTree_Base', () => {
   });
 
   it('should start root node upon starting', () => {
-    const root = new Node('root');
-    const tree = new SceneTree_Base(root, dependencies);
+    const root = createNode('root');
+    const tree = new SceneTree_Base(root, createSignals());
 
     tree.start();
 
@@ -108,8 +111,8 @@ describe('SceneTree_Base', () => {
   });
 
   it('should stop root node upon stopping', () => {
-    const root = new Node('root');
-    const tree = new SceneTree_Base(root, dependencies);
+    const root = createNode('root');
+    const tree = new SceneTree_Base(root, createSignals());
 
     tree.stop();
 
@@ -117,51 +120,13 @@ describe('SceneTree_Base', () => {
   });
 });
 
-const Node = vi.fn(class {
-  public readonly child_added = new Signal();
-  public readonly child_removed = new Signal();
-  public readonly controller = new SignalController();
-  public readonly id;
-  public readonly started = new Signal();
-  public readonly stopped = new Signal();
-  public readonly tree_entered = new Signal();
-  public readonly tree_exited = new Signal();
+function createNode(id: string) {
+  return new Node_Test(id);
+}
 
-  constructor(id: string) {
-    this.id = id;
-  }
-
-  public children = [];
-  public isActive = false;
-  public isInsideTree = false;
-  public parent = null;
-  public tree = null;
-  public addChild = vi.fn();
-  public enterTree = vi.fn();
-  public exitTree = vi.fn();
-  public removeChild = vi.fn();
-  public setParent = vi.fn();
-  public start = vi.fn();
-  public stop = vi.fn();
-});
-
-const Signal = vi.fn(class {
-  public callbackCount = 0;
-  public clear = vi.fn();
-  public emit = vi.fn();
-  public listen = vi.fn();
-  public unlisten = vi.fn();
-});
-
-const SignalController = vi.fn(class {
-  public isListening = false;
-  public clear = vi.fn();
-  public deregister = vi.fn();
-  public register = vi.fn();
-  public startListening = vi.fn();
-  public stopListening = vi.fn();
-});
-
-const dependencies = {
-  Signal,
+function createSignals() {
+  return {
+    node_deregistered: new Signal_Test<Node>(),
+    node_registered: new Signal_Test<Node>(),
+  };
 };

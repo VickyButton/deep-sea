@@ -1,5 +1,6 @@
 import type { Canvas } from './domain/canvases';
 import type { Engine } from './engine/engine.types';
+import type { Node } from './nodes/node/node.types';
 import type { NodeFactory } from './nodes/nodeFactory.types';
 import { SignalController_Base } from './controllers/SignalController_Base';
 import { Engine_Base } from './engine/Engine_Base';
@@ -52,9 +53,7 @@ function createPluginManager() {
 }
 
 function createSceneTree() {
-  return new SceneTree_Base(createRootNode(), {
-    Signal: Signal_Base,
-  });
+  return new SceneTree_Base(createRootNode(), createSceneTreeSignals());
 }
 
 function createRootNode() {
@@ -62,6 +61,13 @@ function createRootNode() {
     Signal: Signal_Base,
     SignalController: SignalController_Base,
   });
+}
+
+function createSceneTreeSignals() {
+  return {
+    node_deregistered: new Signal_Base<Node>(),
+    node_registered: new Signal_Base<Node>(),
+  };
 }
 
 /**
