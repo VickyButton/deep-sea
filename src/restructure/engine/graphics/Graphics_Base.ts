@@ -1,7 +1,8 @@
 import type { DrawCommand, Graphics } from './graphics.types';
 import type { Canvas } from '../../domain/canvases/Canvas';
 
-export class GraphicsDefault implements Graphics {
+/** The base implementation of the Graphics interface. */
+export class Graphics_Base implements Graphics {
   private readonly cache = new DrawCommandCache();
   private readonly canvas: Canvas;
   private readonly queue = new DrawCommandQueue();
