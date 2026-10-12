@@ -1,6 +1,5 @@
 import type { Canvas } from './domain/canvases';
 import type { Engine } from './engine/engine.types';
-import { SignalController_Base } from './controllers/SignalController_Base';
 import { Engine_Base } from './engine/Engine_Base';
 import { Graphics_Base } from './engine/graphics/Graphics_Base';
 import { Loop_Base } from './engine/loop/Loop_Base';
@@ -19,16 +18,11 @@ export function createEngine(canvas: Canvas): Engine {
 
 function createComponents(canvas: Canvas) {
   return {
-    controller: createController(),
     graphics: createGraphics(canvas),
     loop: createLoop(),
     pluginManager: createPluginManager(),
     sceneTree: createSceneTree(),
   };
-}
-
-function createController() {
-  return new SignalController_Base();
 }
 
 function createGraphics(canvas: Canvas) {

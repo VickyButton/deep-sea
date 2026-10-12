@@ -3,17 +3,16 @@ import type { Graphics } from './graphics/graphics.types';
 import type { Loop } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
-import type { SignalController } from '../controllers/signalController.types';
+import { SignalController_Base } from '../controllers/SignalController_Base';
 
 export class Engine_Base implements Engine {
-  private readonly controller: SignalController;
+  private readonly controller = new SignalController_Base();
   private readonly graphics: Graphics;
   private readonly loop: Loop;
   private readonly pluginManager: PluginManager;
   private readonly sceneTree: SceneTree;
 
   constructor(components: EngineComponents) {
-    this.controller = components.controller;
     this.graphics = components.graphics;
     this.loop = components.loop;
     this.pluginManager = components.pluginManager;
@@ -66,7 +65,6 @@ export class Engine_Base implements Engine {
 }
 
 interface EngineComponents {
-  controller: SignalController;
   graphics: Graphics;
   loop: Loop;
   pluginManager: PluginManager;
