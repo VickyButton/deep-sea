@@ -1,20 +1,13 @@
 import type { ShapeNode2D } from './shapeNode2D.types';
 import type { Shape2D } from '../../domain/shapes';
-import type { NodeDependencies } from '../node/node.types';
 import { RectangleShape2D } from '../../domain/shapes';
+import { Signal_Base } from '../../signals/signal/Signal_Base';
 import { Node2D_Base } from '../node2D/Node2D_Base';
 
 /** The base implementation of the ShapeNode2D interface. */
 export class ShapeNode2D_Base extends Node2D_Base implements ShapeNode2D {
-  public readonly shape_changed;
+  public readonly shape_changed = new Signal_Base<Shape2D>();
   private _shape: Shape2D = new RectangleShape2D();
-
-  constructor(id: string, dependencies: NodeDependencies) {
-    super(id, dependencies);
-
-    const { Signal } = dependencies;
-    this.shape_changed = new Signal<Shape2D>();
-  }
 
   public get shape() {
     return this._shape;

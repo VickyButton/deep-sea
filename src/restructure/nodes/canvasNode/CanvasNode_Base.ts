@@ -1,24 +1,15 @@
 import type { CanvasNode } from './canvasNode.types';
-import type { NodeDependencies } from '../node/node.types';
+import { Signal_Base } from '../../signals/signal/Signal_Base';
 import { Node_Base } from '../node/Node_Base';
 
 /** The base implementation of the CanvasNode interface. */
 export class CanvasNode_Base extends Node_Base implements CanvasNode {
-  public readonly redraw_requested;
-  public readonly visibility_changed;
-  public readonly z_index_changed;
+  public readonly redraw_requested = new Signal_Base();
+  public readonly visibility_changed = new Signal_Base<boolean>();
+  public readonly z_index_changed = new Signal_Base<number>();
   private hasActiveRedrawRequest = false;
   private _visible = true;
   private _zIndex = 0;
-
-  constructor(id: string, dependencies: NodeDependencies) {
-    super(id, dependencies);
-
-    const { Signal } = dependencies;
-    this.redraw_requested = new Signal();
-    this.visibility_changed = new Signal<boolean>();
-    this.z_index_changed = new Signal<number>();
-  }
 
   public get globalVisible(): boolean {
     if (!this.visible) {
