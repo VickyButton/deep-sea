@@ -85,26 +85,6 @@ export class Node_Base implements Node {
     this.enterChildrenIntoTree(tree);
   }
 
-  public process(dt: number) {
-    this.executeProcessCallback(dt);
-    this.processChildren(dt);
-    this.emitProcessedSignal();
-  }
-
-  private executeProcessCallback(dt: number) {
-    this.processCallback(dt);
-  }
-
-  private processChildren(dt: number) {
-    for (const child of this.children) {
-      child.process(dt);
-    }
-  }
-
-  private emitProcessedSignal() {
-    this.processed.emit();
-  }
-
   private registerWithTree(tree: SceneTree) {
     tree.registerNode(this);
   }
@@ -150,6 +130,26 @@ export class Node_Base implements Node {
 
   private emitTreeExitedSignal(tree: SceneTree) {
     this.tree_exited.emit(tree);
+  }
+
+  public process(dt: number) {
+    this.executeProcessCallback(dt);
+    this.processChildren(dt);
+    this.emitProcessedSignal();
+  }
+
+  private executeProcessCallback(dt: number) {
+    this.processCallback(dt);
+  }
+
+  private processChildren(dt: number) {
+    for (const child of this.children) {
+      child.process(dt);
+    }
+  }
+
+  private emitProcessedSignal() {
+    this.processed.emit();
   }
 
   public removeChild(node: Node) {
