@@ -1,15 +1,12 @@
 import type { Canvas } from './domain/canvases';
 import type { Engine } from './engine/engine.types';
-import type { NodeFactory } from './nodes/nodeFactory.types';
 import { SignalController_Base } from './controllers/SignalController_Base';
 import { Engine_Base } from './engine/Engine_Base';
 import { Graphics_Base } from './engine/graphics/Graphics_Base';
 import { Loop_Base } from './engine/loop/Loop_Base';
 import { PluginManager_Base } from './engine/pluginManager/PluginManager_Base';
 import { SceneTree_Base } from './engine/sceneTree/SceneTree_Base';
-import { NodeFactory_Base } from './nodes/NodeFactory_Base';
 import { ClockSystem } from './providers/clock/ClockSystem';
-import { Signal_Base } from './signals/signal/Signal_Base';
 
 /**
  * Creates a new engine instance.
@@ -52,15 +49,4 @@ function createPluginManager() {
 
 function createSceneTree() {
   return new SceneTree_Base();
-}
-
-/**
- * Creates a new node factory instance.
- * @returns The instantiated node factory.
- */
-export function createNodeFactory(): NodeFactory {
-  return new NodeFactory_Base({
-    Signal: Signal_Base,
-    SignalController: SignalController_Base,
-  });
 }
