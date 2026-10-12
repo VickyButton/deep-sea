@@ -7,6 +7,7 @@ import { Signal_Base } from '../../signals/signal/Signal_Base';
 export class SceneTree_Base implements SceneTree {
   public readonly node_deregistered = new Signal_Base<Node>();
   public readonly node_registered = new Signal_Base<Node>();
+  public readonly processed = new Signal_Base();
   public readonly root: Node;
   private readonly nodes = new NodeManager();
 
@@ -43,6 +44,19 @@ export class SceneTree_Base implements SceneTree {
 
   private emitNodeDeregisteredSignal(node: Node) {
     this.node_deregistered.emit(node);
+  }
+
+  public process(dt: number) {
+    this.processRoot(dt);
+    this.emitProcessedSignal();
+  }
+
+  private processRoot(dt: number) {
+    this.root.process(dt);
+  }
+
+  private emitProcessedSignal() {
+    this.processed.emit();
   }
 
   public registerNode(node: Node) {

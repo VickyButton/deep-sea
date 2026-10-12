@@ -49,6 +49,27 @@ describe('SceneTree_Base', () => {
     expect(emitSpy).toHaveBeenCalledWith(node);
   });
 
+  it('should process root node upon processing', () => {
+    const tree = new SceneTree_Base();
+    const processSpy = vi.spyOn(tree.root, 'process');
+    const dt = 1;
+
+    tree.process(dt);
+
+    expect(processSpy).toHaveBeenCalledWith(dt);
+  });
+
+  it('should emit "processed" signal after processing root node', () => {
+    const tree = new SceneTree_Base();
+    const emitSpy = vi.spyOn(tree.processed, 'emit');
+    const processSpy = vi.spyOn(tree.root, 'process');
+    const dt = 1;
+
+    tree.process(dt);
+
+    expect(emitSpy).toHaveBeenCalledAfter(processSpy);
+  });
+
   it('should register node with self upon registering node', () => {
     const tree = new SceneTree_Base();
     const node = createNode('node');
