@@ -1,7 +1,4 @@
-/**
- * This file defines node exports for the package.
- */
-
+/** This file defines node exports for the package. */
 import { CanvasNode_Base } from './canvasNode/CanvasNode_Base';
 import { Node_Base } from './node/Node_Base';
 import { Node2D_Base } from './node2D/Node2D_Base';
