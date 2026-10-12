@@ -1,8 +1,8 @@
 import type { SignalController } from './signalController.types';
 import { vi } from 'vitest';
 
-/** The test implementation of the SignalController interface. */
-export class SignalController_Test implements SignalController {
+/** The mock implementation of the SignalController interface. */
+export class SignalController_Mock implements SignalController {
   private _isListening = false;
 
   public get isListening() {

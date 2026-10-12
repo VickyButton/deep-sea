@@ -1,5 +1,5 @@
 import type { Node } from './node.types';
-import { SignalController_Test } from '../../controllers/SignalController_Test';
+import { SignalController_Mock } from '../../controllers/SignalController_Mock';
 import { Signal_Mock } from '../../signals/signal/Signal_Mock';
 import { vi } from 'vitest';
 
@@ -7,7 +7,7 @@ import { vi } from 'vitest';
 export class Node_Mock implements Node {
   public readonly child_added = new Signal_Mock();
   public readonly child_removed = new Signal_Mock();
-  public readonly controller = new SignalController_Test();
+  public readonly controller = new SignalController_Mock();
   public readonly id;
   public readonly started = new Signal_Mock();
   public readonly stopped = new Signal_Mock();
