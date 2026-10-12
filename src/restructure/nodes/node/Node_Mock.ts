@@ -3,8 +3,8 @@ import { SignalController_Test } from '../../controllers/SignalController_Test';
 import { Signal_Test } from '../../signals/signal/Signal_Test';
 import { vi } from 'vitest';
 
-/** The test implementation of the Node interface. */
-export class Node_Test implements Node {
+/** The mock implementation of the Node interface. */
+export class Node_Mock implements Node {
   public readonly child_added = new Signal_Test();
   public readonly child_removed = new Signal_Test();
   public readonly controller = new SignalController_Test();

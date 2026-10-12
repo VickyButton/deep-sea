@@ -1,5 +1,5 @@
 import type { SceneTree } from './sceneTree.types';
-import { Node_Test } from '../../nodes/node/Node_Test';
+import { Node_Mock } from '../../nodes/node/Node_Mock';
 import { Signal_Test } from '../../signals/signal/Signal_Test';
 import { vi } from 'vitest';
 
@@ -7,7 +7,7 @@ import { vi } from 'vitest';
 export class SceneTree_Mock implements SceneTree {
   public readonly node_deregistered = new Signal_Test();
   public readonly node_registered = new Signal_Test();
-  public readonly root = new Node_Test('root');
+  public readonly root = new Node_Mock('root');
 
   public get nodeCount() {
     return 1;

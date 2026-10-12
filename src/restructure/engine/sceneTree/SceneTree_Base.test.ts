@@ -1,5 +1,5 @@
 import { SceneTree_Base } from './SceneTree_Base';
-import { Node_Test } from '../../nodes/node/Node_Test';
+import { Node_Mock } from '../../nodes/node/Node_Mock';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('SceneTree_Base', () => {
@@ -110,5 +110,5 @@ describe('SceneTree_Base', () => {
 });
 
 function createNode(id: string) {
-  return new Node_Test(id);
+  return new Node_Mock(id);
 }
