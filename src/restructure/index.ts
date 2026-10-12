@@ -1,6 +1,5 @@
 import type { Canvas } from './domain/canvases';
 import type { Engine } from './engine/engine.types';
-import type { Node } from './nodes/node/node.types';
 import type { NodeFactory } from './nodes/nodeFactory.types';
 import { SignalController_Base } from './controllers/SignalController_Base';
 import { Engine_Base } from './engine/Engine_Base';
@@ -8,7 +7,6 @@ import { Graphics_Base } from './engine/graphics/Graphics_Base';
 import { Loop_Base } from './engine/loop/Loop_Base';
 import { PluginManager_Base } from './engine/pluginManager/PluginManager_Base';
 import { SceneTree_Base } from './engine/sceneTree/SceneTree_Base';
-import { Node_Base } from './nodes/node/Node_Base';
 import { NodeFactory_Base } from './nodes/NodeFactory_Base';
 import { ClockSystem } from './providers/clock/ClockSystem';
 import { Signal_Base } from './signals/signal/Signal_Base';
@@ -53,21 +51,7 @@ function createPluginManager() {
 }
 
 function createSceneTree() {
-  return new SceneTree_Base(createRootNode(), createSceneTreeSignals());
-}
-
-function createRootNode() {
-  return new Node_Base('root', {
-    Signal: Signal_Base,
-    SignalController: SignalController_Base,
-  });
-}
-
-function createSceneTreeSignals() {
-  return {
-    node_deregistered: new Signal_Base<Node>(),
-    node_registered: new Signal_Base<Node>(),
-  };
+  return new SceneTree_Base();
 }
 
 /**

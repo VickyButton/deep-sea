@@ -1,20 +1,18 @@
 import type { SceneTree } from './sceneTree.types';
 import type { Node } from '../../nodes/node/node.types';
-import type { Signal } from '../../signals/signal/signal.types';
+import { Node_Base } from '../../nodes/node/Node_Base';
+import { Signal_Base } from '../../signals/signal/Signal_Base';
 
 /** The base implementation of the SceneTree interface. */
 export class SceneTree_Base implements SceneTree {
-  public readonly node_deregistered;
-  public readonly node_registered;
+  public readonly node_deregistered = new Signal_Base<Node>();
+  public readonly node_registered = new Signal_Base<Node>();
   public readonly root: Node;
   private readonly nodes = new NodeManager();
 
-  constructor(root: Node, signals: Signals) {
-    this.node_deregistered = signals.node_deregistered;
-    this.node_registered = signals.node_registered;
-
-    this.root = root;
-    this.registerNode(root);
+  constructor() {
+    this.root = new Node_Base('root');
+    this.registerNode(this.root);
   }
 
   public get nodeCount() {
@@ -118,9 +116,4 @@ class NodeManager {
   public register(node: Node) {
     this.nodes.set(node.id, node);
   }
-}
-
-interface Signals {
-  node_deregistered: Signal<Node>;
-  node_registered: Signal<Node>;
 }

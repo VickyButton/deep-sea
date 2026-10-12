@@ -1,20 +1,16 @@
-import type { Node } from '../../nodes/node/node.types';
 import { SceneTree_Base } from './SceneTree_Base';
 import { Node_Test } from '../../nodes/node/Node_Test';
-import { Signal_Test } from '../../signals/signal/Signal_Test';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('SceneTree_Base', () => {
   it('should have 1 registered node by default', () => {
-    const root = createNode('root');
-    const tree = new SceneTree_Base(root, createSignals());
+    const tree = new SceneTree_Base();
 
     expect(tree.nodeCount).toBe(1);
   });
 
   it('should add scene to root node as a child upon adding scene', () => {
-    const root = createNode('root');
-    const tree = new SceneTree_Base(root, createSignals());
+    const tree = new SceneTree_Base();
     const scene = createNode('scene');
     const addChildSpy = vi.spyOn(tree.root, 'addChild');
 
@@ -24,8 +20,7 @@ describe('SceneTree_Base', () => {
   });
 
   it('should enter scene into self upon adding scene', () => {
-    const root = createNode('root');
-    const tree = new SceneTree_Base(root, createSignals());
+    const tree = new SceneTree_Base();
     const scene = createNode('scene');
 
     tree.addScene(scene);
@@ -34,8 +29,7 @@ describe('SceneTree_Base', () => {
   });
 
   it('should deregister node from self upon deregistering node', () => {
-    const root = createNode('root');
-    const tree = new SceneTree_Base(root, createSignals());
+    const tree = new SceneTree_Base();
     const node = createNode('node');
 
     tree.registerNode(node);
@@ -45,8 +39,7 @@ describe('SceneTree_Base', () => {
   });
 
   it('should emit "node_deregistered" signal upon deregistering node', () => {
-    const root = createNode('root');
-    const tree = new SceneTree_Base(root, createSignals());
+    const tree = new SceneTree_Base();
     const node = createNode('node');
     const emitSpy = vi.spyOn(tree.node_deregistered, 'emit');
 
@@ -57,8 +50,7 @@ describe('SceneTree_Base', () => {
   });
 
   it('should register node with self upon registering node', () => {
-    const root = createNode('root');
-    const tree = new SceneTree_Base(root, createSignals());
+    const tree = new SceneTree_Base();
     const node = createNode('node');
 
     tree.registerNode(node);
@@ -67,8 +59,7 @@ describe('SceneTree_Base', () => {
   });
 
   it('should emit "node_registered" signal upon registering node', () => {
-    const root = createNode('root');
-    const tree = new SceneTree_Base(root, createSignals());
+    const tree = new SceneTree_Base();
     const node = createNode('node');
     const emitSpy = vi.spyOn(tree.node_registered, 'emit');
 
@@ -79,8 +70,7 @@ describe('SceneTree_Base', () => {
   });
 
   it('should remove scene from root node as a child upon removing scene', () => {
-    const root = createNode('root');
-    const tree = new SceneTree_Base(root, createSignals());
+    const tree = new SceneTree_Base();
     const scene = createNode('scene');
     const removeChildSpy = vi.spyOn(tree.root, 'removeChild');
 
@@ -91,8 +81,7 @@ describe('SceneTree_Base', () => {
   });
 
   it('should exit scene from self upon removing scene', () => {
-    const root = createNode('root');
-    const tree = new SceneTree_Base(root, createSignals());
+    const tree = new SceneTree_Base();
     const scene = createNode('scene');
 
     tree.addScene(scene);
@@ -102,31 +91,24 @@ describe('SceneTree_Base', () => {
   });
 
   it('should start root node upon starting', () => {
-    const root = createNode('root');
-    const tree = new SceneTree_Base(root, createSignals());
+    const tree = new SceneTree_Base();
+    const startSpy = vi.spyOn(tree.root, 'start');
 
     tree.start();
 
-    expect(root.start).toHaveBeenCalled();
+    expect(startSpy).toHaveBeenCalled();
   });
 
   it('should stop root node upon stopping', () => {
-    const root = createNode('root');
-    const tree = new SceneTree_Base(root, createSignals());
+    const tree = new SceneTree_Base();
+    const stopSpy = vi.spyOn(tree.root, 'stop');
 
     tree.stop();
 
-    expect(root.stop).toHaveBeenCalled();
+    expect(stopSpy).toHaveBeenCalled();
   });
 });
 
 function createNode(id: string) {
   return new Node_Test(id);
 }
-
-function createSignals() {
-  return {
-    node_deregistered: new Signal_Test<Node>(),
-    node_registered: new Signal_Test<Node>(),
-  };
-};
