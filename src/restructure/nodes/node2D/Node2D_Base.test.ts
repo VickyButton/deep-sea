@@ -1,19 +1,17 @@
 import { Node2D_Base } from './Node2D_Base';
-import { SignalController_Test } from '../../controllers/SignalController_Test';
 import { Vector2D } from '../../domain';
 import { Transform2D } from '../../domain/Transform2D';
-import { Signal_Test } from '../../signals/signal/Signal_Test';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Node2D_Base', () => {
   it('should be positioned at origin by default', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
 
     expect(node.position).toEqual(new Vector2D(0, 0));
   });
 
   it('should not emit "position_changed" signal if position has not changed', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newValue = node.position;
     const emitSpy = vi.spyOn(node.position_changed, 'emit');
 
@@ -23,7 +21,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "position_changed" signal if position has changed', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newValue = node.position.add(new Vector2D(1, 1));
     const emitSpy = vi.spyOn(node.position_changed, 'emit');
 
@@ -33,7 +31,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "transform_changed" signal if position has changed', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newValue = node.position.add(new Vector2D(1, 1));
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
 
@@ -43,13 +41,13 @@ describe('Node2D_Base', () => {
   });
 
   it('should not be rotated by default', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
 
     expect(node.rotation).toBe(0);
   });
 
   it('should not emit "rotation_changed" signal if rotation has not changed', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newValue = node.rotation;
     const emitSpy = vi.spyOn(node.rotation_changed, 'emit');
 
@@ -59,7 +57,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "rotation_changed" signal if rotation has changed', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newValue = node.rotation + 1;
     const emitSpy = vi.spyOn(node.rotation_changed, 'emit');
 
@@ -69,7 +67,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "transform_changed" signal if rotation has changed', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newValue = node.rotation + 1;
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
 
@@ -79,13 +77,13 @@ describe('Node2D_Base', () => {
   });
 
   it('should not be scaled by default', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
 
     expect(node.scale).toEqual(new Vector2D(1, 1));
   });
 
   it('should not emit "scale_changed" signal if scale has not changed', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newValue = node.scale;
     const emitSpy = vi.spyOn(node.scale_changed, 'emit');
 
@@ -95,7 +93,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "scale_changed" signal if scale has changed', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newValue = node.scale.add(new Vector2D(1, 1));
     const emitSpy = vi.spyOn(node.scale_changed, 'emit');
 
@@ -105,7 +103,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "transform_changed" signal if scale has changed', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newValue = node.scale.add(new Vector2D(1, 1));
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
 
@@ -115,7 +113,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should not be transformed by default', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
 
     expect(node.transform).toEqual(new Transform2D({
       rotation: 0,
@@ -125,7 +123,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should not emit "transform_changed" signal if transform has not changed', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newValue = node.transform;
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
 
@@ -135,7 +133,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "transform_changed" signal once if transform has changed', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newValue = new Transform2D({
       rotation: node.transform.rotation + 1,
       scale: node.transform.scale.add(new Vector2D(1, 1)),
@@ -150,7 +148,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "position_changed" signal if transform has changed with new position', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newPosition = node.transform.translation.add(new Vector2D(1, 1));
     const newTransform = new Transform2D({
       rotation: node.transform.rotation,
@@ -165,7 +163,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "rotation_changed" signal if transform has changed with new rotation', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newRotation = node.transform.rotation + 1;
     const newTransform = new Transform2D({
       rotation: newRotation,
@@ -180,7 +178,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "scale_changed" signal if transform has changed with new scale', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const newScale = node.transform.scale.add(new Vector2D(1, 1));
     const newTransform = new Transform2D({
       rotation: node.transform.rotation,
@@ -195,15 +193,15 @@ describe('Node2D_Base', () => {
   });
 
   it('should be positioned at origin globally by default', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
 
     expect(node.globalPosition).toEqual(new Vector2D(0, 0));
   });
 
   it('should determine global position from closest ancestor', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     node.position = new Vector2D(1, 1);
-    const parent = new Node2D_Base('ancestor', dependencies);
+    const parent = new Node2D_Base('ancestor');
     parent.position = new Vector2D(2, 2);
 
     parent.addChild(node);
@@ -212,15 +210,15 @@ describe('Node2D_Base', () => {
   });
 
   it('should not be rotated globally by default', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
 
     expect(node.globalRotation).toBe(0);
   });
 
   it('should determine global rotation from closest ancestor', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     node.rotation = 1;
-    const parent = new Node2D_Base('ancestor', dependencies);
+    const parent = new Node2D_Base('ancestor');
     parent.rotation = 2;
 
     parent.addChild(node);
@@ -229,15 +227,15 @@ describe('Node2D_Base', () => {
   });
 
   it('should not be scaled globally by default', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
 
     expect(node.globalScale).toEqual(new Vector2D(1, 1));
   });
 
   it('should determine global scale from closest ancestor', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     node.scale = new Vector2D(2, 2);
-    const parent = new Node2D_Base('ancestor', dependencies);
+    const parent = new Node2D_Base('ancestor');
     parent.scale = new Vector2D(3, 3);
 
     parent.addChild(node);
@@ -246,7 +244,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should rotate node', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     node.rotation = 1;
 
     node.rotateBy(1);
@@ -255,7 +253,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "rotation_changed" signal on rotate', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const emitSpy = vi.spyOn(node.rotation_changed, 'emit');
     node.rotation = 1;
 
@@ -265,7 +263,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "transform_changed" signal on rotate', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
     node.rotation = 1;
 
@@ -275,7 +273,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should scale node', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     node.scale = new Vector2D(2, 2);
 
     node.scaleBy(new Vector2D(3, 3));
@@ -284,7 +282,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "scale_changed" signal on scale', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const emitSpy = vi.spyOn(node.scale_changed, 'emit');
     node.scale = new Vector2D(2, 2);
 
@@ -294,7 +292,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "transform_changed" signal on scale', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
     node.scale = new Vector2D(2, 2);
 
@@ -304,7 +302,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should translate node', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     node.position = new Vector2D(1, 1);
 
     node.translateBy(new Vector2D(2, 2));
@@ -313,7 +311,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "position_changed" signal on translate', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const emitSpy = vi.spyOn(node.position_changed, 'emit');
     node.position = new Vector2D(1, 1);
 
@@ -323,7 +321,7 @@ describe('Node2D_Base', () => {
   });
 
   it('should emit "transform_changed" signal on translate', () => {
-    const node = new Node2D_Base('node', dependencies);
+    const node = new Node2D_Base('node');
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
     node.position = new Vector2D(1, 1);
 
@@ -332,8 +330,3 @@ describe('Node2D_Base', () => {
     expect(emitSpy).toHaveBeenLastCalledWith(node.transform);
   });
 });
-
-const dependencies = {
-  Signal: Signal_Test,
-  SignalController: SignalController_Test,
-};
