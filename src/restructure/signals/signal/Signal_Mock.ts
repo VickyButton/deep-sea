@@ -1,8 +1,8 @@
 import type { Signal } from './signal.types';
 import { vi } from 'vitest';
 
-/** The test implementation of the Signal interface. */
-export class Signal_Test<CallbackData = void> implements Signal<CallbackData> {
+/** The mock implementation of the Signal interface. */
+export class Signal_Mock<CallbackData = void> implements Signal<CallbackData> {
   public get callbackCount() {
     return 0;
   }
