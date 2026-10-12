@@ -1,4 +1,5 @@
 import { Node_Base } from './Node_Base';
+import { Node_Mock } from './Node_Mock';
 import { SceneTree_Mock } from '../../engine/sceneTree/SceneTree_Mock';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -192,6 +193,40 @@ describe('Node_Base', () => {
     node.exitTree(tree);
 
     expect(emitSpy).toHaveBeenCalledWith(tree);
+  });
+
+  it('should execute process callback upon processing', () => {
+    const node = new Node_Base('node');
+    const callback = vi.fn();
+    const dt = 1;
+
+    node.setProcessCallback(callback);
+    node.process(dt);
+
+    expect(callback).toHaveBeenCalledWith(dt);
+  });
+
+  it('should process children after process callback is executed', () => {
+    const node = new Node_Base('node');
+    const callback = vi.fn();
+    const child = new Node_Mock('child');
+
+    node.setProcessCallback(callback);
+    node.addChild(child);
+    node.process(1);
+
+    expect(child.process).toHaveBeenCalledAfter(callback);
+  });
+
+  it('should emit "processed" signal after children have been processed', () => {
+    const node = new Node_Base('node');
+    const child = new Node_Mock('child');
+    const emitSpy = vi.spyOn(node.processed, 'emit');
+
+    node.addChild(child);
+    node.process(1);
+
+    expect(emitSpy).toHaveBeenCalledAfter(child.process);
   });
 
   it('should throw an error if trying to remove a child that does not belong to it', () => {

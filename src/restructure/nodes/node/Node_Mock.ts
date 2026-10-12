@@ -9,6 +9,7 @@ export class Node_Mock implements Node {
   public readonly child_removed = new Signal_Mock();
   public readonly controller = new SignalController_Mock();
   public readonly id;
+  public readonly processed = new Signal_Mock();
   public readonly started = new Signal_Mock();
   public readonly stopped = new Signal_Mock();
   public readonly tree_entered = new Signal_Mock();
@@ -45,12 +46,14 @@ export class Node_Mock implements Node {
   });
   public enterTree = vi.fn();
   public exitTree = vi.fn();
+  public process = vi.fn();
   public removeChild = vi.fn().mockImplementation((node: Node) => {
     this._children.delete(node);
   });
   public setParent = vi.fn().mockImplementation((node: Node | null) => {
     this._parent = node;
   });
+  public setProcessCallback = vi.fn();
   public start = vi.fn();
   public stop = vi.fn();
 }

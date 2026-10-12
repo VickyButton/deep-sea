@@ -1,4 +1,4 @@
-import type { Node } from './node.types';
+import type { Node, ProcessCallback } from './node.types';
 import type { SignalController } from '../../controllers/signalController.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
 import type { Signal } from '../../signals/signal/signal.types';
@@ -11,12 +11,14 @@ export class Node_Base implements Node {
   public readonly child_removed = new Signal_Base<Node>();
   public readonly controller = new SignalController_Base();
   public readonly id;
+  public readonly processed = new Signal_Base();
   public readonly started = new Signal_Base();
   public readonly stopped = new Signal_Base();
   public readonly tree_entered = new Signal_Base<SceneTree>();
   public readonly tree_exited = new Signal_Base<SceneTree>();
   private readonly relationships = new NodeRelationships();
   private _tree: SceneTree | null = null;
+  private processCallback: ProcessCallback = () => { };
 
   constructor(id: string) {
     this.id = id;
@@ -81,6 +83,26 @@ export class Node_Base implements Node {
 
     // Enter children into tree.
     this.enterChildrenIntoTree(tree);
+  }
+
+  public process(dt: number) {
+    this.executeProcessCallback(dt);
+    this.processChildren(dt);
+    this.emitProcessedSignal();
+  }
+
+  private executeProcessCallback(dt: number) {
+    this.processCallback(dt);
+  }
+
+  private processChildren(dt: number) {
+    for (const child of this.children) {
+      child.process(dt);
+    }
+  }
+
+  private emitProcessedSignal() {
+    this.processed.emit();
   }
 
   private registerWithTree(tree: SceneTree) {
@@ -161,6 +183,10 @@ export class Node_Base implements Node {
 
   private setParentRelationship(node: Node | null) {
     this.relationships.setParent(node);
+  }
+
+  public setProcessCallback(callback: ProcessCallback) {
+    this.processCallback = callback;
   }
 
   public start() {

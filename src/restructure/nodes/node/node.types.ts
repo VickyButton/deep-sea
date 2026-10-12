@@ -12,6 +12,8 @@ export interface Node {
   readonly controller: SignalController;
   /** The node's unique ID. */
   readonly id: string;
+  /** Emitted when the node has finished processing. Processing is considered finished after both the node and its children have finished processing. */
+  readonly processed: Signal;
   /** Emitted when the node is started. */
   readonly started: Signal;
   /** Emitted when the node is stopped. */
@@ -46,6 +48,11 @@ export interface Node {
    */
   exitTree(tree: SceneTree): void;
   /**
+   * Processes the node and its children. The nodes process callback is executed before its childrens' callbacks.
+   * @param dt The time elapsed since the last loop.
+   */
+  process(dt: number): void;
+  /**
    * Removes a node from the node's children.
    * @param node The node to remove from the node's children.
    */
@@ -55,8 +62,15 @@ export interface Node {
    * @param node The node to set as the node's parent, or null if removing a parent.
    */
   setParent(node: Node | null): void;
+  /**
+   * Sets the callback to be executed on each process call.
+   * @param callback The callback to execute on process.
+   */
+  setProcessCallback(callback: ProcessCallback): void;
   /** Starts the node and its children, allowing it to listen for signals. */
   start(): void;
   /** Stops the node and its children, preventing it from listening for signals. */
   stop(): void;
 }
+
+export type ProcessCallback = (dt: number) => void;
