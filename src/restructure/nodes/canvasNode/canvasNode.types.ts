@@ -1,11 +1,12 @@
 import type { Canvas } from '../../domain/canvases';
+import type { DrawCommand } from '../../engine/graphics/graphics.types';
 import type { Signal } from '../../signals/signal/signal.types';
 import type { Node } from '../node/node.types';
 
 /** A node that can be drawn onto a canvas. */
 export interface CanvasNode extends Node {
   /** Emitted after a redraw has been requested for the node. The node is passed to callbacks. */
-  readonly redraw_requested: Signal<CanvasNode>;
+  readonly redraw_requested: Signal<DrawCommand>;
   /** Emitted after the node's visibility has been changed. The new visibility is passed to callbacks. */
   readonly visibility_changed: Signal<boolean>;
   /** Emitted after the node's z-index has been changed. The new z-index is passed to callbacks. */

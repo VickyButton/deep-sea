@@ -1,10 +1,11 @@
 import type { CanvasNode } from './canvasNode.types';
+import type { DrawCommand } from '../../engine/graphics/graphics.types';
 import { Signal_Base } from '../../signals/signal/Signal_Base';
 import { Node_Base } from '../node/Node_Base';
 
 /** The base implementation of the CanvasNode interface. */
 export class CanvasNode_Base extends Node_Base implements CanvasNode {
-  public readonly redraw_requested = new Signal_Base<CanvasNode>();
+  public readonly redraw_requested = new Signal_Base<DrawCommand>();
   public readonly visibility_changed = new Signal_Base<boolean>();
   public readonly z_index_changed = new Signal_Base<number>();
   private hasActiveRedrawRequest = false;
@@ -103,7 +104,15 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
   }
 
   private emitRedrawRequestedSignal() {
-    this.redraw_requested.emit(this);
+    this.redraw_requested.emit(this.createDrawCommand());
+  }
+
+  private createDrawCommand() {
+    return {
+      id: this.id,
+      zIndex: this.globalZIndex,
+      draw: this.draw,
+    };
   }
 
   public show() {
