@@ -6,6 +6,17 @@ import { SceneTree_Mock } from './sceneTree/SceneTree_Mock';
 import { describe, expect, it } from 'vitest';
 
 describe('Engine_Base', () => {
+  it('should not be active by default', () => {
+    const engine = new Engine_Base({
+      graphics: new Graphics_Mock(),
+      loop: new Loop_Mock(),
+      pluginManager: new PluginManager_Mock(),
+      sceneTree: new SceneTree_Mock(),
+    });
+
+    expect(engine.isActive).toBe(false);
+  });
+
   it('should set loop callback upon instantiation', () => {
     const loop = new Loop_Mock();
 
@@ -63,6 +74,19 @@ describe('Engine_Base', () => {
     expect(loop.start).toHaveBeenCalledAfter(sceneTree.start);
   });
 
+  it('should be active after starting', () => {
+    const engine = new Engine_Base({
+      graphics: new Graphics_Mock(),
+      loop: new Loop_Mock(),
+      pluginManager: new PluginManager_Mock(),
+      sceneTree: new SceneTree_Mock(),
+    });
+
+    engine.start();
+
+    expect(engine.isActive).toBe(true);
+  });
+
   it('should stop loop upon stopping', () => {
     const loop = new Loop_Mock();
     const engine = new Engine_Base({
@@ -105,6 +129,19 @@ describe('Engine_Base', () => {
     engine.stop();
 
     expect(pluginManager.stopPlugins).toHaveBeenCalledAfter(sceneTree.stop);
+  });
+
+  it('should not be active after starting', () => {
+    const engine = new Engine_Base({
+      graphics: new Graphics_Mock(),
+      loop: new Loop_Mock(),
+      pluginManager: new PluginManager_Mock(),
+      sceneTree: new SceneTree_Mock(),
+    });
+
+    engine.stop();
+
+    expect(engine.isActive).toBe(false);
   });
 });
 

@@ -3,21 +3,27 @@ import type { Graphics } from './graphics/graphics.types';
 import type { Loop } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
+import type { Node } from '../nodes/node/node.types';
 import { SignalController_Base } from '../controllers/signalController/SignalController_Base';
 
 export class Engine_Base implements Engine {
-  private readonly controller = new SignalController_Base();
+  private readonly controller: EngineController;
   private readonly graphics: Graphics;
   private readonly loop: Loop;
   private readonly pluginManager: PluginManager;
   private readonly sceneTree: SceneTree;
 
   constructor(components: EngineComponents) {
+    this.controller = new EngineController(components);
     this.graphics = components.graphics;
     this.loop = components.loop;
     this.pluginManager = components.pluginManager;
     this.sceneTree = components.sceneTree;
     this.setLoopCallback();
+  }
+
+  public get isActive() {
+    return this.controller.isListening;
   }
 
   private setLoopCallback() {
@@ -38,9 +44,14 @@ export class Engine_Base implements Engine {
   }
 
   public start() {
+    this.startController();
     this.startPlugins();
     this.startSceneTree();
     this.startLoop();
+  }
+
+  private startController() {
+    this.controller.startListening();
   }
 
   private startPlugins() {
@@ -59,6 +70,7 @@ export class Engine_Base implements Engine {
     this.stopLoop();
     this.stopSceneTree();
     this.stopPlugins();
+    this.stopController();
   }
 
   private stopLoop() {
@@ -71,6 +83,38 @@ export class Engine_Base implements Engine {
 
   private stopPlugins() {
     this.pluginManager.stopPlugins();
+  }
+
+  private stopController() {
+    this.controller.stopListening();
+  }
+}
+
+class EngineController {
+  private readonly controller = new SignalController_Base();
+  private readonly graphics: Graphics;
+  private readonly sceneTree: SceneTree;
+
+  constructor(components: EngineComponents) {
+    this.graphics = components.graphics;
+    this.sceneTree = components.sceneTree;
+    this.registerCallbacks();
+  }
+
+  private registerCallbacks() {
+    // TODO: Implement.
+  }
+
+  public get isListening() {
+    return this.controller.isListening;
+  }
+
+  public startListening() {
+    this.controller.startListening();
+  }
+
+  public stopListening() {
+    this.controller.stopListening();
   }
 }
 
