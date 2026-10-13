@@ -30,7 +30,6 @@
     "./canvases": "./src/restructure/domain/canvases/index.ts",
     "./colors": "./src/restructure/domain/colors/index.ts",
     "./domain": "./src/restructure/domain/index.ts",
-    "./events": "./src/restructure/events/index.ts",
     "./nodes": "./src/restructure/nodes/index.ts",
     "./shapes": "./src/restructure/domain/shapes/index.ts",
     "./signals": "./src/restructure/signals/index.ts"
