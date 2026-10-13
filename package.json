@@ -28,6 +28,7 @@
   "exports": {
     ".": "./src/restructure/index.ts",
     "./canvases": "./src/restructure/domain/canvases/index.ts",
+    "./controllers": "./src/restructure/controllers/index.ts",
     "./colors": "./src/restructure/domain/colors/index.ts",
     "./domain": "./src/restructure/domain/index.ts",
     "./nodes": "./src/restructure/nodes/index.ts",
