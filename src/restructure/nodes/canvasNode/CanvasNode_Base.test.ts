@@ -102,7 +102,7 @@ describe('CanvasNode_Base', () => {
 
     node.requestRedraw();
 
-    expect(emitSpy).toHaveBeenCalled();
+    expect(emitSpy).toHaveBeenCalledWith(node);
   });
 
   it('should only emit "redraw_requested" signal once, even if redraw is requested more than once', () => {

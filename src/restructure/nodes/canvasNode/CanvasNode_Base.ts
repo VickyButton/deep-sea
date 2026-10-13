@@ -4,7 +4,7 @@ import { Node_Base } from '../node/Node_Base';
 
 /** The base implementation of the CanvasNode interface. */
 export class CanvasNode_Base extends Node_Base implements CanvasNode {
-  public readonly redraw_requested = new Signal_Base();
+  public readonly redraw_requested = new Signal_Base<CanvasNode>();
   public readonly visibility_changed = new Signal_Base<boolean>();
   public readonly z_index_changed = new Signal_Base<number>();
   private hasActiveRedrawRequest = false;
@@ -103,7 +103,7 @@ export class CanvasNode_Base extends Node_Base implements CanvasNode {
   }
 
   private emitRedrawRequestedSignal() {
-    this.redraw_requested.emit();
+    this.redraw_requested.emit(this);
   }
 
   public show() {
