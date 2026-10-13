@@ -10,6 +10,10 @@ export class SceneTree_Mock implements SceneTree {
   public readonly processed = new Signal_Mock();
   public readonly root = new Node_Mock('root');
 
+  public get isActive() {
+    return false;
+  }
+
   public get nodeCount() {
     return 1;
   }

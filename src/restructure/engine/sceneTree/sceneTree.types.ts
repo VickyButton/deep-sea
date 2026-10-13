@@ -11,7 +11,8 @@ export interface SceneTree {
   readonly processed: Signal;
   /** The root node of the tree. */
   readonly root: Node;
-  // TODO: Add isActive getter.
+  /** Whether or not the tree's root node is active. */
+  get isActive(): boolean;
   /** The number of nodes registered with the tree, including the root node. */
   get nodeCount(): number;
   /**

@@ -16,6 +16,10 @@ export class SceneTree_Base implements SceneTree {
     this.registerNode(this.root);
   }
 
+  public get isActive() {
+    return this.root.isActive;
+  }
+
   public get nodeCount() {
     return this.nodes.count;
   }

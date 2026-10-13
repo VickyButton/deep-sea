@@ -3,6 +3,12 @@ import { Node_Mock } from '../../nodes/node/Node_Mock';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('SceneTree_Base', () => {
+  it('should not be active by default', () => {
+    const tree = new SceneTree_Base();
+
+    expect(tree.isActive).toBe(false);
+  });
+
   it('should have 1 registered node by default', () => {
     const tree = new SceneTree_Base();
 
@@ -120,6 +126,14 @@ describe('SceneTree_Base', () => {
     expect(startSpy).toHaveBeenCalled();
   });
 
+  it('should be active after starting', () => {
+    const tree = new SceneTree_Base();
+
+    tree.start();
+
+    expect(tree.isActive).toBe(true);
+  });
+
   it('should stop root node upon stopping', () => {
     const tree = new SceneTree_Base();
     const stopSpy = vi.spyOn(tree.root, 'stop');
@@ -127,6 +141,14 @@ describe('SceneTree_Base', () => {
     tree.stop();
 
     expect(stopSpy).toHaveBeenCalled();
+  });
+
+  it('should not be active after stopping', () => {
+    const tree = new SceneTree_Base();
+
+    tree.stop();
+
+    expect(tree.isActive).toBe(false);
   });
 });
 
