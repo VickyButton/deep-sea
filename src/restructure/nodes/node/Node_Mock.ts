@@ -1,5 +1,5 @@
 import type { Node } from './node.types';
-import { SignalController_Mock } from '../../controllers/SignalController_Mock';
+import { SignalController_Mock } from '../../controllers/signalController/SignalController_Mock';
 import { Signal_Mock } from '../../signals/signal/Signal_Mock';
 import { vi } from 'vitest';
 

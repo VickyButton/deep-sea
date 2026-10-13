@@ -3,7 +3,7 @@ import type { Graphics } from './graphics/graphics.types';
 import type { Loop } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
-import { SignalController_Base } from '../controllers/SignalController_Base';
+import { SignalController_Base } from '../controllers/signalController/SignalController_Base';
 
 export class Engine_Base implements Engine {
   private readonly controller = new SignalController_Base();

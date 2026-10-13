@@ -1,8 +1,8 @@
 import type { Node, ProcessCallback } from './node.types';
-import type { SignalController } from '../../controllers/signalController.types';
+import type { SignalController } from '../../controllers/signalController/signalController.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
 import type { Signal } from '../../signals/signal/signal.types';
-import { SignalController_Base } from '../../controllers/SignalController_Base';
+import { SignalController_Base } from '../../controllers/signalController/SignalController_Base';
 import { Signal_Base } from '../../signals/signal/Signal_Base';
 
 /** The base implementation of the Node interface. */

@@ -1,5 +1,5 @@
 import type { SignalController } from './signalController.types';
-import type { Signal, SignalCallback } from '../signals/signal/signal.types';
+import type { Signal, SignalCallback } from '../../signals/signal/signal.types';
 
 /** The base implementation of the SignalController interface. */
 export class SignalController_Base implements SignalController {

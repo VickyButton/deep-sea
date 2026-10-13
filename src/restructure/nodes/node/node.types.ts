@@ -1,4 +1,4 @@
-import type { SignalController } from '../../controllers/signalController.types';
+import type { SignalController } from '../../controllers/signalController/signalController.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
 import type { Signal } from '../../signals/signal/signal.types';
 
