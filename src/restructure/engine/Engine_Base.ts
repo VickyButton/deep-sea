@@ -39,11 +39,16 @@ export class Engine_Base implements Engine {
 
   public start() {
     this.startPlugins();
+    this.startSceneTree();
     this.startLoop();
   }
 
   private startPlugins() {
     this.pluginManager.startPlugins();
+  }
+
+  private startSceneTree() {
+    this.sceneTree.start();
   }
 
   private startLoop() {
@@ -52,11 +57,16 @@ export class Engine_Base implements Engine {
 
   public stop() {
     this.stopLoop();
+    this.stopSceneTree();
     this.stopPlugins();
   }
 
   private stopLoop() {
     this.loop.stop();
+  }
+
+  private stopSceneTree() {
+    this.sceneTree.stop();
   }
 
   private stopPlugins() {

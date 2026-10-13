@@ -33,32 +33,34 @@ describe('Engine_Base', () => {
     expect(pluginManager.startPlugins).toHaveBeenCalled();
   });
 
-  it('should start loop upon starting', () => {
-    const loop = new Loop_Mock();
-    const engine = new Engine_Base({
-      graphics: new Graphics_Mock(),
-      loop,
-      pluginManager: new PluginManager_Mock(),
-      sceneTree: new SceneTree_Mock(),
-    });
-
-    engine.start();
-
-    expect(loop.start).toHaveBeenCalled();
-  });
-
-  it('should stop plugins upon stopping', () => {
+  it('should start scene tree after starting plugins', () => {
     const pluginManager = new PluginManager_Mock();
+    const sceneTree = new SceneTree_Mock();
     const engine = new Engine_Base({
       graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager,
-      sceneTree: new SceneTree_Mock(),
+      sceneTree,
     });
 
-    engine.stop();
+    engine.start();
 
-    expect(pluginManager.stopPlugins).toHaveBeenCalled();
+    expect(sceneTree.start).toHaveBeenCalledAfter(pluginManager.startPlugins);
+  });
+
+  it('should start loop after starting scene tree', () => {
+    const loop = new Loop_Mock();
+    const sceneTree = new SceneTree_Mock();
+    const engine = new Engine_Base({
+      graphics: new Graphics_Mock(),
+      loop,
+      pluginManager: new PluginManager_Mock(),
+      sceneTree,
+    });
+
+    engine.start();
+
+    expect(loop.start).toHaveBeenCalledAfter(sceneTree.start);
   });
 
   it('should stop loop upon stopping', () => {
@@ -73,6 +75,36 @@ describe('Engine_Base', () => {
     engine.stop();
 
     expect(loop.stop).toHaveBeenCalled();
+  });
+
+  it('should stop scene tree after stopping loop', () => {
+    const loop = new Loop_Mock();
+    const sceneTree = new SceneTree_Mock();
+    const engine = new Engine_Base({
+      graphics: new Graphics_Mock(),
+      loop,
+      pluginManager: new PluginManager_Mock(),
+      sceneTree,
+    });
+
+    engine.stop();
+
+    expect(sceneTree.stop).toHaveBeenCalledAfter(loop.stop);
+  });
+
+  it('should stop plugins after stopping scene tree', () => {
+    const pluginManager = new PluginManager_Mock();
+    const sceneTree = new SceneTree_Mock();
+    const engine = new Engine_Base({
+      graphics: new Graphics_Mock(),
+      loop: new Loop_Mock(),
+      pluginManager,
+      sceneTree,
+    });
+
+    engine.stop();
+
+    expect(pluginManager.stopPlugins).toHaveBeenCalledAfter(sceneTree.stop);
   });
 });
 
