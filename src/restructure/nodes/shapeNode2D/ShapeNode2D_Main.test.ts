@@ -1,10 +1,10 @@
-import { ShapeNode2D_Base } from './ShapeNode2D_Base';
+import { ShapeNode2D_Main } from './ShapeNode2D_Main';
 import { RectangleShape2D } from '../../domain/shapes';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('ShapeNode2D_Base', () => {
+describe('ShapeNode2D_Main', () => {
   it('should have a rectangle shape by default', () => {
-    const node = new ShapeNode2D_Base('node');
+    const node = new ShapeNode2D_Main('node');
 
     expect(node.shape).toEqual(new RectangleShape2D({
       width: 1,
@@ -13,7 +13,7 @@ describe('ShapeNode2D_Base', () => {
   });
 
   it('should emit "shape_changed" signal if shape has changed', () => {
-    const node = new ShapeNode2D_Base('node');
+    const node = new ShapeNode2D_Main('node');
     const newShape = new RectangleShape2D({
       width: 2,
       height: 2,
