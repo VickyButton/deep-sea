@@ -21,11 +21,12 @@ export class Engine_Base implements Engine {
     this.loop = components.loop;
     this.pluginManager = components.pluginManager;
     this.sceneTree = components.sceneTree;
+    this.setupController();
     this.setLoopCallback();
   }
 
-  public get isActive() {
-    return this.controller.isListening;
+  private setupController() {
+    this.controller.setup();
   }
 
   private setLoopCallback() {
@@ -43,6 +44,10 @@ export class Engine_Base implements Engine {
 
   private processDrawCommandQueue() {
     this.graphics.processDrawCommandQueue();
+  }
+
+  public get isActive() {
+    return this.controller.isListening;
   }
 
   public start() {
@@ -100,10 +105,13 @@ class EngineController {
   constructor(components: EngineComponents) {
     this.graphics = components.graphics;
     this.sceneTree = components.sceneTree;
-    this.setupController();
   }
 
-  private setupController() {
+  public get isListening() {
+    return this.controller.isListening;
+  }
+
+  public setup() {
     this.controller.register(this.sceneTree.node_registered, this.onNodeRegistered);
     this.controller.register(this.sceneTree.node_deregistered, this.onNodeDeregistered);
   }
@@ -133,10 +141,6 @@ class EngineController {
 
   private handleCanvasNodeDeregistered(node: CanvasNode) {
     this.controller.deregister(node.redraw_requested, this.onCanvasNodeRedrawRequested);
-  }
-
-  public get isListening() {
-    return this.controller.isListening;
   }
 
   public startListening() {
