@@ -1,4 +1,4 @@
-import type { Signal, SignalCallback } from './signal/signal.types';
+import type { Signal, SignalCallback } from './signal.types';
 
 /** The base implementation of the Signal interface. */
 export class Signal_Base<CallbackData = void> implements Signal<CallbackData> {
