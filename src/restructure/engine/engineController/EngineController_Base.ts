@@ -4,7 +4,7 @@ import type { Node } from '../../nodes/node/node.types';
 import type { DrawCommand, Graphics } from '../graphics/graphics.types';
 import type { SceneTree } from '../sceneTree/sceneTree.types';
 import { SignalController_Base } from '../../controllers/signalController/SignalController_Base';
-import { CanvasNode_Base } from '../../nodes/canvasNode/CanvasNode_Base';
+import { CanvasNode_Main } from '../../nodes/canvasNode/CanvasNode_Main';
 
 /** The base implementation of the EngineController interface. */
 export class EngineController_Base implements EngineController {
@@ -33,7 +33,7 @@ export class EngineController_Base implements EngineController {
   };
 
   private isCanvasNode(node: Node): node is CanvasNode {
-    return node instanceof CanvasNode_Base;
+    return node instanceof CanvasNode_Main;
   }
 
   private handleCanvasNodeRegistered(node: CanvasNode) {
