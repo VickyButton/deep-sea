@@ -1,5 +1,4 @@
 import type { Node, ProcessCallback } from './node.types';
-import type { SignalController } from '../../controllers/signalController/signalController.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
 import type { Signal } from '../../signals/signal/signal.types';
 import { SignalController_Base } from '../../controllers/signalController/SignalController_Base';
@@ -229,7 +228,7 @@ export class Node_Base implements Node {
     this.stopped.emit();
   }
 
-  protected getClosestAncestorOfType<T extends Node, S extends NodeSignals>(type: NodeConstructorGeneric<T, S>) {
+  protected getClosestAncestorOfType<T extends Node>(type: NodeConstructorGeneric<T>) {
     let parent = this.parent;
 
     while (parent !== null) {
@@ -344,6 +343,6 @@ export interface NodeSignals {
   readonly tree_exited: Signal<SceneTree>;
 }
 
-type NodeConstructorGeneric<Type extends Node, Signals extends NodeSignals> = NodeConstructorAbstract<Type, Signals> | NodeConstructor<Type, Signals>;
-type NodeConstructorAbstract<Type extends Node, Signals extends NodeSignals> = abstract new (id: string, controller: SignalController, signals: Signals) => Type;
-type NodeConstructor<Type extends Node, Signals extends NodeSignals> = new (id: string, controller: SignalController, signals: Signals) => Type;
+type NodeConstructorGeneric<Type extends Node> = NodeConstructorAbstract<Type> | NodeConstructor<Type>;
+type NodeConstructorAbstract<Type extends Node> = abstract new (id: string) => Type;
+type NodeConstructor<Type extends Node> = new (id: string) => Type;
