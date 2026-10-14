@@ -4,8 +4,8 @@ import { Transform2D } from '../../domain/Transform2D';
 import { Signal_Base } from '../../signals/signal/Signal_Base';
 import { CanvasNode_Main } from '../canvasNode/CanvasNode_Main';
 
-/** The base implementation of the Node2D interface. */
-export class Node2D_Base extends CanvasNode_Main implements Node2D {
+/** The main implementation of the Node2D interface. */
+export class Node2D_Main extends CanvasNode_Main implements Node2D {
   public readonly position_changed = new Signal_Base<Vector2D>();
   public readonly rotation_changed = new Signal_Base<number>();
   public readonly scale_changed = new Signal_Base<Vector2D>();
@@ -17,7 +17,7 @@ export class Node2D_Base extends CanvasNode_Main implements Node2D {
   });
 
   public get globalPosition(): Vector2D {
-    const closestAncestor = this.getClosestAncestorOfType(Node2D_Base);
+    const closestAncestor = this.getClosestAncestorOfType(Node2D_Main);
 
     return closestAncestor ? this.calculateGlobalPositionFromNode(closestAncestor) : this.position;
   }
@@ -27,7 +27,7 @@ export class Node2D_Base extends CanvasNode_Main implements Node2D {
   }
 
   public get globalRotation(): number {
-    const closestAncestor = this.getClosestAncestorOfType(Node2D_Base);
+    const closestAncestor = this.getClosestAncestorOfType(Node2D_Main);
 
     return closestAncestor ? this.calculateGlobalRotationFromNode(closestAncestor) : this.rotation;
   }
@@ -37,7 +37,7 @@ export class Node2D_Base extends CanvasNode_Main implements Node2D {
   }
 
   public get globalScale(): Vector2D {
-    const closestAncestor = this.getClosestAncestorOfType(Node2D_Base);
+    const closestAncestor = this.getClosestAncestorOfType(Node2D_Main);
 
     return closestAncestor ? this.calculateGlobalScaleFromNode(closestAncestor) : this.scale;
   }
@@ -47,7 +47,7 @@ export class Node2D_Base extends CanvasNode_Main implements Node2D {
   }
 
   public get globalTransform(): Transform2D {
-    const closestAncestor = this.getClosestAncestorOfType(Node2D_Base);
+    const closestAncestor = this.getClosestAncestorOfType(Node2D_Main);
 
     return closestAncestor ? this.calculateGlobalTransformFromNode(closestAncestor) : this.transform;
   }
