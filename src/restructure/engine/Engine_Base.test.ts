@@ -1,4 +1,5 @@
 import { Engine_Base } from './Engine_Base';
+import { EngineController_Mock } from './engineController/EngineController_Mock';
 import { Graphics_Mock } from './graphics/Graphics_Mock';
 import { Loop_Mock } from './loop/Loop_Mock';
 import { PluginManager_Mock } from './pluginManager/PluginManager_Mock';
@@ -8,6 +9,7 @@ import { describe, expect, it } from 'vitest';
 describe('Engine_Base', () => {
   it('should not be active by default', () => {
     const engine = new Engine_Base({
+      engineController: new EngineController_Mock(),
       graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager: new PluginManager_Mock(),
@@ -21,6 +23,7 @@ describe('Engine_Base', () => {
     const loop = new Loop_Mock();
 
     new Engine_Base({
+      engineController: new EngineController_Mock(),
       graphics: new Graphics_Mock(),
       loop,
       pluginManager: new PluginManager_Mock(),
@@ -33,6 +36,7 @@ describe('Engine_Base', () => {
   it('should start plugins upon starting', () => {
     const pluginManager = new PluginManager_Mock();
     const engine = new Engine_Base({
+      engineController: new EngineController_Mock(),
       graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager,
@@ -48,6 +52,7 @@ describe('Engine_Base', () => {
     const pluginManager = new PluginManager_Mock();
     const sceneTree = new SceneTree_Mock();
     const engine = new Engine_Base({
+      engineController: new EngineController_Mock(),
       graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager,
@@ -63,6 +68,7 @@ describe('Engine_Base', () => {
     const loop = new Loop_Mock();
     const sceneTree = new SceneTree_Mock();
     const engine = new Engine_Base({
+      engineController: new EngineController_Mock(),
       graphics: new Graphics_Mock(),
       loop,
       pluginManager: new PluginManager_Mock(),
@@ -76,6 +82,7 @@ describe('Engine_Base', () => {
 
   it('should be active after starting', () => {
     const engine = new Engine_Base({
+      engineController: new EngineController_Mock(),
       graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager: new PluginManager_Mock(),
@@ -90,6 +97,7 @@ describe('Engine_Base', () => {
   it('should stop loop upon stopping', () => {
     const loop = new Loop_Mock();
     const engine = new Engine_Base({
+      engineController: new EngineController_Mock(),
       graphics: new Graphics_Mock(),
       loop,
       pluginManager: new PluginManager_Mock(),
@@ -105,6 +113,7 @@ describe('Engine_Base', () => {
     const loop = new Loop_Mock();
     const sceneTree = new SceneTree_Mock();
     const engine = new Engine_Base({
+      engineController: new EngineController_Mock(),
       graphics: new Graphics_Mock(),
       loop,
       pluginManager: new PluginManager_Mock(),
@@ -120,6 +129,7 @@ describe('Engine_Base', () => {
     const pluginManager = new PluginManager_Mock();
     const sceneTree = new SceneTree_Mock();
     const engine = new Engine_Base({
+      engineController: new EngineController_Mock(),
       graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager,
@@ -133,6 +143,7 @@ describe('Engine_Base', () => {
 
   it('should not be active after starting', () => {
     const engine = new Engine_Base({
+      engineController: new EngineController_Mock(),
       graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager: new PluginManager_Mock(),

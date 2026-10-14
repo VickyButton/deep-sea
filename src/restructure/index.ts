@@ -1,6 +1,9 @@
 import type { Canvas } from './domain/canvases';
 import type { Engine } from './engine/engine.types';
+import type { Graphics } from './engine/graphics/graphics.types';
+import type { SceneTree } from './engine/sceneTree/sceneTree.types';
 import { Engine_Base } from './engine/Engine_Base';
+import { EngineController_Base } from './engine/engineController/EngineController_Base';
 import { Graphics_Base } from './engine/graphics/Graphics_Base';
 import { Loop_Base } from './engine/loop/Loop_Base';
 import { PluginManager_Base } from './engine/pluginManager/PluginManager_Base';
@@ -17,12 +20,23 @@ export function createEngine(canvas: Canvas): Engine {
 }
 
 function createComponents(canvas: Canvas) {
+  const graphics = createGraphics(canvas);
+  const sceneTree = createSceneTree();
+
   return {
-    graphics: createGraphics(canvas),
+    engineController: createEngineController(graphics, sceneTree),
+    graphics,
     loop: createLoop(),
     pluginManager: createPluginManager(),
-    sceneTree: createSceneTree(),
+    sceneTree,
   };
+}
+
+function createEngineController(graphics: Graphics, sceneTree: SceneTree) {
+  return new EngineController_Base({
+    graphics,
+    sceneTree,
+  });
 }
 
 function createGraphics(canvas: Canvas) {
