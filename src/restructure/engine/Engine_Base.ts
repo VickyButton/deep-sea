@@ -13,12 +13,12 @@ export class Engine_Base implements Engine {
   private readonly pluginManager: PluginManager;
   private readonly sceneTree: SceneTree;
 
-  constructor(components: EngineComponents) {
-    this.engineController = components.engineController;
-    this.graphics = components.graphics;
-    this.loop = components.loop;
-    this.pluginManager = components.pluginManager;
-    this.sceneTree = components.sceneTree;
+  constructor({ engineController, graphics, loop, pluginManager, sceneTree }: EngineComponents) {
+    this.engineController = engineController;
+    this.graphics = graphics;
+    this.loop = loop;
+    this.pluginManager = pluginManager;
+    this.sceneTree = sceneTree;
     this.setupController();
     this.setLoopCallback();
   }
