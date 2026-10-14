@@ -4,8 +4,8 @@ import type { Signal } from '../../signals/signal/signal.types';
 import { SignalController_Base } from '../../controllers/signalController/SignalController_Base';
 import { Signal_Base } from '../../signals/signal/Signal_Base';
 
-/** The base implementation of the Node interface. */
-export class Node_Base implements Node {
+/** The main implementation of the Node interface. */
+export class Node_Main implements Node {
   public readonly child_added = new Signal_Base<Node>();
   public readonly child_removed = new Signal_Base<Node>();
   public readonly controller = new SignalController_Base();

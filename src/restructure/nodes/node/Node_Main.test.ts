@@ -1,49 +1,49 @@
-import { Node_Base } from './Node_Base';
+import { Node_Main } from './Node_Main';
 import { Node_Mock } from './Node_Mock';
 import { SceneTree_Mock } from '../../engine/sceneTree/SceneTree_Mock';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('Node_Base', () => {
+describe('Node_Main', () => {
   it('should have no children by default', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
 
     expect(node.children.length).toBe(0);
   });
 
   it('should not be active by default', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
 
     expect(node.isActive).toBe(false);
   });
 
   it('should not be inside a tree by default', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
 
     expect(node.isInsideTree).toBe(false);
   });
 
   it('should have no parent by default', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
 
     expect(node.parent).toBe(null);
   });
 
   it('should have no tree by default', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
 
     expect(node.tree).toBe(null);
   });
 
   it('should throw an error if trying to add self as a child', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
 
     expect(() => node.addChild(node)).toThrowError();
   });
 
   it('should throw an error if trying to add child that already has a parent', () => {
-    const node = new Node_Base('node');
-    const parent = new Node_Base('parent');
-    const child = new Node_Base('child');
+    const node = new Node_Main('node');
+    const parent = new Node_Main('parent');
+    const child = new Node_Main('child');
 
     parent.addChild(child);
 
@@ -51,8 +51,8 @@ describe('Node_Base', () => {
   });
 
   it('should add a child', () => {
-    const node = new Node_Base('node');
-    const child = new Node_Base('child');
+    const node = new Node_Main('node');
+    const child = new Node_Main('child');
 
     node.addChild(child);
 
@@ -62,9 +62,9 @@ describe('Node_Base', () => {
   });
 
   it('should enter a node into tree upon adding as a child', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
-    const child = new Node_Base('child');
+    const child = new Node_Main('child');
 
     node.enterTree(tree);
     node.addChild(child);
@@ -73,8 +73,8 @@ describe('Node_Base', () => {
   });
 
   it('should emit "child_added" signal upon adding a child', () => {
-    const node = new Node_Base('node');
-    const child = new Node_Base('child');
+    const node = new Node_Main('node');
+    const child = new Node_Main('child');
     const emitSpy = vi.spyOn(node.child_added, 'emit');
 
     node.addChild(child);
@@ -83,7 +83,7 @@ describe('Node_Base', () => {
   });
 
   it('should throw an error if trying to enter a tree while already belonging to another tree', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
     const otherTree = new SceneTree_Mock();
 
@@ -93,7 +93,7 @@ describe('Node_Base', () => {
   });
 
   it('should register with tree upon entering a tree', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
     const registerNodeSpy = vi.spyOn(tree, 'registerNode');
 
@@ -103,7 +103,7 @@ describe('Node_Base', () => {
   });
 
   it('should enter a tree', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
 
     node.enterTree(tree);
@@ -112,7 +112,7 @@ describe('Node_Base', () => {
   });
 
   it('should emit "tree_entered" signal upon entering a tree', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
     const emitSpy = vi.spyOn(node.tree_entered, 'emit');
 
@@ -122,9 +122,9 @@ describe('Node_Base', () => {
   });
 
   it('should enter children into tree upon entering a tree', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
-    const child = new Node_Base('child');
+    const child = new Node_Main('child');
 
     node.addChild(child);
     node.enterTree(tree);
@@ -133,7 +133,7 @@ describe('Node_Base', () => {
   });
 
   it('should be inside a tree after entering a tree', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
 
     node.enterTree(tree);
@@ -142,7 +142,7 @@ describe('Node_Base', () => {
   });
 
   it('should throw an error if trying to exit a tree that it does not belong to', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
     const otherTree = new SceneTree_Mock();
 
@@ -152,7 +152,7 @@ describe('Node_Base', () => {
   });
 
   it('should deregister from tree upon exiting a tree', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
     const deregisterNodeSpy = vi.spyOn(tree, 'deregisterNode');
 
@@ -163,7 +163,7 @@ describe('Node_Base', () => {
   });
 
   it('should exit a tree', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
 
     node.enterTree(tree);
@@ -173,8 +173,8 @@ describe('Node_Base', () => {
   });
 
   it('should exit children from a tree after exiting a tree', () => {
-    const node = new Node_Base('node');
-    const child = new Node_Base('child');
+    const node = new Node_Main('node');
+    const child = new Node_Main('child');
     const tree = new SceneTree_Mock();
 
     node.addChild(child);
@@ -185,7 +185,7 @@ describe('Node_Base', () => {
   });
 
   it('should emit "tree_exited" signal upon exiting a tree', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
     const emitSpy = vi.spyOn(node.tree_exited, 'emit');
 
@@ -196,7 +196,7 @@ describe('Node_Base', () => {
   });
 
   it('should execute process callback upon processing', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const callback = vi.fn();
     const dt = 1;
 
@@ -207,7 +207,7 @@ describe('Node_Base', () => {
   });
 
   it('should process children after process callback is executed', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const callback = vi.fn();
     const child = new Node_Mock('child');
 
@@ -219,7 +219,7 @@ describe('Node_Base', () => {
   });
 
   it('should emit "processed" signal after children have been processed', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const child = new Node_Mock('child');
     const emitSpy = vi.spyOn(node.processed, 'emit');
 
@@ -230,9 +230,9 @@ describe('Node_Base', () => {
   });
 
   it('should throw an error if trying to remove a child that does not belong to it', () => {
-    const node = new Node_Base('node');
-    const parent = new Node_Base('parent');
-    const child = new Node_Base('child');
+    const node = new Node_Main('node');
+    const parent = new Node_Main('parent');
+    const child = new Node_Main('child');
 
     parent.addChild(child);
 
@@ -240,8 +240,8 @@ describe('Node_Base', () => {
   });
 
   it('should remove a child', () => {
-    const node = new Node_Base('node');
-    const child = new Node_Base('child');
+    const node = new Node_Main('node');
+    const child = new Node_Main('child');
 
     node.addChild(child);
     node.removeChild(child);
@@ -251,9 +251,9 @@ describe('Node_Base', () => {
   });
 
   it('should exit a node from tree upon removing as a child', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const tree = new SceneTree_Mock();
-    const child = new Node_Base('child');
+    const child = new Node_Main('child');
 
     node.enterTree(tree);
     node.addChild(child);
@@ -263,8 +263,8 @@ describe('Node_Base', () => {
   });
 
   it('should set parent to another node', () => {
-    const node = new Node_Base('node');
-    const parent = new Node_Base('parent');
+    const node = new Node_Main('node');
+    const parent = new Node_Main('parent');
 
     node.setParent(parent);
 
@@ -272,8 +272,8 @@ describe('Node_Base', () => {
   });
 
   it('should remove parent', () => {
-    const node = new Node_Base('node');
-    const parent = new Node_Base('parent');
+    const node = new Node_Main('node');
+    const parent = new Node_Main('parent');
 
     node.setParent(parent);
     node.setParent(null);
@@ -282,7 +282,7 @@ describe('Node_Base', () => {
   });
 
   it('should start listening for signals upon starting', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const startListeningSpy = vi.spyOn(node.controller, 'startListening');
 
     node.start();
@@ -291,8 +291,8 @@ describe('Node_Base', () => {
   });
 
   it('should start children upon starting', () => {
-    const node = new Node_Base('node');
-    const child = new Node_Base('child');
+    const node = new Node_Main('node');
+    const child = new Node_Main('child');
     const emitSpy = vi.spyOn(child.started, 'emit');
 
     node.addChild(child);
@@ -302,7 +302,7 @@ describe('Node_Base', () => {
   });
 
   it('should emit "started" signal upon starting', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const emitSpy = vi.spyOn(node.started, 'emit');
 
     node.start();
@@ -311,7 +311,7 @@ describe('Node_Base', () => {
   });
 
   it('should be active after starting', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
 
     node.start();
 
@@ -319,8 +319,8 @@ describe('Node_Base', () => {
   });
 
   it('should stop children upon stopping', () => {
-    const node = new Node_Base('node');
-    const child = new Node_Base('child');
+    const node = new Node_Main('node');
+    const child = new Node_Main('child');
     const emitSpy = vi.spyOn(child.stopped, 'emit');
 
     node.addChild(child);
@@ -330,7 +330,7 @@ describe('Node_Base', () => {
   });
 
   it('should stop listening for signals upon stopping', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const stopListeningSpy = vi.spyOn(node.controller, 'stopListening');
 
     node.stop();
@@ -339,7 +339,7 @@ describe('Node_Base', () => {
   });
 
   it('should emit "stopped" signal upon stopping', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
     const emitSpy = vi.spyOn(node.stopped, 'emit');
 
     node.stop();
@@ -348,7 +348,7 @@ describe('Node_Base', () => {
   });
 
   it('should not be active after stopping', () => {
-    const node = new Node_Base('node');
+    const node = new Node_Main('node');
 
     node.stop();
 

@@ -1,10 +1,10 @@
 import type { CanvasNode } from './canvasNode.types';
 import type { DrawCommand } from '../../engine/graphics/graphics.types';
 import { Signal_Base } from '../../signals/signal/Signal_Base';
-import { Node_Base } from '../node/Node_Base';
+import { Node_Main } from '../node/Node_Main';
 
 /** The base implementation of the CanvasNode interface. */
-export class CanvasNode_Base extends Node_Base implements CanvasNode {
+export class CanvasNode_Base extends Node_Main implements CanvasNode {
   public readonly redraw_requested = new Signal_Base<DrawCommand>();
   public readonly visibility_changed = new Signal_Base<boolean>();
   public readonly z_index_changed = new Signal_Base<number>();

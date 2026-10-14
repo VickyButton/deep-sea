@@ -1,6 +1,6 @@
 import type { SceneTree } from './sceneTree.types';
 import type { Node } from '../../nodes/node/node.types';
-import { Node_Base } from '../../nodes/node/Node_Base';
+import { Node_Main } from '../../nodes/node/Node_Main';
 import { Signal_Base } from '../../signals/signal/Signal_Base';
 
 /** The base implementation of the SceneTree interface. */
@@ -12,7 +12,7 @@ export class SceneTree_Base implements SceneTree {
   private readonly nodes = new NodeManager();
 
   constructor() {
-    this.root = new Node_Base('root');
+    this.root = new Node_Main('root');
     this.registerNode(this.root);
   }
 
