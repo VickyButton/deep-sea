@@ -7,7 +7,7 @@ import { EngineController_Base } from './engine/engineController/EngineControlle
 import { Graphics_Main } from './engine/graphics/Graphics_Main';
 import { Loop_Base } from './engine/loop/Loop_Base';
 import { PluginManager_Main } from './engine/pluginManager/PluginManager_Main';
-import { SceneTree_Base } from './engine/sceneTree/SceneTree_Base';
+import { SceneTree_Main } from './engine/sceneTree/SceneTree_Main';
 import { ClockSystem } from './providers/clock/ClockSystem';
 
 /**
@@ -56,5 +56,5 @@ function createPluginManager() {
 }
 
 function createSceneTree() {
-  return new SceneTree_Base();
+  return new SceneTree_Main();
 }

@@ -3,8 +3,8 @@ import type { Node } from '../../nodes/node/node.types';
 import { Node_Main } from '../../nodes/node/Node_Main';
 import { Signal_Main } from '../../signals/signal/Signal_Main';
 
-/** The base implementation of the SceneTree interface. */
-export class SceneTree_Base implements SceneTree {
+/** The main implementation of the SceneTree interface. */
+export class SceneTree_Main implements SceneTree {
   public readonly node_deregistered = new Signal_Main<Node>();
   public readonly node_registered = new Signal_Main<Node>();
   public readonly processed = new Signal_Main();
