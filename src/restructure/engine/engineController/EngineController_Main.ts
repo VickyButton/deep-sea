@@ -6,8 +6,8 @@ import type { SceneTree } from '../sceneTree/sceneTree.types';
 import { SignalController_Main } from '../../controllers/signalController/SignalController_Main';
 import { CanvasNode_Main } from '../../nodes/canvasNode/CanvasNode_Main';
 
-/** The base implementation of the EngineController interface. */
-export class EngineController_Base implements EngineController {
+/** The main implementation of the EngineController interface. */
+export class EngineController_Main implements EngineController {
   private readonly controller = new SignalController_Main();
   private readonly graphics: Graphics;
   private readonly sceneTree: SceneTree;

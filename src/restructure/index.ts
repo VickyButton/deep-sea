@@ -3,7 +3,7 @@ import type { Engine } from './engine/engine.types';
 import type { Graphics } from './engine/graphics/graphics.types';
 import type { SceneTree } from './engine/sceneTree/sceneTree.types';
 import { Engine_Base } from './engine/Engine_Base';
-import { EngineController_Base } from './engine/engineController/EngineController_Base';
+import { EngineController_Main } from './engine/engineController/EngineController_Main';
 import { Graphics_Main } from './engine/graphics/Graphics_Main';
 import { Loop_Main } from './engine/loop/Loop_Main';
 import { PluginManager_Main } from './engine/pluginManager/PluginManager_Main';
@@ -33,7 +33,7 @@ function createComponents(canvas: Canvas) {
 }
 
 function createEngineController(graphics: Graphics, sceneTree: SceneTree) {
-  return new EngineController_Base({
+  return new EngineController_Main({
     graphics,
     sceneTree,
   });
