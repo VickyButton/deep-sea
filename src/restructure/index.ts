@@ -4,7 +4,7 @@ import type { Graphics } from './engine/graphics/graphics.types';
 import type { SceneTree } from './engine/sceneTree/sceneTree.types';
 import { Engine_Base } from './engine/Engine_Base';
 import { EngineController_Base } from './engine/engineController/EngineController_Base';
-import { Graphics_Base } from './engine/graphics/Graphics_Base';
+import { Graphics_Main } from './engine/graphics/Graphics_Main';
 import { Loop_Base } from './engine/loop/Loop_Base';
 import { PluginManager_Base } from './engine/pluginManager/PluginManager_Base';
 import { SceneTree_Base } from './engine/sceneTree/SceneTree_Base';
@@ -40,7 +40,7 @@ function createEngineController(graphics: Graphics, sceneTree: SceneTree) {
 }
 
 function createGraphics(canvas: Canvas) {
-  return new Graphics_Base(canvas);
+  return new Graphics_Main(canvas);
 }
 
 function createLoop() {

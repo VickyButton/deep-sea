@@ -1,10 +1,10 @@
-import { Graphics_Base } from './Graphics_Base';
+import { Graphics_Main } from './Graphics_Main';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('Graphics_Base', () => {
+describe('Graphics_Main', () => {
   it('should clear canvas', () => {
     const canvas = new Canvas();
-    const graphics = new Graphics_Base(canvas);
+    const graphics = new Graphics_Main(canvas);
 
     graphics.clearCanvas();
 
@@ -13,7 +13,7 @@ describe('Graphics_Base', () => {
 
   it('should draw onto canvas using draw commands', () => {
     const canvas = new Canvas();
-    const graphics = new Graphics_Base(canvas);
+    const graphics = new Graphics_Main(canvas);
     const drawCommand = {
       id: 'draw-command',
       zIndex: 0,
@@ -28,7 +28,7 @@ describe('Graphics_Base', () => {
 
   it('should process queued commands in order of z-index', () => {
     const canvas = new Canvas();
-    const graphics = new Graphics_Base(canvas);
+    const graphics = new Graphics_Main(canvas);
     const drawCommandZ0 = {
       id: 'draw-command-z0',
       zIndex: 0,
@@ -49,7 +49,7 @@ describe('Graphics_Base', () => {
 
   it('should cache command after processing', () => {
     const canvas = new Canvas();
-    const graphics = new Graphics_Base(canvas);
+    const graphics = new Graphics_Main(canvas);
     const drawCommand = {
       id: 'draw-command',
       zIndex: 0,
@@ -65,7 +65,7 @@ describe('Graphics_Base', () => {
 
   it('should delete cached command after queueing redraw', () => {
     const canvas = new Canvas();
-    const graphics = new Graphics_Base(canvas);
+    const graphics = new Graphics_Main(canvas);
     const drawCommand1 = {
       id: 'draw-command',
       zIndex: 0,
@@ -88,7 +88,7 @@ describe('Graphics_Base', () => {
 
   it('should delete cached command', () => {
     const canvas = new Canvas();
-    const graphics = new Graphics_Base(canvas);
+    const graphics = new Graphics_Main(canvas);
     const drawCommand = {
       id: 'draw-command',
       zIndex: 0,
@@ -105,7 +105,7 @@ describe('Graphics_Base', () => {
 
   it('should clear command queue', () => {
     const canvas = new Canvas();
-    const graphics = new Graphics_Base(canvas);
+    const graphics = new Graphics_Main(canvas);
     const drawCommand = {
       id: 'draw-command',
       zIndex: 0,
