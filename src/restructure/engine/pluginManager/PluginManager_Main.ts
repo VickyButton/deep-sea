@@ -1,7 +1,7 @@
 import type { Plugin, PluginManager } from './pluginManager.types';
 
-/** The base implementation of the PluginManager interface. */
-export class PluginManager_Base implements PluginManager {
+/** The main implementation of the PluginManager interface. */
+export class PluginManager_Main implements PluginManager {
   private readonly plugins = new Set<Plugin>();
 
   public addPlugin(plugin: Plugin) {

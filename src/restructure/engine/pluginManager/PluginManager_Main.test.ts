@@ -1,9 +1,9 @@
-import { PluginManager_Base } from './PluginManager_Base';
+import { PluginManager_Main } from './PluginManager_Main';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('PluginManager_Base', () => {
+describe('PluginManager_Main', () => {
   it('should start plugins', () => {
-    const manager = new PluginManager_Base();
+    const manager = new PluginManager_Main();
     const plugin = new Plugin();
 
     manager.addPlugin(plugin);
@@ -13,7 +13,7 @@ describe('PluginManager_Base', () => {
   });
 
   it('should stop plugins', () => {
-    const manager = new PluginManager_Base();
+    const manager = new PluginManager_Main();
     const plugin = new Plugin();
 
     manager.addPlugin(plugin);

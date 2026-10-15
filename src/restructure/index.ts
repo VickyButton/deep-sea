@@ -6,7 +6,7 @@ import { Engine_Base } from './engine/Engine_Base';
 import { EngineController_Base } from './engine/engineController/EngineController_Base';
 import { Graphics_Main } from './engine/graphics/Graphics_Main';
 import { Loop_Base } from './engine/loop/Loop_Base';
-import { PluginManager_Base } from './engine/pluginManager/PluginManager_Base';
+import { PluginManager_Main } from './engine/pluginManager/PluginManager_Main';
 import { SceneTree_Base } from './engine/sceneTree/SceneTree_Base';
 import { ClockSystem } from './providers/clock/ClockSystem';
 
@@ -52,7 +52,7 @@ function createClock() {
 }
 
 function createPluginManager() {
-  return new PluginManager_Base();
+  return new PluginManager_Main();
 }
 
 function createSceneTree() {
