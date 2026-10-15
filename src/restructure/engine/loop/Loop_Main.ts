@@ -5,8 +5,8 @@ import { clamp } from '../../utils/clamp';
 const LOOPS_PER_SECOND_MIN = 1;
 const LOOPS_PER_SECOND_MAX = 120;
 
-/** The base implementation of the Loop interface. */
-export class Loop_Base implements Loop {
+/** The main implementation of the Loop interface. */
+export class Loop_Main implements Loop {
   private readonly clock: Clock;
   private lastAnimationFrameTimestamp = 0;
   private lastLoopTimestamp = 0;

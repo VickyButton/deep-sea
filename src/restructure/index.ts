@@ -5,7 +5,7 @@ import type { SceneTree } from './engine/sceneTree/sceneTree.types';
 import { Engine_Base } from './engine/Engine_Base';
 import { EngineController_Base } from './engine/engineController/EngineController_Base';
 import { Graphics_Main } from './engine/graphics/Graphics_Main';
-import { Loop_Base } from './engine/loop/Loop_Base';
+import { Loop_Main } from './engine/loop/Loop_Main';
 import { PluginManager_Main } from './engine/pluginManager/PluginManager_Main';
 import { SceneTree_Main } from './engine/sceneTree/SceneTree_Main';
 import { ClockSystem } from './providers/clock/ClockSystem';
@@ -44,7 +44,7 @@ function createGraphics(canvas: Canvas) {
 }
 
 function createLoop() {
-  return new Loop_Base(createClock());
+  return new Loop_Main(createClock());
 }
 
 function createClock() {
