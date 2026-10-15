@@ -2,7 +2,7 @@ import type { Canvas } from './domain/canvases';
 import type { Engine } from './engine/engine.types';
 import type { Graphics } from './engine/graphics/graphics.types';
 import type { SceneTree } from './engine/sceneTree/sceneTree.types';
-import { Engine_Base } from './engine/Engine_Base';
+import { Engine_Main } from './engine/Engine_Main';
 import { EngineController_Main } from './engine/engineController/EngineController_Main';
 import { Graphics_Main } from './engine/graphics/Graphics_Main';
 import { Loop_Main } from './engine/loop/Loop_Main';
@@ -16,7 +16,7 @@ import { ClockSystem } from './providers/clock/ClockSystem';
  * @returns The instantiated engine.
  */
 export function createEngine(canvas: Canvas): Engine {
-  return new Engine_Base(createComponents(canvas));
+  return new Engine_Main(createComponents(canvas));
 }
 
 function createComponents(canvas: Canvas) {

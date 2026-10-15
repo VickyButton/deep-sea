@@ -5,8 +5,8 @@ import type { Loop } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
 
-/** The base implementation of the Engine interface. */
-export class Engine_Base implements Engine {
+/** The main implementation of the Engine interface. */
+export class Engine_Main implements Engine {
   private readonly engineController: EngineController;
   private readonly graphics: Graphics;
   private readonly loop: Loop;
