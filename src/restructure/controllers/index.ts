@@ -1,5 +1,5 @@
-import { SignalController_Base } from './signalController/SignalController_Base';
+import { SignalController_Main } from './signalController/SignalController_Main';
 
 export {
-  SignalController_Base as SignalController,
+  SignalController_Main as SignalController,
 };
