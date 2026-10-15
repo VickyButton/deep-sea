@@ -1,13 +1,13 @@
 import type { SceneTree } from './sceneTree.types';
 import type { Node } from '../../nodes/node/node.types';
 import { Node_Main } from '../../nodes/node/Node_Main';
-import { Signal_Base } from '../../signals/signal/Signal_Base';
+import { Signal_Main } from '../../signals/signal/Signal_Main';
 
 /** The base implementation of the SceneTree interface. */
 export class SceneTree_Base implements SceneTree {
-  public readonly node_deregistered = new Signal_Base<Node>();
-  public readonly node_registered = new Signal_Base<Node>();
-  public readonly processed = new Signal_Base();
+  public readonly node_deregistered = new Signal_Main<Node>();
+  public readonly node_registered = new Signal_Main<Node>();
+  public readonly processed = new Signal_Main();
   public readonly root: Node;
   private readonly nodes = new NodeManager();
 

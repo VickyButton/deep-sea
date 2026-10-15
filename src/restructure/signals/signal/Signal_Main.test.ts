@@ -1,16 +1,16 @@
 
-import { Signal_Base } from './Signal_Base';
+import { Signal_Main } from './Signal_Main';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('Signal_Base', () => {
+describe('Signal_Main', () => {
   it('should have no registered callbacks by default', () => {
-    const signal = new Signal_Base();
+    const signal = new Signal_Main();
 
     expect(signal.callbackCount).toBe(0);
   });
 
   it('should register a callback', () => {
-    const signal = new Signal_Base();
+    const signal = new Signal_Main();
 
     signal.listen(vi.fn());
 
@@ -18,7 +18,7 @@ describe('Signal_Base', () => {
   });
 
   it('should deregister a callback', () => {
-    const signal = new Signal_Base();
+    const signal = new Signal_Main();
     const callback = vi.fn();
 
     signal.listen(callback);
@@ -28,7 +28,7 @@ describe('Signal_Base', () => {
   });
 
   it('should clear all registered callbacks', () => {
-    const signal = new Signal_Base();
+    const signal = new Signal_Main();
     const callback = vi.fn();
 
     signal.listen(callback);
@@ -38,7 +38,7 @@ describe('Signal_Base', () => {
   });
 
   it('should emit signal data to registered callbacks', () => {
-    const signal = new Signal_Base<string>();
+    const signal = new Signal_Main<string>();
     const callback = vi.fn();
     const data = 'SIGNAL_DATA';
 

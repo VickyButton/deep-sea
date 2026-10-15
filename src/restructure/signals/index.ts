@@ -1,5 +1,5 @@
-import { Signal_Base } from './signal/Signal_Base';
+import { Signal_Main } from './signal/Signal_Main';
 
 export {
-  Signal_Base as Signal,
+  Signal_Main as Signal,
 };

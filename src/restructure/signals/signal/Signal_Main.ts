@@ -1,7 +1,7 @@
 import type { Signal, SignalCallback } from './signal.types';
 
-/** The base implementation of the Signal interface. */
-export class Signal_Base<CallbackData = void> implements Signal<CallbackData> {
+/** The main implementation of the Signal interface. */
+export class Signal_Main<CallbackData = void> implements Signal<CallbackData> {
   private readonly callbacks = new CallbackManager<CallbackData>();
 
   public get callbackCount() {

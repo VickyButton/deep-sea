@@ -1,12 +1,12 @@
 import type { ShapeNode2D } from './shapeNode2D.types';
 import type { Shape2D } from '../../domain/shapes';
 import { RectangleShape2D } from '../../domain/shapes';
-import { Signal_Base } from '../../signals/signal/Signal_Base';
+import { Signal_Main } from '../../signals/signal/Signal_Main';
 import { Node2D_Main } from '../node2D/Node2D_Main';
 
 /** The base implementation of the ShapeNode2D interface. */
 export class ShapeNode2D_Main extends Node2D_Main implements ShapeNode2D {
-  public readonly shape_changed = new Signal_Base<Shape2D>();
+  public readonly shape_changed = new Signal_Main<Shape2D>();
   private _shape: Shape2D = new RectangleShape2D();
 
   public get shape() {
