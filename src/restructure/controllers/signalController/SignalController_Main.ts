@@ -1,7 +1,7 @@
 import type { SignalController } from './signalController.types';
 import type { Signal, SignalCallback } from '../../signals/signal/signal.types';
 
-/** The base implementation of the SignalController interface. */
+/** The main implementation of the SignalController interface. */
 export class SignalController_Main implements SignalController {
   private readonly manager = new CallbackGroupManager(() => this.isListening);
   private _isListening = false;
