@@ -1,6 +1,5 @@
 import type { Node, ProcessCallback } from './node.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
-import type { Signal } from '../../signals/signal/signal.types';
 import { SignalController_Base } from '../../controllers/signalController/SignalController_Base';
 import { Signal_Base } from '../../signals/signal/Signal_Base';
 
@@ -332,15 +331,6 @@ class NodeRelationships {
   public setSelf(node: Node) {
     this.self = node;
   }
-}
-
-export interface NodeSignals {
-  readonly child_added: Signal<Node>;
-  readonly child_removed: Signal<Node>;
-  readonly started: Signal;
-  readonly stopped: Signal;
-  readonly tree_entered: Signal<SceneTree>;
-  readonly tree_exited: Signal<SceneTree>;
 }
 
 type NodeConstructorGeneric<Type extends Node> = NodeConstructorAbstract<Type> | NodeConstructor<Type>;
