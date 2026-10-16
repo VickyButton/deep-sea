@@ -1,5 +1,5 @@
 import type { BoundingBox2D } from './shapes.types';
-import type { Canvas } from '../canvas/Canvas';
+import type { Canvas } from '../canvas/canvas.types';
 import type { Transform2D } from '../Transform2D';
 
 /**
