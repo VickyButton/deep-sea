@@ -1,9 +1,9 @@
 import type { BoundingBox2D } from '../shape2D.types';
-import { AxisAlignedBoundingBoxCollisionResolver2D } from './AxisAlignedBoundingBoxCollisionResolver2D';
+import { CollisionResolver2D_AxisAlignedBoundingBox } from './CollisionResolver2D_AxisAlignedBoundingBox';
 import { Vector2D } from '../../Vector2D';
 import { describe, expect, it } from 'vitest';
 
-describe('AxisAlignedBoundingBoxCollisionResolver2D', () => {
+describe('CollisionResolver2D_AxisAlignedBoundingBox', () => {
   it.each([
     {
       relation: 'to the left of',
@@ -43,7 +43,7 @@ describe('AxisAlignedBoundingBoxCollisionResolver2D', () => {
     },
   ])('should not detect collision if one box is $relation the other box ', ({ boundingBoxB }) => {
     const boundingBoxA = BOX_CENTERED;
-    const collisionResolver = new AxisAlignedBoundingBoxCollisionResolver2D(boundingBoxA, boundingBoxB);
+    const collisionResolver = new CollisionResolver2D_AxisAlignedBoundingBox(boundingBoxA, boundingBoxB);
 
     expect(collisionResolver.resolveCollision()).toBe(false);
   });
@@ -96,7 +96,7 @@ describe('AxisAlignedBoundingBoxCollisionResolver2D', () => {
     },
   ])('should detect collision if one box is $relation the other box ', ({ boundingBoxB }) => {
     const boundingBoxA = BOX_CENTERED;
-    const collisionResolver = new AxisAlignedBoundingBoxCollisionResolver2D(boundingBoxA, boundingBoxB);
+    const collisionResolver = new CollisionResolver2D_AxisAlignedBoundingBox(boundingBoxA, boundingBoxB);
 
     expect(collisionResolver.resolveCollision()).toBe(true);
   });
