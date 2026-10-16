@@ -1,6 +1,6 @@
 import { Transform2D } from '../Transform2D';
 import { Vector2D } from '../Vector2D';
-import { RectangleCollisionResolver2D } from './collisionResolvers/RectangleCollisionResolver2D';
+import { CollisionResolver2D_Rectangle } from './collisionResolvers/CollisionResolver2D_Rectangle';
 import { Shape2D_Rectangle } from './Shape2D_Rectangle';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -101,7 +101,7 @@ describe('Shape2D_Rectangle', () => {
   });
 
   it('should use rectangle collision resolver to resolve collisions', () => {
-    vi.mock('./collisionResolvers/RectangleCollisionResolver2D');
+    vi.mock('./collisionResolvers/CollisionResolver2D_Rectangle');
 
     const rectangleA = new Shape2D_Rectangle();
     const transformA = new Transform2D();
@@ -110,7 +110,7 @@ describe('Shape2D_Rectangle', () => {
 
     rectangleA.overlaps(transformA, rectangleB, transformB);
 
-    expect(RectangleCollisionResolver2D).toHaveBeenCalledWith(rectangleA, transformA, rectangleB, transformB);
+    expect(CollisionResolver2D_Rectangle).toHaveBeenCalledWith(rectangleA, transformA, rectangleB, transformB);
   });
 
   it('should determine if shape is a rectangle', () => {

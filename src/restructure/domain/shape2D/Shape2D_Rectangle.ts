@@ -2,7 +2,7 @@ import type { Canvas } from '../canvas/canvas.types';
 import type { Transform2D } from '../Transform2D';
 import type { Shape2D } from './shape2D.types';
 import { Vector2D } from '../Vector2D';
-import { RectangleCollisionResolver2D } from './collisionResolvers/RectangleCollisionResolver2D';
+import { CollisionResolver2D_Rectangle } from './collisionResolvers/CollisionResolver2D_Rectangle';
 
 /** The rectangle implementation of the Shape2D interface. */
 export class Shape2D_Rectangle implements Shape2D {
@@ -154,7 +154,7 @@ export class Shape2D_Rectangle implements Shape2D {
   }
 
   public overlaps(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D) {
-    return new RectangleCollisionResolver2D(this, transform, shape, shapeTransform).resolveCollision();
+    return new CollisionResolver2D_Rectangle(this, transform, shape, shapeTransform).resolveCollision();
   }
 
   public draw(canvas: Canvas) {

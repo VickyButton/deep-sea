@@ -7,7 +7,7 @@ import { Shape2D_Polygon } from '../Shape2D_Polygon';
 import { Shape2D_Rectangle } from '../Shape2D_Rectangle';
 
 /** Resolves a collision between a rectangle and an unknown 2D shape. */
-export class RectangleCollisionResolver2D extends CollisionResolver2D {
+export class CollisionResolver2D_Rectangle extends CollisionResolver2D {
   private readonly rectangle: Shape2D_Rectangle;
   private readonly rectangleTransform: Transform2D;
   private readonly shape: Shape2D;
