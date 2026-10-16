@@ -6,7 +6,7 @@ import { CollisionResolver2D } from './CollisionResolver2D';
 import { CollisionResolver2D_SeparatingAxisTheorem } from './CollisionResolver2D_SeparatingAxisTheorem';
 
 /** Resolves a collision between a 2D polygon and a rectangle. */
-export class PolygonRectanglePairCollisionResolver2D extends CollisionResolver2D {
+export class CollisionResolver2D_PolygonRectanglePair extends CollisionResolver2D {
   private readonly polygon: Shape2D_Polygon;
   private readonly polygonTransform: Transform2D;
   private readonly rectangle: Shape2D_Rectangle;
