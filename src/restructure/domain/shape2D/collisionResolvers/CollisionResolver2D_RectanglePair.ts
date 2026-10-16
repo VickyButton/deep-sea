@@ -5,7 +5,7 @@ import { CollisionResolver2D } from './CollisionResolver2D';
 import { CollisionResolver2D_SeparatingAxisTheorem } from './CollisionResolver2D_SeparatingAxisTheorem';
 
 /** Resolves a collision between two rectangles. */
-export class RectanglePairCollisionResolver2D extends CollisionResolver2D {
+export class CollisionResolver2D_RectanglePair extends CollisionResolver2D {
   private readonly rectangleA: Shape2D_Rectangle;
   private readonly transformA: Transform2D;
   private readonly rectangleB: Shape2D_Rectangle;

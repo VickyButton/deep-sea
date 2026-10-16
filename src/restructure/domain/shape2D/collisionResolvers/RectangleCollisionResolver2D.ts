@@ -1,8 +1,8 @@
 import type { Transform2D } from '../../Transform2D';
 import type { Shape2D } from '../shape2D.types';
 import { CollisionResolver2D } from './CollisionResolver2D';
+import { CollisionResolver2D_RectanglePair } from './CollisionResolver2D_RectanglePair';
 import { PolygonRectanglePairCollisionResolver2D } from './PolygonRectanglePairCollisionResolver2D';
-import { RectanglePairCollisionResolver2D } from './RectanglePairCollisionResolver2D';
 import { Shape2D_Polygon } from '../Shape2D_Polygon';
 import { Shape2D_Rectangle } from '../Shape2D_Rectangle';
 
@@ -37,7 +37,7 @@ export class RectangleCollisionResolver2D extends CollisionResolver2D {
   }
 
   private createRectanglePairCollisionResolver(rectangleA: Shape2D_Rectangle, transformA: Transform2D, rectangleB: Shape2D_Rectangle, transformB: Transform2D) {
-    return new RectanglePairCollisionResolver2D(rectangleA, transformA, rectangleB, transformB);
+    return new CollisionResolver2D_RectanglePair(rectangleA, transformA, rectangleB, transformB);
   }
 
   private createPolygonRectanglePairCollisionResolver(polygon: Shape2D_Polygon, polygonTransform: Transform2D, rectangle: Shape2D_Rectangle, rectangleTransform: Transform2D) {

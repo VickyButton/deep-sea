@@ -1,6 +1,6 @@
+import { CollisionResolver2D_RectanglePair } from './CollisionResolver2D_RectanglePair';
 import { PolygonRectanglePairCollisionResolver2D } from './PolygonRectanglePairCollisionResolver2D';
 import { RectangleCollisionResolver2D } from './RectangleCollisionResolver2D';
-import { RectanglePairCollisionResolver2D } from './RectanglePairCollisionResolver2D';
 import { Transform2D } from '../../Transform2D';
 import { Shape2D_Mock } from '../Shape2D_Mock';
 import { Shape2D_Polygon } from '../Shape2D_Polygon';
@@ -9,7 +9,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 describe('RectangleCollisionResolver2D', () => {
   it('should use rectangle pair collision resolver if both shapes are rectangles', () => {
-    vi.mock('./RectanglePairCollisionResolver2D');
+    vi.mock('./CollisionResolver2D_RectanglePair');
 
     const rectangle = new Shape2D_Rectangle();
     const rectangleTransform = new Transform2D();
@@ -19,7 +19,7 @@ describe('RectangleCollisionResolver2D', () => {
 
     resolver.resolveCollision();
 
-    expect(RectanglePairCollisionResolver2D).toHaveBeenCalledWith(rectangle, rectangleTransform, shape, shapeTransform);
+    expect(CollisionResolver2D_RectanglePair).toHaveBeenCalledWith(rectangle, rectangleTransform, shape, shapeTransform);
   });
 
   it('should use polygon-rectangle pair collision resolver if polygon-rectangle pair', () => {
