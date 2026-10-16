@@ -1,4 +1,4 @@
-import { Color } from './Color';
+import type { Color } from './color.types';
 import { clamp } from '../../utils/clamp';
 
 const COLOR_COMPONENT_MIN = 0;
@@ -6,15 +6,14 @@ const COLOR_COMPONENT_MAX = 255;
 const ALPHA_COMPONENT_MIN = 0;
 const ALPHA_COMPONENT_MAX = 1;
 
-export class RGBA extends Color {
+/** The RGBA implementation of the Color interface. */
+export class Color_RGBA implements Color {
   private _r: number;
   private _g: number;
   private _b: number;
   private _a: number;
 
   constructor(options?: RGBA_Options) {
-    super();
-
     this._r = options?.r !== undefined ? this.clampColorComponent(options.r) : COLOR_COMPONENT_MAX;
     this._g = options?.g !== undefined ? this.clampColorComponent(options.g) : COLOR_COMPONENT_MAX;
     this._b = options?.b !== undefined ? this.clampColorComponent(options.b) : COLOR_COMPONENT_MAX;
@@ -70,7 +69,7 @@ export class RGBA extends Color {
   }
 
   public static get RED() {
-    return new RGBA({
+    return new Color_RGBA({
       r: 255,
       g: 0,
       b: 0,
@@ -79,7 +78,7 @@ export class RGBA extends Color {
   }
 
   public static get GREEN() {
-    return new RGBA({
+    return new Color_RGBA({
       r: 0,
       g: 255,
       b: 0,
@@ -88,7 +87,7 @@ export class RGBA extends Color {
   }
 
   public static get BLUE() {
-    return new RGBA({
+    return new Color_RGBA({
       r: 0,
       g: 0,
       b: 255,
@@ -97,7 +96,7 @@ export class RGBA extends Color {
   }
 
   public static get WHITE() {
-    return new RGBA({
+    return new Color_RGBA({
       r: 255,
       g: 255,
       b: 255,
@@ -106,7 +105,7 @@ export class RGBA extends Color {
   }
 
   public static get BLACK() {
-    return new RGBA({
+    return new Color_RGBA({
       r: 0,
       g: 0,
       b: 0,
