@@ -1,9 +1,7 @@
-import type { BoundingBox2D } from '../shapes.types';
+import type { BoundingBox2D } from '../shape2D.types';
 import { CollisionResolver } from './CollisionResolver';
 
-/**
- * Used for resolving a collision between two 2D axis-aligned bounding boxes.
- */
+/** Resolves a collision between two 2D axis-aligned bounding boxes. */
 export class AxisAlignedBoundingBoxCollisionResolver2D extends CollisionResolver {
   private readonly boundingBoxA: BoundingBox2D;
   private readonly boundingBoxB: BoundingBox2D;

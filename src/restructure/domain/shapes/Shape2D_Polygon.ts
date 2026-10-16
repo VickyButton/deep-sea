@@ -1,21 +1,17 @@
 import type { Transform2D } from '../Transform2D';
-import type { BoundingBox2D } from './shapes.types';
+import type { BoundingBox2D } from './shape2D.types';
+import type { Shape2D } from './shape2D.types';
 import type { Canvas } from '../canvas/canvas.types';
 import { Vector2D } from '../Vector2D';
 import { PolygonCollisionResolver2D } from './collisionResolvers/PolygonCollisionResolver2D';
-import { Shape2D } from './Shape2D';
 
-/**
- * Representation of a 2D polygon defined by a set of vertices.
- */
-export class PolygonShape2D extends Shape2D {
+/** The polygon implementation of the Shape2D interface. */
+export class Shape2D_Polygon implements Shape2D {
   private _vertices: Vector2D[];
   private _boundingBox: BoundingBox2D;
   private isBoundingBoxStale: boolean;
 
   constructor(options?: PolygonShape2D_Options) {
-    super();
-
     if (options?.vertices && !this.isValidVertices(options.vertices)) {
       throw this.createInvalidVerticesError();
     }
@@ -115,12 +111,12 @@ export class PolygonShape2D extends Shape2D {
     canvas.createLine(from.x, from.y, to.x, to.y);
   }
 
-  public static isPolygon(shape: Shape2D): shape is PolygonShape2D {
-    return shape instanceof PolygonShape2D;
+  public static isPolygon(shape: Shape2D): shape is Shape2D_Polygon {
+    return shape instanceof Shape2D_Polygon;
   }
 
   public static createRegularPolygon(numSides = 3) {
-    return new PolygonShape2D({
+    return new Shape2D_Polygon({
       vertices: computeRegularPolygonVertices(numSides),
     });
   }

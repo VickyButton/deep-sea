@@ -1,6 +1,4 @@
-/**
- * Handles collision resolution between two shapes.
- */
+/** Resolves a collision between two shapes. */
 export abstract class CollisionResolver {
   /**
    * Resolves a collision between two shapes.

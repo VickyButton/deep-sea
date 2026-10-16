@@ -1,19 +1,17 @@
 import type { Transform2D } from '../../Transform2D';
 import type { Vector2D } from '../../Vector2D';
-import type { PolygonShape2D } from '../PolygonShape2D';
+import type { Shape2D_Polygon } from '../Shape2D_Polygon';
 import { CollisionResolver } from './CollisionResolver';
 import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
 
-/**
- * Used for resolving a collision between two 2D polygons.
- */
+/** Resolves a collision between two 2D polygons. */
 export class PolygonPairCollisionResolver2D extends CollisionResolver {
-  private readonly polygonA: PolygonShape2D;
+  private readonly polygonA: Shape2D_Polygon;
   private readonly transformA: Transform2D;
-  private readonly polygonB: PolygonShape2D;
+  private readonly polygonB: Shape2D_Polygon;
   private readonly transformB: Transform2D;
 
-  constructor(polygonA: PolygonShape2D, transformA: Transform2D, polygonB: PolygonShape2D, transformB: Transform2D) {
+  constructor(polygonA: Shape2D_Polygon, transformA: Transform2D, polygonB: Shape2D_Polygon, transformB: Transform2D) {
     super();
 
     this.polygonA = polygonA;

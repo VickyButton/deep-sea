@@ -1,12 +1,12 @@
 import { Transform2D } from '../Transform2D';
 import { Vector2D } from '../Vector2D';
 import { PolygonCollisionResolver2D } from './collisionResolvers/PolygonCollisionResolver2D';
-import { PolygonShape2D } from './PolygonShape2D';
+import { Shape2D_Polygon } from './Shape2D_Polygon';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('PolygonShape2D', () => {
+describe('Shape2D_Polygon', () => {
   it('should be a triangle by default', () => {
-    const polygon = new PolygonShape2D();
+    const polygon = new Shape2D_Polygon();
 
     expect(polygon.vertices).toEqual([
       new Vector2D(1, 0),
@@ -16,13 +16,13 @@ describe('PolygonShape2D', () => {
   });
 
   it('should throw if an invalid vertices are passed', () => {
-    expect(() => new PolygonShape2D({
+    expect(() => new Shape2D_Polygon({
       vertices: [],
     })).toThrowError();
   });
 
   it('should compute vertices', () => {
-    const polygon = new PolygonShape2D({
+    const polygon = new Shape2D_Polygon({
       vertices: VERTICES,
     });
 
@@ -34,7 +34,7 @@ describe('PolygonShape2D', () => {
   });
 
   it('should compute bounding box', () => {
-    const polygon = new PolygonShape2D({
+    const polygon = new Shape2D_Polygon({
       vertices: VERTICES,
     });
 
@@ -49,9 +49,9 @@ describe('PolygonShape2D', () => {
   it('should use polygon collision resolver to resolve collisions', () => {
     vi.mock('./collisionResolvers/PolygonCollisionResolver2D');
 
-    const polygonA = new PolygonShape2D();
+    const polygonA = new Shape2D_Polygon();
     const transformA = new Transform2D;
-    const polygonB = new PolygonShape2D();
+    const polygonB = new Shape2D_Polygon();
     const transformB = new Transform2D;
 
     polygonA.overlaps(transformA, polygonB, transformB);
@@ -60,9 +60,9 @@ describe('PolygonShape2D', () => {
   });
 
   it('should determine if shape is a polygon', () => {
-    const shape = new PolygonShape2D();
+    const shape = new Shape2D_Polygon();
 
-    expect(PolygonShape2D.isPolygon(shape)).toBe(true);
+    expect(Shape2D_Polygon.isPolygon(shape)).toBe(true);
   });
 });
 

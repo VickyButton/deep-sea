@@ -1,17 +1,18 @@
 import type { Transform2D } from '../../Transform2D';
 import type { Vector2D } from '../../Vector2D';
-import type { PolygonShape2D } from '../PolygonShape2D';
-import type { RectangleShape2D } from '../RectangleShape2D';
+import type { Shape2D_Polygon } from '../Shape2D_Polygon';
+import type { Shape2D_Rectangle } from '../Shape2D_Rectangle';
 import { CollisionResolver } from './CollisionResolver';
 import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
 
+/** Resolves a collision between a 2D polygon and a rectangle. */
 export class PolygonRectanglePairCollisionResolver2D extends CollisionResolver {
-  private readonly polygon: PolygonShape2D;
+  private readonly polygon: Shape2D_Polygon;
   private readonly polygonTransform: Transform2D;
-  private readonly rectangle: RectangleShape2D;
+  private readonly rectangle: Shape2D_Rectangle;
   private readonly rectangleTransform: Transform2D;
 
-  constructor(polygon: PolygonShape2D, polygonTransform: Transform2D, rectangle: RectangleShape2D, rectangleTransform: Transform2D) {
+  constructor(polygon: Shape2D_Polygon, polygonTransform: Transform2D, rectangle: Shape2D_Rectangle, rectangleTransform: Transform2D) {
     super();
 
     this.polygon = polygon;

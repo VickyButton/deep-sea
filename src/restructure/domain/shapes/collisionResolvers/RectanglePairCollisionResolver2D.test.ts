@@ -2,16 +2,16 @@ import { AxisAlignedBoundingBoxCollisionResolver2D } from './AxisAlignedBounding
 import { RectanglePairCollisionResolver2D } from './RectanglePairCollisionResolver2D';
 import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
 import { Transform2D } from '../../Transform2D';
-import { RectangleShape2D } from '../RectangleShape2D';
+import { Shape2D_Rectangle } from '../Shape2D_Rectangle';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('RectanglePairCollisionResolver2D', () => {
   it('should use Axis-Aligned Bounding Box collision resolver if both rectangles are axis-aligned', () => {
     vi.mock('./AxisAlignedBoundingBoxCollisionResolver2D');
 
-    const rectangleA = new RectangleShape2D();
+    const rectangleA = new Shape2D_Rectangle();
     const transformA = new Transform2D();
-    const rectangleB = new RectangleShape2D();
+    const rectangleB = new Shape2D_Rectangle();
     const transformB = new Transform2D();
     const resolver = new RectanglePairCollisionResolver2D(rectangleA, transformA, rectangleB, transformB);
 
@@ -23,9 +23,9 @@ describe('RectanglePairCollisionResolver2D', () => {
   it('should use Separating Axis Theorem collision resolver if either rectangle is not axis-aligned', () => {
     vi.mock('./SeparatingAxisTheoremCollisionResolver2D');
 
-    const rectangleA = new RectangleShape2D();
+    const rectangleA = new Shape2D_Rectangle();
     const transformA = new Transform2D();
-    const rectangleB = new RectangleShape2D();
+    const rectangleB = new Shape2D_Rectangle();
     const transformB = new Transform2D({
       rotation: Math.PI / 4,
     });

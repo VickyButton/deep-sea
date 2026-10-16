@@ -1,14 +1,11 @@
-import type { BoundingBox2D } from './shapes.types';
 import type { Canvas } from '../canvas/canvas.types';
 import type { Transform2D } from '../Transform2D';
+import type { Vector2D } from '../Vector2D';
 
-/**
- * Abstract representation of a 2D shape that can be checked for collision.
- */
-export abstract class Shape2D {
+/** A 2D shape that can be transformed and drawn. */
+export interface Shape2D {
   /** The axis-aligned bounding box of the shape. */
-  public abstract get boundingBox(): BoundingBox2D;
-
+  get boundingBox(): BoundingBox2D;
   /**
    * Checks whether this shape overlaps another shape.
    * @param transform The 2D transformation matrix to apply to this shape.
@@ -16,11 +13,13 @@ export abstract class Shape2D {
    * @param shapeTransform The 2D transformation matrix to apply to the other shape.
    * @returns True if the two shapes overlap, false if not.
    */
-  public abstract overlaps(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D): boolean;
-
+  overlaps(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D): boolean;
   /**
    * Draws the shape onto a canvas.
    * @param canvas The canvas to draw the shape onto.
    */
-  public abstract draw(canvas: Canvas): void;
+  draw(canvas: Canvas): void;
 }
+
+/** A set of vertices that form an axis-aligned bounding box of a 2D shape, in counterclockwise order. */
+export type BoundingBox2D = [Vector2D, Vector2D, Vector2D, Vector2D];

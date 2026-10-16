@@ -1,13 +1,11 @@
 import type { Canvas } from '../canvas/canvas.types';
 import type { Transform2D } from '../Transform2D';
-import { RectangleCollisionResolver2D } from './collisionResolvers/RectangleCollisionResolver2D';
-import { Shape2D } from './Shape2D';
+import type { Shape2D } from './shape2D.types';
 import { Vector2D } from '../Vector2D';
+import { RectangleCollisionResolver2D } from './collisionResolvers/RectangleCollisionResolver2D';
 
-/**
- * Representation of a 2D rectangle.
- */
-export class RectangleShape2D extends Shape2D {
+/** The rectangle implementation of the Shape2D interface. */
+export class Shape2D_Rectangle implements Shape2D {
   private _width: number;
   private _halfWidth: number;
   private isHalfWidthStale: boolean;
@@ -18,8 +16,6 @@ export class RectangleShape2D extends Shape2D {
   private isVerticesStale: boolean;
 
   constructor(options?: RectangleShape2D_Options) {
-    super();
-
     this._width = options?.width ?? 1;
     this._halfWidth = this.computeHalfWidth();
     this.isHalfWidthStale = false;
@@ -191,8 +187,8 @@ export class RectangleShape2D extends Shape2D {
     canvas.createLine(from.x, from.y, to.x, to.y);
   }
 
-  public static isRectangle(shape: Shape2D): shape is RectangleShape2D {
-    return shape instanceof RectangleShape2D;
+  public static isRectangle(shape: Shape2D): shape is Shape2D_Rectangle {
+    return shape instanceof Shape2D_Rectangle;
   }
 }
 

@@ -1,12 +1,12 @@
 import { Transform2D } from '../Transform2D';
 import { Vector2D } from '../Vector2D';
 import { RectangleCollisionResolver2D } from './collisionResolvers/RectangleCollisionResolver2D';
-import { RectangleShape2D } from './RectangleShape2D';
+import { Shape2D_Rectangle } from './Shape2D_Rectangle';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('RectangleShape2D', () => {
+describe('Shape2D_Rectangle', () => {
   it('should get width', () => {
-    const rectangle = new RectangleShape2D({
+    const rectangle = new Shape2D_Rectangle({
       width: 1,
       height: 1,
     });
@@ -15,7 +15,7 @@ describe('RectangleShape2D', () => {
   });
 
   it('should get half-width', () => {
-    const rectangle = new RectangleShape2D({
+    const rectangle = new Shape2D_Rectangle({
       width: 1,
       height: 1,
     });
@@ -24,7 +24,7 @@ describe('RectangleShape2D', () => {
   });
 
   it('should update half-width when width is updated', () => {
-    const rectangle = new RectangleShape2D({
+    const rectangle = new Shape2D_Rectangle({
       width: 1,
       height: 1,
     });
@@ -35,7 +35,7 @@ describe('RectangleShape2D', () => {
   });
 
   it('should get height', () => {
-    const rectangle = new RectangleShape2D({
+    const rectangle = new Shape2D_Rectangle({
       width: 1,
       height: 1,
     });
@@ -44,7 +44,7 @@ describe('RectangleShape2D', () => {
   });
 
   it('should get half-height', () => {
-    const rectangle = new RectangleShape2D({
+    const rectangle = new Shape2D_Rectangle({
       width: 1,
       height: 1,
     });
@@ -53,7 +53,7 @@ describe('RectangleShape2D', () => {
   });
 
   it('should update half-height when height is updated', () => {
-    const rectangle = new RectangleShape2D({
+    const rectangle = new Shape2D_Rectangle({
       width: 1,
       height: 1,
     });
@@ -64,7 +64,7 @@ describe('RectangleShape2D', () => {
   });
 
   it('should get size', () => {
-    const rectangle = new RectangleShape2D({
+    const rectangle = new Shape2D_Rectangle({
       width: 1,
       height: 1,
     });
@@ -73,7 +73,7 @@ describe('RectangleShape2D', () => {
   });
 
   it('should compute vertices', () => {
-    const rectangle = new RectangleShape2D({
+    const rectangle = new Shape2D_Rectangle({
       width: 1,
       height: 1,
     });
@@ -87,7 +87,7 @@ describe('RectangleShape2D', () => {
   });
 
   it('should compute bounding box', () => {
-    const rectangle = new RectangleShape2D({
+    const rectangle = new Shape2D_Rectangle({
       width: 1,
       height: 1,
     });
@@ -103,9 +103,9 @@ describe('RectangleShape2D', () => {
   it('should use rectangle collision resolver to resolve collisions', () => {
     vi.mock('./collisionResolvers/RectangleCollisionResolver2D');
 
-    const rectangleA = new RectangleShape2D();
+    const rectangleA = new Shape2D_Rectangle();
     const transformA = new Transform2D();
-    const rectangleB = new RectangleShape2D();
+    const rectangleB = new Shape2D_Rectangle();
     const transformB = new Transform2D();
 
     rectangleA.overlaps(transformA, rectangleB, transformB);
@@ -114,8 +114,8 @@ describe('RectangleShape2D', () => {
   });
 
   it('should determine if shape is a rectangle', () => {
-    const shape = new RectangleShape2D();
+    const shape = new Shape2D_Rectangle();
 
-    expect(RectangleShape2D.isRectangle(shape)).toBe(true);
+    expect(Shape2D_Rectangle.isRectangle(shape)).toBe(true);
   });
 });

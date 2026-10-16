@@ -1,19 +1,17 @@
 import type { Transform2D } from '../../Transform2D';
-import type { RectangleShape2D } from '../RectangleShape2D';
+import type { Shape2D_Rectangle } from '../Shape2D_Rectangle';
 import { AxisAlignedBoundingBoxCollisionResolver2D } from './AxisAlignedBoundingBoxCollisionResolver2D';
 import { CollisionResolver } from './CollisionResolver';
 import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
 
-/**
- * Used for resolving a collision between two 2D rectangles.
- */
+/** Resolves a collision between two rectangles. */
 export class RectanglePairCollisionResolver2D extends CollisionResolver {
-  private readonly rectangleA: RectangleShape2D;
+  private readonly rectangleA: Shape2D_Rectangle;
   private readonly transformA: Transform2D;
-  private readonly rectangleB: RectangleShape2D;
+  private readonly rectangleB: Shape2D_Rectangle;
   private readonly transformB: Transform2D;
 
-  constructor(rectangleA: RectangleShape2D, transformA: Transform2D, rectangleB: RectangleShape2D, transformB: Transform2D) {
+  constructor(rectangleA: Shape2D_Rectangle, transformA: Transform2D, rectangleB: Shape2D_Rectangle, transformB: Transform2D) {
     super();
 
     this.rectangleA = rectangleA;
