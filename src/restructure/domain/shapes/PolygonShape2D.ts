@@ -1,6 +1,6 @@
 import type { Transform2D } from '../Transform2D';
 import type { BoundingBox2D } from './shapes.types';
-import type { Canvas } from '../canvases/Canvas';
+import type { Canvas } from '../canvas/Canvas';
 import { Vector2D } from '../Vector2D';
 import { PolygonCollisionResolver2D } from './collisionResolvers/PolygonCollisionResolver2D';
 import { Shape2D } from './Shape2D';

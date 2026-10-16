@@ -1,4 +1,4 @@
-import type { Canvas } from '../../domain/canvases/Canvas';
+import type { Canvas } from '../../domain/canvas/canvas.types';
 
 /** Exposes functionality for drawing graphics onto a canvas through draw commands. */
 export interface Graphics {

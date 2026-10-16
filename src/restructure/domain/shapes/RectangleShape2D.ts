@@ -1,4 +1,4 @@
-import type { Canvas } from '../canvases/Canvas';
+import type { Canvas } from '../canvas/Canvas';
 import type { Transform2D } from '../Transform2D';
 import { RectangleCollisionResolver2D } from './collisionResolvers/RectangleCollisionResolver2D';
 import { Shape2D } from './Shape2D';

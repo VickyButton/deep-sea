@@ -1,4 +1,4 @@
-import type { Canvas } from './domain/canvases';
+import type { Canvas } from './domain/canvas/canvas.types';
 import type { Engine } from './engine/engine.types';
 import type { Graphics } from './engine/graphics/graphics.types';
 import type { SceneTree } from './engine/sceneTree/sceneTree.types';

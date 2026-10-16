@@ -1,9 +1,10 @@
 import { Graphics_Main } from './Graphics_Main';
+import { Canvas_Mock } from '../../domain/canvas/Canvas_Mock';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Graphics_Main', () => {
   it('should clear canvas', () => {
-    const canvas = new Canvas();
+    const canvas = new Canvas_Mock();
     const graphics = new Graphics_Main(canvas);
 
     graphics.clearCanvas();
@@ -12,7 +13,7 @@ describe('Graphics_Main', () => {
   });
 
   it('should draw onto canvas using draw commands', () => {
-    const canvas = new Canvas();
+    const canvas = new Canvas_Mock();
     const graphics = new Graphics_Main(canvas);
     const drawCommand = {
       id: 'draw-command',
@@ -27,7 +28,7 @@ describe('Graphics_Main', () => {
   });
 
   it('should process queued commands in order of z-index', () => {
-    const canvas = new Canvas();
+    const canvas = new Canvas_Mock();
     const graphics = new Graphics_Main(canvas);
     const drawCommandZ0 = {
       id: 'draw-command-z0',
@@ -48,7 +49,7 @@ describe('Graphics_Main', () => {
   });
 
   it('should cache command after processing', () => {
-    const canvas = new Canvas();
+    const canvas = new Canvas_Mock();
     const graphics = new Graphics_Main(canvas);
     const drawCommand = {
       id: 'draw-command',
@@ -64,7 +65,7 @@ describe('Graphics_Main', () => {
   });
 
   it('should delete cached command after queueing redraw', () => {
-    const canvas = new Canvas();
+    const canvas = new Canvas_Mock();
     const graphics = new Graphics_Main(canvas);
     const drawCommand1 = {
       id: 'draw-command',
@@ -87,7 +88,7 @@ describe('Graphics_Main', () => {
   });
 
   it('should delete cached command', () => {
-    const canvas = new Canvas();
+    const canvas = new Canvas_Mock();
     const graphics = new Graphics_Main(canvas);
     const drawCommand = {
       id: 'draw-command',
@@ -104,7 +105,7 @@ describe('Graphics_Main', () => {
   });
 
   it('should clear command queue', () => {
-    const canvas = new Canvas();
+    const canvas = new Canvas_Mock();
     const graphics = new Graphics_Main(canvas);
     const drawCommand = {
       id: 'draw-command',
@@ -118,21 +119,4 @@ describe('Graphics_Main', () => {
 
     expect(drawCommand.draw).not.toHaveBeenCalled();
   });
-});
-
-const Canvas = vi.fn(class {
-  width = 0;
-  height = 0;
-  beginPath = vi.fn();
-  closePath = vi.fn();
-  setTransform = vi.fn();
-  resetTransform = vi.fn();
-  createLine = vi.fn();
-  createArc = vi.fn();
-  createRectangle = vi.fn();
-  setStrokeColor = vi.fn();
-  stroke = vi.fn();
-  setFillColor = vi.fn();
-  fill = vi.fn();
-  clear = vi.fn();
 });

@@ -1,5 +1,5 @@
 import type { DrawCommand, Graphics } from './graphics.types';
-import type { Canvas } from '../../domain/canvases/Canvas';
+import type { Canvas } from '../../domain/canvas/Canvas';
 
 /** The main implementation of the Graphics interface. */
 export class Graphics_Main implements Graphics {

@@ -1,29 +1,37 @@
 import type { Matrix3D } from '../Matrix3D';
-import { Canvas } from './Canvas';
+import type { Canvas } from './canvas.types';
 
-export class Canvas2D extends Canvas {
-  private ctx: CanvasRenderingContext2D;
+/** The 2D implementation of the Canvas interface. */
+export class Canvas_2D implements Canvas {
+  private readonly canvas: OffscreenCanvas;
+  private readonly ctx: OffscreenCanvasRenderingContext2D;
 
-  constructor(ctx: CanvasRenderingContext2D) {
-    super();
+  constructor(width: number, height: number) {
+    this.canvas = new OffscreenCanvas(width, height);
+
+    const ctx = this.canvas.getContext('2d');
+
+    if (!ctx) {
+      throw new Error('2D rendering is not supported.');
+    }
 
     this.ctx = ctx;
   }
 
   public get width() {
-    return this.ctx.canvas.width;
+    return this.canvas.width;
   }
 
   public set width(width: number) {
-    this.ctx.canvas.width = width;
+    this.canvas.width = width;
   }
 
   public get height() {
-    return this.ctx.canvas.height;
+    return this.canvas.height;
   }
 
   public set height(height: number) {
-    this.ctx.canvas.height = height;
+    this.canvas.height = height;
   }
 
   public beginPath() {

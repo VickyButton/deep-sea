@@ -1,4 +1,4 @@
-import type { Canvas } from '../../domain/canvases';
+import type { Canvas } from '../../domain/canvas';
 import type { DrawCommand } from '../../engine/graphics/graphics.types';
 import type { Signal } from '../../signals/signal/signal.types';
 import type { Node } from '../node/node.types';
