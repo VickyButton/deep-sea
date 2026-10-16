@@ -1,8 +1,8 @@
-import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
+import { CollisionResolver2D_SeparatingAxisTheorem } from './CollisionResolver2D_SeparatingAxisTheorem';
 import { Vector2D } from '../../Vector2D';
 import { describe, expect, it } from 'vitest';
 
-describe('SeparatingAxisTheoremCollisionResolver2D', () => {
+describe('CollisionResolver2D_SeparatingAxisTheorem', () => {
   it('should not detect collision if polygons do not overlap', () => {
     const polygonA = CENTERED_POLYGON;
     const polygonB = [
@@ -11,7 +11,7 @@ describe('SeparatingAxisTheoremCollisionResolver2D', () => {
       polygonA[2].add(new Vector2D(2, 2)),
       polygonA[3].add(new Vector2D(2, 2)),
     ];
-    const collisionResolver = new SeparatingAxisTheoremCollisionResolver2D(polygonA, polygonB);
+    const collisionResolver = new CollisionResolver2D_SeparatingAxisTheorem(polygonA, polygonB);
 
     expect(collisionResolver.resolveCollision()).toBe(false);
   });
@@ -24,7 +24,7 @@ describe('SeparatingAxisTheoremCollisionResolver2D', () => {
       polygonA[2].add(new Vector2D(1, 1)),
       polygonA[3].add(new Vector2D(1, 1)),
     ];
-    const collisionResolver = new SeparatingAxisTheoremCollisionResolver2D(polygonA, polygonB);
+    const collisionResolver = new CollisionResolver2D_SeparatingAxisTheorem(polygonA, polygonB);
 
     expect(collisionResolver.resolveCollision()).toBe(true);
   });

@@ -1,6 +1,6 @@
 import { AxisAlignedBoundingBoxCollisionResolver2D } from './AxisAlignedBoundingBoxCollisionResolver2D';
+import { CollisionResolver2D_SeparatingAxisTheorem } from './CollisionResolver2D_SeparatingAxisTheorem';
 import { RectanglePairCollisionResolver2D } from './RectanglePairCollisionResolver2D';
-import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
 import { Transform2D } from '../../Transform2D';
 import { Shape2D_Rectangle } from '../Shape2D_Rectangle';
 import { describe, expect, it, vi } from 'vitest';
@@ -21,7 +21,7 @@ describe('RectanglePairCollisionResolver2D', () => {
   });
 
   it('should use Separating Axis Theorem collision resolver if either rectangle is not axis-aligned', () => {
-    vi.mock('./SeparatingAxisTheoremCollisionResolver2D');
+    vi.mock('./CollisionResolver2D_SeparatingAxisTheorem');
 
     const rectangleA = new Shape2D_Rectangle();
     const transformA = new Transform2D();
@@ -33,6 +33,6 @@ describe('RectanglePairCollisionResolver2D', () => {
 
     resolver.resolveCollision();
 
-    expect(SeparatingAxisTheoremCollisionResolver2D).toHaveBeenCalledWith(rectangleA.vertices, rectangleB.vertices);
+    expect(CollisionResolver2D_SeparatingAxisTheorem).toHaveBeenCalledWith(rectangleA.vertices, rectangleB.vertices);
   });
 });

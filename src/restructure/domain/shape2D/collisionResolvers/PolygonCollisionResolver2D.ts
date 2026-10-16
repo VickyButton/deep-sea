@@ -1,13 +1,13 @@
 import type { Transform2D } from '../../Transform2D';
 import type { Shape2D } from '../shape2D.types';
-import { CollisionResolver } from './CollisionResolver';
+import { CollisionResolver2D } from './CollisionResolver2D';
 import { PolygonPairCollisionResolver2D } from './PolygonPairCollisionResolver2D';
 import { PolygonRectanglePairCollisionResolver2D } from './PolygonRectanglePairCollisionResolver2D';
 import { Shape2D_Polygon } from '../Shape2D_Polygon';
 import { Shape2D_Rectangle } from '../Shape2D_Rectangle';
 
 /** Resolves a collision between a 2D polygon and an unknown 2D shape. */
-export class PolygonCollisionResolver2D extends CollisionResolver {
+export class PolygonCollisionResolver2D extends CollisionResolver2D {
   private readonly polygon: Shape2D_Polygon;
   private readonly polygonTransform: Transform2D;
   private readonly shape: Shape2D;
@@ -26,7 +26,7 @@ export class PolygonCollisionResolver2D extends CollisionResolver {
     return this.getCollisionResolver().resolveCollision();
   }
 
-  private getCollisionResolver(): CollisionResolver {
+  private getCollisionResolver(): CollisionResolver2D {
     if (Shape2D_Polygon.isPolygon(this.shape)) {
       return this.createPolygonPairCollisionResolver(this.polygon, this.polygonTransform, this.shape, this.shapeTransform);
     } else if (Shape2D_Rectangle.isRectangle(this.shape)) {

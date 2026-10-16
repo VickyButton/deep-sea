@@ -1,11 +1,11 @@
 import type { Transform2D } from '../../Transform2D';
 import type { Shape2D_Rectangle } from '../Shape2D_Rectangle';
 import { AxisAlignedBoundingBoxCollisionResolver2D } from './AxisAlignedBoundingBoxCollisionResolver2D';
-import { CollisionResolver } from './CollisionResolver';
-import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
+import { CollisionResolver2D } from './CollisionResolver2D';
+import { CollisionResolver2D_SeparatingAxisTheorem } from './CollisionResolver2D_SeparatingAxisTheorem';
 
 /** Resolves a collision between two rectangles. */
-export class RectanglePairCollisionResolver2D extends CollisionResolver {
+export class RectanglePairCollisionResolver2D extends CollisionResolver2D {
   private readonly rectangleA: Shape2D_Rectangle;
   private readonly transformA: Transform2D;
   private readonly rectangleB: Shape2D_Rectangle;
@@ -53,6 +53,6 @@ export class RectanglePairCollisionResolver2D extends CollisionResolver {
     const verticesA = this.rectangleA.vertices;
     const verticesB = this.rectangleB.vertices;
 
-    return new SeparatingAxisTheoremCollisionResolver2D(verticesA, verticesB);
+    return new CollisionResolver2D_SeparatingAxisTheorem(verticesA, verticesB);
   }
 }

@@ -1,11 +1,11 @@
 import type { Transform2D } from '../../Transform2D';
 import type { Vector2D } from '../../Vector2D';
 import type { Shape2D_Polygon } from '../Shape2D_Polygon';
-import { CollisionResolver } from './CollisionResolver';
-import { SeparatingAxisTheoremCollisionResolver2D } from './SeparatingAxisTheoremCollisionResolver2D';
+import { CollisionResolver2D } from './CollisionResolver2D';
+import { CollisionResolver2D_SeparatingAxisTheorem } from './CollisionResolver2D_SeparatingAxisTheorem';
 
 /** Resolves a collision between two 2D polygons. */
-export class PolygonPairCollisionResolver2D extends CollisionResolver {
+export class PolygonPairCollisionResolver2D extends CollisionResolver2D {
   private readonly polygonA: Shape2D_Polygon;
   private readonly transformA: Transform2D;
   private readonly polygonB: Shape2D_Polygon;
@@ -32,7 +32,7 @@ export class PolygonPairCollisionResolver2D extends CollisionResolver {
     const verticesA = this.verticesA;
     const verticesB = this.verticesB;
 
-    return new SeparatingAxisTheoremCollisionResolver2D(verticesA, verticesB);
+    return new CollisionResolver2D_SeparatingAxisTheorem(verticesA, verticesB);
   }
 
   private get verticesA() {
