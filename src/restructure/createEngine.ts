@@ -1,5 +1,4 @@
 import type { Engine } from './engine/engine.types';
-import type { SceneRegistry } from './engine/sceneManager/sceneManager.types';
 import { Canvas_2D } from './domain/canvas/Canvas_2D';
 import { Clock_System } from './domain/clock/Clock_System';
 import { Engine_Main } from './engine/Engine_Main';
@@ -67,5 +66,4 @@ interface Config {
     width: number;
     height: number;
   };
-  scenes: SceneRegistry;
 }
