@@ -1,5 +1,5 @@
 import { ShapeNode2D_Main } from './ShapeNode2D_Main';
-import { Shape2D_Rectangle } from '../../domain/shapes/Shape2D_Rectangle';
+import { Shape2D_Rectangle } from '../../domain/shape2D/Shape2D_Rectangle';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('ShapeNode2D_Main', () => {

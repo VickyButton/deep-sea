@@ -1,6 +1,6 @@
 import type { ShapeNode2D } from './shapeNode2D.types';
-import type { Shape2D } from '../../domain/shapes/shape2D.types';
-import { Shape2D_Rectangle } from '../../domain/shapes/Shape2D_Rectangle';
+import type { Shape2D } from '../../domain/shape2D/shape2D.types';
+import { Shape2D_Rectangle } from '../../domain/shape2D/Shape2D_Rectangle';
 import { Signal_Main } from '../../domain/signal/Signal_Main';
 import { Node2D_Main } from '../node2D/Node2D_Main';
 
