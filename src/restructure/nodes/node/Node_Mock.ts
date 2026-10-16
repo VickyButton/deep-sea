@@ -1,6 +1,6 @@
 import type { Node } from './node.types';
-import { SignalController_Mock } from '../../controllers/signalController/SignalController_Mock';
 import { Signal_Mock } from '../../domain/signal/Signal_Mock';
+import { SignalController_Mock } from '../../domain/signalController/SignalController_Mock';
 import { vi } from 'vitest';
 
 /** The mock implementation of the Node interface. */

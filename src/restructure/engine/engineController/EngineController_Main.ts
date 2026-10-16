@@ -3,7 +3,7 @@ import type { CanvasNode } from '../../nodes/canvasNode/canvasNode.types';
 import type { Node } from '../../nodes/node/node.types';
 import type { DrawCommand, Graphics } from '../graphics/graphics.types';
 import type { SceneTree } from '../sceneTree/sceneTree.types';
-import { SignalController_Main } from '../../controllers/signalController/SignalController_Main';
+import { SignalController_Main } from '../../domain/signalController/SignalController_Main';
 
 /** The main implementation of the EngineController interface. */
 export class EngineController_Main implements EngineController {
