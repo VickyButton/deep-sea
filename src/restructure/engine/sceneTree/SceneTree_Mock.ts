@@ -1,6 +1,6 @@
 import type { SceneTree } from './sceneTree.types';
 import { Node_Mock } from '../../nodes/node/Node_Mock';
-import { Signal_Mock } from '../../signals/signal/Signal_Mock';
+import { Signal_Mock } from '../../domain/signals/signal/Signal_Mock';
 import { vi } from 'vitest';
 
 /** The mock implementation of the SceneTree interface. */

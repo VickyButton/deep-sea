@@ -1,7 +1,7 @@
 import type { ShapeNode2D } from './shapeNode2D.types';
 import type { Shape2D } from '../../domain/shapes';
 import { RectangleShape2D } from '../../domain/shapes';
-import { Signal_Main } from '../../signals/signal/Signal_Main';
+import { Signal_Main } from '../../domain/signals/signal/Signal_Main';
 import { Node2D_Main } from '../node2D/Node2D_Main';
 
 /** The base implementation of the ShapeNode2D interface. */

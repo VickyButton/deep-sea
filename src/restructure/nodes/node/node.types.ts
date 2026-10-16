@@ -1,6 +1,6 @@
 import type { SignalController } from '../../controllers/signalController/signalController.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
-import type { Signal } from '../../signals/signal/signal.types';
+import type { Signal } from '../../domain/signals/signal/signal.types';
 
 /** A node that encapsulate state, emits signals, and can be added to a scene tree. */
 export interface Node {

@@ -1,7 +1,7 @@
 import type { SceneTree } from './sceneTree.types';
 import type { Node } from '../../nodes/node/node.types';
 import { Node_Main } from '../../nodes/node/Node_Main';
-import { Signal_Main } from '../../signals/signal/Signal_Main';
+import { Signal_Main } from '../../domain/signals/signal/Signal_Main';
 
 /** The main implementation of the SceneTree interface. */
 export class SceneTree_Main implements SceneTree {

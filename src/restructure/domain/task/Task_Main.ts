@@ -1,5 +1,5 @@
 import type { Task, TaskFailure, TaskResult, TaskState, TaskSuccess } from './task.types';
-import { Signal_Main } from '../../signals/signal/Signal_Main';
+import { Signal_Main } from '../signals/signal/Signal_Main';
 
 /** The main implementation of the Task interface. */
 export class Task_Main<Data = void> implements Task<Data> {

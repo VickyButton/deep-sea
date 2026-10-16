@@ -1,4 +1,4 @@
-import type { Signal, SignalCallback } from '../../signals/signal/signal.types';
+import type { Signal, SignalCallback } from '../../domain/signals/signal/signal.types';
 
 /** A controller used to delegate signal callbacks and toggle listening. */
 export interface SignalController {

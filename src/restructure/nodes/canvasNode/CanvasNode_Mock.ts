@@ -1,6 +1,6 @@
 import type { CanvasNode } from './canvasNode.types';
 import type { DrawCommand } from '../../engine/graphics/graphics.types';
-import { Signal_Mock } from '../../signals/signal/Signal_Mock';
+import { Signal_Mock } from '../../domain/signals/signal/Signal_Mock';
 import { Node_Mock } from '../node/Node_Mock';
 import { vi } from 'vitest';
 
