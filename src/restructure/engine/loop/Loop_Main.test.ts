@@ -1,9 +1,6 @@
 import { Loop_Main } from './Loop_Main';
+import { Clock_Mock } from '../../domain/clock/Clock_Mock';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-
-const clock = {
-  now: 0,
-};
 
 // Mock global animation frame methods.
 global.requestAnimationFrame = (cb: FrameRequestCallback) => {
@@ -21,10 +18,10 @@ describe('Loop_Main', () => {
   afterEach(() => {
     vi.clearAllMocks();
     vi.useRealTimers();
-    clock.now = 0;
   });
 
   it('should execute loop callback on interval', () => {
+    const clock = new Clock_Mock();
     const loop = new Loop_Main(clock);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
@@ -33,12 +30,14 @@ describe('Loop_Main', () => {
     loop.setLoopsPerSecond(loopsPerSecond);
     loop.setLoopCallback(loopCallback);
     loop.start();
-    advanceTimers(loopsPerSecondInterval);
+    clock.now += loopsPerSecondInterval;
+    vi.advanceTimersByTime(loopsPerSecondInterval);
 
     expect(loopCallback).toHaveBeenCalledWith(loopsPerSecondInterval);
   });
 
   it('should not execute loop callback after stopping', () => {
+    const clock = new Clock_Mock();
     const loop = new Loop_Main(clock);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
@@ -48,13 +47,9 @@ describe('Loop_Main', () => {
     loop.setLoopCallback(loopCallback);
     loop.start();
     loop.stop();
-    advanceTimers(loopsPerSecondInterval);
+    clock.now += loopsPerSecondInterval;
+    vi.advanceTimersByTime(loopsPerSecondInterval);
 
     expect(loopCallback).not.toHaveBeenCalled();
   });
 });
-
-function advanceTimers(ms: number) {
-  clock.now += ms;
-  vi.advanceTimersByTime(ms);
-}

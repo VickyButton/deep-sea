@@ -2,13 +2,13 @@ import type { Canvas } from './domain/canvas/canvas.types';
 import type { Engine } from './engine/engine.types';
 import type { Graphics } from './engine/graphics/graphics.types';
 import type { SceneTree } from './engine/sceneTree/sceneTree.types';
+import { Clock_System } from './domain/clock/Clock_System';
 import { Engine_Main } from './engine/Engine_Main';
 import { EngineController_Main } from './engine/engineController/EngineController_Main';
 import { Graphics_Main } from './engine/graphics/Graphics_Main';
 import { Loop_Main } from './engine/loop/Loop_Main';
 import { PluginManager_Main } from './engine/pluginManager/PluginManager_Main';
 import { SceneTree_Main } from './engine/sceneTree/SceneTree_Main';
-import { ClockSystem } from './providers/clock/ClockSystem';
 
 /**
  * Creates a new engine instance.
@@ -48,7 +48,7 @@ function createLoop() {
 }
 
 function createClock() {
-  return new ClockSystem();
+  return new Clock_System();
 }
 
 function createPluginManager() {

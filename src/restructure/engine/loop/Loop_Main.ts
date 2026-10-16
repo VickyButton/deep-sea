@@ -1,5 +1,5 @@
 import type { Loop, LoopCallback } from './loop.types';
-import type { Clock } from '../../providers/clock/clock.types';
+import type { Clock } from '../../domain/clock/clock.types';
 import { clamp } from '../../utils/clamp';
 
 const LOOPS_PER_SECOND_MIN = 1;

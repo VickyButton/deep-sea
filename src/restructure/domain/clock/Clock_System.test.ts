@@ -1,7 +1,7 @@
-import { ClockSystem } from './ClockSystem';
+import { Clock_System } from './Clock_System';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-describe('ClockSystem', () => {
+describe('Clock_System', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -11,7 +11,7 @@ describe('ClockSystem', () => {
   });
 
   it('should use system time', () => {
-    const clock = new ClockSystem();
+    const clock = new Clock_System();
     const time = 0;
 
     vi.setSystemTime(time);
