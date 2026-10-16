@@ -1,5 +1,5 @@
+import type { Signal } from '../../domain/signal/signal.types';
 import type { Node } from '../../nodes/node/node.types';
-import type { Signal } from '../../domain/signals/signal/signal.types';
 
 /** A tree of scenes that share a root node. */
 export interface SceneTree {

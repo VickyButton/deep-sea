@@ -1,6 +1,6 @@
 import type { CanvasNode } from './canvasNode.types';
 import type { DrawCommand } from '../../engine/graphics/graphics.types';
-import { Signal_Main } from '../../domain/signals/signal/Signal_Main';
+import { Signal_Main } from '../../domain/signal/Signal_Main';
 import { Node_Main } from '../node/Node_Main';
 
 /** The main implementation of the CanvasNode interface. */

@@ -1,5 +1,5 @@
 import type { Shape2D } from '../../domain/shapes/Shape2D';
-import type { Signal } from '../../domain/signals/signal/signal.types';
+import type { Signal } from '../../domain/signal/signal.types';
 import type { Node2D } from '../node2D/node2D.types';
 
 /** A node that holds a 2D shape. */

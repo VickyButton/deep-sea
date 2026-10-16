@@ -1,4 +1,4 @@
-import type { Signal } from '../signals/signal/signal.types';
+import type { Signal } from '../signal/signal.types';
 
 /** Represents an asynchronous task that can be tracked. */
 export interface Task<Data = void> {

@@ -1,6 +1,6 @@
 import type { Vector2D } from '../../domain';
+import type { Signal } from '../../domain/signal/signal.types';
 import type { Transform2D } from '../../domain/Transform2D';
-import type { Signal } from '../../domain/signals/signal/signal.types';
 import type { CanvasNode } from '../canvasNode/canvasNode.types';
 
 /** A 2D node that has position, rotation, and scale. */

@@ -1,7 +1,7 @@
 import type { Node, NodeConstructor, ProcessCallback } from './node.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
 import { SignalController_Main } from '../../controllers/signalController/SignalController_Main';
-import { Signal_Main } from '../../domain/signals/signal/Signal_Main';
+import { Signal_Main } from '../../domain/signal/Signal_Main';
 
 /** The main implementation of the Node interface. */
 export class Node_Main implements Node {

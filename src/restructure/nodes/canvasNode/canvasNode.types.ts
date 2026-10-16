@@ -1,6 +1,6 @@
-import type { Canvas } from '../../domain/canvas';
+import type { Canvas } from '../../domain/canvas/canvas.types';
+import type { Signal } from '../../domain/signal/signal.types';
 import type { DrawCommand } from '../../engine/graphics/graphics.types';
-import type { Signal } from '../../domain/signals/signal/signal.types';
 import type { Node } from '../node/node.types';
 
 /** A node that can be drawn onto a canvas. */
