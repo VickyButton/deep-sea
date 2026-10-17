@@ -46,16 +46,16 @@ export class Canvas_2D implements Canvas {
     this.ctx.closePath();
   }
 
-  public createArc(x: number, y: number, radius: number, startAngle: number, endAngle: number, counterClockwise = false) {
+  public drawArc(x: number, y: number, radius: number, startAngle: number, endAngle: number, counterClockwise = false) {
     this.ctx.arc(x, y, radius, startAngle, endAngle, counterClockwise);
   }
 
-  public createLine(fromX: number, fromY: number, toX: number, toY: number) {
+  public drawLine(fromX: number, fromY: number, toX: number, toY: number) {
     this.ctx.moveTo(fromX, fromY);
     this.ctx.lineTo(toX, toY);
   }
 
-  public createRectangle(x: number, y: number, width: number, height: number) {
+  public drawRectangle(x: number, y: number, width: number, height: number) {
     this.ctx.rect(x, y, width, height);
   }
 

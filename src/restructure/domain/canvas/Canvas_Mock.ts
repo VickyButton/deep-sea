@@ -8,9 +8,9 @@ export class Canvas_Mock implements Canvas {
   public beginPath = vi.fn();
   public clear = vi.fn();
   public closePath = vi.fn();
-  public createArc = vi.fn();
-  public createLine = vi.fn();
-  public createRectangle = vi.fn();
+  public drawArc = vi.fn();
+  public drawLine = vi.fn();
+  public drawRectangle = vi.fn();
   public fill = vi.fn();
   public resetTransform = vi.fn();
   public setFillColor = vi.fn();

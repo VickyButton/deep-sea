@@ -184,7 +184,7 @@ export class Shape2D_Rectangle implements Shape2D {
   }
 
   private drawLine(canvas: Canvas, from: Vector2D, to: Vector2D) {
-    canvas.createLine(from.x, from.y, to.x, to.y);
+    canvas.drawLine(from.x, from.y, to.x, to.y);
   }
 
   public static isRectangle(shape: Shape2D): shape is Shape2D_Rectangle {

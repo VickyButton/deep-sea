@@ -108,7 +108,7 @@ export class Shape2D_Polygon implements Shape2D {
   }
 
   private drawLine(canvas: Canvas, from: Vector2D, to: Vector2D) {
-    canvas.createLine(from.x, from.y, to.x, to.y);
+    canvas.drawLine(from.x, from.y, to.x, to.y);
   }
 
   public static isPolygon(shape: Shape2D): shape is Shape2D_Polygon {
