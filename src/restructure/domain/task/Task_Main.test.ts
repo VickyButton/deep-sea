@@ -18,6 +18,14 @@ describe('Task_Main', () => {
     expect(task.state).toBe('CREATED');
   });
 
+  it('should throw an error if active or finished task is started again', () => {
+    const task = new Task_Main('ID', startTask);
+
+    task.start();
+
+    expect(() => task.start()).toThrowError();
+  });
+
   it('should start task upon starting', () => {
     const task = new Task_Main('ID', startTask);
 

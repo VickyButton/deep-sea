@@ -26,9 +26,17 @@ export class Task_Main<Data = void> implements Task<Data> {
   }
 
   public start() {
+    if (this.isActiveOrFinished) {
+      throw new Error('Task is already active or finished.');
+    }
+
     this.handleTaskPromise(this.startTask());
     this.setState('ACTIVE');
     this.emitStartedSignal();
+  }
+
+  private get isActiveOrFinished() {
+    return this.state !== 'CREATED';
   }
 
   private async handleTaskPromise(promise: Promise<Data>) {
