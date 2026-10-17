@@ -1,6 +1,6 @@
 import { Transform2D } from '../Transform2D';
 import { Vector2D } from '../Vector2D';
-import { CollisionResolver2D_Polygon } from './collisionResolvers/CollisionResolver2D_Polygon';
+import { CollisionResolver2D_Polygon } from './collisionResolver2D/CollisionResolver2D_Polygon';
 import { Shape2D_Polygon } from './Shape2D_Polygon';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -47,7 +47,7 @@ describe('Shape2D_Polygon', () => {
   });
 
   it('should use polygon collision resolver to resolve collisions', () => {
-    vi.mock('./collisionResolvers/CollisionResolver2D_Polygon');
+    vi.mock('./collisionResolver2D/CollisionResolver2D_Polygon');
 
     const polygonA = new Shape2D_Polygon();
     const transformA = new Transform2D;

@@ -2,7 +2,7 @@ import type { Canvas } from '../canvas/canvas.types';
 import type { Transform2D } from '../Transform2D';
 import type { Shape2D } from './shape2D.types';
 import { Vector2D } from '../Vector2D';
-import { CollisionResolver2D_Rectangle } from './collisionResolvers/CollisionResolver2D_Rectangle';
+import { CollisionResolver2D_Rectangle } from './collisionResolver2D/CollisionResolver2D_Rectangle';
 
 /** The rectangle implementation of the Shape2D interface. */
 export class Shape2D_Rectangle implements Shape2D {

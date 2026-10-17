@@ -3,7 +3,7 @@ import type { BoundingBox2D } from './shape2D.types';
 import type { Shape2D } from './shape2D.types';
 import type { Canvas } from '../canvas/canvas.types';
 import { Vector2D } from '../Vector2D';
-import { CollisionResolver2D_Polygon } from './collisionResolvers/CollisionResolver2D_Polygon';
+import { CollisionResolver2D_Polygon } from './collisionResolver2D/CollisionResolver2D_Polygon';
 
 /** The polygon implementation of the Shape2D interface. */
 export class Shape2D_Polygon implements Shape2D {
