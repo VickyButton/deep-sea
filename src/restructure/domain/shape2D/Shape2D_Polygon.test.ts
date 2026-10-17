@@ -1,6 +1,6 @@
 import { Transform2D } from '../Transform2D';
 import { Vector2D } from '../Vector2D';
-import { PolygonCollisionResolver2D } from './collisionResolvers/PolygonCollisionResolver2D';
+import { CollisionResolver2D_Polygon } from './collisionResolvers/CollisionResolver2D_Polygon';
 import { Shape2D_Polygon } from './Shape2D_Polygon';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -47,7 +47,7 @@ describe('Shape2D_Polygon', () => {
   });
 
   it('should use polygon collision resolver to resolve collisions', () => {
-    vi.mock('./collisionResolvers/PolygonCollisionResolver2D');
+    vi.mock('./collisionResolvers/CollisionResolver2D_Polygon');
 
     const polygonA = new Shape2D_Polygon();
     const transformA = new Transform2D;
@@ -56,7 +56,7 @@ describe('Shape2D_Polygon', () => {
 
     polygonA.overlaps(transformA, polygonB, transformB);
 
-    expect(PolygonCollisionResolver2D).toHaveBeenCalledWith(polygonA, transformA, polygonB, transformB);
+    expect(CollisionResolver2D_Polygon).toHaveBeenCalledWith(polygonA, transformA, polygonB, transformB);
   });
 
   it('should determine if shape is a polygon', () => {

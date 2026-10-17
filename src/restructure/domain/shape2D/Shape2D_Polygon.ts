@@ -3,7 +3,7 @@ import type { BoundingBox2D } from './shape2D.types';
 import type { Shape2D } from './shape2D.types';
 import type { Canvas } from '../canvas/canvas.types';
 import { Vector2D } from '../Vector2D';
-import { PolygonCollisionResolver2D } from './collisionResolvers/PolygonCollisionResolver2D';
+import { CollisionResolver2D_Polygon } from './collisionResolvers/CollisionResolver2D_Polygon';
 
 /** The polygon implementation of the Shape2D interface. */
 export class Shape2D_Polygon implements Shape2D {
@@ -78,7 +78,7 @@ export class Shape2D_Polygon implements Shape2D {
   }
 
   public overlaps(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D) {
-    return new PolygonCollisionResolver2D(this, transform, shape, shapeTransform).resolveCollision();
+    return new CollisionResolver2D_Polygon(this, transform, shape, shapeTransform).resolveCollision();
   }
 
   public draw(canvas: Canvas) {
