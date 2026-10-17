@@ -1,5 +1,5 @@
-import { Vector2D } from './vector2D/Vector2D';
 import { Vector3D } from './Vector3D';
+import { Vector2D } from '../vector2D/Vector2D';
 import { describe, expect, it } from 'vitest';
 
 describe('Vector3D', () => {
