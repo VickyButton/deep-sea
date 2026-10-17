@@ -1,8 +1,6 @@
-import { Vector2D } from './Vector2D';
+import { Vector2D } from '../Vector2D';
 
-/**
- * A 2D matrix.
- */
+/** A 2-dimensional matrix. */
 export class Matrix2D {
   public columns: [Vector2D, Vector2D];
 
