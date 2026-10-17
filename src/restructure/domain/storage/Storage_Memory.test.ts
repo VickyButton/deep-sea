@@ -25,13 +25,18 @@ describe('Storage_Memory', () => {
     expect(storage.get(key)).toBe(null);
   });
 
-  it('should retrieve an item', () => {
+  it('should retrieve a stored item', () => {
     const key = 'KEY';
+    const item = 'ITEM';
     const storage = new Storage_Memory();
 
-    storage.set(key, 'ITEM');
+    storage.set(key, item);
 
-    expect(storage.get(key)).toBe('ITEM');
+    expect(storage.get(key)).toBe(item);
+  });
+
+  it('should return null if unable to retrieve item', () => {
+    expect(new Storage_Memory().get('KEY')).toBe(null);
   });
 
   it('should determine that an item exists', () => {
@@ -44,17 +49,16 @@ describe('Storage_Memory', () => {
   });
 
   it('should determine that an item does not exists', () => {
-    const storage = new Storage_Memory();
-
-    expect(storage.has('KEY')).toBe(false);
+    expect(new Storage_Memory().has('KEY')).toBe(false);
   });
 
   it('should store an item', () => {
     const key = 'KEY';
+    const item = 'ITEM';
     const storage = new Storage_Memory();
 
-    storage.set(key, 'ITEM');
+    storage.set(key, item);
 
-    expect(storage.get(key)).toBe('ITEM');
+    expect(storage.get(key)).toBe(item);
   });
 });
