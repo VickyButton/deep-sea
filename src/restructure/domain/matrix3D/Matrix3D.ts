@@ -1,5 +1,5 @@
 import type { Vector2D } from '../vector2D/Vector2D';
-import { Vector3D } from '../Vector3D';
+import { Vector3D } from '../vector3D/Vector3D';
 
 /** A 3-dimensional matrix. */
 export class Matrix3D {
