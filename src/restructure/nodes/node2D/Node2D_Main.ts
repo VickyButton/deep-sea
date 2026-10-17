@@ -17,7 +17,7 @@ export class Node2D_Main extends CanvasNode_Main implements Node2D {
   });
 
   public get globalPosition(): Vector2D {
-    const closestAncestor = this.getClosestAncestorOfType(Node2D_Main);
+    const closestAncestor = this.getClosestNode2DAncestor();
 
     return closestAncestor ? this.calculateGlobalPositionFromNode(closestAncestor) : this.position;
   }
@@ -27,7 +27,7 @@ export class Node2D_Main extends CanvasNode_Main implements Node2D {
   }
 
   public get globalRotation(): number {
-    const closestAncestor = this.getClosestAncestorOfType(Node2D_Main);
+    const closestAncestor = this.getClosestNode2DAncestor();
 
     return closestAncestor ? this.calculateGlobalRotationFromNode(closestAncestor) : this.rotation;
   }
@@ -37,7 +37,7 @@ export class Node2D_Main extends CanvasNode_Main implements Node2D {
   }
 
   public get globalScale(): Vector2D {
-    const closestAncestor = this.getClosestAncestorOfType(Node2D_Main);
+    const closestAncestor = this.getClosestNode2DAncestor();
 
     return closestAncestor ? this.calculateGlobalScaleFromNode(closestAncestor) : this.scale;
   }
@@ -47,7 +47,7 @@ export class Node2D_Main extends CanvasNode_Main implements Node2D {
   }
 
   public get globalTransform(): Transform2D {
-    const closestAncestor = this.getClosestAncestorOfType(Node2D_Main);
+    const closestAncestor = this.getClosestNode2DAncestor();
 
     return closestAncestor ? this.calculateGlobalTransformFromNode(closestAncestor) : this.transform;
   }
@@ -58,6 +58,10 @@ export class Node2D_Main extends CanvasNode_Main implements Node2D {
       scale: this.calculateGlobalScaleFromNode(node),
       translation: this.calculateGlobalPositionFromNode(node),
     });
+  }
+
+  private getClosestNode2DAncestor() {
+    return this.getClosestAncestorOfType(Node2D_Main);
   }
 
   public get position() {
