@@ -1,4 +1,4 @@
-import type { Matrix3D } from '../Matrix3D';
+import type { Matrix3D } from '../matrix3D/Matrix3D';
 
 /** Represents a canvas interface for drawing. */
 export interface Canvas {

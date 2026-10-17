@@ -1,9 +1,7 @@
-import type { Vector2D } from './Vector2D';
-import { Vector3D } from './Vector3D';
+import type { Vector2D } from '../Vector2D';
+import { Vector3D } from '../Vector3D';
 
-/**
- * A 3D matrix.
- */
+/** A 3-dimensional matrix. */
 export class Matrix3D {
   /** The matrix's columns. */
   public columns: [Vector3D, Vector3D, Vector3D];

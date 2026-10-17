@@ -1,4 +1,4 @@
-import { Matrix3D } from './Matrix3D';
+import { Matrix3D } from './matrix3D/Matrix3D';
 import { Vector2D } from './Vector2D';
 import { Vector3D } from './Vector3D';
 

@@ -1,5 +1,5 @@
-import type { Matrix3D } from '../Matrix3D';
 import type { Canvas } from './canvas.types';
+import type { Matrix3D } from '../matrix3D/Matrix3D';
 
 /** The 2D implementation of the Canvas interface. */
 export class Canvas_2D implements Canvas {
