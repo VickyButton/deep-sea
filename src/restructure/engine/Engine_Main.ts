@@ -34,13 +34,19 @@ export class Engine_Main implements Engine {
     this.loop.setLoopCallback(this.executeLoop);
   }
 
-  private executeLoop = () => {
+  private executeLoop = (dt: number) => {
+    this.processSceneTree(dt);
+
     if (this.newFrameCallback) {
       this.newFrameCallback(this.renderNewFrame());
     }
 
     this.clearCommandQueue();
   };
+
+  private processSceneTree(dt: number) {
+    this.sceneTree.process(dt);
+  }
 
   private renderNewFrame() {
     return this.graphics.render();
