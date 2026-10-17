@@ -5,7 +5,7 @@ import { CollisionResolver2D } from './CollisionResolver2D';
 import { CollisionResolver2D_SeparatingAxisTheorem } from './CollisionResolver2D_SeparatingAxisTheorem';
 
 /** Resolves a collision between two 2D polygons. */
-export class PolygonPairCollisionResolver2D extends CollisionResolver2D {
+export class CollisionResolver2D_PolygonPair extends CollisionResolver2D {
   private readonly polygonA: Shape2D_Polygon;
   private readonly transformA: Transform2D;
   private readonly polygonB: Shape2D_Polygon;
