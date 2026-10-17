@@ -18,14 +18,6 @@ export class Canvas_2D implements Canvas {
     this.ctx = ctx;
   }
 
-  public get width() {
-    return this.canvas.width;
-  }
-
-  public set width(width: number) {
-    this.canvas.width = width;
-  }
-
   public get height() {
     return this.canvas.height;
   }
@@ -34,12 +26,53 @@ export class Canvas_2D implements Canvas {
     this.canvas.height = height;
   }
 
+  public get width() {
+    return this.canvas.width;
+  }
+
+  public set width(width: number) {
+    this.canvas.width = width;
+  }
+
   public beginPath() {
     this.ctx.beginPath();
   }
 
+  public clear() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+  }
+
   public closePath() {
     this.ctx.closePath();
+  }
+
+  public createArc(x: number, y: number, radius: number, startAngle: number, endAngle: number, counterClockwise = false) {
+    this.ctx.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+  }
+
+  public createLine(fromX: number, fromY: number, toX: number, toY: number) {
+    this.ctx.moveTo(fromX, fromY);
+    this.ctx.lineTo(toX, toY);
+  }
+
+  public createRectangle(x: number, y: number, width: number, height: number) {
+    this.ctx.rect(x, y, width, height);
+  }
+
+  public fill() {
+    this.ctx.fill();
+  }
+
+  public resetTransform() {
+    this.ctx.resetTransform();
+  }
+
+  public setFillColor(color: string) {
+    this.ctx.fillStyle = color;
+  }
+
+  public setStrokeColor(color: string) {
+    this.ctx.strokeStyle = color;
   }
 
   public setTransform(matrix: Matrix3D) {
@@ -53,40 +86,7 @@ export class Canvas_2D implements Canvas {
     this.ctx.setTransform(a, b, c, d, e, f);
   }
 
-  public resetTransform() {
-    this.ctx.resetTransform();
-  }
-
-  public createLine(fromX: number, fromY: number, toX: number, toY: number) {
-    this.ctx.moveTo(fromX, fromY);
-    this.ctx.lineTo(toX, toY);
-  }
-
-  public createArc(x: number, y: number, radius: number, startAngle: number, endAngle: number, counterClockwise = false) {
-    this.ctx.arc(x, y, radius, startAngle, endAngle, counterClockwise);
-  }
-
-  public createRectangle(x: number, y: number, width: number, height: number) {
-    this.ctx.rect(x, y, width, height);
-  }
-
-  public setStrokeColor(color: string) {
-    this.ctx.strokeStyle = color;
-  }
-
   public stroke() {
     this.ctx.stroke();
-  }
-
-  public setFillColor(color: string) {
-    this.ctx.fillStyle = color;
-  }
-
-  public fill() {
-    this.ctx.fill();
-  }
-
-  public clear() {
-    this.ctx.clearRect(0, 0, this.width, this.height);
   }
 }
