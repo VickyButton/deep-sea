@@ -1,5 +1,5 @@
 import type { DrawCommand, Graphics } from './graphics.types';
-import type { Canvas } from '../../domain/canvas/Canvas';
+import type { Canvas } from '../../domain/canvas/canvas.types';
 
 /** The main implementation of the Graphics interface. */
 export class Graphics_Main implements Graphics {
@@ -11,19 +11,23 @@ export class Graphics_Main implements Graphics {
     this.canvas = canvas;
   }
 
-  public clearCanvas() {
-    this.canvas.clear();
+  public cacheCommand(command: DrawCommand) {
+    this.addCommandToCache(command);
   }
 
-  public clearDrawCommandQueue() {
-    this.clearQueue();
+  private addCommandToCache(command: DrawCommand) {
+    this.cache.set(command.id, command);
   }
 
-  private clearQueue() {
+  public clearQueue() {
+    this.clearCommandQueue();
+  }
+
+  private clearCommandQueue() {
     this.queue.clear();
   }
 
-  public deleteCachedDrawCommand(id: string) {
+  public deleteCommand(id: string) {
     this.deleteCommandFromCache(id);
   }
 
@@ -31,59 +35,75 @@ export class Graphics_Main implements Graphics {
     this.cache.delete(id);
   }
 
-  public processDrawCommandQueue() {
-    this.applyCacheToQueue();
-    this.processQueue();
-  }
-
-  private applyCacheToQueue() {
-    const cachedCommands = this.getCachedCommands();
-
-    for (const command of cachedCommands) {
-      this.addCommandToQueue(command);
-    }
-  }
-
-  private getCachedCommands() {
-    return this.cache.commands;
+  public queueCommand(command: DrawCommand) {
+    this.addCommandToQueue(command);
   }
 
   private addCommandToQueue(command: DrawCommand) {
     this.queue.add(command);
   }
 
-  private processQueue() {
-    this.processCommands(this.queuedCommands);
+  public render() {
+    this.clearCanvas();
+    this.processCommands();
+    this.clearCommandQueue();
+
+    return this.frame;
   }
 
-  private processCommands(commands: DrawCommand[]) {
-    for (const command of commands) {
+  private clearCanvas() {
+    this.canvas.clear();
+  }
+
+  private processCommands() {
+    for (const command of this.orderedCommands) {
       this.processCommand(command);
     }
-
-    this.clearQueue();
   }
 
-  private processCommand(command: DrawCommand) {
-    this.drawToCanvas(command);
-    this.cacheCommand(command);
+  private get orderedCommands() {
+    return this.sortByZIndex(this.dedupedCommands);
   }
 
-  private drawToCanvas(command: DrawCommand) {
-    command.draw(this.canvas);
+  private sortByZIndex(commands: DrawCommand[]) {
+    return commands.sort((a, b) => a.zIndex - b.zIndex);
   }
 
-  private cacheCommand(command: DrawCommand) {
-    this.cache.set(command.id, command);
+  private get dedupedCommands() {
+    return this.dedupeCommands(this.allCommands);
+  }
+
+  private dedupeCommands(commands: DrawCommand[]) {
+    return Array.from(new Set(commands));
+  }
+
+  private get allCommands() {
+    // Cached commands are overwritten by queued commands with identical IDs.
+    return [...this.cachedCommands, ...this.queuedCommands];
+  }
+
+  private get cachedCommands() {
+    return this.cache.commands;
   }
 
   private get queuedCommands() {
     return this.queue.commands;
   }
 
-  public queueDrawCommand(command: DrawCommand) {
-    this.deleteCommandFromCache(command.id);
-    this.addCommandToQueue(command);
+  private processCommand(command: DrawCommand) {
+    this.executeCommand(command);
+  }
+
+  private executeCommand(command: DrawCommand) {
+    command.draw(this.canvas);
+  }
+
+  private get frame() {
+    return this.getCanvasImageBitmap();
+  }
+
+  private getCanvasImageBitmap() {
+    return this.canvas.toImageBitmap();
   }
 }
 
@@ -93,11 +113,7 @@ class DrawCommandQueue {
 
   /** The queued draw commands, ordered by ascending z-index. */
   public get commands() {
-    return this.sortByZIndex(this.commandsArray);
-  }
-
-  private sortByZIndex(commands: DrawCommand[]) {
-    return commands.sort((a, b) => a.zIndex - b.zIndex);
+    return this.commandsArray;
   }
 
   private get commandsArray() {

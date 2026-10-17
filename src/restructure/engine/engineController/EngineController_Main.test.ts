@@ -33,7 +33,7 @@ describe('EngineController_Main', () => {
     sceneTree.node_registered.emit(canvasNode);
     canvasNode.redraw_requested.emit(command);
 
-    expect(graphics.queueDrawCommand).toHaveBeenCalledWith(command);
+    expect(graphics.queueCommand).toHaveBeenCalledWith(command);
   });
 
   it('should not queue draw command upon deregistered canvas node emitting "redraw_requested" signal', () => {
@@ -56,7 +56,7 @@ describe('EngineController_Main', () => {
     sceneTree.node_deregistered.emit(canvasNode);
     canvasNode.redraw_requested.emit(command);
 
-    expect(graphics.queueDrawCommand).not.toHaveBeenCalledWith();
+    expect(graphics.queueCommand).not.toHaveBeenCalledWith();
   });
 
   it('should be listening after starting', () => {

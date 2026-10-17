@@ -1,28 +1,34 @@
 import type { Canvas } from '../../domain/canvas/canvas.types';
 
-/** Exposes functionality for drawing graphics onto a canvas through draw commands. */
+/** Exposes functionality for rendering frames through draw commands. */
 export interface Graphics {
-  /** Clears the canvas. */
-  clearCanvas(): void;
+  /**
+   * Caches a command, allowing it to execute each render until it is deleted.
+   * @command The command to cache.
+   */
+  cacheCommand(command: DrawCommand): void;
   /** Clears the draw command queue. */
-  clearDrawCommandQueue(): void;
+  clearQueue(): void;
   /**
    * Deletes a cached draw command.
    * @param id The command's unique identifier.
    */
-  deleteCachedDrawCommand(id: string): void;
-  /** Processes the draw command queue, executing each draw command. */
-  processDrawCommandQueue(): void;
+  deleteCommand(id: string): void;
   /**
-   * Queues a draw command for drawing onto the canvas.
+   * Queues a draw command for the next frame.
    * @param command The draw command to add to the queue.
    */
-  queueDrawCommand(command: DrawCommand): void;
+  queueCommand(command: DrawCommand): void;
+  /**
+   * Renders a new frame by executing queued draw commands.
+   * @returns The rendered frame as an image bitmap.
+   */
+  render(): ImageBitmap;
 }
 
 /** A command for drawing onto a graphics canvas. */
 export interface DrawCommand {
-  /** The unique identifier for the draw command. */
+  /** The unique identifier for the command. */
   id: string;
   /** The order in which the command should be executed, with smaller z-indices being drawn first. */
   zIndex: number;

@@ -40,7 +40,7 @@ export class EngineController_Main implements EngineController {
   }
 
   private onCanvasNodeRedrawRequested = (command: DrawCommand) => {
-    this.graphics.queueDrawCommand(command);
+    this.graphics.queueCommand(command);
   };
   private onNodeDeregistered = (node: Node) => {
     if (this.isCanvasNode(node)) {

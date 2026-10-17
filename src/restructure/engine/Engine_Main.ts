@@ -1,4 +1,4 @@
-import type { Engine } from './engine.types';
+import type { Engine, NewFrameCallback } from './engine.types';
 import type { EngineController } from './engineController/engineController.types';
 import type { Graphics } from './graphics/graphics.types';
 import type { Loop } from './loop/loop.types';
@@ -12,6 +12,7 @@ export class Engine_Main implements Engine {
   private readonly loop: Loop;
   private readonly pluginManager: PluginManager;
   private readonly sceneTree: SceneTree;
+  private newFrameCallback: NewFrameCallback | null = null;
 
   constructor({ engineController, graphics, loop, pluginManager, sceneTree }: EngineComponents) {
     this.engineController = engineController;
@@ -32,20 +33,27 @@ export class Engine_Main implements Engine {
   }
 
   private executeLoop = () => {
-    this.clearCanvas();
-    this.processDrawCommandQueue();
+    if (this.newFrameCallback) {
+      this.newFrameCallback(this.renderNewFrame());
+    }
+
+    this.clearCommandQueue();
   };
 
-  private clearCanvas() {
-    this.graphics.clearCanvas();
+  private renderNewFrame() {
+    return this.graphics.render();
   }
 
-  private processDrawCommandQueue() {
-    this.graphics.processDrawCommandQueue();
+  private clearCommandQueue() {
+    this.graphics.clearQueue();
   }
 
   public get isActive() {
     return this.engineController.isListening;
+  }
+
+  public setNewFrameCallback(callback: NewFrameCallback) {
+    this.newFrameCallback = callback;
   }
 
   public start() {
