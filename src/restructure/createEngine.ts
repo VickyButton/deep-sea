@@ -1,4 +1,5 @@
 import type { Engine } from './engine/engine.types';
+import type { NodeConstructor } from './nodes/node/node.types';
 import { Canvas_2D } from './domain/canvas/Canvas_2D';
 import { Clock_System } from './domain/clock/Clock_System';
 import { Engine_Main } from './engine/Engine_Main';
@@ -62,6 +63,7 @@ function createPluginManager() {
 }
 
 interface Config {
+  initialScene: NodeConstructor;
   canvas: {
     width: number;
     height: number;

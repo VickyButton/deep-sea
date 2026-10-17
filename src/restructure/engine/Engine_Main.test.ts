@@ -4,6 +4,7 @@ import { Graphics_Mock } from './graphics/Graphics_Mock';
 import { Loop_Mock } from './loop/Loop_Mock';
 import { PluginManager_Mock } from './pluginManager/PluginManager_Mock';
 import { SceneTree_Mock } from './sceneTree/SceneTree_Mock';
+import { Node_Mock } from '../nodes/node/Node_Mock';
 import { describe, expect, it } from 'vitest';
 
 describe('Engine_Main', () => {
@@ -31,6 +32,37 @@ describe('Engine_Main', () => {
     });
 
     expect(loop.setLoopCallback).toHaveBeenCalled();
+  });
+
+  it('should set current scene in scene tree', () => {
+    const sceneTree = new SceneTree_Mock();
+    const engine = new Engine_Main({
+      engineController: new EngineController_Mock(),
+      graphics: new Graphics_Mock(),
+      loop: new Loop_Mock(),
+      pluginManager: new PluginManager_Mock(),
+      sceneTree,
+    });
+
+    engine.replaceScene(Node_Mock);
+
+    expect(sceneTree.addScene).toHaveBeenCalled();
+  });
+
+  it('should remove current scene when replacing scene in scene tree', () => {
+    const sceneTree = new SceneTree_Mock();
+    const engine = new Engine_Main({
+      engineController: new EngineController_Mock(),
+      graphics: new Graphics_Mock(),
+      loop: new Loop_Mock(),
+      pluginManager: new PluginManager_Mock(),
+      sceneTree,
+    });
+
+    engine.replaceScene(Node_Mock);
+    engine.replaceScene(Node_Mock);
+
+    expect(sceneTree.removeScene).toHaveBeenCalled();
   });
 
   it('should start plugins upon starting', () => {

@@ -4,6 +4,7 @@ import type { Graphics } from './graphics/graphics.types';
 import type { Loop } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
+import type { Node, NodeConstructor } from '../nodes/node/node.types';
 
 /** The main implementation of the Engine interface. */
 export class Engine_Main implements Engine {
@@ -12,6 +13,7 @@ export class Engine_Main implements Engine {
   private readonly loop: Loop;
   private readonly pluginManager: PluginManager;
   private readonly sceneTree: SceneTree;
+  private currentScene: Node | null = null;
   private newFrameCallback: NewFrameCallback | null = null;
 
   constructor({ engineController, graphics, loop, pluginManager, sceneTree }: EngineComponents) {
@@ -50,6 +52,25 @@ export class Engine_Main implements Engine {
 
   public get isActive() {
     return this.engineController.isListening;
+  }
+
+  public replaceScene(Scene: NodeConstructor) {
+    const sceneNode = new Scene('scene');
+
+    if (this.currentScene) {
+      this.removeSceneFromSceneTree(this.currentScene);
+    }
+
+    this.currentScene = sceneNode;
+    this.addSceneToSceneTree(this.currentScene);
+  }
+
+  private removeSceneFromSceneTree(scene: Node) {
+    this.sceneTree.removeScene(scene);
+  }
+
+  private addSceneToSceneTree(scene: Node) {
+    this.sceneTree.addScene(scene);
   }
 
   public setNewFrameCallback(callback: NewFrameCallback) {

@@ -1,4 +1,4 @@
-import type { Node, NodeConstructor, ProcessCallback } from './node.types';
+import type { AbstractNodeConstructor, Node, NodeConstructor, ProcessCallback } from './node.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
 import { Signal_Main } from '../../domain/signal/Signal_Main';
 import { SignalController_Main } from '../../domain/signalController/SignalController_Main';
@@ -227,7 +227,7 @@ export class Node_Main implements Node {
     this.stopped.emit();
   }
 
-  protected getClosestAncestorOfType<T extends Node>(type: NodeConstructor<T>) {
+  protected getClosestAncestorOfType<T extends Node>(type: AbstractNodeConstructor<T> | NodeConstructor<T>) {
     let parent = this.parent;
 
     while (parent !== null) {

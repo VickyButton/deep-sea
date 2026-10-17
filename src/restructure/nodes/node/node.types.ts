@@ -73,5 +73,6 @@ export interface Node {
   stop(): void;
 }
 
-export type NodeConstructor<Type extends Node = Node> = (abstract new (id: string) => Type) | (new (id: string) => Type);
+export type AbstractNodeConstructor<Type extends Node = Node> = abstract new (id: string) => Type;
+export type NodeConstructor<Type extends Node = Node> = new (id: string) => Type;
 export type ProcessCallback = (dt: number) => void;
