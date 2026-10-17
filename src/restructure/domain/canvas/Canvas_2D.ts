@@ -89,4 +89,8 @@ export class Canvas_2D implements Canvas {
   public stroke() {
     this.ctx.stroke();
   }
+
+  public toImageBitmap() {
+    return this.canvas.transferToImageBitmap();
+  }
 }

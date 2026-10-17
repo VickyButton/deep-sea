@@ -17,4 +17,5 @@ export class Canvas_Mock implements Canvas {
   public setStrokeColor = vi.fn();
   public setTransform = vi.fn();
   public stroke = vi.fn();
+  public toImageBitmap = vi.fn();
 }

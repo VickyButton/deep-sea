@@ -59,4 +59,9 @@ export interface Canvas {
   setTransform(matrix: Matrix3D): void;
   /** Strokes the current path with the current stroke color. */
   stroke(): void;
+  /**
+   * Transfers the canvas contents into an image bitmap.
+   * @returns An image bitmap representation of the canvas contents.
+   */
+  toImageBitmap(): ImageBitmap;
 }
