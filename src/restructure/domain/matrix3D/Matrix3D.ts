@@ -1,4 +1,4 @@
-import type { Vector2D } from '../Vector2D';
+import type { Vector2D } from '../vector2D/Vector2D';
 import { Vector3D } from '../Vector3D';
 
 /** A 3-dimensional matrix. */

@@ -1,6 +1,6 @@
 import type { Canvas } from '../canvas/canvas.types';
-import type { Transform2D } from '../Transform2D';
-import type { Vector2D } from '../Vector2D';
+import type { Transform2D } from '../transform2D/Transform2D';
+import type { Vector2D } from '../vector2D/Vector2D';
 
 /** A 2D shape that can be transformed and drawn. */
 export interface Shape2D {

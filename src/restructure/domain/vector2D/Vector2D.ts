@@ -1,6 +1,4 @@
-/**
- * A 2D vector.
- */
+/** A 2D vector. */
 export class Vector2D {
   /** The vector's X component. */
   public x: number;

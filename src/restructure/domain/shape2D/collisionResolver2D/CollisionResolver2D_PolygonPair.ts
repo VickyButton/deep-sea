@@ -1,5 +1,5 @@
-import type { Transform2D } from '../../Transform2D';
-import type { Vector2D } from '../../Vector2D';
+import type { Transform2D } from '../../transform2D/Transform2D';
+import type { Vector2D } from '../../vector2D/Vector2D';
 import type { Shape2D_Polygon } from '../Shape2D_Polygon';
 import { CollisionResolver2D } from './CollisionResolver2D';
 import { CollisionResolver2D_SeparatingAxisTheorem } from './CollisionResolver2D_SeparatingAxisTheorem';

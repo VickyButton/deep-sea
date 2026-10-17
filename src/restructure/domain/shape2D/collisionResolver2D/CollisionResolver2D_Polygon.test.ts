@@ -1,7 +1,7 @@
 import { CollisionResolver2D_Polygon } from './CollisionResolver2D_Polygon';
 import { CollisionResolver2D_PolygonPair } from './CollisionResolver2D_PolygonPair';
 import { CollisionResolver2D_PolygonRectanglePair } from './CollisionResolver2D_PolygonRectanglePair';
-import { Transform2D } from '../../Transform2D';
+import { Transform2D } from '../../transform2D/Transform2D';
 import { Shape2D_Mock } from '../Shape2D_Mock';
 import { Shape2D_Polygon } from '../Shape2D_Polygon';
 import { Shape2D_Rectangle } from '../Shape2D_Rectangle';

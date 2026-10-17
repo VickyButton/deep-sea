@@ -1,5 +1,5 @@
 import { CollisionResolver2D } from './CollisionResolver2D';
-import { Vector2D } from '../../Vector2D';
+import { Vector2D } from '../../vector2D/Vector2D';
 
 /** Resolves a collision between two 2D polygons (each defined by a set of vertices) using Separating Axis Theorem. */
 export class CollisionResolver2D_SeparatingAxisTheorem extends CollisionResolver2D {

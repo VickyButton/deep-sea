@@ -1,6 +1,6 @@
 import { Node2D_Main } from './Node2D_Main';
 import { Vector2D } from '../../domain';
-import { Transform2D } from '../../domain/Transform2D';
+import { Transform2D } from '../../domain/transform2D/Transform2D';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Node2D_Main', () => {

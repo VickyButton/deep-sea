@@ -1,7 +1,7 @@
 import type { Node2D } from './node2D.types';
 import { Vector2D } from '../../domain';
 import { Signal_Main } from '../../domain/signal/Signal_Main';
-import { Transform2D } from '../../domain/Transform2D';
+import { Transform2D } from '../../domain/transform2D/Transform2D';
 import { CanvasNode_Main } from '../canvasNode/CanvasNode_Main';
 
 /** The main implementation of the Node2D interface. */

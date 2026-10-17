@@ -1,7 +1,7 @@
-import { Transform2D } from '../Transform2D';
-import { Vector2D } from '../Vector2D';
-import { CollisionResolver2D_Rectangle } from './collisionResolver2D/CollisionResolver2D_Rectangle';
 import { Shape2D_Rectangle } from './Shape2D_Rectangle';
+import { Transform2D } from '../transform2D/Transform2D';
+import { Vector2D } from '../vector2D/Vector2D';
+import { CollisionResolver2D_Rectangle } from './collisionResolver2D/CollisionResolver2D_Rectangle';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Shape2D_Rectangle', () => {

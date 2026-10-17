@@ -1,4 +1,4 @@
-import type { Transform2D } from '../../Transform2D';
+import type { Transform2D } from '../../transform2D/Transform2D';
 import type { Shape2D } from '../shape2D.types';
 import { CollisionResolver2D } from './CollisionResolver2D';
 import { CollisionResolver2D_PolygonPair } from './CollisionResolver2D_PolygonPair';

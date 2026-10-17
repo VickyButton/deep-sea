@@ -1,7 +1,7 @@
 /**
  * This file defines domain exports for the package.
  */
-import { Vector2D } from './Vector2D';
+import { Vector2D } from './vector2D/Vector2D';
 import { Vector3D } from './Vector3D';
 
 export {

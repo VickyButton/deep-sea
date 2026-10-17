@@ -1,5 +1,5 @@
 import { Matrix3D } from './Matrix3D';
-import { Vector2D } from '../Vector2D';
+import { Vector2D } from '../vector2D/Vector2D';
 import { Vector3D } from '../Vector3D';
 import { describe, expect, it } from 'vitest';
 
