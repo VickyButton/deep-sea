@@ -24,7 +24,7 @@ export class Storage_Memory<T> implements Storage<T> {
     return this.items.has(key);
   }
 
-  public set(key: string, data: T) {
-    this.items.set(key, data);
+  public set(key: string, item: T) {
+    this.items.set(key, item);
   }
 }
