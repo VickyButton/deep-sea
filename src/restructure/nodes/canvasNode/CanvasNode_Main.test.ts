@@ -1,4 +1,5 @@
 import { CanvasNode_Main } from './CanvasNode_Main';
+import { Canvas_Mock } from '../../domain/canvas/Canvas_Mock';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('CanvasNode_Main', () => {
@@ -87,6 +88,17 @@ describe('CanvasNode_Main', () => {
     expect(node.globalZIndex).toBe(3);
   });
 
+  it('should execute draw callback with canvas on draw', () => {
+    const node = new CanvasNode_Main('node');
+    const callback = vi.fn();
+    const canvas = new Canvas_Mock();
+
+    node.setDrawCallback(callback);
+    node.draw(canvas);
+
+    expect(callback).toHaveBeenCalledWith(canvas);
+  });
+
   it('should hide node', () => {
     const node = new CanvasNode_Main('node');
     const emitSpy = vi.spyOn(node.visibility_changed, 'emit');
@@ -121,10 +133,11 @@ describe('CanvasNode_Main', () => {
 
   it('should allow "redraw_requested" signal to be emitted again after request is completed', () => {
     const node = new CanvasNode_Main('node');
+    const canvas = new Canvas_Mock();
     const emitSpy = vi.spyOn(node.redraw_requested, 'emit');
 
     node.requestRedraw();
-    node.draw();
+    node.draw(canvas);
     node.requestRedraw();
 
     expect(emitSpy).toHaveBeenCalledTimes(2);

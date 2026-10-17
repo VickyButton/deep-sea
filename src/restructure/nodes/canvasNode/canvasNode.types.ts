@@ -20,14 +20,22 @@ export interface CanvasNode extends Node {
   /** The node's global z-index. */
   get globalZIndex(): number;
   /**
-   * Draws the node onto a canvas.
-   * @param canvas The canvas to draw the node onto.
+   * Executes the node's draw callback.
+   * @param canvas The canvas to pass to the draw callback.
    */
   draw(canvas: Canvas): void;
   /** Turns off the node's visibility. Hidden nodes cannot be drawn. */
   hide(): void;
   /** Requests a redraw for the next frame. Only one redraw will be requested, even if called more than once. */
   requestRedraw(): void;
+  /**
+   * Sets the callback to execute on draw.
+   * @param callback The draw callback.
+   */
+  setDrawCallback(callback: DrawCallback): void;
   /** Turns on the node's visibility. Visible nodes can be drawn. */
   show(): void;
 }
+
+/** Callback to execute on draw. */
+export type DrawCallback = (canvas: Canvas) => void;
