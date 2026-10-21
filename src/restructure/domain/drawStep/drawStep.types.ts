@@ -1,3 +1,15 @@
+import type { Canvas } from '../canvas/canvas.types';
+
+/** Used for translating draw steps canvas callbacks. */
+export interface DrawStepTranslator {
+  /**
+   * Translates a draw step into a canvas callback.
+   * @param step The step to translate.
+   * @returns Callback for executing the step on a canvas.
+   */
+  translate(step: DrawStep): (canvas: Canvas) => void;
+}
+
 export type DrawStep = DrawStep_BeginPath | DrawStep_ClosePath | DrawStep_DrawArc | DrawStep_DrawLine | DrawStep_DrawRectangle | DrawStep_Fill | DrawStep_ResetTransform | DrawStep_SetFillColor | DrawStep_SetStrokeColor | DrawStep_SetTransform | DrawStep_Stroke;
 
 export interface DrawStep_BeginPath {
