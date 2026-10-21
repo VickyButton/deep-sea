@@ -2,6 +2,8 @@
 export interface Storage<T> {
   /** The number of items in the storage. */
   get itemCount(): number;
+  /** The items stored in the storage. */
+  get items(): T[];
   /** Clears all items from the storage. */
   clear(): void;
   /**

@@ -2,8 +2,12 @@ import { Storage_Memory } from './Storage_Memory';
 import { describe, expect, it } from 'vitest';
 
 describe('Storage_Memory', () => {
-  it('should have no items by default', () => {
+  it('should have item count of zero by default', () => {
     expect(new Storage_Memory().itemCount).toBe(0);
+  });
+
+  it('should have no items by default', () => {
+    expect(new Storage_Memory().items).toEqual([]);
   });
 
   it('should clear all items', () => {
@@ -12,6 +16,7 @@ describe('Storage_Memory', () => {
     storage.set('KEY', 'ITEM');
     storage.clear();
 
+    expect(storage.items).toEqual([]);
     expect(storage.itemCount).toBe(0);
   });
 
@@ -59,6 +64,7 @@ describe('Storage_Memory', () => {
 
     storage.set(key, item);
 
-    expect(storage.get(key)).toBe(item);
+    expect(storage.items).toEqual([item]);
+    expect(storage.itemCount).toBe(1);
   });
 });
