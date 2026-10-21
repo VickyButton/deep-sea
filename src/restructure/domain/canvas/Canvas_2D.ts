@@ -1,5 +1,4 @@
 import type { Canvas } from './canvas.types';
-import type { Matrix3D } from '../matrix3D/Matrix3D';
 
 /** The 2D implementation of the Canvas interface. */
 export class Canvas_2D implements Canvas {
@@ -75,14 +74,7 @@ export class Canvas_2D implements Canvas {
     this.ctx.strokeStyle = color;
   }
 
-  public setTransform(matrix: Matrix3D) {
-    const a = matrix[0][0];
-    const b = matrix[0][1];
-    const c = matrix[1][0];
-    const d = matrix[1][1];
-    const e = matrix[2][0];
-    const f = matrix[2][1];
-
+  public setTransform(a: number, b: number, c: number, d: number, e: number, f: number) {
     this.ctx.setTransform(a, b, c, d, e, f);
   }
 

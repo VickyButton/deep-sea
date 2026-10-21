@@ -1,5 +1,3 @@
-import type { Matrix3D } from '../matrix3D/Matrix3D';
-
 /** Represents a canvas interface for drawing. */
 export interface Canvas {
   /** The height of the canvas in pixels. */
@@ -54,9 +52,14 @@ export interface Canvas {
   setStrokeColor(color: string): void;
   /**
    * Applies a transformation matrix to the canvas.
-   * @param matrix The transformation matrix to apply.
+   * @param a The cell in the first row and first column of the matrix.
+   * @param b The cell in the second row and first column of the matrix.
+   * @param c The cell in the first row and second column of the matrix.
+   * @param d The cell in the second row and second column of the matrix.
+   * @param e The cell in the first row and third column of the matrix.
+   * @param f The cell in the second row and third column of the matrix.
    */
-  setTransform(matrix: Matrix3D): void;
+  setTransform(a: number, b: number, c: number, d: number, e: number, f: number): void;
   /** Strokes the current path with the current stroke color. */
   stroke(): void;
   /**
