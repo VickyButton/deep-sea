@@ -1,4 +1,5 @@
-import type { DrawInstructionsBuilder, DrawStep } from './drawInstructions.types';
+import type { DrawInstructionsBuilder } from './drawInstructions.types';
+import type { DrawStep } from '../drawStep/drawStep.types';
 
 /** The main implementation of the DrawInstructionsBuilder interface. */
 export class DrawInstructionsBuilder_Main implements DrawInstructionsBuilder {
