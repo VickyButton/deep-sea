@@ -54,7 +54,12 @@ export interface DrawStep_SetStrokeColor {
 
 export interface DrawStep_SetTransform {
   type: 'SET_TRANSFORM';
-  matrix: [number, number, number, number, number, number];
+  a: number;
+  b: number;
+  c: number;
+  d: number;
+  e: number;
+  f: number;
 }
 
 export interface DrawStep_Stroke {
