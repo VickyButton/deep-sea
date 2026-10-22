@@ -145,4 +145,14 @@ describe('DrawStepTranslator_Main', () => {
 
     expect(canvas.stroke).toHaveBeenCalled();
   });
+
+  it('should throw an error if step type is unknown', () => {
+    const translator = new DrawStepTranslator_Main();
+    const canvas = new Canvas_Mock();
+
+    expect(() => translator.translate({
+      // @ts-expect-error Passing unknown type.
+      type: 'UNKNOWN',
+    })(canvas)).toThrowError();
+  });
 });
