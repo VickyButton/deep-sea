@@ -106,7 +106,7 @@ describe('CanvasNode_Main', () => {
     expect(callback).toHaveBeenCalled();
   });
 
-  it('should emit "redraw_requested" signal when a redraw is requested', () => {
+  it('should emit "redraw_requested" signal upon redraw request', () => {
     const node = new CanvasNode_Main('node');
     const emitSpy = vi.spyOn(node.redraw_requested, 'emit');
 
