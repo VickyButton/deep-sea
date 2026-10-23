@@ -5,22 +5,20 @@ import type { DrawStepTranslator } from '../../domain/drawStep/translator/drawSt
 
 /** The main implementation of the DrawEngine interface. */
 export class DrawEngine_Main implements DrawEngine {
-  private readonly canvas: Canvas;
   private readonly translator: DrawStepTranslator;
 
-  constructor(canvas: Canvas, translator: DrawStepTranslator) {
-    this.canvas = canvas;
+  constructor(translator: DrawStepTranslator) {
     this.translator = translator;
   }
 
-  public draw(steps: DrawStep[]) {
+  public draw(canvas: Canvas, steps: DrawStep[]) {
     for (const step of steps) {
-      this.executeStep(step);
+      this.executeStepOnCanvas(step, canvas);
     }
   }
 
-  private executeStep(step: DrawStep) {
-    this.getStepCallback(step)(this.canvas);
+  private executeStepOnCanvas(step: DrawStep, canvas: Canvas) {
+    this.getStepCallback(step)(canvas);
   }
 
   private getStepCallback(step: DrawStep) {

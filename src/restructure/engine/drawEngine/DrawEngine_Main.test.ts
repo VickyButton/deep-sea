@@ -5,13 +5,13 @@ import { describe, expect, it, vi } from 'vitest';
 
 describe('DrawEngine_Main', () => {
   it('should execute draw steps on target canvas', () => {
-    const canvas = new Canvas_Mock();
     const translator = new DrawStepTranslator_Mock();
-    const engine = new DrawEngine_Main(canvas, translator);
+    const engine = new DrawEngine_Main(translator);
+    const canvas = new Canvas_Mock();
     const callback = vi.fn();
     translator.translate.mockReturnValue(callback);
 
-    engine.draw([
+    engine.draw(canvas, [
       {
         type: 'BEGIN_PATH',
       },
