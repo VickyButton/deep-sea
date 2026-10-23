@@ -2,6 +2,8 @@
 export interface Queue<T> {
   /** The item at the front of the queue. */
   get front(): T | null;
+  /** The items in the queue. */
+  get items(): T[];
   /**
    * Adds an item to the back of the queue.
    * @param item The item to add to the queue.

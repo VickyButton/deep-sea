@@ -15,12 +15,17 @@ describe('Queue_Main', () => {
     expect(queue.front).toBe(1);
   });
 
+  it('should have no items by default', () => {
+    expect(new Queue_Main().items).toEqual([]);
+  });
+
   it('should add an item to the queue', () => {
     const queue = new Queue_Main();
 
     queue.add(1);
 
     expect(queue.front).toBe(1);
+    expect(queue.items).toEqual([1]);
   });
 
   it('should remove the front item from the queue', () => {
@@ -30,5 +35,6 @@ describe('Queue_Main', () => {
 
     expect(queue.remove()).toBe(1);
     expect(queue.front).toBe(null);
+    expect(queue.items).toEqual([]);
   });
 });

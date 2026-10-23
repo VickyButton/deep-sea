@@ -2,17 +2,21 @@ import type { Queue } from './queue.types';
 
 /** The main implementation of the Queue interface. */
 export class Queue_Main<T> implements Queue<T> {
-  private readonly items: T[] = [];
+  private readonly _items: T[] = [];
 
   public get front() {
-    return this.items[0] ?? null;
+    return this._items[0] ?? null;
+  }
+
+  public get items() {
+    return this._items;
   }
 
   public add(item: T) {
-    this.items.push(item);
+    this._items.push(item);
   }
 
   public remove() {
-    return this.items.shift() ?? null;
+    return this._items.shift() ?? null;
   }
 }
