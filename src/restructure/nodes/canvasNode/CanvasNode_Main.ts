@@ -1,16 +1,15 @@
 import type { CanvasNode, DrawCallback } from './canvasNode.types';
-import type { Canvas } from '../../domain/canvas/canvas.types';
-import type { DrawCommand } from '../../engine/graphics/graphics.types';
+import type { DrawInstructions } from '../../domain/drawInstructions/drawInstructions.types';
+import { DrawInstructionsBuilder } from '../../domain/drawInstructions/builder/DrawInstructionsBuilder';
 import { Signal_Main } from '../../domain/signal/Signal_Main';
 import { Node_Main } from '../node/Node_Main';
 
 /** The main implementation of the CanvasNode interface. */
 export class CanvasNode_Main extends Node_Main implements CanvasNode {
-  public readonly redraw_requested = new Signal_Main<DrawCommand>();
+  public readonly redraw_requested = new Signal_Main<DrawInstructions>();
   public readonly visibility_changed = new Signal_Main<boolean>();
   public readonly z_index_changed = new Signal_Main<number>();
   private drawCallback: DrawCallback | null = null;
-  private hasActiveRedrawRequest = false;
   private _visible = true;
   private _zIndex = 0;
 
@@ -84,18 +83,6 @@ export class CanvasNode_Main extends Node_Main implements CanvasNode {
     this.z_index_changed.emit(zIndex);
   }
 
-  public draw = (canvas: Canvas) => {
-    if (this.drawCallback) {
-      this.drawCallback(canvas);
-    }
-
-    this.completeRedrawRequest();
-  };
-
-  private completeRedrawRequest() {
-    this.hasActiveRedrawRequest = false;
-  }
-
   public hide() {
     this.visible = false;
   }
@@ -109,24 +96,23 @@ export class CanvasNode_Main extends Node_Main implements CanvasNode {
   }
 
   public requestRedraw() {
-    if (this.hasActiveRedrawRequest) {
-      return;
+    this.emitRedrawRequestedSignal(this.buildDrawInstructions());
+  }
+
+  private emitRedrawRequestedSignal(instructions: DrawInstructions) {
+    this.redraw_requested.emit(instructions);
+  }
+
+  private buildDrawInstructions() {
+    const builder = new DrawInstructionsBuilder();
+
+    builder.setZIndex(this.globalZIndex);
+
+    if (this.drawCallback) {
+      this.drawCallback(builder);
     }
 
-    this.hasActiveRedrawRequest = true;
-    this.emitRedrawRequestedSignal();
-  }
-
-  private emitRedrawRequestedSignal() {
-    this.redraw_requested.emit(this.createDrawCommand());
-  }
-
-  private createDrawCommand() {
-    return {
-      id: this.id,
-      zIndex: this.globalZIndex,
-      draw: this.draw,
-    };
+    return builder.build();
   }
 
   public setDrawCallback(callback: DrawCallback) {

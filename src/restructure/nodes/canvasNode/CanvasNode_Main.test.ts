@@ -1,5 +1,4 @@
 import { CanvasNode_Main } from './CanvasNode_Main';
-import { Canvas_Mock } from '../../domain/canvas/Canvas_Mock';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('CanvasNode_Main', () => {
@@ -88,17 +87,6 @@ describe('CanvasNode_Main', () => {
     expect(node.globalZIndex).toBe(3);
   });
 
-  it('should execute draw callback with canvas on draw', () => {
-    const node = new CanvasNode_Main('node');
-    const callback = vi.fn();
-    const canvas = new Canvas_Mock();
-
-    node.setDrawCallback(callback);
-    node.draw(canvas);
-
-    expect(callback).toHaveBeenCalledWith(canvas);
-  });
-
   it('should hide node', () => {
     const node = new CanvasNode_Main('node');
     const emitSpy = vi.spyOn(node.visibility_changed, 'emit');
@@ -108,6 +96,16 @@ describe('CanvasNode_Main', () => {
     expect(emitSpy).toHaveBeenCalledWith(false);
   });
 
+  it('should execute draw callback upon redraw request', () => {
+    const node = new CanvasNode_Main('node');
+    const callback = vi.fn();
+
+    node.setDrawCallback(callback);
+    node.requestRedraw();
+
+    expect(callback).toHaveBeenCalled();
+  });
+
   it('should emit "redraw_requested" signal when a redraw is requested', () => {
     const node = new CanvasNode_Main('node');
     const emitSpy = vi.spyOn(node.redraw_requested, 'emit');
@@ -115,32 +113,9 @@ describe('CanvasNode_Main', () => {
     node.requestRedraw();
 
     expect(emitSpy).toHaveBeenCalledWith({
-      id: node.id,
       zIndex: node.globalZIndex,
-      draw: node.draw,
+      steps: [],
     });
-  });
-
-  it('should only emit "redraw_requested" signal once, even if redraw is requested more than once', () => {
-    const node = new CanvasNode_Main('node');
-    const emitSpy = vi.spyOn(node.redraw_requested, 'emit');
-
-    node.requestRedraw();
-    node.requestRedraw();
-
-    expect(emitSpy).toHaveBeenCalledOnce();
-  });
-
-  it('should allow "redraw_requested" signal to be emitted again after request is completed', () => {
-    const node = new CanvasNode_Main('node');
-    const canvas = new Canvas_Mock();
-    const emitSpy = vi.spyOn(node.redraw_requested, 'emit');
-
-    node.requestRedraw();
-    node.draw(canvas);
-    node.requestRedraw();
-
-    expect(emitSpy).toHaveBeenCalledTimes(2);
   });
 
   it('should show node', () => {
