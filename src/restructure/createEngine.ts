@@ -1,9 +1,13 @@
+import type { DrawInstructions } from './domain/drawInstructions/drawInstructions.types';
 import type { Engine } from './engine/engine.types';
 import { Canvas_2D } from './domain/canvas/Canvas_2D';
 import { Clock_System } from './domain/clock/Clock_System';
+import { DrawStepTranslator_Main } from './domain/drawStep/translator/DrawStepTranslator_Main';
+import { Queue_Main } from './domain/queue/Queue_Main';
+import { DrawEngine_Main } from './engine/drawEngine/DrawEngine_Main';
+import { DrawInstructionsResolver_Main } from './engine/drawInstructionsResolver/DrawInstructionsResolver_Main';
 import { Engine_Main } from './engine/Engine_Main';
 import { EngineController_Main } from './engine/engineController/EngineController_Main';
-import { Graphics_Main } from './engine/graphics/Graphics_Main';
 import { Loop_Main } from './engine/loop/Loop_Main';
 import { PluginManager_Main } from './engine/pluginManager/PluginManager_Main';
 import { SceneTree_Main } from './engine/sceneTree/SceneTree_Main';
@@ -14,37 +18,51 @@ import { SceneTree_Main } from './engine/sceneTree/SceneTree_Main';
  * @returns The instantiated engine.
  */
 export function createEngine(config: Config): Engine {
-  const graphics = createGraphics(createCanvas(config.canvas.width, config.canvas.height));
+  const drawEngine = createDrawEngine(createDrawStepTranslator());
+  const drawInstructionsQueue = createDrawInstructionsQueue();
+  const drawInstructionsResolver = createDrawInstructionsResolver();
   const sceneTree = createSceneTree();
-  const engineController = createEngineController(graphics, sceneTree);
+  const engineController = createEngineController(drawInstructionsQueue, sceneTree);
   const clock = createClock();
   const loop = createLoop(clock);
   const pluginManager = createPluginManager();
+  const targetCanvas = createTargetCanvas(config.canvas.width, config.canvas.height);
 
   return new Engine_Main({
+    drawEngine,
+    drawInstructionsQueue,
+    drawInstructionsResolver,
     engineController,
-    graphics,
     loop,
     pluginManager,
     sceneTree,
+    targetCanvas,
   });
 }
 
-function createGraphics(canvas: ReturnType<typeof createCanvas>) {
-  return new Graphics_Main(canvas);
+function createDrawEngine(resolver: ReturnType<typeof createDrawStepTranslator>) {
+  return new DrawEngine_Main(resolver);
 }
 
-function createCanvas(width: number, height: number) {
-  return new Canvas_2D(width, height);
+function createDrawStepTranslator() {
+  return new DrawStepTranslator_Main();
+}
+
+function createDrawInstructionsQueue() {
+  return new Queue_Main<DrawInstructions>();
+}
+
+function createDrawInstructionsResolver() {
+  return new DrawInstructionsResolver_Main();
 }
 
 function createSceneTree() {
   return new SceneTree_Main();
 }
 
-function createEngineController(graphics: ReturnType<typeof createGraphics>, sceneTree: ReturnType<typeof createSceneTree>) {
+function createEngineController(drawInstructionsQueue: ReturnType<typeof createDrawInstructionsQueue>, sceneTree: ReturnType<typeof createSceneTree>) {
   return new EngineController_Main({
-    graphics,
+    drawInstructionsQueue,
     sceneTree,
   });
 }
@@ -59,6 +77,10 @@ function createClock() {
 
 function createPluginManager() {
   return new PluginManager_Main();
+}
+
+function createTargetCanvas(width: number, height: number) {
+  return new Canvas_2D(width, height);
 }
 
 interface Config {

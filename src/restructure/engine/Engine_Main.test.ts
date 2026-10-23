@@ -1,20 +1,26 @@
+import { DrawEngine_Mock } from './drawEngine/DrawEngine_Mock';
+import { DrawInstructionsResolver_Mock } from './drawInstructionsResolver/DrawInstructionsResolver_Mock';
 import { Engine_Main } from './Engine_Main';
 import { EngineController_Mock } from './engineController/EngineController_Mock';
-import { Graphics_Mock } from './graphics/Graphics_Mock';
 import { Loop_Mock } from './loop/Loop_Mock';
 import { PluginManager_Mock } from './pluginManager/PluginManager_Mock';
 import { SceneTree_Mock } from './sceneTree/SceneTree_Mock';
+import { Canvas_Mock } from '../domain/canvas/Canvas_Mock';
+import { Queue_Mock } from '../domain/queue/Queue_Mock';
 import { Node_Mock } from '../nodes/node/Node_Mock';
 import { describe, expect, it } from 'vitest';
 
 describe('Engine_Main', () => {
   it('should not be active by default', () => {
     const engine = new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager: new PluginManager_Mock(),
       sceneTree: new SceneTree_Mock(),
+      targetCanvas: new Canvas_Mock(),
     });
 
     expect(engine.isActive).toBe(false);
@@ -24,11 +30,14 @@ describe('Engine_Main', () => {
     const loop = new Loop_Mock();
 
     new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop,
       pluginManager: new PluginManager_Mock(),
       sceneTree: new SceneTree_Mock(),
+      targetCanvas: new Canvas_Mock(),
     });
 
     expect(loop.setLoopCallback).toHaveBeenCalled();
@@ -37,11 +46,14 @@ describe('Engine_Main', () => {
   it('should set current scene in scene tree', () => {
     const sceneTree = new SceneTree_Mock();
     const engine = new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager: new PluginManager_Mock(),
       sceneTree,
+      targetCanvas: new Canvas_Mock(),
     });
 
     engine.replaceScene(Node_Mock);
@@ -52,11 +64,14 @@ describe('Engine_Main', () => {
   it('should remove current scene when replacing scene in scene tree', () => {
     const sceneTree = new SceneTree_Mock();
     const engine = new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager: new PluginManager_Mock(),
       sceneTree,
+      targetCanvas: new Canvas_Mock(),
     });
 
     engine.replaceScene(Node_Mock);
@@ -68,11 +83,14 @@ describe('Engine_Main', () => {
   it('should start plugins upon starting', () => {
     const pluginManager = new PluginManager_Mock();
     const engine = new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager,
       sceneTree: new SceneTree_Mock(),
+      targetCanvas: new Canvas_Mock(),
     });
 
     engine.start();
@@ -84,11 +102,14 @@ describe('Engine_Main', () => {
     const pluginManager = new PluginManager_Mock();
     const sceneTree = new SceneTree_Mock();
     const engine = new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager,
       sceneTree,
+      targetCanvas: new Canvas_Mock(),
     });
 
     engine.start();
@@ -100,11 +121,14 @@ describe('Engine_Main', () => {
     const loop = new Loop_Mock();
     const sceneTree = new SceneTree_Mock();
     const engine = new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop,
       pluginManager: new PluginManager_Mock(),
       sceneTree,
+      targetCanvas: new Canvas_Mock(),
     });
 
     engine.start();
@@ -114,11 +138,14 @@ describe('Engine_Main', () => {
 
   it('should be active after starting', () => {
     const engine = new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager: new PluginManager_Mock(),
       sceneTree: new SceneTree_Mock(),
+      targetCanvas: new Canvas_Mock(),
     });
 
     engine.start();
@@ -129,11 +156,14 @@ describe('Engine_Main', () => {
   it('should stop loop upon stopping', () => {
     const loop = new Loop_Mock();
     const engine = new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop,
       pluginManager: new PluginManager_Mock(),
       sceneTree: new SceneTree_Mock(),
+      targetCanvas: new Canvas_Mock(),
     });
 
     engine.stop();
@@ -145,11 +175,14 @@ describe('Engine_Main', () => {
     const loop = new Loop_Mock();
     const sceneTree = new SceneTree_Mock();
     const engine = new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop,
       pluginManager: new PluginManager_Mock(),
       sceneTree,
+      targetCanvas: new Canvas_Mock(),
     });
 
     engine.stop();
@@ -161,11 +194,14 @@ describe('Engine_Main', () => {
     const pluginManager = new PluginManager_Mock();
     const sceneTree = new SceneTree_Mock();
     const engine = new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager,
       sceneTree,
+      targetCanvas: new Canvas_Mock(),
     });
 
     engine.stop();
@@ -175,11 +211,14 @@ describe('Engine_Main', () => {
 
   it('should not be active after starting', () => {
     const engine = new Engine_Main({
+      drawEngine: new DrawEngine_Mock(),
+      drawInstructionsQueue: new Queue_Mock(),
+      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
       engineController: new EngineController_Mock(),
-      graphics: new Graphics_Mock(),
       loop: new Loop_Mock(),
       pluginManager: new PluginManager_Mock(),
       sceneTree: new SceneTree_Mock(),
+      targetCanvas: new Canvas_Mock(),
     });
 
     engine.stop();
