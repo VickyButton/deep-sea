@@ -1,16 +1,39 @@
-import type { DrawInstructions } from '../drawInstructions.types';
+import type { DrawStep } from '../../drawStep/drawStep.types';
 
 /** Used for building draw instructions. */
-export interface DrawInstructionsBuilder {
+export class DrawInstructionsBuilder {
+  private readonly steps: DrawStep[] = [];
+  private zIndex = 0;
+
   /** Adds a "BEGIN_PATH" draw step to the instructions steps. */
-  beginPath(): void;
+  public beginPath() {
+    this.addStep({
+      type: 'BEGIN_PATH',
+    });
+  }
+
+  private addStep(step: DrawStep) {
+    this.steps.push(step);
+  }
+
   /**
    * Builds the draw instructions.
    * @returns The finished draw instructions.
    */
-  build(): DrawInstructions;
+  public build() {
+    return {
+      steps: this.steps,
+      zIndex: this.zIndex,
+    };
+  }
+
   /** Adds a "CLOSE_PATH" draw step to the instructions steps. */
-  closePath(): void;
+  public closePath() {
+    this.addStep({
+      type: 'CLOSE_PATH',
+    });
+  }
+
   /**
    * Adds a "DRAW_ARC" draw step to the instructions steps.
    * @param x The horizontal coordinate of the arc's center.
@@ -20,7 +43,18 @@ export interface DrawInstructionsBuilder {
    * @param endAngle The angle at which the arc ends in radians, measured from the positive x-axis.
    * @param counterClockwise If true, draws the arc counter-clockwise between the start and end angles.
    */
-  drawArc(x: number, y: number, radius: number, startAngle: number, endAngle: number, counterClockwise?: boolean): void;
+  public drawArc(x: number, y: number, radius: number, startAngle: number, endAngle: number, counterClockwise?: boolean) {
+    this.addStep({
+      type: 'DRAW_ARC',
+      x,
+      y,
+      radius,
+      startAngle,
+      endAngle,
+      counterClockwise,
+    });
+  }
+
   /**
    * Adds a "DRAW_LINE" draw step to the instructions steps.
    * @param fromX The x-axis coordinate of the line's starting point.
@@ -28,7 +62,16 @@ export interface DrawInstructionsBuilder {
    * @param toX The x-axis coordinate of the line's stopping point.
    * @param toY The y-axis coordinate of the line's stopping point.
    */
-  drawLine(fromX: number, fromY: number, toX: number, toY: number): void;
+  public drawLine(fromX: number, fromY: number, toX: number, toY: number) {
+    this.addStep({
+      type: 'DRAW_LINE',
+      fromX,
+      fromY,
+      toX,
+      toY,
+    });
+  }
+
   /**
    * Adds a "DRAW_RECTANGLE" draw step to the instructions steps.
    * @param x The x-axis coordinate of the rectangle's starting point.
@@ -36,21 +79,52 @@ export interface DrawInstructionsBuilder {
    * @param width The rectangle's width. Positive values are to the right, and negative to the left.
    * @param height The rectangle's height. Positive values are down, and negative are up.
    */
-  drawRectangle(x: number, y: number, width: number, height: number): void;
+  public drawRectangle(x: number, y: number, width: number, height: number) {
+    this.addStep({
+      type: 'DRAW_RECTANGLE',
+      x,
+      y,
+      width,
+      height,
+    });
+  }
+
   /** Adds a "FILL" draw step to the instructions steps. */
-  fill(): void;
+  public fill() {
+    this.addStep({
+      type: 'FILL',
+    });
+  }
+
   /** Adds a "RESET_TRANSFORM" draw step to the instructions steps. */
-  resetTransform(): void;
+  public resetTransform() {
+    this.addStep({
+      type: 'RESET_TRANSFORM',
+    });
+  }
+
   /**
    * Adds a "SET_FILL_COLOR" draw step to the instructions steps.
    * @param color The color to use for filling.
    */
-  setFillColor(color: string): void;
+  public setFillColor(color: string) {
+    this.addStep({
+      type: 'SET_FILL_COLOR',
+      color,
+    });
+  }
+
   /**
    * Adds a "SET_STROKE_COLOR" draw step to the instructions steps.
    * @param color The color to use for stroking.
    */
-  setStrokeColor(color: string): void;
+  public setStrokeColor(color: string) {
+    this.addStep({
+      type: 'SET_STROKE_COLOR',
+      color,
+    });
+  }
+
   /**
    * Adds a "SET_TRANSFORM" draw step to the instructions steps.
    * @param a The cell in the first row and first column of the matrix.
@@ -60,13 +134,31 @@ export interface DrawInstructionsBuilder {
    * @param e The cell in the first row and third column of the matrix.
    * @param f The cell in the second row and third column of the matrix.
    */
-  setTransform(a: number, b: number, c: number, d: number, e: number, f: number): void;
+  public setTransform(a: number, b: number, c: number, d: number, e: number, f: number) {
+    this.addStep({
+      type: 'SET_TRANSFORM',
+      a,
+      b,
+      c,
+      d,
+      e,
+      f,
+    });
+  }
+
   /**
    * Sets the z-index for the instructions.
    * @param zIndex The z-index for the instructions to execute at.
    * @throws An error if a build hasn't already been started.
    */
-  setZIndex(zIndex: number): void;
+  public setZIndex(zIndex: number) {
+    this.zIndex = zIndex;
+  }
+
   /** Adds a "STROKE" draw step to the instructions steps. */
-  stroke(): void;
+  public stroke() {
+    this.addStep({
+      type: 'STROKE',
+    });
+  }
 }

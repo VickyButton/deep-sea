@@ -1,9 +1,9 @@
-import { DrawInstructionsBuilder_Main } from './DrawInstructionsBuilder_Main';
+import { DrawInstructionsBuilder } from './DrawInstructionsBuilder';
 import { describe, expect, it } from 'vitest';
 
-describe('DrawInstructionsBuilder_Main', () => {
+describe('DrawInstructionsBuilder', () => {
   it('should add a "BEGIN_PATH" draw step to the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.beginPath();
 
@@ -18,7 +18,7 @@ describe('DrawInstructionsBuilder_Main', () => {
   });
 
   it('should add a "CLOSE_PATH" draw step to the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.closePath();
 
@@ -33,7 +33,7 @@ describe('DrawInstructionsBuilder_Main', () => {
   });
 
   it('should add a "DRAW_ARC" draw step to the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.drawArc(1, 2, 3, 4, 5, true);
 
@@ -54,7 +54,7 @@ describe('DrawInstructionsBuilder_Main', () => {
   });
 
   it('should add a "DRAW_LINE" draw step to the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.drawLine(1, 2, 3, 4);
 
@@ -73,7 +73,7 @@ describe('DrawInstructionsBuilder_Main', () => {
   });
 
   it('should add a "DRAW_RECTANGLE" draw step to the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.drawRectangle(1, 2, 3, 4);
 
@@ -92,7 +92,7 @@ describe('DrawInstructionsBuilder_Main', () => {
   });
 
   it('should add a "FILL" draw step to the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.fill();
 
@@ -107,7 +107,7 @@ describe('DrawInstructionsBuilder_Main', () => {
   });
 
   it('should add a "RESET_TRANSFORM" draw step to the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.resetTransform();
 
@@ -122,7 +122,7 @@ describe('DrawInstructionsBuilder_Main', () => {
   });
 
   it('should add a "SET_FILL_COLOR" draw step to the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.setFillColor('COLOR');
 
@@ -138,7 +138,7 @@ describe('DrawInstructionsBuilder_Main', () => {
   });
 
   it('should add a "SET_STROKE_COLOR" draw step to the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.setStrokeColor('COLOR');
 
@@ -154,7 +154,7 @@ describe('DrawInstructionsBuilder_Main', () => {
   });
 
   it('should add a "SET_TRANSFORM" draw step to the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.setTransform(1, 2, 3, 4, 5, 6);
 
@@ -175,7 +175,7 @@ describe('DrawInstructionsBuilder_Main', () => {
   });
 
   it('should set the z-index for the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.setZIndex(1);
 
@@ -186,7 +186,7 @@ describe('DrawInstructionsBuilder_Main', () => {
   });
 
   it('should add a "STROKE" draw step to the instructions', () => {
-    const builder = new DrawInstructionsBuilder_Main();
+    const builder = new DrawInstructionsBuilder();
 
     builder.stroke();
 
