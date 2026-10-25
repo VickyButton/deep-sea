@@ -1,7 +1,7 @@
 import type { DrawInstructions } from '../../domain/drawInstructions/drawInstructions.types';
 import { EngineController_Main } from './EngineController_Main';
 import { Queue_Mock } from '../../domain/queue/Queue_Mock';
-import { CanvasNode_Mock } from '../../nodes/canvasNode/CanvasNode_Mock';
+import { CanvasNode } from '../../nodes/canvasNode/CanvasNode';
 import { SceneTree_Mock } from '../sceneTree/SceneTree_Mock';
 import { describe, expect, it } from 'vitest';
 
@@ -22,7 +22,7 @@ describe('EngineController_Main', () => {
       drawInstructionsQueue,
       sceneTree,
     });
-    const canvasNode = new CanvasNode_Mock('node');
+    const canvasNode = new CanvasNode('node');
     const instructions = {
       steps: [],
       zIndex: canvasNode.globalZIndex,
@@ -43,7 +43,7 @@ describe('EngineController_Main', () => {
       drawInstructionsQueue,
       sceneTree,
     });
-    const canvasNode = new CanvasNode_Mock('node');
+    const canvasNode = new CanvasNode('node');
     const instructions = {
       steps: [],
       zIndex: canvasNode.globalZIndex,

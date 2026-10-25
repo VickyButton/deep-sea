@@ -2,10 +2,10 @@ import type { Node2D } from './node2D.types';
 import { Signal } from '../../domain/signal/Signal';
 import { Transform2D } from '../../domain/transform2D/Transform2D';
 import { Vector2 } from '../../domain/vector2/Vector2';
-import { CanvasNode_Main } from '../canvasNode/CanvasNode_Main';
+import { CanvasNode } from '../canvasNode/CanvasNode';
 
 /** The main implementation of the Node2D interface. */
-export class Node2D_Main extends CanvasNode_Main implements Node2D {
+export class Node2D_Main extends CanvasNode implements Node2D {
   public readonly position_changed = new Signal<Vector2>();
   public readonly rotation_changed = new Signal<number>();
   public readonly scale_changed = new Signal<Vector2>();
