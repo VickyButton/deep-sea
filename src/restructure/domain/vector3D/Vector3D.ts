@@ -1,4 +1,4 @@
-import { Vector2D } from '../vector2D/Vector2D';
+import { Vector2 } from '../vector2/Vector2';
 
 /**
  * A 3D vector.
@@ -158,7 +158,7 @@ export class Vector3D {
    * @returns The 2D copy of the vector.
    */
   public to2D() {
-    return new Vector2D(this.x, this.y);
+    return new Vector2(this.x, this.y);
   }
 
   /**
@@ -166,7 +166,7 @@ export class Vector3D {
    * @param vector A 2D vector.
    * @returns A 3D vector with the X and Y components of the 2D vector.
    */
-  public static from2D(vector2D: Vector2D) {
+  public static from2D(vector2D: Vector2) {
     return new Vector3D(vector2D.x, vector2D.y);
   }
 }

@@ -1,5 +1,5 @@
-/** A 2D vector. */
-export class Vector2D {
+/** A vector consisting of 2 components. */
+export class Vector2 {
   /** The vector's X component. */
   public x: number;
   /** The vector's Y component. */
@@ -52,7 +52,7 @@ export class Vector2D {
     const normalizedX = this.x / magnitude;
     const normalizedY = this.y / magnitude;
 
-    return new Vector2D(normalizedX, normalizedY);
+    return new Vector2(normalizedX, normalizedY);
   }
 
   /**
@@ -60,11 +60,11 @@ export class Vector2D {
    * @param vector The vector to add to this vector.
    * @returns The sum vector.
    */
-  public add(vector: Vector2D) {
+  public add(vector: Vector2) {
     const sumX = this.x + vector.x;
     const sumY = this.y + vector.y;
 
-    return new Vector2D(sumX, sumY);
+    return new Vector2(sumX, sumY);
   }
 
   /**
@@ -72,11 +72,11 @@ export class Vector2D {
    * @param vector The vector to subtract this vector by.
    * @returns The difference vector.
    */
-  public subtract(vector: Vector2D) {
+  public subtract(vector: Vector2) {
     const differenceX = this.x - vector.x;
     const differenceY = this.y - vector.y;
 
-    return new Vector2D(differenceX, differenceY);
+    return new Vector2(differenceX, differenceY);
   }
 
   /**
@@ -84,11 +84,11 @@ export class Vector2D {
    * @param vector The vector to multiply this vector by.
    * @returns The product vector.
    */
-  public multiply(vector: Vector2D) {
+  public multiply(vector: Vector2) {
     const productX = this.x * vector.x;
     const productY = this.y * vector.y;
 
-    return new Vector2D(productX, productY);
+    return new Vector2(productX, productY);
   }
 
   /**
@@ -96,11 +96,11 @@ export class Vector2D {
    * @param vector The vector to divide this vector by.
    * @returns The quotient vector.
    */
-  public divide(vector: Vector2D) {
+  public divide(vector: Vector2) {
     const quotientX = this.x / vector.x;
     const quotientY = this.y / vector.y;
 
-    return new Vector2D(quotientX, quotientY);
+    return new Vector2(quotientX, quotientY);
   }
 
   /**
@@ -108,7 +108,7 @@ export class Vector2D {
    * @param vector The vector to multiply this vector by.
    * @returns The dot product of the two vectors.
    */
-  public computeDotProduct(vector: Vector2D) {
+  public computeDotProduct(vector: Vector2) {
     const productX = this.x * vector.x;
     const productY = this.y * vector.y;
 
@@ -120,7 +120,7 @@ export class Vector2D {
    * @param vector The vector to compare equality to.
    * @returns True if equal, false if not.
    */
-  public equals(vector: Vector2D) {
+  public equals(vector: Vector2) {
     return this.x === vector.x && this.y === vector.y;
   }
 
@@ -129,26 +129,26 @@ export class Vector2D {
    * @returns A copy of this vector.
    */
   public copy() {
-    return new Vector2D(this.x, this.y);
+    return new Vector2(this.x, this.y);
   }
 
   /** Creates a vector pointing up. */
   public static get UP() {
-    return new Vector2D(0, 1);
+    return new Vector2(0, 1);
   }
 
   /** Creates a vector pointing down. */
   public static get DOWN() {
-    return new Vector2D(0, -1);
+    return new Vector2(0, -1);
   }
 
   /** Creates a vector pointing right. */
   public static get RIGHT() {
-    return new Vector2D(1, 0);
+    return new Vector2(1, 0);
   }
 
   /** Creates a vector pointing left. */
   public static get LEFT() {
-    return new Vector2D(-1, 0);
+    return new Vector2(-1, 0);
   }
 }

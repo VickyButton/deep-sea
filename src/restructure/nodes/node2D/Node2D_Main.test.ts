@@ -1,5 +1,5 @@
 import { Node2D_Main } from './Node2D_Main';
-import { Vector2D } from '../../domain';
+import { Vector2 } from '../../domain';
 import { Transform2D } from '../../domain/transform2D/Transform2D';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -7,7 +7,7 @@ describe('Node2D_Main', () => {
   it('should be positioned at origin by default', () => {
     const node = new Node2D_Main('node');
 
-    expect(node.position).toEqual(new Vector2D(0, 0));
+    expect(node.position).toEqual(new Vector2(0, 0));
   });
 
   it('should not emit "position_changed" signal if position has not changed', () => {
@@ -22,7 +22,7 @@ describe('Node2D_Main', () => {
 
   it('should emit "position_changed" signal if position has changed', () => {
     const node = new Node2D_Main('node');
-    const newValue = node.position.add(new Vector2D(1, 1));
+    const newValue = node.position.add(new Vector2(1, 1));
     const emitSpy = vi.spyOn(node.position_changed, 'emit');
 
     node.position = newValue;
@@ -32,7 +32,7 @@ describe('Node2D_Main', () => {
 
   it('should emit "transform_changed" signal if position has changed', () => {
     const node = new Node2D_Main('node');
-    const newValue = node.position.add(new Vector2D(1, 1));
+    const newValue = node.position.add(new Vector2(1, 1));
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
 
     node.position = newValue;
@@ -79,7 +79,7 @@ describe('Node2D_Main', () => {
   it('should not be scaled by default', () => {
     const node = new Node2D_Main('node');
 
-    expect(node.scale).toEqual(new Vector2D(1, 1));
+    expect(node.scale).toEqual(new Vector2(1, 1));
   });
 
   it('should not emit "scale_changed" signal if scale has not changed', () => {
@@ -94,7 +94,7 @@ describe('Node2D_Main', () => {
 
   it('should emit "scale_changed" signal if scale has changed', () => {
     const node = new Node2D_Main('node');
-    const newValue = node.scale.add(new Vector2D(1, 1));
+    const newValue = node.scale.add(new Vector2(1, 1));
     const emitSpy = vi.spyOn(node.scale_changed, 'emit');
 
     node.scale = newValue;
@@ -104,7 +104,7 @@ describe('Node2D_Main', () => {
 
   it('should emit "transform_changed" signal if scale has changed', () => {
     const node = new Node2D_Main('node');
-    const newValue = node.scale.add(new Vector2D(1, 1));
+    const newValue = node.scale.add(new Vector2(1, 1));
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
 
     node.scale = newValue;
@@ -117,8 +117,8 @@ describe('Node2D_Main', () => {
 
     expect(node.transform).toEqual(new Transform2D({
       rotation: 0,
-      scale: new Vector2D(1, 1),
-      translation: new Vector2D(0, 0),
+      scale: new Vector2(1, 1),
+      translation: new Vector2(0, 0),
     }));
   });
 
@@ -136,8 +136,8 @@ describe('Node2D_Main', () => {
     const node = new Node2D_Main('node');
     const newValue = new Transform2D({
       rotation: node.transform.rotation + 1,
-      scale: node.transform.scale.add(new Vector2D(1, 1)),
-      translation: node.transform.translation.add(new Vector2D(1, 1)),
+      scale: node.transform.scale.add(new Vector2(1, 1)),
+      translation: node.transform.translation.add(new Vector2(1, 1)),
     });
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
 
@@ -149,7 +149,7 @@ describe('Node2D_Main', () => {
 
   it('should emit "position_changed" signal if transform has changed with new position', () => {
     const node = new Node2D_Main('node');
-    const newPosition = node.transform.translation.add(new Vector2D(1, 1));
+    const newPosition = node.transform.translation.add(new Vector2(1, 1));
     const newTransform = new Transform2D({
       rotation: node.transform.rotation,
       scale: node.transform.scale,
@@ -179,7 +179,7 @@ describe('Node2D_Main', () => {
 
   it('should emit "scale_changed" signal if transform has changed with new scale', () => {
     const node = new Node2D_Main('node');
-    const newScale = node.transform.scale.add(new Vector2D(1, 1));
+    const newScale = node.transform.scale.add(new Vector2(1, 1));
     const newTransform = new Transform2D({
       rotation: node.transform.rotation,
       scale: newScale,
@@ -195,18 +195,18 @@ describe('Node2D_Main', () => {
   it('should be positioned at origin globally by default', () => {
     const node = new Node2D_Main('node');
 
-    expect(node.globalPosition).toEqual(new Vector2D(0, 0));
+    expect(node.globalPosition).toEqual(new Vector2(0, 0));
   });
 
   it('should determine global position from closest ancestor', () => {
     const node = new Node2D_Main('node');
-    node.position = new Vector2D(1, 1);
+    node.position = new Vector2(1, 1);
     const parent = new Node2D_Main('ancestor');
-    parent.position = new Vector2D(2, 2);
+    parent.position = new Vector2(2, 2);
 
     parent.addChild(node);
 
-    expect(node.globalPosition).toEqual(new Vector2D(3, 3));
+    expect(node.globalPosition).toEqual(new Vector2(3, 3));
   });
 
   it('should not be rotated globally by default', () => {
@@ -229,18 +229,18 @@ describe('Node2D_Main', () => {
   it('should not be scaled globally by default', () => {
     const node = new Node2D_Main('node');
 
-    expect(node.globalScale).toEqual(new Vector2D(1, 1));
+    expect(node.globalScale).toEqual(new Vector2(1, 1));
   });
 
   it('should determine global scale from closest ancestor', () => {
     const node = new Node2D_Main('node');
-    node.scale = new Vector2D(2, 2);
+    node.scale = new Vector2(2, 2);
     const parent = new Node2D_Main('ancestor');
-    parent.scale = new Vector2D(3, 3);
+    parent.scale = new Vector2(3, 3);
 
     parent.addChild(node);
 
-    expect(node.globalScale).toEqual(new Vector2D(6, 6));
+    expect(node.globalScale).toEqual(new Vector2(6, 6));
   });
 
   it('should rotate node', () => {
@@ -274,58 +274,58 @@ describe('Node2D_Main', () => {
 
   it('should scale node', () => {
     const node = new Node2D_Main('node');
-    node.scale = new Vector2D(2, 2);
+    node.scale = new Vector2(2, 2);
 
-    node.scaleBy(new Vector2D(3, 3));
+    node.scaleBy(new Vector2(3, 3));
 
-    expect(node.scale).toEqual(new Vector2D(6, 6));
+    expect(node.scale).toEqual(new Vector2(6, 6));
   });
 
   it('should emit "scale_changed" signal on scale', () => {
     const node = new Node2D_Main('node');
     const emitSpy = vi.spyOn(node.scale_changed, 'emit');
-    node.scale = new Vector2D(2, 2);
+    node.scale = new Vector2(2, 2);
 
-    node.scaleBy(new Vector2D(3, 3));
+    node.scaleBy(new Vector2(3, 3));
 
-    expect(emitSpy).toHaveBeenLastCalledWith(new Vector2D(6, 6));
+    expect(emitSpy).toHaveBeenLastCalledWith(new Vector2(6, 6));
   });
 
   it('should emit "transform_changed" signal on scale', () => {
     const node = new Node2D_Main('node');
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
-    node.scale = new Vector2D(2, 2);
+    node.scale = new Vector2(2, 2);
 
-    node.scaleBy(new Vector2D(3, 3));
+    node.scaleBy(new Vector2(3, 3));
 
     expect(emitSpy).toHaveBeenLastCalledWith(node.transform);
   });
 
   it('should translate node', () => {
     const node = new Node2D_Main('node');
-    node.position = new Vector2D(1, 1);
+    node.position = new Vector2(1, 1);
 
-    node.translateBy(new Vector2D(2, 2));
+    node.translateBy(new Vector2(2, 2));
 
-    expect(node.position).toEqual(new Vector2D(3, 3));
+    expect(node.position).toEqual(new Vector2(3, 3));
   });
 
   it('should emit "position_changed" signal on translate', () => {
     const node = new Node2D_Main('node');
     const emitSpy = vi.spyOn(node.position_changed, 'emit');
-    node.position = new Vector2D(1, 1);
+    node.position = new Vector2(1, 1);
 
-    node.translateBy(new Vector2D(2, 2));
+    node.translateBy(new Vector2(2, 2));
 
-    expect(emitSpy).toHaveBeenLastCalledWith(new Vector2D(3, 3));
+    expect(emitSpy).toHaveBeenLastCalledWith(new Vector2(3, 3));
   });
 
   it('should emit "transform_changed" signal on translate', () => {
     const node = new Node2D_Main('node');
     const emitSpy = vi.spyOn(node.transform_changed, 'emit');
-    node.position = new Vector2D(1, 1);
+    node.position = new Vector2(1, 1);
 
-    node.translateBy(new Vector2D(2, 2));
+    node.translateBy(new Vector2(2, 2));
 
     expect(emitSpy).toHaveBeenLastCalledWith(node.transform);
   });

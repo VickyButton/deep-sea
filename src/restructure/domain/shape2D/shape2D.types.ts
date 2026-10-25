@@ -1,6 +1,6 @@
 import type { DrawStep } from '../drawStep/drawStep.types';
 import type { Transform2D } from '../transform2D/Transform2D';
-import type { Vector2D } from '../vector2D/Vector2D';
+import type { Vector2 } from '../vector2/Vector2';
 
 /** A 2D shape that can be transformed and drawn. */
 export interface Shape2D {
@@ -19,4 +19,4 @@ export interface Shape2D {
 }
 
 /** A set of vertices that form an axis-aligned bounding box of a 2D shape, in counterclockwise order. */
-export type BoundingBox2D = [Vector2D, Vector2D, Vector2D, Vector2D];
+export type BoundingBox2D = [Vector2, Vector2, Vector2, Vector2];

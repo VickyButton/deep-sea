@@ -1,15 +1,15 @@
-import { Vector2D } from '../vector2D/Vector2D';
+import { Vector2 } from '../vector2/Vector2';
 
 /** A 2-dimensional matrix. */
 export class Matrix2D {
-  public columns: [Vector2D, Vector2D];
+  public columns: [Vector2, Vector2];
 
   /** The first column of the matrix. */
   public get 0() {
     return this.columns[0];
   }
 
-  public set 0(vector: Vector2D) {
+  public set 0(vector: Vector2) {
     this.columns[0] = vector;
   }
 
@@ -18,11 +18,11 @@ export class Matrix2D {
     return this.columns[1];
   }
 
-  public set 1(vector: Vector2D) {
+  public set 1(vector: Vector2) {
     this.columns[1] = vector;
   }
 
-  constructor(columns: [Vector2D, Vector2D] = [new Vector2D(), new Vector2D()]) {
+  constructor(columns: [Vector2, Vector2] = [new Vector2(), new Vector2()]) {
     this.columns = columns;
   }
 
@@ -43,9 +43,9 @@ export class Matrix2D {
    * @param vector The vector to multiply by.
    * @returns The resulting product vector.
    */
-  public multiplyVector(vector: Vector2D) {
+  public multiplyVector(vector: Vector2) {
     const x = vector.x * this[0][0] + vector.y * this[1][0];
     const y = vector.x * this[0][1] + vector.y * this[1][1];
-    return new Vector2D(x, y);
+    return new Vector2(x, y);
   }
 }

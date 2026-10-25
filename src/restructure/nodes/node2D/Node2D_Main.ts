@@ -1,22 +1,22 @@
 import type { Node2D } from './node2D.types';
-import { Vector2D } from '../../domain';
+import { Vector2 } from '../../domain';
 import { Signal_Main } from '../../domain/signal/Signal_Main';
 import { Transform2D } from '../../domain/transform2D/Transform2D';
 import { CanvasNode_Main } from '../canvasNode/CanvasNode_Main';
 
 /** The main implementation of the Node2D interface. */
 export class Node2D_Main extends CanvasNode_Main implements Node2D {
-  public readonly position_changed = new Signal_Main<Vector2D>();
+  public readonly position_changed = new Signal_Main<Vector2>();
   public readonly rotation_changed = new Signal_Main<number>();
-  public readonly scale_changed = new Signal_Main<Vector2D>();
+  public readonly scale_changed = new Signal_Main<Vector2>();
   public readonly transform_changed = new Signal_Main<Transform2D>();
   private _transform = new Transform2D({
-    scale: new Vector2D(1, 1),
+    scale: new Vector2(1, 1),
     rotation: 0,
-    translation: new Vector2D(0, 0),
+    translation: new Vector2(0, 0),
   });
 
-  public get globalPosition(): Vector2D {
+  public get globalPosition(): Vector2 {
     const closestAncestor = this.getClosestNode2DAncestor();
 
     return closestAncestor ? this.calculateGlobalPositionFromNode(closestAncestor) : this.position;
@@ -36,7 +36,7 @@ export class Node2D_Main extends CanvasNode_Main implements Node2D {
     return this.rotation + node.globalRotation;
   }
 
-  public get globalScale(): Vector2D {
+  public get globalScale(): Vector2 {
     const closestAncestor = this.getClosestNode2DAncestor();
 
     return closestAncestor ? this.calculateGlobalScaleFromNode(closestAncestor) : this.scale;
@@ -68,7 +68,7 @@ export class Node2D_Main extends CanvasNode_Main implements Node2D {
     return this.transform.translation;
   }
 
-  public set position(position: Vector2D) {
+  public set position(position: Vector2) {
     if (this.equalsCurrentPosition(position)) {
       return;
     }
@@ -78,15 +78,15 @@ export class Node2D_Main extends CanvasNode_Main implements Node2D {
     this.emitTransformChangedSignal(this.transform);
   }
 
-  private equalsCurrentPosition(position: Vector2D) {
+  private equalsCurrentPosition(position: Vector2) {
     return this.position.equals(position);
   }
 
-  private setPosition(position: Vector2D) {
+  private setPosition(position: Vector2) {
     this.transform.translation = position;
   }
 
-  private emitPositionChangedSignal(position: Vector2D) {
+  private emitPositionChangedSignal(position: Vector2) {
     this.position_changed.emit(position);
   }
 
@@ -124,7 +124,7 @@ export class Node2D_Main extends CanvasNode_Main implements Node2D {
     return this.transform.scale;
   }
 
-  public set scale(scale: Vector2D) {
+  public set scale(scale: Vector2) {
     if (this.equalsCurrentScale(scale)) {
       return;
     }
@@ -134,15 +134,15 @@ export class Node2D_Main extends CanvasNode_Main implements Node2D {
     this.emitTransformChangedSignal(this.transform);
   }
 
-  private equalsCurrentScale(scale: Vector2D) {
+  private equalsCurrentScale(scale: Vector2) {
     return this.scale.equals(scale);
   }
 
-  private setScale(scale: Vector2D) {
+  private setScale(scale: Vector2) {
     this.transform.scale = scale;
   }
 
-  private emitScaleChangedSignal(scale: Vector2D) {
+  private emitScaleChangedSignal(scale: Vector2) {
     this.scale_changed.emit(scale);
   }
 
@@ -184,11 +184,11 @@ export class Node2D_Main extends CanvasNode_Main implements Node2D {
     this.rotation = this.rotation + radians;
   }
 
-  public scaleBy(ratio: Vector2D) {
+  public scaleBy(ratio: Vector2) {
     this.scale = this.scale.multiply(ratio);
   }
 
-  public translateBy(offset: Vector2D) {
+  public translateBy(offset: Vector2) {
     this.position = this.position.add(offset);
   }
 }

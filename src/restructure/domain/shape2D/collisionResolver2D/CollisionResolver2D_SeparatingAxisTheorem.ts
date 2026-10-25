@@ -1,12 +1,12 @@
 import { CollisionResolver2D } from './CollisionResolver2D';
-import { Vector2D } from '../../vector2D/Vector2D';
+import { Vector2 } from '../../vector2/Vector2';
 
 /** Resolves a collision between two 2D polygons (each defined by a set of vertices) using Separating Axis Theorem. */
 export class CollisionResolver2D_SeparatingAxisTheorem extends CollisionResolver2D {
-  private readonly verticesA: Vector2D[];
-  private readonly verticesB: Vector2D[];
+  private readonly verticesA: Vector2[];
+  private readonly verticesB: Vector2[];
 
-  constructor(verticesA: Vector2D[], verticesB: Vector2D[]) {
+  constructor(verticesA: Vector2[], verticesB: Vector2[]) {
     super();
 
     this.verticesA = verticesA;
@@ -48,15 +48,15 @@ export class CollisionResolver2D_SeparatingAxisTheorem extends CollisionResolver
     return true;
   }
 
-  private getVectorBetweenTwoPoints(start: Vector2D, end: Vector2D) {
+  private getVectorBetweenTwoPoints(start: Vector2, end: Vector2) {
     return end.subtract(start);
   }
 
-  private getPerpendicularVectorCounterclockwise(vector: Vector2D) {
-    return new Vector2D(-vector.y, vector.x);
+  private getPerpendicularVectorCounterclockwise(vector: Vector2) {
+    return new Vector2(-vector.y, vector.x);
   }
 
-  private findMinMaxVertexProjectionsOnAxis(vertices: Vector2D[], axis: Vector2D) {
+  private findMinMaxVertexProjectionsOnAxis(vertices: Vector2[], axis: Vector2) {
     let min = Number.MAX_SAFE_INTEGER;
     let max = Number.MIN_SAFE_INTEGER;
 
@@ -70,7 +70,7 @@ export class CollisionResolver2D_SeparatingAxisTheorem extends CollisionResolver
     return [min, max];
   }
 
-  private projectVertexOntoAxis(vertex: Vector2D, axis: Vector2D) {
+  private projectVertexOntoAxis(vertex: Vector2, axis: Vector2) {
     return vertex.computeDotProduct(axis);
   }
 

@@ -1,12 +1,12 @@
 import type { Shape2D } from './shape2D.types';
 import type { DrawStep_DrawLine } from '../drawStep/drawStep.types';
 import type { Transform2D } from '../transform2D/Transform2D';
-import { Vector2D } from '../vector2D/Vector2D';
+import { Vector2 } from '../vector2/Vector2';
 import { CollisionResolver2D_Polygon } from './collisionResolver2D/CollisionResolver2D_Polygon';
 
 /** The polygon implementation of the Shape2D interface. */
 export class Shape2D_Polygon implements Shape2D {
-  private _vertices: Vector2D[];
+  private _vertices: Vector2[];
 
   constructor(vertices = this.computeDefaultPolygonVertices()) {
     if (!this.isValidVertices(vertices)) {
@@ -16,7 +16,7 @@ export class Shape2D_Polygon implements Shape2D {
     this._vertices = vertices;
   }
 
-  private isValidVertices(vertices: Vector2D[]) {
+  private isValidVertices(vertices: Vector2[]) {
     return vertices.length >= 3;
   }
 
@@ -33,7 +33,7 @@ export class Shape2D_Polygon implements Shape2D {
     return this.computeBoundingBox();
   }
 
-  private computeBoundingBox(): [Vector2D, Vector2D, Vector2D, Vector2D] {
+  private computeBoundingBox(): [Vector2, Vector2, Vector2, Vector2] {
     const vertices = this.vertices;
     const xValues = vertices.map((vertex) => vertex.x);
     const xMax = Math.max(...xValues);
@@ -43,10 +43,10 @@ export class Shape2D_Polygon implements Shape2D {
     const yMin = Math.min(...yValues);
 
     return [
-      new Vector2D(xMax, yMax),
-      new Vector2D(xMin, yMax),
-      new Vector2D(xMin, yMin),
-      new Vector2D(xMax, yMin),
+      new Vector2(xMax, yMax),
+      new Vector2(xMin, yMax),
+      new Vector2(xMin, yMin),
+      new Vector2(xMax, yMin),
     ];
   }
 
@@ -69,7 +69,7 @@ export class Shape2D_Polygon implements Shape2D {
   }
 
   private computeLines() {
-    const lines: [Vector2D, Vector2D][] = [];
+    const lines: [Vector2, Vector2][] = [];
     const vertices = this.vertices;
 
     for (let i = 0; i < vertices.length; i++) {
@@ -87,7 +87,7 @@ export class Shape2D_Polygon implements Shape2D {
     return structuredClone(this._vertices);
   }
 
-  public set vertices(vertices: Vector2D[]) {
+  public set vertices(vertices: Vector2[]) {
     if (!this.isValidVertices(vertices)) {
       throw this.createInvalidVerticesError();
     }
@@ -110,7 +110,7 @@ export class Shape2D_Polygon implements Shape2D {
 
 function computeRegularPolygonVertices(numSides: number) {
   const stepAngle = computeStepAngle(numSides);
-  const polygon: Vector2D[] = [];
+  const polygon: Vector2[] = [];
 
   for (let i = 0; i < numSides; i++) {
     const angle = i * stepAngle;
@@ -129,5 +129,5 @@ function computePointAlongUnitCircle(angle: number) {
   const x = Math.cos(angle);
   const y = Math.sin(angle);
 
-  return new Vector2D(x, y);
+  return new Vector2(x, y);
 }

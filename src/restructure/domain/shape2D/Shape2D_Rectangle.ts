@@ -1,7 +1,7 @@
 import type { Shape2D } from './shape2D.types';
 import type { DrawStep_DrawRectangle } from '../drawStep/drawStep.types';
 import type { Transform2D } from '../transform2D/Transform2D';
-import { Vector2D } from '../vector2D/Vector2D';
+import { Vector2 } from '../vector2/Vector2';
 import { CollisionResolver2D_Rectangle } from './collisionResolver2D/CollisionResolver2D_Rectangle';
 
 /** The rectangle implementation of the Shape2D interface. */
@@ -37,19 +37,19 @@ export class Shape2D_Rectangle implements Shape2D {
   }
 
   private computeTopRightVertex(halfWidth: number, halfHeight: number) {
-    return new Vector2D(halfWidth, halfHeight);
+    return new Vector2(halfWidth, halfHeight);
   }
 
   private computeTopLeftVertex(halfWidth: number, halfHeight: number) {
-    return new Vector2D(-halfWidth, halfHeight);
+    return new Vector2(-halfWidth, halfHeight);
   }
 
   private computeBottomLeftVertex(halfWidth: number, halfHeight: number) {
-    return new Vector2D(-halfWidth, -halfHeight);
+    return new Vector2(-halfWidth, -halfHeight);
   }
 
   private computeBottomRightVertex(halfWidth: number, halfHeight: number) {
-    return new Vector2D(halfWidth, -halfHeight);
+    return new Vector2(halfWidth, -halfHeight);
   }
 
   public get drawSteps() {
@@ -77,7 +77,7 @@ export class Shape2D_Rectangle implements Shape2D {
     return this.computeVertices();
   }
 
-  private computeVertices(): [Vector2D, Vector2D, Vector2D, Vector2D] {
+  private computeVertices(): [Vector2, Vector2, Vector2, Vector2] {
     const { halfWidth, halfHeight } = this;
 
     return [

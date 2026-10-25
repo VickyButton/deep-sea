@@ -1,5 +1,5 @@
 import { Matrix3D } from './Matrix3D';
-import { Vector2D } from '../vector2D/Vector2D';
+import { Vector2 } from '../vector2/Vector2';
 import { Vector3D } from '../vector3D/Vector3D';
 import { describe, expect, it } from 'vitest';
 
@@ -42,9 +42,9 @@ describe('Matrix3D', () => {
       new Vector3D(4, 5, 6),
       new Vector3D(7, 8, 9),
     ]);
-    const vector = new Vector2D(1, 2);
+    const vector = new Vector2(1, 2);
     const result = matrix.multiplyVector2D(vector);
 
-    expect(result).toEqual(new Vector2D(16, 20));
+    expect(result).toEqual(new Vector2(16, 20));
   });
 });

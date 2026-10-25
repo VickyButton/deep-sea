@@ -1,5 +1,5 @@
 import { Vector3D } from './Vector3D';
-import { Vector2D } from '../vector2D/Vector2D';
+import { Vector2 } from '../vector2/Vector2';
 import { describe, expect, it } from 'vitest';
 
 describe('Vector3D', () => {
@@ -101,11 +101,11 @@ describe('Vector3D', () => {
   it('should copy to a 2D vector', () => {
     const vector = new Vector3D(1, 1, 1);
 
-    expect(vector.to2D()).toEqual(new Vector2D(1, 1));
+    expect(vector.to2D()).toEqual(new Vector2(1, 1));
   });
 
   it('should create a 3D vector from a 2D vector', () => {
-    const vector2D = new Vector2D(1, 1);
+    const vector2D = new Vector2(1, 1);
 
     expect(Vector3D.from2D(vector2D)).toEqual(new Vector3D(1, 1, 0));
   });

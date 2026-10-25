@@ -1,5 +1,5 @@
 import { Matrix3D } from '../matrix3D/Matrix3D';
-import { Vector2D } from '../vector2D/Vector2D';
+import { Vector2 } from '../vector2/Vector2';
 import { Vector3D } from '../vector3D/Vector3D';
 
 /**
@@ -14,14 +14,14 @@ export class Transform2D {
   /** The transform rotation in radians. */
   public rotation: number;
   /** The transform scalar vector. */
-  public scale: Vector2D;
+  public scale: Vector2;
   /** The transform translation vector. */
-  public translation: Vector2D;
+  public translation: Vector2;
 
   constructor(options?: Transform2D_Options) {
     this.rotation = options?.rotation ?? 0;
-    this.scale = options?.scale ?? new Vector2D(1, 1);
-    this.translation = options?.translation ?? new Vector2D(0, 0);
+    this.scale = options?.scale ?? new Vector2(1, 1);
+    this.translation = options?.translation ?? new Vector2(0, 0);
   }
 
   /**
@@ -68,6 +68,6 @@ export class Transform2D {
 
 export interface Transform2D_Options {
   rotation?: number;
-  scale?: Vector2D;
-  translation?: Vector2D;
+  scale?: Vector2;
+  translation?: Vector2;
 }

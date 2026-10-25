@@ -1,6 +1,6 @@
 import { Shape2D_Polygon } from './Shape2D_Polygon';
 import { Transform2D } from '../transform2D/Transform2D';
-import { Vector2D } from '../vector2D/Vector2D';
+import { Vector2 } from '../vector2/Vector2';
 import { CollisionResolver2D_Polygon } from './collisionResolver2D/CollisionResolver2D_Polygon';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -9,9 +9,9 @@ describe('Shape2D_Polygon', () => {
     const polygon = new Shape2D_Polygon();
 
     expect(polygon.vertices).toEqual([
-      new Vector2D(1, 0),
-      new Vector2D(-0.4999999999999998, 0.8660254037844387),
-      new Vector2D(-0.5000000000000004, -0.8660254037844385),
+      new Vector2(1, 0),
+      new Vector2(-0.4999999999999998, 0.8660254037844387),
+      new Vector2(-0.5000000000000004, -0.8660254037844385),
     ]);
   });
 
@@ -23,10 +23,10 @@ describe('Shape2D_Polygon', () => {
     const polygon = new Shape2D_Polygon(VERTICES);
 
     expect(polygon.boundingBox).toEqual([
-      new Vector2D(1, 0.8660254037844387),
-      new Vector2D(-0.5000000000000004, 0.8660254037844387),
-      new Vector2D(-0.5000000000000004, -0.8660254037844385),
-      new Vector2D(1, -0.8660254037844385),
+      new Vector2(1, 0.8660254037844387),
+      new Vector2(-0.5000000000000004, 0.8660254037844387),
+      new Vector2(-0.5000000000000004, -0.8660254037844385),
+      new Vector2(1, -0.8660254037844385),
     ]);
   });
 
@@ -62,9 +62,9 @@ describe('Shape2D_Polygon', () => {
     const polygon = new Shape2D_Polygon(VERTICES);
 
     expect(polygon.vertices).toEqual([
-      new Vector2D(1, 0),
-      new Vector2D(-0.4999999999999998, 0.8660254037844387),
-      new Vector2D(-0.5000000000000004, -0.8660254037844385),
+      new Vector2(1, 0),
+      new Vector2(-0.4999999999999998, 0.8660254037844387),
+      new Vector2(-0.5000000000000004, -0.8660254037844385),
     ]);
   });
 
@@ -89,7 +89,7 @@ describe('Shape2D_Polygon', () => {
 });
 
 const VERTICES = [
-  new Vector2D(1, 0),
-  new Vector2D(-0.4999999999999998, 0.8660254037844387),
-  new Vector2D(-0.5000000000000004, -0.8660254037844385),
+  new Vector2(1, 0),
+  new Vector2(-0.4999999999999998, 0.8660254037844387),
+  new Vector2(-0.5000000000000004, -0.8660254037844385),
 ];

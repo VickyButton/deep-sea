@@ -1,6 +1,6 @@
 import { Shape2D_Rectangle } from './Shape2D_Rectangle';
 import { Transform2D } from '../transform2D/Transform2D';
-import { Vector2D } from '../vector2D/Vector2D';
+import { Vector2 } from '../vector2/Vector2';
 import { CollisionResolver2D_Rectangle } from './collisionResolver2D/CollisionResolver2D_Rectangle';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -21,10 +21,10 @@ describe('Shape2D_Rectangle', () => {
     const rectangle = new Shape2D_Rectangle(1, 1);
 
     expect(rectangle.boundingBox).toEqual([
-      new Vector2D(0.5, 0.5),
-      new Vector2D(-0.5, 0.5),
-      new Vector2D(-0.5, -0.5),
-      new Vector2D(0.5, -0.5),
+      new Vector2(0.5, 0.5),
+      new Vector2(-0.5, 0.5),
+      new Vector2(-0.5, -0.5),
+      new Vector2(0.5, -0.5),
     ]);
   });
 
@@ -46,10 +46,10 @@ describe('Shape2D_Rectangle', () => {
     const rectangle = new Shape2D_Rectangle(1, 1);
 
     expect(rectangle.vertices).toEqual([
-      new Vector2D(0.5, 0.5),
-      new Vector2D(-0.5, 0.5),
-      new Vector2D(-0.5, -0.5),
-      new Vector2D(0.5, -0.5),
+      new Vector2(0.5, 0.5),
+      new Vector2(-0.5, 0.5),
+      new Vector2(-0.5, -0.5),
+      new Vector2(0.5, -0.5),
     ]);
   });
 

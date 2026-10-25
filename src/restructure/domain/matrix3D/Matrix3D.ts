@@ -1,4 +1,4 @@
-import type { Vector2D } from '../vector2D/Vector2D';
+import type { Vector2 } from '../vector2/Vector2';
 import { Vector3D } from '../vector3D/Vector3D';
 
 /** A 3-dimensional matrix. */
@@ -67,7 +67,7 @@ export class Matrix3D {
    * @param vector The 2D vector to multiply by.
    * @returns The resulting 2D product vector.
    */
-  public multiplyVector2D(vector: Vector2D) {
+  public multiplyVector2D(vector: Vector2) {
     return this.multiplyVector3D(new Vector3D(vector.x, vector.y, 1)).to2D();
   }
 }

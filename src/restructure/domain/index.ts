@@ -7,7 +7,7 @@ import { Signal_Main } from './signal/Signal_Main';
 import { SignalController_Main } from './signalController/SignalController_Main';
 import { Task_Main } from './task/Task_Main';
 import { Transform2D } from './transform2D/Transform2D';
-import { Vector2D } from './vector2D/Vector2D';
+import { Vector2 } from './vector2/Vector2';
 import { Vector3D } from './vector3D/Vector3D';
 
 export {
@@ -20,6 +20,6 @@ export {
   SignalController_Main as SignalController,
   Task_Main as Task,
   Transform2D,
-  Vector2D,
+  Vector2,
   Vector3D,
 };

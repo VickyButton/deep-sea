@@ -1,5 +1,5 @@
 import type { Transform2D } from '../../transform2D/Transform2D';
-import type { Vector2D } from '../../vector2D/Vector2D';
+import type { Vector2 } from '../../vector2/Vector2';
 import type { Shape2D_Polygon } from '../Shape2D_Polygon';
 import { CollisionResolver2D } from './CollisionResolver2D';
 import { CollisionResolver2D_SeparatingAxisTheorem } from './CollisionResolver2D_SeparatingAxisTheorem';
@@ -43,7 +43,7 @@ export class CollisionResolver2D_PolygonPair extends CollisionResolver2D {
     return this.transformVertices(this.polygonB.vertices, this.transformB);
   }
 
-  private transformVertices(vertices: Vector2D[], transform: Transform2D) {
+  private transformVertices(vertices: Vector2[], transform: Transform2D) {
     const transformMatrix = transform.computeTransformationMatrix();
 
     return vertices.map((vertex) => transformMatrix.multiplyVector2D(vertex));
