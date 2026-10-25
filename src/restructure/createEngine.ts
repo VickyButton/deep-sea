@@ -8,7 +8,7 @@ import { DrawEngine } from './engine/drawEngine/DrawEngine';
 import { DrawInstructionsResolver } from './engine/drawInstructionsResolver/DrawInstructionsResolver';
 import { Engine_Main } from './engine/Engine_Main';
 import { EngineController } from './engine/engineController/EngineController';
-import { Loop_Main } from './engine/loop/Loop_Main';
+import { Loop } from './engine/loop/Loop';
 import { PluginManager_Main } from './engine/pluginManager/PluginManager_Main';
 import { SceneTree_Main } from './engine/sceneTree/SceneTree_Main';
 
@@ -68,7 +68,7 @@ function createEngineController(drawInstructionsQueue: ReturnType<typeof createD
 }
 
 function createLoop(clock: ReturnType<typeof createClock>) {
-  return new Loop_Main(clock);
+  return new Loop(clock);
 }
 
 function createClock() {

@@ -1,12 +1,12 @@
-import type { Loop, LoopCallback } from './loop.types';
+import type { LoopCallback } from './loop.types';
 import type { Clock } from '../../domain/clock/clock.types';
 import { clamp } from '../../utils/clamp';
 
 const LOOPS_PER_SECOND_MIN = 1;
 const LOOPS_PER_SECOND_MAX = 120;
 
-/** The main implementation of the Loop interface. */
-export class Loop_Main implements Loop {
+/** Responsible for managing loop timing and executing loop callback. */
+export class Loop {
   private readonly clock: Clock;
   private lastAnimationFrameTimestamp = 0;
   private lastLoopTimestamp = 0;
@@ -20,10 +20,12 @@ export class Loop_Main implements Loop {
     this.clock = clock;
   }
 
+  /** Sets the callback to execute on each new loop. */
   public setLoopCallback(callback: LoopCallback) {
     this.loopCallback = callback;
   }
 
+  /** Sets the number of loops per second to run at. */
   public setLoopsPerSecond(loopsPerSecond: number) {
     this.loopsPerSecond = this.clampLoopsPerSecond(loopsPerSecond);
     this.millisecondsPerLoop = this.computeMillisecondsPerLoop();
@@ -37,6 +39,7 @@ export class Loop_Main implements Loop {
     return 1000 / this.loopsPerSecond;
   }
 
+  /** Starts the loop. */
   public start() {
     this.scheduleAnimationFrameRequest();
   }
@@ -88,6 +91,7 @@ export class Loop_Main implements Loop {
     this.lastLoopTimestamp = this.lastAnimationFrameTimestamp;
   }
 
+  /** Stops the loop. */
   public stop() {
     this.cancelScheduledAnimationFrameRequest();
   }
