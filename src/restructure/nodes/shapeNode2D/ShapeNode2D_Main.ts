@@ -2,12 +2,12 @@ import type { ShapeNode2D } from './shapeNode2D.types';
 import type { DrawInstructionsBuilder } from '../../domain/drawInstructions/builder/DrawInstructionsBuilder';
 import type { Shape2D } from '../../domain/shape2D/shape2D.types';
 import { Shape2D_Rectangle } from '../../domain/shape2D/Shape2D_Rectangle';
-import { Signal_Main } from '../../domain/signal/Signal_Main';
+import { Signal } from '../../domain/signal/Signal';
 import { Node2D_Main } from '../node2D/Node2D_Main';
 
 /** The base implementation of the ShapeNode2D interface. */
 export class ShapeNode2D_Main extends Node2D_Main implements ShapeNode2D {
-  public readonly shape_changed = new Signal_Main<Shape2D>();
+  public readonly shape_changed = new Signal<Shape2D>();
   private _shape: Shape2D = new Shape2D_Rectangle();
 
   constructor(id: string) {

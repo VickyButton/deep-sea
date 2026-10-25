@@ -3,7 +3,7 @@ import { Matrix2D } from './matrix2D/Matrix2D';
 import { Matrix3D } from './matrix3D/Matrix3D';
 import { Shape2D_Polygon } from './shape2D/Shape2D_Polygon';
 import { Shape2D_Rectangle } from './shape2D/Shape2D_Rectangle';
-import { Signal_Main } from './signal/Signal_Main';
+import { Signal } from './signal/Signal';
 import { SignalController } from './signalController/SignalController';
 import { Task_Main } from './task/Task_Main';
 import { Transform2D } from './transform2D/Transform2D';
@@ -16,7 +16,7 @@ export {
   Matrix3D,
   Shape2D_Polygon as Polygon2D,
   Shape2D_Rectangle as Rectangle2D,
-  Signal_Main as Signal,
+  Signal,
   SignalController,
   Task_Main as Task,
   Transform2D,

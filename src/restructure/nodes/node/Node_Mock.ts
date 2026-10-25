@@ -1,19 +1,19 @@
 import type { Node } from './node.types';
-import { Signal_Mock } from '../../domain/signal/Signal_Mock';
+import { Signal } from '../../domain/signal/Signal';
 import { SignalController } from '../../domain/signalController/SignalController';
 import { vi } from 'vitest';
 
 /** The mock implementation of the Node interface. */
 export class Node_Mock implements Node {
-  public readonly child_added = new Signal_Mock();
-  public readonly child_removed = new Signal_Mock();
+  public readonly child_added = new Signal();
+  public readonly child_removed = new Signal();
   public readonly controller = new SignalController();
   public readonly id;
-  public readonly processed = new Signal_Mock();
-  public readonly started = new Signal_Mock();
-  public readonly stopped = new Signal_Mock();
-  public readonly tree_entered = new Signal_Mock();
-  public readonly tree_exited = new Signal_Mock();
+  public readonly processed = new Signal();
+  public readonly started = new Signal();
+  public readonly stopped = new Signal();
+  public readonly tree_entered = new Signal();
+  public readonly tree_exited = new Signal();
   private readonly _children = new Set<Node>();
   private _parent: Node | null = null;
 

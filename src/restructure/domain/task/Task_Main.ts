@@ -1,13 +1,13 @@
 import type { Task, TaskFailure, TaskResult, TaskState, TaskSuccess } from './task.types';
-import { Signal_Main } from '../signal/Signal_Main';
+import { Signal } from '../signal/Signal';
 
 /** The main implementation of the Task interface. */
 export class Task_Main<Data = void> implements Task<Data> {
-  public readonly failed = new Signal_Main();
-  public readonly finished = new Signal_Main();
+  public readonly failed = new Signal();
+  public readonly finished = new Signal();
   public readonly id: string;
-  public readonly started = new Signal_Main();
-  public readonly succeeded = new Signal_Main();
+  public readonly started = new Signal();
+  public readonly succeeded = new Signal();
   private _result: TaskResult<Data> | null = null;
   private _state: TaskState = 'CREATED';
   private startTask: StartTask<Data>;

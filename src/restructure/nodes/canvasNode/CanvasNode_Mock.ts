@@ -1,14 +1,14 @@
 import type { CanvasNode } from './canvasNode.types';
 import type { DrawInstructions } from '../../domain/drawInstructions/drawInstructions.types';
-import { Signal_Mock } from '../../domain/signal/Signal_Mock';
+import { Signal } from '../../domain/signal/Signal';
 import { Node_Mock } from '../node/Node_Mock';
 import { vi } from 'vitest';
 
 /** The mock implementation of the CanvasNode interface. */
 export class CanvasNode_Mock extends Node_Mock implements CanvasNode {
-  public readonly redraw_requested = new Signal_Mock<DrawInstructions>();
-  public readonly visibility_changed = new Signal_Mock<boolean>();
-  public readonly z_index_changed = new Signal_Mock<number>();
+  public readonly redraw_requested = new Signal<DrawInstructions>();
+  public readonly visibility_changed = new Signal<boolean>();
+  public readonly z_index_changed = new Signal<number>();
   public visible = true;
   public zIndex = 0;
 
