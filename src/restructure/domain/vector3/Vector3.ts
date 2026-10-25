@@ -1,9 +1,7 @@
 import { Vector2 } from '../vector2/Vector2';
 
-/**
- * A 3D vector.
- */
-export class Vector3D {
+/** A vector consisting of 3 components. */
+export class Vector3 {
   /** The vector's X component. */
   public x: number;
   /** The vector's Y component. */
@@ -68,7 +66,7 @@ export class Vector3D {
     const normalizedY = this.y / magnitude;
     const normalizedZ = this.z / magnitude;
 
-    return new Vector3D(normalizedX, normalizedY, normalizedZ);
+    return new Vector3(normalizedX, normalizedY, normalizedZ);
   }
 
   /**
@@ -76,12 +74,12 @@ export class Vector3D {
    * @param vector The vector to add to this vector.
    * @returns The sum vector.
    */
-  public add(vector: Vector3D) {
+  public add(vector: Vector3) {
     const sumX = this.x + vector.x;
     const sumY = this.y + vector.y;
     const sumZ = this.z + vector.z;
 
-    return new Vector3D(sumX, sumY, sumZ);
+    return new Vector3(sumX, sumY, sumZ);
   }
 
   /**
@@ -89,12 +87,12 @@ export class Vector3D {
    * @param vector The vector to subtract this vector by.
    * @returns The difference vector.
    */
-  public subtract(vector: Vector3D) {
+  public subtract(vector: Vector3) {
     const differenceX = this.x - vector.x;
     const differenceY = this.y - vector.y;
     const differenceZ = this.z - vector.z;
 
-    return new Vector3D(differenceX, differenceY, differenceZ);
+    return new Vector3(differenceX, differenceY, differenceZ);
   }
 
   /**
@@ -102,12 +100,12 @@ export class Vector3D {
    * @param vector The vector to multiply this vector by.
    * @returns The product vector.
    */
-  public multiply(vector: Vector3D) {
+  public multiply(vector: Vector3) {
     const productX = this.x * vector.x;
     const productY = this.y * vector.y;
     const productZ = this.z * vector.z;
 
-    return new Vector3D(productX, productY, productZ);
+    return new Vector3(productX, productY, productZ);
   }
 
   /**
@@ -115,12 +113,12 @@ export class Vector3D {
    * @param vector The vector to divide this vector by.
    * @returns The quotient vector.
    */
-  public divide(vector: Vector3D) {
+  public divide(vector: Vector3) {
     const quotientX = this.x / vector.x;
     const quotientY = this.y / vector.y;
     const quotientZ = this.z / vector.z;
 
-    return new Vector3D(quotientX, quotientY, quotientZ);
+    return new Vector3(quotientX, quotientY, quotientZ);
   }
 
   /**
@@ -128,7 +126,7 @@ export class Vector3D {
    * @param vector The vector to multiply this vector by.
    * @returns The dot product of the two vectors.
    */
-  public computeDotProduct(vector: Vector3D) {
+  public computeDotProduct(vector: Vector3) {
     const productX = this.x * vector.x;
     const productY = this.y * vector.y;
     const productZ = this.z * vector.z;
@@ -141,7 +139,7 @@ export class Vector3D {
    * @param vector The vector to compare equality to.
    * @returns True if equal, false if not.
    */
-  public equals(vector: Vector3D) {
+  public equals(vector: Vector3) {
     return this.x === vector.x && this.y === vector.y && this.z === vector.z;
   }
 
@@ -150,7 +148,7 @@ export class Vector3D {
    * @returns A copy of this vector.
    */
   public copy() {
-    return new Vector3D(this.x, this.y, this.z);
+    return new Vector3(this.x, this.y, this.z);
   }
 
   /**
@@ -167,6 +165,6 @@ export class Vector3D {
    * @returns A 3D vector with the X and Y components of the 2D vector.
    */
   public static from2D(vector2D: Vector2) {
-    return new Vector3D(vector2D.x, vector2D.y);
+    return new Vector3(vector2D.x, vector2D.y);
   }
 }

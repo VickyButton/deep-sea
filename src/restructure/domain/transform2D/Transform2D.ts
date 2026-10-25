@@ -1,6 +1,6 @@
 import { Matrix3D } from '../matrix3D/Matrix3D';
 import { Vector2 } from '../vector2/Vector2';
-import { Vector3D } from '../vector3D/Vector3D';
+import { Vector3 } from '../vector3/Vector3';
 
 /**
  * A 2D transform matrix.
@@ -43,25 +43,25 @@ export class Transform2D {
     const sine = Math.sin(this.rotation);
 
     return new Matrix3D([
-      new Vector3D(cosine, sine, 0),
-      new Vector3D(-sine, cosine, 0),
-      new Vector3D(0, 0, 1),
+      new Vector3(cosine, sine, 0),
+      new Vector3(-sine, cosine, 0),
+      new Vector3(0, 0, 1),
     ]);
   }
 
   private computeScalingMatrix() {
     return new Matrix3D([
-      new Vector3D(this.scale.x, 0, 0),
-      new Vector3D(0, this.scale.y, 0),
-      new Vector3D(0, 0, 1),
+      new Vector3(this.scale.x, 0, 0),
+      new Vector3(0, this.scale.y, 0),
+      new Vector3(0, 0, 1),
     ]);
   }
 
   private computeTranslationMatrix() {
     return new Matrix3D([
-      new Vector3D(1, 0, 0),
-      new Vector3D(0, 1, 0),
-      new Vector3D(this.translation.x, this.translation.y, 1),
+      new Vector3(1, 0, 0),
+      new Vector3(0, 1, 0),
+      new Vector3(this.translation.x, this.translation.y, 1),
     ]);
   }
 }

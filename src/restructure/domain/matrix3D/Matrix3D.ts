@@ -1,17 +1,17 @@
 import type { Vector2 } from '../vector2/Vector2';
-import { Vector3D } from '../vector3D/Vector3D';
+import { Vector3 } from '../vector3/Vector3';
 
 /** A 3-dimensional matrix. */
 export class Matrix3D {
   /** The matrix's columns. */
-  public columns: [Vector3D, Vector3D, Vector3D];
+  public columns: [Vector3, Vector3, Vector3];
 
   /** The first column of the matrix. */
   public get 0() {
     return this.columns[0];
   }
 
-  public set 0(vector: Vector3D) {
+  public set 0(vector: Vector3) {
     this.columns[0] = vector;
   }
 
@@ -20,7 +20,7 @@ export class Matrix3D {
     return this.columns[1];
   }
 
-  public set 1(vector: Vector3D) {
+  public set 1(vector: Vector3) {
     this.columns[1] = vector;
   }
 
@@ -29,11 +29,11 @@ export class Matrix3D {
     return this.columns[2];
   }
 
-  public set 2(vector: Vector3D) {
+  public set 2(vector: Vector3) {
     this.columns[2] = vector;
   }
 
-  constructor(columns: [Vector3D, Vector3D, Vector3D] = [new Vector3D(), new Vector3D(), new Vector3D()]) {
+  constructor(columns: [Vector3, Vector3, Vector3] = [new Vector3(), new Vector3(), new Vector3()]) {
     this.columns = columns;
   }
 
@@ -55,11 +55,11 @@ export class Matrix3D {
    * @param vector The 3D vector to multiply by.
    * @returns The resulting 3D product vector.
    */
-  public multiplyVector3D(vector: Vector3D) {
+  public multiplyVector3D(vector: Vector3) {
     const x = vector.x * this[0][0] + vector.y * this[1][0] + vector.z * this[2][0];
     const y = vector.x * this[0][1] + vector.y * this[1][1] + vector.z * this[2][1];
     const z = vector.x * this[0][2] + vector.y * this[1][2] + vector.z * this[2][2];
-    return new Vector3D(x, y, z);
+    return new Vector3(x, y, z);
   }
 
   /**
@@ -68,6 +68,6 @@ export class Matrix3D {
    * @returns The resulting 2D product vector.
    */
   public multiplyVector2D(vector: Vector2) {
-    return this.multiplyVector3D(new Vector3D(vector.x, vector.y, 1)).to2D();
+    return this.multiplyVector3D(new Vector3(vector.x, vector.y, 1)).to2D();
   }
 }
