@@ -1,6 +1,6 @@
 import type { DrawEngine } from './drawEngine/DrawEngine';
 import type { DrawInstructionsQueue } from './drawInstructionsQueue/drawInstructionsQueue.types';
-import type { DrawInstructionsResolver } from './drawInstructionsResolver/drawInstructionsResolver.types';
+import type { DrawInstructionsResolver } from './drawInstructionsResolver/DrawInstructionsResolver';
 import type { Engine, NewFrameCallback } from './engine.types';
 import type { EngineController } from './engineController/engineController.types';
 import type { Loop } from './loop/loop.types';

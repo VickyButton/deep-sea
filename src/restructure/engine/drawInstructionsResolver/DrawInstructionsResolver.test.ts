@@ -1,9 +1,9 @@
-import { DrawInstructionsResolver_Main } from './DrawInstructionsResolver_Main';
+import { DrawInstructionsResolver } from './DrawInstructionsResolver';
 import { describe, expect, it } from 'vitest';
 
-describe('DrawInstructionsResolver_Main', () => {
+describe('DrawInstructionsResolver', () => {
   it('should resolve draw instructions list into ordered list of draw steps', () => {
-    const resolver = new DrawInstructionsResolver_Main();
+    const resolver = new DrawInstructionsResolver();
     const fillStep = {
       type: 'FILL' as const,
     };

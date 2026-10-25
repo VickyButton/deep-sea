@@ -5,7 +5,7 @@ import { Clock_System } from './domain/clock/Clock_System';
 import { DrawStepTranslator_Main } from './domain/drawStep/translator/DrawStepTranslator_Main';
 import { Queue_Main } from './domain/queue/Queue_Main';
 import { DrawEngine } from './engine/drawEngine/DrawEngine';
-import { DrawInstructionsResolver_Main } from './engine/drawInstructionsResolver/DrawInstructionsResolver_Main';
+import { DrawInstructionsResolver } from './engine/drawInstructionsResolver/DrawInstructionsResolver';
 import { Engine_Main } from './engine/Engine_Main';
 import { EngineController_Main } from './engine/engineController/EngineController_Main';
 import { Loop_Main } from './engine/loop/Loop_Main';
@@ -53,7 +53,7 @@ function createDrawInstructionsQueue() {
 }
 
 function createDrawInstructionsResolver() {
-  return new DrawInstructionsResolver_Main();
+  return new DrawInstructionsResolver();
 }
 
 function createSceneTree() {
