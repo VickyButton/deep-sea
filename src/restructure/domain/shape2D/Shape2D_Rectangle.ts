@@ -97,7 +97,3 @@ export class Shape2D_Rectangle implements Shape2D {
   }
 }
 
-export interface RectangleShape2D_Options {
-  width?: number;
-  height?: number;
-}
