@@ -1,6 +1,6 @@
 import type { Shape2D } from '../../domain/shape2D/shape2D.types';
 import type { Signal } from '../../domain/signal/Signal';
-import type { Node2D } from '../node2D/node2D.types';
+import type { Node2D } from '../node2D/Node2D';
 
 /** A node that holds a 2D shape. */
 export interface ShapeNode2D extends Node2D {
