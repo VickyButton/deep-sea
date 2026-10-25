@@ -23,6 +23,3 @@ export interface SignalController {
   /** Stops listening for signals. */
   stopListening(): void;
 }
-
-/** A constructor for a SignalController. */
-export type SignalControllerConstructor = new () => SignalController;
