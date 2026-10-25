@@ -4,7 +4,7 @@ import { Canvas_2D } from './domain/canvas/Canvas_2D';
 import { Clock_System } from './domain/clock/Clock_System';
 import { DrawStepTranslator_Main } from './domain/drawStep/translator/DrawStepTranslator_Main';
 import { Queue_Main } from './domain/queue/Queue_Main';
-import { DrawEngine_Main } from './engine/drawEngine/DrawEngine_Main';
+import { DrawEngine } from './engine/drawEngine/DrawEngine';
 import { DrawInstructionsResolver_Main } from './engine/drawInstructionsResolver/DrawInstructionsResolver_Main';
 import { Engine_Main } from './engine/Engine_Main';
 import { EngineController_Main } from './engine/engineController/EngineController_Main';
@@ -41,7 +41,7 @@ export function createEngine(config: Config): Engine {
 }
 
 function createDrawEngine(resolver: ReturnType<typeof createDrawStepTranslator>) {
-  return new DrawEngine_Main(resolver);
+  return new DrawEngine(resolver);
 }
 
 function createDrawStepTranslator() {

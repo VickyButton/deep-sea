@@ -1,4 +1,4 @@
-import type { DrawEngine } from './drawEngine/drawEngine.types';
+import type { DrawEngine } from './drawEngine/DrawEngine';
 import type { DrawInstructionsQueue } from './drawInstructionsQueue/drawInstructionsQueue.types';
 import type { DrawInstructionsResolver } from './drawInstructionsResolver/drawInstructionsResolver.types';
 import type { Engine, NewFrameCallback } from './engine.types';
