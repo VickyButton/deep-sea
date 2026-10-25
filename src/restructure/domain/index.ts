@@ -5,7 +5,7 @@ import { Shape2D_Polygon } from './shape2D/Shape2D_Polygon';
 import { Shape2D_Rectangle } from './shape2D/Shape2D_Rectangle';
 import { Signal } from './signal/Signal';
 import { SignalController } from './signalController/SignalController';
-import { Task_Main } from './task/Task_Main';
+import { Task } from './task/Task';
 import { Transform2D } from './transform2D/Transform2D';
 import { Vector2 } from './vector2/Vector2';
 import { Vector3 } from './vector3/Vector3';
@@ -18,7 +18,7 @@ export {
   Shape2D_Rectangle as Rectangle2D,
   Signal,
   SignalController,
-  Task_Main as Task,
+  Task,
   Transform2D,
   Vector2,
   Vector3,
