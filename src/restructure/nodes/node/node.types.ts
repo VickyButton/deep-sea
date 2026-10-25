@@ -1,4 +1,4 @@
-import type { Signal } from '../../domain/signal/signal.types';
+import type { Signal } from '../../domain/signal/Signal';
 import type { SignalController } from '../../domain/signalController/SignalController';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
 

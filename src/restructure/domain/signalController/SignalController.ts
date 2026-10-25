@@ -1,4 +1,5 @@
-import type { Signal, SignalCallback } from '../signal/signal.types';
+import type { Signal } from '../signal/Signal';
+import type { SignalCallback } from '../signal/signal.types';
 
 /** A controller used to delegate signal callbacks and toggle listening. */
 export class SignalController {
@@ -65,25 +66,25 @@ class CallbackGroupManager {
    * @param callback The callback to add.
    */
   public add<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>) {
-    this.addToGroup(signal, callback);
+    this.addToGroup(signal as Signal<unknown>, callback as SignalCallback<unknown>);
   }
 
-  private addToGroup<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>) {
-    const group = this.getOrCreateGroup<CallbackData>(signal);
+  private addToGroup(signal: Signal<unknown>, callback: SignalCallback<unknown>) {
+    const group = this.getOrCreateGroup(signal);
 
     group.add(callback);
   }
 
-  private getOrCreateGroup<CallbackData>(signal: Signal<CallbackData>) {
-    return this.getGroup<CallbackData>(signal) ?? this.createGroup<CallbackData>(signal);
+  private getOrCreateGroup(signal: Signal<unknown>) {
+    return this.getGroup(signal) ?? this.createGroup(signal);
   }
 
-  private getGroup<CallbackData>(signal: Signal<CallbackData>) {
-    return this.groups.get(signal) as CallbackGroup<CallbackData> | undefined;
+  private getGroup(signal: Signal<unknown>) {
+    return this.groups.get(signal) as CallbackGroup<unknown> | undefined;
   }
 
-  private createGroup<CallbackData>(signal: Signal<CallbackData>) {
-    const group = new CallbackGroup<CallbackData>();
+  private createGroup(signal: Signal<unknown>) {
+    const group = new CallbackGroup<unknown>();
 
     this.setGroup(signal, group);
 
@@ -94,11 +95,11 @@ class CallbackGroupManager {
     return group;
   }
 
-  private registerDelegator<CallbackData>(signal: Signal<CallbackData>, delegator: SignalCallback<CallbackData>) {
+  private registerDelegator(signal: Signal<unknown>, delegator: SignalCallback<unknown>) {
     signal.listen(delegator);
   }
 
-  private setGroup<CallbackData>(signal: Signal<CallbackData>, group: CallbackGroup<CallbackData>) {
+  private setGroup(signal: Signal<unknown>, group: CallbackGroup<unknown>) {
     this.groups.set(signal, group as CallbackGroup<unknown>);
   }
 
@@ -108,7 +109,7 @@ class CallbackGroupManager {
     }
   }
 
-  private removeGroup<CallbackData>(signal: Signal<CallbackData>, group: CallbackGroup<CallbackData>) {
+  private removeGroup(signal: Signal<unknown>, group: CallbackGroup<unknown>) {
     this.groups.delete(signal);
 
     if (this.isListening) {
@@ -123,7 +124,7 @@ class CallbackGroupManager {
     }
   }
 
-  private deregisterDelegator<CallbackData>(signal: Signal<CallbackData>, delegator: SignalCallback<CallbackData>) {
+  private deregisterDelegator(signal: Signal<unknown>, delegator: SignalCallback<unknown>) {
     signal.unlisten(delegator);
   }
 
@@ -140,11 +141,11 @@ class CallbackGroupManager {
    * @param callback The callback to add.
    */
   public remove<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>) {
-    this.removeFromGroup(signal, callback);
+    this.removeFromGroup(signal as Signal<unknown>, callback as SignalCallback<unknown>);
   }
 
-  private removeFromGroup<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>) {
-    const group = this.getGroup<CallbackData>(signal);
+  private removeFromGroup(signal: Signal<unknown>, callback: SignalCallback<unknown>) {
+    const group = this.getGroup(signal);
 
     if (group === undefined) {
       return;

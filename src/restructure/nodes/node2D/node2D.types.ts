@@ -1,4 +1,4 @@
-import type { Signal } from '../../domain/signal/signal.types';
+import type { Signal } from '../../domain/signal/Signal';
 import type { Transform2D } from '../../domain/transform2D/Transform2D';
 import type { Vector2 } from '../../domain/vector2/Vector2';
 import type { CanvasNode } from '../canvasNode/canvasNode.types';

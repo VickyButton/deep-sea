@@ -1,4 +1,4 @@
-import type { Signal } from '../../domain/signal/signal.types';
+import type { Signal } from '../../domain/signal/Signal';
 import type { Node } from '../../nodes/node/node.types';
 
 /** A tree of scenes that share a root node. */

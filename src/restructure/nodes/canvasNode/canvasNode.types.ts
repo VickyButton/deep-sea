@@ -1,6 +1,6 @@
 import type { DrawInstructionsBuilder } from '../../domain/drawInstructions/builder/DrawInstructionsBuilder';
 import type { DrawInstructions } from '../../domain/drawInstructions/drawInstructions.types';
-import type { Signal } from '../../domain/signal/signal.types';
+import type { Signal } from '../../domain/signal/Signal';
 import type { Node } from '../node/node.types';
 
 /** A node that can be drawn onto a canvas. */
