@@ -7,7 +7,7 @@ import type { Loop } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/pluginManager.types';
 import type { SceneTree } from './sceneTree/sceneTree.types';
 import type { Canvas } from '../domain/canvas/canvas.types';
-import type { Node, NodeConstructor } from '../nodes/node/node.types';
+import type { Node } from '../nodes/node/Node';
 
 /** The main implementation of the Engine interface. */
 export class Engine_Main implements Engine {
@@ -85,7 +85,7 @@ export class Engine_Main implements Engine {
     return this.engineController.isListening;
   }
 
-  public replaceScene(Scene: NodeConstructor) {
+  public replaceScene(Scene: new (id: string) => Node) {
     const sceneNode = new Scene('scene');
 
     if (this.currentScene) {

@@ -1,18 +1,27 @@
-import type { AbstractNodeConstructor, Node, NodeConstructor, ProcessCallback } from './node.types';
+import type { ProcessCallback } from './node.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
 import { Signal } from '../../domain/signal/Signal';
 import { SignalController } from '../../domain/signalController/SignalController';
 
-/** The main implementation of the Node interface. */
-export class Node_Main implements Node {
+/** A node that encapsulate state, emits signals, and can be added to a scene tree. */
+export class Node {
+  /** Emitted when the node has a child added to it. The added child is passed to callbacks. */
   public readonly child_added = new Signal<Node>();
+  /** Emitted when the node has a child removed from it. The removed child is passed to callbacks. */
   public readonly child_removed = new Signal<Node>();
+  /** The node's signal controller used for delegating signal callbacks. */
   public readonly controller = new SignalController();
+  /** The node's unique ID. */
   public readonly id;
+  /** Emitted when the node has finished processing. Processing is considered finished after both the node and its children have finished processing. */
   public readonly processed = new Signal();
+  /** Emitted when the node is started. */
   public readonly started = new Signal();
+  /** Emitted when the node is stopped. */
   public readonly stopped = new Signal();
+  /** Emitted when the node enters a scene tree. The entered tree is passed to callbacks. */
   public readonly tree_entered = new Signal<SceneTree>();
+  /** Emitted when the node exits a scene tree. The exited tree is passed to callbacks. */
   public readonly tree_exited = new Signal<SceneTree>();
   private readonly relationships = new NodeRelationships();
   private _tree: SceneTree | null = null;
@@ -23,26 +32,35 @@ export class Node_Main implements Node {
     this.relationships.setSelf(this);
   }
 
+  /** The node's children. */
   public get children() {
     return this.relationships.children;
   }
 
+  /** Whether or not the node is listening for signals. Starting a node activates it and stopping a node deactivates it. */
   public get isActive() {
     return this.controller.isListening;
   }
 
+  /** Whether or not the node is inside a scene tree. */
   public get isInsideTree() {
     return this.tree !== null;
   }
 
+  /** The node's parent, or null if the node does not have a parent. */
   public get parent() {
     return this.relationships.parent;
   }
 
+  /** The scene tree which the node belongs to, or null if the node does not belong to a tree. */
   public get tree() {
     return this._tree;
   }
 
+  /**
+   * Adds a node to the node's children.
+   * @param node The node to add to the node's children.
+   */
   public addChild(node: Node) {
     // Add child relationship to self.
     this.addChildRelationship(node);
@@ -68,6 +86,10 @@ export class Node_Main implements Node {
     this.child_added.emit(node);
   }
 
+  /**
+   * Enters the node and its children into a scene tree.
+   * @param tree The tree to enter.
+   */
   public enterTree(tree: SceneTree) {
     // Assert that node does not already belong to a tree.
     if (this.tree !== null) {
@@ -101,6 +123,10 @@ export class Node_Main implements Node {
     }
   }
 
+  /**
+   * Exits the node and its children from a scene tree.
+   * @param tree The tree to exit.
+   */
   public exitTree(tree: SceneTree) {
     // Assert that self belongs to tree being exited.
     if (this.tree !== tree) {
@@ -130,6 +156,10 @@ export class Node_Main implements Node {
     this.tree_exited.emit(tree);
   }
 
+  /**
+   * Processes the node and its children. The nodes process callback is executed before its childrens' callbacks.
+   * @param dt The time elapsed since the last loop.
+   */
   public process(dt: number) {
     this.executeProcessCallback(dt);
     this.processChildren(dt);
@@ -150,6 +180,10 @@ export class Node_Main implements Node {
     this.processed.emit();
   }
 
+  /**
+   * Removes a node from the node's children.
+   * @param node The node to remove from the node's children.
+   */
   public removeChild(node: Node) {
     // Remove child relationship from self.
     this.removeChildRelationship(node);
@@ -175,6 +209,10 @@ export class Node_Main implements Node {
     this.child_removed.emit(node);
   }
 
+  /**
+   * Sets the node's parent.
+   * @param node The node to set as the node's parent, or null if removing a parent.
+   */
   public setParent(node: Node | null) {
     this.setParentRelationship(node);
   }
@@ -183,10 +221,15 @@ export class Node_Main implements Node {
     this.relationships.setParent(node);
   }
 
+  /**
+   * Sets the callback to be executed on each process call.
+   * @param callback The callback to execute on process.
+   */
   public setProcessCallback(callback: ProcessCallback) {
     this.processCallback = callback;
   }
 
+  /** Starts the node and its children, allowing it to listen for signals. */
   public start() {
     this.startListening();
     this.startChildren();
@@ -207,6 +250,7 @@ export class Node_Main implements Node {
     this.started.emit();
   }
 
+  /** Stops the node and its children, preventing it from listening for signals. */
   public stop() {
     this.stopChildren();
     this.stopListening();
@@ -332,3 +376,6 @@ class NodeRelationships {
     this.self = node;
   }
 }
+
+type AbstractNodeConstructor<Type extends Node = Node> = abstract new (id: string) => Type;
+type NodeConstructor<Type extends Node = Node> = new (id: string) => Type;

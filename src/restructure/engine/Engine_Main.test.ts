@@ -7,7 +7,7 @@ import { PluginManager_Mock } from './pluginManager/PluginManager_Mock';
 import { SceneTree_Mock } from './sceneTree/SceneTree_Mock';
 import { Canvas_Mock } from '../domain/canvas/Canvas_Mock';
 import { Queue_Mock } from '../domain/queue/Queue_Mock';
-import { Node_Mock } from '../nodes/node/Node_Mock';
+import { Node } from '../nodes/node/Node';
 import { describe, expect, it } from 'vitest';
 
 describe('Engine_Main', () => {
@@ -56,7 +56,7 @@ describe('Engine_Main', () => {
       targetCanvas: new Canvas_Mock(),
     });
 
-    engine.replaceScene(Node_Mock);
+    engine.replaceScene(Node);
 
     expect(sceneTree.addScene).toHaveBeenCalled();
   });
@@ -74,8 +74,8 @@ describe('Engine_Main', () => {
       targetCanvas: new Canvas_Mock(),
     });
 
-    engine.replaceScene(Node_Mock);
-    engine.replaceScene(Node_Mock);
+    engine.replaceScene(Node);
+    engine.replaceScene(Node);
 
     expect(sceneTree.removeScene).toHaveBeenCalled();
   });

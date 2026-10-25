@@ -1,7 +1,6 @@
 import type { SceneTree } from './sceneTree.types';
-import type { Node } from '../../nodes/node/node.types';
 import { Signal } from '../../domain/signal/Signal';
-import { Node_Main } from '../../nodes/node/Node_Main';
+import { Node } from '../../nodes/node/Node';
 
 /** The main implementation of the SceneTree interface. */
 export class SceneTree_Main implements SceneTree {
@@ -12,7 +11,7 @@ export class SceneTree_Main implements SceneTree {
   private readonly nodes = new NodeManager();
 
   constructor() {
-    this.root = new Node_Main('root');
+    this.root = new Node('root');
     this.registerNode(this.root);
   }
 

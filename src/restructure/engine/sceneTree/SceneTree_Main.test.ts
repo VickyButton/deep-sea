@@ -1,5 +1,5 @@
 import { SceneTree_Main } from './SceneTree_Main';
-import { Node_Mock } from '../../nodes/node/Node_Mock';
+import { Node } from '../../nodes/node/Node';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('SceneTree_Main', () => {
@@ -28,10 +28,11 @@ describe('SceneTree_Main', () => {
   it('should enter scene into self upon adding scene', () => {
     const tree = new SceneTree_Main();
     const scene = createNode('scene');
+    const enterTreeSpy = vi.spyOn(scene, 'enterTree');
 
     tree.addScene(scene);
 
-    expect(scene.enterTree).toHaveBeenCalledWith(tree);
+    expect(enterTreeSpy).toHaveBeenCalledWith(tree);
   });
 
   it('should deregister node from self upon deregistering node', () => {
@@ -110,11 +111,12 @@ describe('SceneTree_Main', () => {
   it('should exit scene from self upon removing scene', () => {
     const tree = new SceneTree_Main();
     const scene = createNode('scene');
+    const exitTreeSpy = vi.spyOn(scene, 'exitTree');
 
     tree.addScene(scene);
     tree.removeScene(scene);
 
-    expect(scene.exitTree).toHaveBeenCalledWith(tree);
+    expect(exitTreeSpy).toHaveBeenCalledWith(tree);
   });
 
   it('should start root node upon starting', () => {
@@ -153,5 +155,5 @@ describe('SceneTree_Main', () => {
 });
 
 function createNode(id: string) {
-  return new Node_Mock(id);
+  return new Node(id);
 }

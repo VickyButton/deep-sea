@@ -2,10 +2,10 @@ import type { CanvasNode, DrawCallback } from './canvasNode.types';
 import type { DrawInstructions } from '../../domain/drawInstructions/drawInstructions.types';
 import { DrawInstructionsBuilder } from '../../domain/drawInstructions/builder/DrawInstructionsBuilder';
 import { Signal } from '../../domain/signal/Signal';
-import { Node_Main } from '../node/Node_Main';
+import { Node } from '../node/Node';
 
 /** The main implementation of the CanvasNode interface. */
-export class CanvasNode_Main extends Node_Main implements CanvasNode {
+export class CanvasNode_Main extends Node implements CanvasNode {
   public readonly redraw_requested = new Signal<DrawInstructions>();
   public readonly visibility_changed = new Signal<boolean>();
   public readonly z_index_changed = new Signal<number>();
