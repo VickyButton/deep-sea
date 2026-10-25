@@ -1,6 +1,5 @@
-import type { BoundingBox2D } from './shape2D.types';
 import type { Shape2D } from './shape2D.types';
-import type { Canvas } from '../canvas/canvas.types';
+import type { DrawStep_DrawLine } from '../drawStep/drawStep.types';
 import type { Transform2D } from '../transform2D/Transform2D';
 import { Vector2D } from '../vector2D/Vector2D';
 import { CollisionResolver2D_Polygon } from './collisionResolver2D/CollisionResolver2D_Polygon';
@@ -8,8 +7,6 @@ import { CollisionResolver2D_Polygon } from './collisionResolver2D/CollisionReso
 /** The polygon implementation of the Shape2D interface. */
 export class Shape2D_Polygon implements Shape2D {
   private _vertices: Vector2D[];
-  private _boundingBox: BoundingBox2D;
-  private isBoundingBoxStale: boolean;
 
   constructor(options?: PolygonShape2D_Options) {
     if (options?.vertices && !this.isValidVertices(options.vertices)) {
@@ -17,8 +14,6 @@ export class Shape2D_Polygon implements Shape2D {
     }
 
     this._vertices = options?.vertices ?? this.computeDefaultPolygonVertices();
-    this._boundingBox = this.computeBoundingBox();
-    this.isBoundingBoxStale = false;
   }
 
   private isValidVertices(vertices: Vector2D[]) {
@@ -32,6 +27,10 @@ export class Shape2D_Polygon implements Shape2D {
   private computeDefaultPolygonVertices() {
     // Default polygon is a triangle.
     return computeRegularPolygonVertices(3);
+  }
+
+  public get boundingBox() {
+    return this.computeBoundingBox();
   }
 
   private computeBoundingBox(): [Vector2D, Vector2D, Vector2D, Vector2D] {
@@ -51,49 +50,25 @@ export class Shape2D_Polygon implements Shape2D {
     ];
   }
 
-  /** The set of vertices that form the polygon, in counterclockwise order. */
-  public get vertices() {
-    return structuredClone(this._vertices);
+  public get drawSteps() {
+    return this.computeDrawSteps();
   }
 
-  public set vertices(vertices: Vector2D[]) {
-    if (!this.isValidVertices(vertices)) {
-      throw this.createInvalidVerticesError();
-    }
-
-    this._vertices = vertices;
+  private computeDrawSteps() {
+    return this.computeDrawPolygonSteps();
   }
 
-  public get boundingBox() {
-    this.updateBoundingBoxIfStale();
-
-    return this._boundingBox;
+  private computeDrawPolygonSteps(): DrawStep_DrawLine[] {
+    return this.computeLines().map(([from, to]) => ({
+      type: 'DRAW_LINE',
+      fromX: from.x,
+      fromY: from.y,
+      toX: to.x,
+      toY: to.y,
+    }));
   }
 
-  private updateBoundingBoxIfStale() {
-    if (this.isBoundingBoxStale) {
-      this._boundingBox = this.computeBoundingBox();
-      this.isBoundingBoxStale = false;
-    }
-  }
-
-  public overlaps(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D) {
-    return new CollisionResolver2D_Polygon(this, transform, shape, shapeTransform).resolveCollision();
-  }
-
-  public draw(canvas: Canvas) {
-    this.drawPolygon(canvas);
-  }
-
-  private drawPolygon(canvas: Canvas) {
-    const lines = this.getLines();
-
-    for (const [from, to] of lines) {
-      this.drawLine(canvas, from, to);
-    }
-  }
-
-  private getLines() {
+  private computeLines() {
     const lines: [Vector2D, Vector2D][] = [];
     const vertices = this.vertices;
 
@@ -107,8 +82,21 @@ export class Shape2D_Polygon implements Shape2D {
     return lines;
   }
 
-  private drawLine(canvas: Canvas, from: Vector2D, to: Vector2D) {
-    canvas.drawLine(from.x, from.y, to.x, to.y);
+  /** The set of vertices that form the polygon, in counterclockwise order. */
+  public get vertices() {
+    return structuredClone(this._vertices);
+  }
+
+  public set vertices(vertices: Vector2D[]) {
+    if (!this.isValidVertices(vertices)) {
+      throw this.createInvalidVerticesError();
+    }
+
+    this._vertices = vertices;
+  }
+
+  public overlaps(transform: Transform2D, shape: Shape2D, shapeTransform: Transform2D) {
+    return new CollisionResolver2D_Polygon(this, transform, shape, shapeTransform).resolveCollision();
   }
 
   public static isPolygon(shape: Shape2D): shape is Shape2D_Polygon {

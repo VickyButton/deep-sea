@@ -14,26 +14,6 @@ describe('Shape2D_Rectangle', () => {
     expect(rectangle.width).toBe(1);
   });
 
-  it('should get half-width', () => {
-    const rectangle = new Shape2D_Rectangle({
-      width: 1,
-      height: 1,
-    });
-
-    expect(rectangle.halfWidth).toBe(0.5);
-  });
-
-  it('should update half-width when width is updated', () => {
-    const rectangle = new Shape2D_Rectangle({
-      width: 1,
-      height: 1,
-    });
-
-    rectangle.width = 2;
-
-    expect(rectangle.halfWidth).toBe(1);
-  });
-
   it('should get height', () => {
     const rectangle = new Shape2D_Rectangle({
       width: 1,
@@ -43,33 +23,35 @@ describe('Shape2D_Rectangle', () => {
     expect(rectangle.height).toBe(1);
   });
 
-  it('should get half-height', () => {
+  it('should compute bounding box', () => {
     const rectangle = new Shape2D_Rectangle({
       width: 1,
       height: 1,
     });
 
-    expect(rectangle.halfHeight).toBe(0.5);
+    expect(rectangle.boundingBox).toEqual([
+      new Vector2D(0.5, 0.5),
+      new Vector2D(-0.5, 0.5),
+      new Vector2D(-0.5, -0.5),
+      new Vector2D(0.5, -0.5),
+    ]);
   });
 
-  it('should update half-height when height is updated', () => {
+  it('should compute draw steps', () => {
     const rectangle = new Shape2D_Rectangle({
       width: 1,
       height: 1,
     });
 
-    rectangle.height = 2;
-
-    expect(rectangle.halfHeight).toBe(1);
-  });
-
-  it('should get size', () => {
-    const rectangle = new Shape2D_Rectangle({
-      width: 1,
-      height: 1,
-    });
-
-    expect(rectangle.size).toEqual(new Vector2D(1, 1));
+    expect(rectangle.drawSteps).toEqual([
+      {
+        type: 'DRAW_RECTANGLE',
+        x: -0.5,
+        y: 0.5,
+        width: 1,
+        height: 1,
+      },
+    ]);
   });
 
   it('should compute vertices', () => {
@@ -79,20 +61,6 @@ describe('Shape2D_Rectangle', () => {
     });
 
     expect(rectangle.vertices).toEqual([
-      new Vector2D(0.5, 0.5),
-      new Vector2D(-0.5, 0.5),
-      new Vector2D(-0.5, -0.5),
-      new Vector2D(0.5, -0.5),
-    ]);
-  });
-
-  it('should compute bounding box', () => {
-    const rectangle = new Shape2D_Rectangle({
-      width: 1,
-      height: 1,
-    });
-
-    expect(rectangle.boundingBox).toEqual([
       new Vector2D(0.5, 0.5),
       new Vector2D(-0.5, 0.5),
       new Vector2D(-0.5, -0.5),

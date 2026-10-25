@@ -4,12 +4,18 @@ import { vi } from 'vitest';
 
 /** The mock implementation of the Shape2D interface. */
 export class Shape2D_Mock implements Shape2D {
-  public boundingBox: BoundingBox2D = [
-    new Vector2D(),
-    new Vector2D(),
-    new Vector2D(),
-    new Vector2D(),
-  ];
+  public get boundingBox(): BoundingBox2D {
+    return [
+      new Vector2D(),
+      new Vector2D(),
+      new Vector2D(),
+      new Vector2D(),
+    ];
+  };
+
+  public get drawSteps() {
+    return [];
+  }
+
   public overlaps = vi.fn();
-  public draw = vi.fn();
 }

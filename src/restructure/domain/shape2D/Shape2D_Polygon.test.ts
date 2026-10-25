@@ -21,18 +21,6 @@ describe('Shape2D_Polygon', () => {
     })).toThrowError();
   });
 
-  it('should compute vertices', () => {
-    const polygon = new Shape2D_Polygon({
-      vertices: VERTICES,
-    });
-
-    expect(polygon.vertices).toEqual([
-      new Vector2D(1, 0),
-      new Vector2D(-0.4999999999999998, 0.8660254037844387),
-      new Vector2D(-0.5000000000000004, -0.8660254037844385),
-    ]);
-  });
-
   it('should compute bounding box', () => {
     const polygon = new Shape2D_Polygon({
       vertices: VERTICES,
@@ -43,6 +31,48 @@ describe('Shape2D_Polygon', () => {
       new Vector2D(-0.5000000000000004, 0.8660254037844387),
       new Vector2D(-0.5000000000000004, -0.8660254037844385),
       new Vector2D(1, -0.8660254037844385),
+    ]);
+  });
+
+  it('should compute draw steps', () => {
+    const polygon = new Shape2D_Polygon({
+      vertices: VERTICES,
+    });
+
+    expect(polygon.drawSteps).toEqual([
+      {
+        type: 'DRAW_LINE',
+        fromX: 1,
+        fromY: 0,
+        toX: -0.4999999999999998,
+        toY: 0.8660254037844387,
+      },
+      {
+        type: 'DRAW_LINE',
+        fromX: -0.4999999999999998,
+        fromY: 0.8660254037844387,
+        toX: -0.5000000000000004,
+        toY: -0.8660254037844385,
+      },
+      {
+        type: 'DRAW_LINE',
+        fromX: -0.5000000000000004,
+        fromY: -0.8660254037844385,
+        toX: 1,
+        toY: 0,
+      },
+    ]);
+  });
+
+  it('should compute vertices', () => {
+    const polygon = new Shape2D_Polygon({
+      vertices: VERTICES,
+    });
+
+    expect(polygon.vertices).toEqual([
+      new Vector2D(1, 0),
+      new Vector2D(-0.4999999999999998, 0.8660254037844387),
+      new Vector2D(-0.5000000000000004, -0.8660254037844385),
     ]);
   });
 
