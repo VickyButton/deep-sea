@@ -2,6 +2,23 @@ import { DrawInstructionsBuilder } from './DrawInstructionsBuilder';
 import { describe, expect, it } from 'vitest';
 
 describe('DrawInstructionsBuilder', () => {
+  it('should add a draw step to the instructions', () => {
+    const builder = new DrawInstructionsBuilder();
+
+    builder.addStep({
+      type: 'BEGIN_PATH',
+    });
+
+    expect(builder.build()).toEqual({
+      steps: [
+        {
+          type: 'BEGIN_PATH',
+        },
+      ],
+      zIndex: 0,
+    });
+  });
+
   it('should add a "BEGIN_PATH" draw step to the instructions', () => {
     const builder = new DrawInstructionsBuilder();
 

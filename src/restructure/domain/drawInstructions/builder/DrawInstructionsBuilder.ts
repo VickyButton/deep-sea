@@ -5,15 +5,16 @@ export class DrawInstructionsBuilder {
   private readonly steps: DrawStep[] = [];
   private zIndex = 0;
 
+  /** Adds a draw step to the instructions steps. */
+  public addStep(step: DrawStep) {
+    this.steps.push(step);
+  }
+
   /** Adds a "BEGIN_PATH" draw step to the instructions steps. */
   public beginPath() {
     this.addStep({
       type: 'BEGIN_PATH',
     });
-  }
-
-  private addStep(step: DrawStep) {
-    this.steps.push(step);
   }
 
   /**
