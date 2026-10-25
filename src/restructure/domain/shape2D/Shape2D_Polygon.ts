@@ -8,12 +8,12 @@ import { CollisionResolver2D_Polygon } from './collisionResolver2D/CollisionReso
 export class Shape2D_Polygon implements Shape2D {
   private _vertices: Vector2D[];
 
-  constructor(options?: PolygonShape2D_Options) {
-    if (options?.vertices && !this.isValidVertices(options.vertices)) {
+  constructor(vertices = this.computeDefaultPolygonVertices()) {
+    if (!this.isValidVertices(vertices)) {
       throw this.createInvalidVerticesError();
     }
 
-    this._vertices = options?.vertices ?? this.computeDefaultPolygonVertices();
+    this._vertices = vertices;
   }
 
   private isValidVertices(vertices: Vector2D[]) {
@@ -104,14 +104,8 @@ export class Shape2D_Polygon implements Shape2D {
   }
 
   public static createRegularPolygon(numSides = 3) {
-    return new Shape2D_Polygon({
-      vertices: computeRegularPolygonVertices(numSides),
-    });
+    return new Shape2D_Polygon(computeRegularPolygonVertices(numSides));
   }
-}
-
-export interface PolygonShape2D_Options {
-  vertices?: Vector2D[];
 }
 
 function computeRegularPolygonVertices(numSides: number) {

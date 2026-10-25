@@ -16,15 +16,11 @@ describe('Shape2D_Polygon', () => {
   });
 
   it('should throw if an invalid vertices are passed', () => {
-    expect(() => new Shape2D_Polygon({
-      vertices: [],
-    })).toThrowError();
+    expect(() => new Shape2D_Polygon([])).toThrowError();
   });
 
   it('should compute bounding box', () => {
-    const polygon = new Shape2D_Polygon({
-      vertices: VERTICES,
-    });
+    const polygon = new Shape2D_Polygon(VERTICES);
 
     expect(polygon.boundingBox).toEqual([
       new Vector2D(1, 0.8660254037844387),
@@ -35,9 +31,7 @@ describe('Shape2D_Polygon', () => {
   });
 
   it('should compute draw steps', () => {
-    const polygon = new Shape2D_Polygon({
-      vertices: VERTICES,
-    });
+    const polygon = new Shape2D_Polygon(VERTICES);
 
     expect(polygon.drawSteps).toEqual([
       {
@@ -65,9 +59,7 @@ describe('Shape2D_Polygon', () => {
   });
 
   it('should compute vertices', () => {
-    const polygon = new Shape2D_Polygon({
-      vertices: VERTICES,
-    });
+    const polygon = new Shape2D_Polygon(VERTICES);
 
     expect(polygon.vertices).toEqual([
       new Vector2D(1, 0),
