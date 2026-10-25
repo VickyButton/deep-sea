@@ -1,25 +1,31 @@
-import { DrawEngine_Mock } from './drawEngine/DrawEngine_Mock';
-import { DrawInstructionsResolver_Mock } from './drawInstructionsResolver/DrawInstructionsResolver_Mock';
+import type { DrawInstructionsQueue } from './drawInstructionsQueue/drawInstructionsQueue.types';
+import type { DrawInstructions } from '../domain/drawInstructions/drawInstructions.types';
+import { DrawEngine } from './drawEngine/DrawEngine';
+import { DrawInstructionsResolver } from './drawInstructionsResolver/DrawInstructionsResolver';
 import { Engine } from './Engine';
-import { EngineController_Mock } from './engineController/EngineController_Mock';
-import { Loop_Mock } from './loop/Loop_Mock';
-import { PluginManager_Mock } from './pluginManager/PluginManager_Mock';
-import { SceneTree_Mock } from './sceneTree/SceneTree_Mock';
+import { EngineController } from './engineController/EngineController';
+import { Loop } from './loop/Loop';
+import { PluginManager } from './pluginManager/PluginManager';
+import { SceneTree } from './sceneTree/SceneTree';
 import { Canvas_Mock } from '../domain/canvas/Canvas_Mock';
+import { Clock_Mock } from '../domain/clock/Clock_Mock';
+import { DrawStepTranslator_Main } from '../domain/drawStep/translator/DrawStepTranslator_Main';
 import { Queue_Mock } from '../domain/queue/Queue_Mock';
 import { Node } from '../nodes/node/Node';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('Engine', () => {
   it('should not be active by default', () => {
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const sceneTree = createSceneTree();
     const engine = new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
-      loop: new Loop_Mock(),
-      pluginManager: new PluginManager_Mock(),
-      sceneTree: new SceneTree_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
+      loop: createLoop(),
+      pluginManager: createPluginManager(),
+      sceneTree: createSceneTree(),
       targetCanvas: new Canvas_Mock(),
     });
 
@@ -27,124 +33,142 @@ describe('Engine', () => {
   });
 
   it('should set loop callback upon instantiation', () => {
-    const loop = new Loop_Mock();
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const loop = createLoop();
+    const sceneTree = createSceneTree();
+    const setLoopCallbackSpy = vi.spyOn(loop, 'setLoopCallback');
 
     new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop,
-      pluginManager: new PluginManager_Mock(),
-      sceneTree: new SceneTree_Mock(),
+      pluginManager: createPluginManager(),
+      sceneTree: createSceneTree(),
       targetCanvas: new Canvas_Mock(),
     });
 
-    expect(loop.setLoopCallback).toHaveBeenCalled();
+    expect(setLoopCallbackSpy).toHaveBeenCalled();
   });
 
   it('should set current scene in scene tree', () => {
-    const sceneTree = new SceneTree_Mock();
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const sceneTree = createSceneTree();
     const engine = new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
-      loop: new Loop_Mock(),
-      pluginManager: new PluginManager_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
+      loop: createLoop(),
+      pluginManager: createPluginManager(),
       sceneTree,
       targetCanvas: new Canvas_Mock(),
     });
+    const addSceneSpy = vi.spyOn(sceneTree, 'addScene');
 
     engine.replaceScene(Node);
 
-    expect(sceneTree.addScene).toHaveBeenCalled();
+    expect(addSceneSpy).toHaveBeenCalled();
   });
 
   it('should remove current scene when replacing scene in scene tree', () => {
-    const sceneTree = new SceneTree_Mock();
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const sceneTree = createSceneTree();
     const engine = new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
-      loop: new Loop_Mock(),
-      pluginManager: new PluginManager_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
+      loop: createLoop(),
+      pluginManager: createPluginManager(),
       sceneTree,
       targetCanvas: new Canvas_Mock(),
     });
+    const removeSceneSpy = vi.spyOn(sceneTree, 'removeScene');
 
     engine.replaceScene(Node);
     engine.replaceScene(Node);
 
-    expect(sceneTree.removeScene).toHaveBeenCalled();
+    expect(removeSceneSpy).toHaveBeenCalled();
   });
 
   it('should start plugins upon starting', () => {
-    const pluginManager = new PluginManager_Mock();
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const pluginManager = createPluginManager();
+    const sceneTree = createSceneTree();
     const engine = new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
-      loop: new Loop_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
+      loop: createLoop(),
       pluginManager,
-      sceneTree: new SceneTree_Mock(),
+      sceneTree: createSceneTree(),
       targetCanvas: new Canvas_Mock(),
     });
+    const startPluginsSpy = vi.spyOn(pluginManager, 'startPlugins');
 
     engine.start();
 
-    expect(pluginManager.startPlugins).toHaveBeenCalled();
+    expect(startPluginsSpy).toHaveBeenCalled();
   });
 
   it('should start scene tree after starting plugins', () => {
-    const pluginManager = new PluginManager_Mock();
-    const sceneTree = new SceneTree_Mock();
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const pluginManager = createPluginManager();
+    const sceneTree = createSceneTree();
     const engine = new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
-      loop: new Loop_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
+      loop: createLoop(),
       pluginManager,
       sceneTree,
       targetCanvas: new Canvas_Mock(),
     });
+    const startSpy = vi.spyOn(sceneTree, 'start');
+    const startPluginsSpy = vi.spyOn(pluginManager, 'startPlugins');
 
     engine.start();
 
-    expect(sceneTree.start).toHaveBeenCalledAfter(pluginManager.startPlugins);
+    expect(startSpy).toHaveBeenCalledAfter(startPluginsSpy);
   });
 
   it('should start loop after starting scene tree', () => {
-    const loop = new Loop_Mock();
-    const sceneTree = new SceneTree_Mock();
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const loop = createLoop();
+    const sceneTree = createSceneTree();
     const engine = new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop,
-      pluginManager: new PluginManager_Mock(),
+      pluginManager: createPluginManager(),
       sceneTree,
       targetCanvas: new Canvas_Mock(),
     });
+    const loopStartSpy = vi.spyOn(loop, 'start');
+    const sceneTreeStartSpy = vi.spyOn(sceneTree, 'start');
 
     engine.start();
 
-    expect(loop.start).toHaveBeenCalledAfter(sceneTree.start);
+    expect(loopStartSpy).toHaveBeenCalledAfter(sceneTreeStartSpy);
   });
 
   it('should be active after starting', () => {
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const sceneTree = createSceneTree();
     const engine = new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
-      loop: new Loop_Mock(),
-      pluginManager: new PluginManager_Mock(),
-      sceneTree: new SceneTree_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
+      loop: createLoop(),
+      pluginManager: createPluginManager(),
+      sceneTree: createSceneTree(),
       targetCanvas: new Canvas_Mock(),
     });
 
@@ -154,70 +178,81 @@ describe('Engine', () => {
   });
 
   it('should stop loop upon stopping', () => {
-    const loop = new Loop_Mock();
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const loop = createLoop();
+    const sceneTree = createSceneTree();
     const engine = new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop,
-      pluginManager: new PluginManager_Mock(),
-      sceneTree: new SceneTree_Mock(),
+      pluginManager: createPluginManager(),
+      sceneTree: createSceneTree(),
       targetCanvas: new Canvas_Mock(),
     });
+    const loopStopSpy = vi.spyOn(loop, 'stop');
 
     engine.stop();
 
-    expect(loop.stop).toHaveBeenCalled();
+    expect(loopStopSpy).toHaveBeenCalled();
   });
 
   it('should stop scene tree after stopping loop', () => {
-    const loop = new Loop_Mock();
-    const sceneTree = new SceneTree_Mock();
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const loop = createLoop();
+    const sceneTree = createSceneTree();
     const engine = new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop,
-      pluginManager: new PluginManager_Mock(),
+      pluginManager: createPluginManager(),
       sceneTree,
       targetCanvas: new Canvas_Mock(),
     });
+    const sceneTreeStopSpy = vi.spyOn(sceneTree, 'stop');
+    const loopStopSpy = vi.spyOn(loop, 'stop');
 
     engine.stop();
 
-    expect(sceneTree.stop).toHaveBeenCalledAfter(loop.stop);
+    expect(sceneTreeStopSpy).toHaveBeenCalledAfter(loopStopSpy);
   });
 
   it('should stop plugins after stopping scene tree', () => {
-    const pluginManager = new PluginManager_Mock();
-    const sceneTree = new SceneTree_Mock();
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const pluginManager = createPluginManager();
+    const sceneTree = createSceneTree();
     const engine = new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
-      loop: new Loop_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
+      loop: createLoop(),
       pluginManager,
       sceneTree,
       targetCanvas: new Canvas_Mock(),
     });
+    const pluginManagerStopPluginsSpy = vi.spyOn(pluginManager, 'stopPlugins');
+    const sceneTreeStopSpy = vi.spyOn(sceneTree, 'stop');
 
     engine.stop();
 
-    expect(pluginManager.stopPlugins).toHaveBeenCalledAfter(sceneTree.stop);
+    expect(pluginManagerStopPluginsSpy).toHaveBeenCalledAfter(sceneTreeStopSpy);
   });
 
   it('should not be active after starting', () => {
+    const drawInstructionsQueue = createDrawInstructionsQueue();
+    const sceneTree = createSceneTree();
     const engine = new Engine({
-      drawEngine: new DrawEngine_Mock(),
-      drawInstructionsQueue: new Queue_Mock(),
-      drawInstructionsResolver: new DrawInstructionsResolver_Mock(),
-      engineController: new EngineController_Mock(),
-      loop: new Loop_Mock(),
-      pluginManager: new PluginManager_Mock(),
-      sceneTree: new SceneTree_Mock(),
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      engineController: createEngineController(drawInstructionsQueue, sceneTree),
+      loop: createLoop(),
+      pluginManager: createPluginManager(),
+      sceneTree: createSceneTree(),
       targetCanvas: new Canvas_Mock(),
     });
 
@@ -227,3 +262,33 @@ describe('Engine', () => {
   });
 });
 
+function createDrawEngine() {
+  return new DrawEngine(new DrawStepTranslator_Main());
+}
+
+function createDrawInstructionsQueue() {
+  return new Queue_Mock<DrawInstructions>();
+}
+
+function createDrawInstructionsResolver() {
+  return new DrawInstructionsResolver();
+}
+
+function createEngineController(drawInstructionsQueue: DrawInstructionsQueue, sceneTree: SceneTree) {
+  return new EngineController({
+    drawInstructionsQueue,
+    sceneTree,
+  });
+}
+
+function createLoop() {
+  return new Loop(new Clock_Mock());
+}
+
+function createPluginManager() {
+  return new PluginManager();
+}
+
+function createSceneTree() {
+  return new SceneTree();
+}
