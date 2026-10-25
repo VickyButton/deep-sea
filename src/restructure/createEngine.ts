@@ -9,7 +9,7 @@ import { DrawInstructionsResolver } from './engine/drawInstructionsResolver/Draw
 import { Engine_Main } from './engine/Engine_Main';
 import { EngineController } from './engine/engineController/EngineController';
 import { Loop } from './engine/loop/Loop';
-import { PluginManager_Main } from './engine/pluginManager/PluginManager_Main';
+import { PluginManager } from './engine/pluginManager/PluginManager';
 import { SceneTree_Main } from './engine/sceneTree/SceneTree_Main';
 
 /**
@@ -76,7 +76,7 @@ function createClock() {
 }
 
 function createPluginManager() {
-  return new PluginManager_Main();
+  return new PluginManager();
 }
 
 function createTargetCanvas(width: number, height: number) {

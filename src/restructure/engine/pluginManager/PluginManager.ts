@@ -1,17 +1,26 @@
-import type { Plugin, PluginManager } from './pluginManager.types';
+import type { Plugin } from './pluginManager.types';
 
-/** The main implementation of the PluginManager interface. */
-export class PluginManager_Main implements PluginManager {
+/** Manages engine plugins. */
+export class PluginManager {
   private readonly plugins = new Set<Plugin>();
 
+  /**
+   * Adds an engine plugin.
+   * @param plugin The plugin to add.
+   */
   public addPlugin(plugin: Plugin) {
     this.plugins.add(plugin);
   }
 
+  /**
+   * Removes an engine plugin.
+   * @param plugin The plugin to remove.
+   */
   public removePlugin(plugin: Plugin) {
     this.plugins.delete(plugin);
   }
 
+  /** Starts the engine plugins. */
   public startPlugins() {
     for (const plugin of this.plugins) {
       this.startPlugin(plugin);
@@ -22,6 +31,7 @@ export class PluginManager_Main implements PluginManager {
     plugin.start();
   }
 
+  /** Stops the engine plugins. */
   public stopPlugins() {
     for (const plugin of this.plugins) {
       this.stopPlugin(plugin);

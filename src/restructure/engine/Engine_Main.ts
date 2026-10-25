@@ -4,7 +4,7 @@ import type { DrawInstructionsResolver } from './drawInstructionsResolver/DrawIn
 import type { Engine, NewFrameCallback } from './engine.types';
 import type { EngineController } from './engineController/EngineController';
 import type { Loop } from './loop/Loop';
-import type { PluginManager } from './pluginManager/pluginManager.types';
+import type { PluginManager } from './pluginManager/PluginManager';
 import type { SceneTree } from './sceneTree/sceneTree.types';
 import type { Canvas } from '../domain/canvas/canvas.types';
 import type { Node } from '../nodes/node/Node';
