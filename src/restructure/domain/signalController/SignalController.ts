@@ -1,32 +1,45 @@
-import type { SignalController } from './signalController.types';
 import type { Signal, SignalCallback } from '../signal/signal.types';
 
-/** The main implementation of the SignalController interface. */
-export class SignalController_Main implements SignalController {
+/** A controller used to delegate signal callbacks and toggle listening. */
+export class SignalController {
   private readonly manager = new CallbackGroupManager(() => this.isListening);
   private _isListening = false;
 
+  /** A flag indicating if the controller is listening for signals. */
   public get isListening() {
     return this._isListening;
   }
 
+  /** Clears all signal delegators. */
   public clear() {
     this.manager.clear();
   }
 
+  /**
+   * Deregisters a callback from a signal delegator.
+   * @param signal The signal the callback is grouped under.
+   * @param callback The callback to deregister.
+   */
   public deregister<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>) {
     this.manager.remove(signal, callback);
   }
 
+  /**
+   * Registers a callback to a signal delegator.
+   * @param signal The signal the callback should be grouped under.
+   * @param callback The callback to register.
+   */
   public register<CallbackData>(signal: Signal<CallbackData>, callback: SignalCallback<CallbackData>) {
     this.manager.add(signal, callback);
   }
 
+  /** Starts listening for signals. */
   public startListening() {
     this.manager.registerDelegators();
     this._isListening = true;
   }
 
+  /** Stops listening for signals. */
   public stopListening() {
     this.manager.deregisterDelegators();
     this._isListening = false;

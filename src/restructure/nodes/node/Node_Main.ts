@@ -1,13 +1,13 @@
 import type { AbstractNodeConstructor, Node, NodeConstructor, ProcessCallback } from './node.types';
 import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
 import { Signal_Main } from '../../domain/signal/Signal_Main';
-import { SignalController_Main } from '../../domain/signalController/SignalController_Main';
+import { SignalController } from '../../domain/signalController/SignalController';
 
 /** The main implementation of the Node interface. */
 export class Node_Main implements Node {
   public readonly child_added = new Signal_Main<Node>();
   public readonly child_removed = new Signal_Main<Node>();
-  public readonly controller = new SignalController_Main();
+  public readonly controller = new SignalController();
   public readonly id;
   public readonly processed = new Signal_Main();
   public readonly started = new Signal_Main();

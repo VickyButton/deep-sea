@@ -4,11 +4,11 @@ import type { CanvasNode } from '../../nodes/canvasNode/canvasNode.types';
 import type { Node } from '../../nodes/node/node.types';
 import type { DrawInstructionsQueue } from '../drawInstructionsQueue/drawInstructionsQueue.types';
 import type { SceneTree } from '../sceneTree/sceneTree.types';
-import { SignalController_Main } from '../../domain/signalController/SignalController_Main';
+import { SignalController } from '../../domain/signalController/SignalController';
 
 /** The main implementation of the EngineController interface. */
 export class EngineController_Main implements EngineController {
-  private readonly controller = new SignalController_Main();
+  private readonly controller = new SignalController();
   private readonly drawInstructionsQueue: DrawInstructionsQueue;
   private readonly sceneTree: SceneTree;
 
