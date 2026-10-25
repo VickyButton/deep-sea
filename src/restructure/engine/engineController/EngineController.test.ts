@@ -1,13 +1,13 @@
 import type { DrawInstructions } from '../../domain/drawInstructions/drawInstructions.types';
-import { EngineController_Main } from './EngineController_Main';
+import { EngineController } from './EngineController';
 import { Queue_Mock } from '../../domain/queue/Queue_Mock';
 import { CanvasNode } from '../../nodes/canvasNode/CanvasNode';
 import { SceneTree_Mock } from '../sceneTree/SceneTree_Mock';
 import { describe, expect, it } from 'vitest';
 
-describe('EngineController_Main', () => {
+describe('EngineController', () => {
   it('should not be listening by default', () => {
-    const controller = new EngineController_Main({
+    const controller = new EngineController({
       drawInstructionsQueue: new Queue_Mock(),
       sceneTree: new SceneTree_Mock(),
     });
@@ -18,7 +18,7 @@ describe('EngineController_Main', () => {
   it('should queue draw instructions upon canvas node emitting "redraw_requested" signal', () => {
     const drawInstructionsQueue = new Queue_Mock<DrawInstructions>();
     const sceneTree = new SceneTree_Mock();
-    const controller = new EngineController_Main({
+    const controller = new EngineController({
       drawInstructionsQueue,
       sceneTree,
     });
@@ -39,7 +39,7 @@ describe('EngineController_Main', () => {
   it('should not queue draw instructions upon deregistered canvas node emitting "redraw_requested" signal', () => {
     const drawInstructionsQueue = new Queue_Mock<DrawInstructions>();
     const sceneTree = new SceneTree_Mock();
-    const controller = new EngineController_Main({
+    const controller = new EngineController({
       drawInstructionsQueue,
       sceneTree,
     });
@@ -59,7 +59,7 @@ describe('EngineController_Main', () => {
   });
 
   it('should be listening after starting', () => {
-    const controller = new EngineController_Main({
+    const controller = new EngineController({
       drawInstructionsQueue: new Queue_Mock(),
       sceneTree: new SceneTree_Mock(),
     });
@@ -70,7 +70,7 @@ describe('EngineController_Main', () => {
   });
 
   it('should not be listening after stopping', () => {
-    const controller = new EngineController_Main({
+    const controller = new EngineController({
       drawInstructionsQueue: new Queue_Mock(),
       sceneTree: new SceneTree_Mock(),
     });

@@ -1,4 +1,3 @@
-import type { EngineController } from './engineController.types';
 import type { DrawInstructions } from '../../domain/drawInstructions/drawInstructions.types';
 import type { Node } from '../../nodes/node/Node';
 import type { DrawInstructionsQueue } from '../drawInstructionsQueue/drawInstructionsQueue.types';
@@ -6,8 +5,8 @@ import type { SceneTree } from '../sceneTree/sceneTree.types';
 import { SignalController } from '../../domain/signalController/SignalController';
 import { CanvasNode } from '../../nodes/canvasNode/CanvasNode';
 
-/** The main implementation of the EngineController interface. */
-export class EngineController_Main implements EngineController {
+/** The main controller used for listening for signals from engine components. */
+export class EngineController {
   private readonly controller = new SignalController();
   private readonly drawInstructionsQueue: DrawInstructionsQueue;
   private readonly sceneTree: SceneTree;
