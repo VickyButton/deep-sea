@@ -6,28 +6,19 @@ import { describe, expect, it, vi } from 'vitest';
 
 describe('Shape2D_Rectangle', () => {
   it('should get width', () => {
-    const rectangle = new Shape2D_Rectangle({
-      width: 1,
-      height: 1,
-    });
+    const rectangle = new Shape2D_Rectangle(1, 1);
 
     expect(rectangle.width).toBe(1);
   });
 
   it('should get height', () => {
-    const rectangle = new Shape2D_Rectangle({
-      width: 1,
-      height: 1,
-    });
+    const rectangle = new Shape2D_Rectangle(1, 1);
 
     expect(rectangle.height).toBe(1);
   });
 
   it('should compute bounding box', () => {
-    const rectangle = new Shape2D_Rectangle({
-      width: 1,
-      height: 1,
-    });
+    const rectangle = new Shape2D_Rectangle(1, 1);
 
     expect(rectangle.boundingBox).toEqual([
       new Vector2D(0.5, 0.5),
@@ -38,10 +29,7 @@ describe('Shape2D_Rectangle', () => {
   });
 
   it('should compute draw steps', () => {
-    const rectangle = new Shape2D_Rectangle({
-      width: 1,
-      height: 1,
-    });
+    const rectangle = new Shape2D_Rectangle(1, 1);
 
     expect(rectangle.drawSteps).toEqual([
       {
@@ -55,10 +43,7 @@ describe('Shape2D_Rectangle', () => {
   });
 
   it('should compute vertices', () => {
-    const rectangle = new Shape2D_Rectangle({
-      width: 1,
-      height: 1,
-    });
+    const rectangle = new Shape2D_Rectangle(1, 1);
 
     expect(rectangle.vertices).toEqual([
       new Vector2D(0.5, 0.5),

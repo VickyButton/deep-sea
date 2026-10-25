@@ -11,9 +11,9 @@ export class Shape2D_Rectangle implements Shape2D {
   /** The height of the rectangle. */
   public height: number;
 
-  constructor(options?: RectangleShape2D_Options) {
-    this.width = options?.width ?? 1;
-    this.height = options?.height ?? 1;
+  constructor(width = 1, height = 1) {
+    this.width = width;
+    this.height = height;
   }
 
   public get boundingBox() {
