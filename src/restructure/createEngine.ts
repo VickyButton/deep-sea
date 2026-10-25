@@ -1,12 +1,11 @@
 import type { DrawInstructions } from './domain/drawInstructions/drawInstructions.types';
-import type { Engine } from './engine/engine.types';
 import { Canvas_2D } from './domain/canvas/Canvas_2D';
 import { Clock_System } from './domain/clock/Clock_System';
 import { DrawStepTranslator_Main } from './domain/drawStep/translator/DrawStepTranslator_Main';
 import { Queue_Main } from './domain/queue/Queue_Main';
 import { DrawEngine } from './engine/drawEngine/DrawEngine';
 import { DrawInstructionsResolver } from './engine/drawInstructionsResolver/DrawInstructionsResolver';
-import { Engine_Main } from './engine/Engine_Main';
+import { Engine } from './engine/Engine';
 import { EngineController } from './engine/engineController/EngineController';
 import { Loop } from './engine/loop/Loop';
 import { PluginManager } from './engine/pluginManager/PluginManager';
@@ -28,7 +27,7 @@ export function createEngine(config: Config): Engine {
   const pluginManager = createPluginManager();
   const targetCanvas = createTargetCanvas(config.canvas.width, config.canvas.height);
 
-  return new Engine_Main({
+  return new Engine({
     drawEngine,
     drawInstructionsQueue,
     drawInstructionsResolver,
