@@ -1,22 +1,22 @@
-import { SceneTree_Main } from './SceneTree_Main';
+import { SceneTree } from './SceneTree';
 import { Node } from '../../nodes/node/Node';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('SceneTree_Main', () => {
+describe('SceneTree', () => {
   it('should not be active by default', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
 
     expect(tree.isActive).toBe(false);
   });
 
   it('should have 1 registered node by default', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
 
     expect(tree.nodeCount).toBe(1);
   });
 
   it('should add scene to root node as a child upon adding scene', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const scene = createNode('scene');
     const addChildSpy = vi.spyOn(tree.root, 'addChild');
 
@@ -26,7 +26,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should enter scene into self upon adding scene', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const scene = createNode('scene');
     const enterTreeSpy = vi.spyOn(scene, 'enterTree');
 
@@ -36,7 +36,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should deregister node from self upon deregistering node', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const node = createNode('node');
 
     tree.registerNode(node);
@@ -46,7 +46,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should emit "node_deregistered" signal upon deregistering node', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const node = createNode('node');
     const emitSpy = vi.spyOn(tree.node_deregistered, 'emit');
 
@@ -57,7 +57,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should process root node upon processing', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const processSpy = vi.spyOn(tree.root, 'process');
     const dt = 1;
 
@@ -67,7 +67,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should emit "processed" signal after processing root node', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const emitSpy = vi.spyOn(tree.processed, 'emit');
     const processSpy = vi.spyOn(tree.root, 'process');
     const dt = 1;
@@ -78,7 +78,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should register node with self upon registering node', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const node = createNode('node');
 
     tree.registerNode(node);
@@ -87,7 +87,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should emit "node_registered" signal upon registering node', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const node = createNode('node');
     const emitSpy = vi.spyOn(tree.node_registered, 'emit');
 
@@ -98,7 +98,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should remove scene from root node as a child upon removing scene', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const scene = createNode('scene');
     const removeChildSpy = vi.spyOn(tree.root, 'removeChild');
 
@@ -109,7 +109,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should exit scene from self upon removing scene', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const scene = createNode('scene');
     const exitTreeSpy = vi.spyOn(scene, 'exitTree');
 
@@ -120,7 +120,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should start root node upon starting', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const startSpy = vi.spyOn(tree.root, 'start');
 
     tree.start();
@@ -129,7 +129,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should be active after starting', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
 
     tree.start();
 
@@ -137,7 +137,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should stop root node upon stopping', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
     const stopSpy = vi.spyOn(tree.root, 'stop');
 
     tree.stop();
@@ -146,7 +146,7 @@ describe('SceneTree_Main', () => {
   });
 
   it('should not be active after stopping', () => {
-    const tree = new SceneTree_Main();
+    const tree = new SceneTree();
 
     tree.stop();
 

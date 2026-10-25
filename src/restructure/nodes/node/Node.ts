@@ -1,5 +1,5 @@
 import type { ProcessCallback } from './node.types';
-import type { SceneTree } from '../../engine/sceneTree/sceneTree.types';
+import type { SceneTree } from '../../engine/sceneTree/SceneTree';
 import { Signal } from '../../domain/signal/Signal';
 import { SignalController } from '../../domain/signalController/SignalController';
 

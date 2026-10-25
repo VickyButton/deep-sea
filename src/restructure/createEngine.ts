@@ -10,7 +10,7 @@ import { Engine_Main } from './engine/Engine_Main';
 import { EngineController } from './engine/engineController/EngineController';
 import { Loop } from './engine/loop/Loop';
 import { PluginManager } from './engine/pluginManager/PluginManager';
-import { SceneTree_Main } from './engine/sceneTree/SceneTree_Main';
+import { SceneTree } from './engine/sceneTree/SceneTree';
 
 /**
  * Creates a new engine instance.
@@ -57,7 +57,7 @@ function createDrawInstructionsResolver() {
 }
 
 function createSceneTree() {
-  return new SceneTree_Main();
+  return new SceneTree();
 }
 
 function createEngineController(drawInstructionsQueue: ReturnType<typeof createDrawInstructionsQueue>, sceneTree: ReturnType<typeof createSceneTree>) {

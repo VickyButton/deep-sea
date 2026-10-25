@@ -1,7 +1,7 @@
 import type { DrawInstructions } from '../../domain/drawInstructions/drawInstructions.types';
 import type { Node } from '../../nodes/node/Node';
 import type { DrawInstructionsQueue } from '../drawInstructionsQueue/drawInstructionsQueue.types';
-import type { SceneTree } from '../sceneTree/sceneTree.types';
+import type { SceneTree } from '../sceneTree/SceneTree';
 import { SignalController } from '../../domain/signalController/SignalController';
 import { CanvasNode } from '../../nodes/canvasNode/CanvasNode';
 
