@@ -50,9 +50,13 @@ describe('Loop', () => {
 
 function advanceTime(ms: number, timeProvider: TimeProvider_Mock) {
   advanceClockByTime(timeProvider, ms);
-  vi.advanceTimersByTime(ms);
+  advanceTimersByTime(ms);
 }
 
 function advanceClockByTime(timeProvider: TimeProvider_Mock, ms: number) {
   timeProvider.now += ms;
+}
+
+function advanceTimersByTime(ms: number) {
+  vi.advanceTimersByTime(ms);
 }
