@@ -3,7 +3,7 @@ import type { SceneTree } from '../../engine/sceneTree/SceneTree';
 import { Signal } from '../../domain/signal/Signal';
 import { SignalController } from '../../domain/signalController/SignalController';
 
-/** A node that encapsulate state, emits signals, and can be added to a scene tree. */
+/** A node that encapsulates state, emits signals, and can be added to a scene tree. */
 export class Node {
   /** Emitted when the node has a child added to it. The added child is passed to callbacks. */
   public readonly child_added = new Signal<Node>();
