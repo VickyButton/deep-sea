@@ -30,6 +30,7 @@
     "./controllers": "./src/restructure/controllers/index.ts",
     "./domain": "./src/restructure/domain/index.ts",
     "./nodes": "./src/restructure/nodes/index.ts",
+    "./providers": "./src/restructure/providers/index.ts",
     "./signals": "./src/restructure/signals/index.ts"
   }
 }
