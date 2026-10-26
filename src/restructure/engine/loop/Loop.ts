@@ -1,5 +1,6 @@
 import type { LoopCallback } from './loop.types';
 import type { Clock } from '../../domain/clock/clock.types';
+import type { AnimationFrameProvider, FrameRequestCallback } from '../../providers/animationFrameProvider/animationFrameProvider.types';
 import { clamp } from '../../utils/clamp';
 
 const LOOPS_PER_SECOND_MIN = 1;
@@ -7,6 +8,7 @@ const LOOPS_PER_SECOND_MAX = 120;
 
 /** Responsible for managing loop timing and executing loop callback. */
 export class Loop {
+  private readonly animationFrameProvider: AnimationFrameProvider;
   private readonly clock: Clock;
   private lastAnimationFrameTimestamp = 0;
   private lastLoopTimestamp = 0;
@@ -16,7 +18,8 @@ export class Loop {
   private millisecondsSinceLastLoop = 0;
   private scheduledAnimationFrameRequestId: number | null = null;
 
-  constructor(clock: Clock) {
+  constructor(animationFrameProvider: AnimationFrameProvider, clock: Clock) {
+    this.animationFrameProvider = animationFrameProvider;
     this.clock = clock;
   }
 
@@ -45,12 +48,11 @@ export class Loop {
   }
 
   private scheduleAnimationFrameRequest() {
-    this.scheduledAnimationFrameRequestId = this.requestAnimationFrameForLoop();
+    this.scheduledAnimationFrameRequestId = this.requestAnimationFrame(this.onAnimationFrame);
   }
 
-  private requestAnimationFrameForLoop() {
-    // TODO: Create AnimationFrameProvider to decouple browser implementation details.
-    return requestAnimationFrame(this.onAnimationFrame);
+  private requestAnimationFrame(callback: FrameRequestCallback) {
+    return this.animationFrameProvider.requestAnimationFrame(callback);
   }
 
   private onAnimationFrame = () => {
@@ -93,13 +95,13 @@ export class Loop {
 
   /** Stops the loop. */
   public stop() {
-    this.cancelScheduledAnimationFrameRequest();
+    if (this.scheduledAnimationFrameRequestId !== null) {
+      this.cancelAnimationFrameRequest(this.scheduledAnimationFrameRequestId);
+    }
   }
 
-  private cancelScheduledAnimationFrameRequest() {
-    if (this.scheduledAnimationFrameRequestId) {
-      cancelAnimationFrame(this.scheduledAnimationFrameRequestId);
-      this.scheduledAnimationFrameRequestId = null;
-    }
+  private cancelAnimationFrameRequest(requestId: number) {
+    this.animationFrameProvider.cancelAnimationFrameRequest(requestId);
+    this.scheduledAnimationFrameRequestId = null;
   }
 }

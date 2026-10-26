@@ -12,6 +12,7 @@ import { Clock_Mock } from '../domain/clock/Clock_Mock';
 import { DrawStepTranslator_Main } from '../domain/drawStep/translator/DrawStepTranslator_Main';
 import { Queue_Mock } from '../domain/queue/Queue_Mock';
 import { Node } from '../nodes/node/Node';
+import { AnimationFrameProvider_Mock } from '../providers/animationFrameProvider/AnimationFrameProvider_Mock';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Engine', () => {
@@ -282,7 +283,7 @@ function createEngineController(drawInstructionsQueue: DrawInstructionsQueue, sc
 }
 
 function createLoop() {
-  return new Loop(new Clock_Mock());
+  return new Loop(new AnimationFrameProvider_Mock(), new Clock_Mock());
 }
 
 function createPluginManager() {

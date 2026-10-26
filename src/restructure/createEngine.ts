@@ -10,6 +10,7 @@ import { EngineController } from './engine/engineController/EngineController';
 import { Loop } from './engine/loop/Loop';
 import { PluginManager } from './engine/pluginManager/PluginManager';
 import { SceneTree } from './engine/sceneTree/SceneTree';
+import { AnimationFrameProvider_Browser } from './providers/animationFrameProvider/AnimationFrameProvider_Browser';
 
 /**
  * Creates a new engine instance.
@@ -67,7 +68,11 @@ function createEngineController(drawInstructionsQueue: ReturnType<typeof createD
 }
 
 function createLoop(clock: ReturnType<typeof createClock>) {
-  return new Loop(clock);
+  return new Loop(createAnimationFrameProvider(), clock);
+}
+
+function createAnimationFrameProvider() {
+  return new AnimationFrameProvider_Browser();
 }
 
 function createClock() {
