@@ -14,4 +14,4 @@ export interface AnimationFrameProvider {
 }
 
 /** Callback that is executed after an animation frame becomes available. */
-export type FrameRequestCallback = () => void;
+export type FrameRequestCallback = (timestamp: number) => void;
