@@ -1,5 +1,5 @@
 import type { DrawInstructions } from '../../domain/drawInstructions/drawInstructions.types';
-import type { Queue } from '../../domain/queue/queue.types';
+import { Queue } from '../../domain/queue/Queue';
 
 /** The queue for draw instructions. */
-export type DrawInstructionsQueue = Queue<DrawInstructions>;
+export const DrawInstructionsQueue = Queue<DrawInstructions>;

@@ -2,7 +2,7 @@ import type { DrawInstructions } from './domain/drawInstructions/drawInstruction
 import type { AnimationFrameProvider } from './providers/animationFrameProvider/animationFrameProvider.types';
 import type { TimeProvider } from './providers/timeProvider/timeProvider.types';
 import { Canvas_2D } from './domain/canvas/Canvas_2D';
-import { Queue_Main } from './domain/queue/Queue_Main';
+import { Queue } from './domain/queue/Queue';
 import { DrawInstructionsResolver } from './engine/drawInstructionsResolver/DrawInstructionsResolver';
 import { DrawStepTranslator } from './engine/drawStepTranslator/DrawStepTranslator';
 import { Engine } from './engine/Engine';
@@ -28,7 +28,7 @@ export function createEngine(config: Config) {
 }
 
 function createDrawInstructionsQueue() {
-  return new Queue_Main<DrawInstructions>();
+  return new Queue<DrawInstructions>();
 }
 
 function createDrawInstructionsResolver() {

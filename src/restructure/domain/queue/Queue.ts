@@ -1,15 +1,25 @@
 /** A queue of items that can be retrieved in sequential order. */
-export interface Queue<T> {
+export class Queue<T> {
+  private readonly items: T[] = [];
+
   /** The item at the front of the queue. */
-  get front(): T | null;
+  public get front() {
+    return this.items[0] ?? null;
+  }
+
   /**
    * Adds an item to the back of the queue.
    * @param item The item to add to the queue.
    */
-  add(item: T): void;
+  public add(item: T) {
+    this.items.push(item);
+  }
+
   /**
    * Removes and returns the item at the front of the queue.
    * @returns The item at the front of the queue.
    */
-  remove(): T | null;
+  public remove() {
+    return this.items.shift() ?? null;
+  }
 }

@@ -1,13 +1,13 @@
-import { Queue_Main } from './Queue_Main';
+import { Queue } from './Queue';
 import { describe, expect, it } from 'vitest';
 
-describe('Queue_Main', () => {
+describe('Queue', () => {
   it('should have no front item by default', () => {
-    expect(new Queue_Main().front).toBe(null);
+    expect(new Queue().front).toBe(null);
   });
 
   it('should get the front item in the queue', () => {
-    const queue = new Queue_Main();
+    const queue = new Queue();
 
     queue.add(1);
     queue.add(2);
@@ -16,7 +16,7 @@ describe('Queue_Main', () => {
   });
 
   it('should add an item to the queue', () => {
-    const queue = new Queue_Main();
+    const queue = new Queue();
 
     queue.add(1);
 
@@ -24,7 +24,7 @@ describe('Queue_Main', () => {
   });
 
   it('should remove the front item from the queue', () => {
-    const queue = new Queue_Main();
+    const queue = new Queue();
 
     queue.add(1);
 
