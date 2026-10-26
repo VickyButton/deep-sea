@@ -4,7 +4,6 @@ import type { TimeProvider } from './providers/timeProvider/timeProvider.types';
 import { Canvas_2D } from './domain/canvas/Canvas_2D';
 import { DrawStepTranslator } from './domain/drawStep/translator/DrawStepTranslator';
 import { Queue_Main } from './domain/queue/Queue_Main';
-import { DrawEngine } from './engine/drawEngine/DrawEngine';
 import { DrawInstructionsResolver } from './engine/drawInstructionsResolver/DrawInstructionsResolver';
 import { Engine } from './engine/Engine';
 import { Loop } from './engine/loop/Loop';
@@ -19,7 +18,6 @@ import { TimeProvider_Performance } from './providers/timeProvider/TimeProvider_
  * @returns The instantiated engine.
  */
 export function createEngine(config: Config): Engine {
-  const drawEngine = createDrawEngine(createDrawStepTranslator());
   const drawInstructionsQueue = createDrawInstructionsQueue();
   const drawInstructionsResolver = createDrawInstructionsResolver();
   const animationFrameProvider = createAnimationFrameProvider();
@@ -30,22 +28,14 @@ export function createEngine(config: Config): Engine {
   const targetCanvas = createTargetCanvas(config.canvas.width, config.canvas.height);
 
   return new Engine({
-    drawEngine,
     drawInstructionsQueue,
     drawInstructionsResolver,
+    drawStepTranslator: createDrawStepTranslator(),
     loop,
     pluginManager,
     sceneTree,
     targetCanvas,
   });
-}
-
-function createDrawEngine(resolver: ReturnType<typeof createDrawStepTranslator>) {
-  return new DrawEngine(resolver);
-}
-
-function createDrawStepTranslator() {
-  return new DrawStepTranslator();
 }
 
 function createDrawInstructionsQueue() {
@@ -54,6 +44,10 @@ function createDrawInstructionsQueue() {
 
 function createDrawInstructionsResolver() {
   return new DrawInstructionsResolver();
+}
+
+function createDrawStepTranslator() {
+  return new DrawStepTranslator();
 }
 
 function createSceneTree() {

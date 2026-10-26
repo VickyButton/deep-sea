@@ -1,4 +1,3 @@
-import type { DrawEngine } from './drawEngine/DrawEngine';
 import type { DrawInstructionsQueue } from './drawInstructionsQueue/drawInstructionsQueue.types';
 import type { DrawInstructionsResolver } from './drawInstructionsResolver/DrawInstructionsResolver';
 import type { NewFrameCallback, SceneConstructor } from './engine.types';
@@ -8,15 +7,17 @@ import type { PluginManager } from './pluginManager/PluginManager';
 import type { SceneTree } from './sceneTree/SceneTree';
 import type { Canvas } from '../domain/canvas/canvas.types';
 import type { DrawInstructions } from '../domain/drawInstructions/drawInstructions.types';
+import type { DrawStep } from '../domain/drawStep/drawStep.types';
+import type { DrawStepTranslator } from '../domain/drawStep/translator/DrawStepTranslator';
 import type { Node } from '../nodes/node/Node';
 import { SignalController } from '../domain';
 import { CanvasNode } from '../nodes';
 
 /** Coordinates interactions between engine components. */
 export class Engine {
-  public readonly drawEngine: DrawEngine;
   public readonly drawInstructionsQueue: DrawInstructionsQueue;
   public readonly drawInstructionsResolver: DrawInstructionsResolver;
+  public readonly drawStepTranslator: DrawStepTranslator;
   public readonly loop: Loop;
   public readonly pluginManager: PluginManager;
   public readonly sceneTree: SceneTree;
@@ -25,10 +26,10 @@ export class Engine {
   private currentScene: Node | null = null;
   private newFrameCallback: NewFrameCallback | null = null;
 
-  constructor({ drawEngine, drawInstructionsQueue, drawInstructionsResolver, loop, pluginManager, sceneTree, targetCanvas }: EngineComponents) {
-    this.drawEngine = drawEngine;
+  constructor({ drawInstructionsQueue, drawInstructionsResolver, drawStepTranslator, loop, pluginManager, sceneTree, targetCanvas }: EngineComponents) {
     this.drawInstructionsQueue = drawInstructionsQueue;
     this.drawInstructionsResolver = drawInstructionsResolver;
+    this.drawStepTranslator = drawStepTranslator;
     this.loop = loop;
     this.pluginManager = pluginManager;
     this.sceneTree = sceneTree;
@@ -100,7 +101,17 @@ export class Engine {
   }
 
   private draw() {
-    this.drawEngine.draw(this.targetCanvas, this.getQueuedDrawSteps());
+    for (const step of this.getQueuedDrawSteps()) {
+      this.executeDrawStep(step);
+    }
+  }
+
+  private executeDrawStep(step: DrawStep) {
+    this.getCanvasCallback(step)(this.targetCanvas);
+  }
+
+  private getCanvasCallback(step: DrawStep) {
+    return this.drawStepTranslator.translate(step);
   }
 
   private getQueuedDrawSteps() {
@@ -228,9 +239,9 @@ class EngineController {
 }
 
 interface EngineComponents {
-  drawEngine: DrawEngine;
   drawInstructionsQueue: DrawInstructionsQueue;
   drawInstructionsResolver: DrawInstructionsResolver;
+  drawStepTranslator: DrawStepTranslator;
   loop: Loop;
   pluginManager: PluginManager;
   sceneTree: SceneTree;

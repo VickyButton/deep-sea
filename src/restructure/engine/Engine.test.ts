@@ -1,6 +1,5 @@
 import type { DrawInstructions } from '../domain/drawInstructions/drawInstructions.types';
 import { CanvasNode } from '../nodes';
-import { DrawEngine } from './drawEngine/DrawEngine';
 import { DrawInstructionsResolver } from './drawInstructionsResolver/DrawInstructionsResolver';
 import { Engine } from './Engine';
 import { Loop } from './loop/Loop';
@@ -160,18 +159,14 @@ describe('Engine', () => {
 
 function createEngine() {
   return new Engine({
-    drawEngine: createDrawEngine(),
     drawInstructionsQueue: createDrawInstructionsQueue(),
     drawInstructionsResolver: createDrawInstructionsResolver(),
+    drawStepTranslator: createDrawStepTranslator(),
     loop: createLoop(),
     pluginManager: createPluginManager(),
     sceneTree: createSceneTree(),
     targetCanvas: createTargetCanvas(),
   });
-}
-
-function createDrawEngine() {
-  return new DrawEngine(new DrawStepTranslator());
 }
 
 function createDrawInstructionsQueue() {
@@ -180,6 +175,10 @@ function createDrawInstructionsQueue() {
 
 function createDrawInstructionsResolver() {
   return new DrawInstructionsResolver();
+}
+
+function createDrawStepTranslator() {
+  return new DrawStepTranslator();
 }
 
 function createLoop() {
