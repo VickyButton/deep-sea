@@ -26,14 +26,14 @@ export class Engine {
   private currentScene: Node | null = null;
   private newFrameCallback: NewFrameCallback | null = null;
 
-  constructor({ drawInstructionsQueue, drawInstructionsResolver, drawStepTranslator, loop, pluginManager, sceneTree, targetCanvas }: EngineComponents) {
-    this.drawInstructionsQueue = drawInstructionsQueue;
-    this.drawInstructionsResolver = drawInstructionsResolver;
-    this.drawStepTranslator = drawStepTranslator;
-    this.loop = loop;
-    this.pluginManager = pluginManager;
-    this.sceneTree = sceneTree;
-    this.targetCanvas = targetCanvas;
+  constructor(components: EngineComponents) {
+    this.drawInstructionsQueue = components.drawInstructionsQueue;
+    this.drawInstructionsResolver = components.drawInstructionsResolver;
+    this.drawStepTranslator = components.drawStepTranslator;
+    this.loop = components.loop;
+    this.pluginManager = components.pluginManager;
+    this.sceneTree = components.sceneTree;
+    this.targetCanvas = components.targetCanvas;
   }
 
   /** Whether or not the engine is listening for signals. */
