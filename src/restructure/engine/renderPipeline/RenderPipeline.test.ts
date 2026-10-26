@@ -11,7 +11,7 @@ describe('RenderPipeline', () => {
 
     pipeline.addStep(step1);
     pipeline.addStep(step2);
-    pipeline.render(canvas);
+    pipeline.run(canvas);
 
     expect(step1).toHaveBeenCalled();
     expect(step2).toHaveBeenCalledAfter(step1);

@@ -13,10 +13,10 @@ export class RenderPipeline {
   }
 
   /**
-   * Renders an image using the pipeline steps.
+   * Runs a canvas through the pipeline.
    * @param canvas The canvas to run the pipeline steps on.
    */
-  public render(canvas: Canvas) {
+  public run(canvas: Canvas) {
     this.executeSteps(canvas);
   }
 
