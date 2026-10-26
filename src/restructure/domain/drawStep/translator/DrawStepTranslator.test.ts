@@ -1,10 +1,10 @@
-import { DrawStepTranslator_Main } from './DrawStepTranslator_Main';
+import { DrawStepTranslator } from './DrawStepTranslator';
 import { Canvas_Mock } from '../../canvas/Canvas_Mock';
 import { describe, expect, it } from 'vitest';
 
-describe('DrawStepTranslator_Main', () => {
+describe('DrawStepTranslator', () => {
   it('should translate step with "BEGIN_PATH" type', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     translator.translate({
@@ -15,7 +15,7 @@ describe('DrawStepTranslator_Main', () => {
   });
 
   it('should translate step with "CLOSE_PATH" type', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     translator.translate({
@@ -26,7 +26,7 @@ describe('DrawStepTranslator_Main', () => {
   });
 
   it('should translate step with "DRAW_ARC" type', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     translator.translate({
@@ -43,7 +43,7 @@ describe('DrawStepTranslator_Main', () => {
   });
 
   it('should translate step with "DRAW_LINE" type', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     translator.translate({
@@ -58,7 +58,7 @@ describe('DrawStepTranslator_Main', () => {
   });
 
   it('should translate step with "DRAW_RECTANGLE" type', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     translator.translate({
@@ -73,7 +73,7 @@ describe('DrawStepTranslator_Main', () => {
   });
 
   it('should translate step with "FILL" type', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     translator.translate({
@@ -84,7 +84,7 @@ describe('DrawStepTranslator_Main', () => {
   });
 
   it('should translate step with "RESET_TRANSFORM" type', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     translator.translate({
@@ -95,7 +95,7 @@ describe('DrawStepTranslator_Main', () => {
   });
 
   it('should translate step with "SET_FILL_COLOR" type', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     translator.translate({
@@ -107,7 +107,7 @@ describe('DrawStepTranslator_Main', () => {
   });
 
   it('should translate step with "SET_STROKE_COLOR" type', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     translator.translate({
@@ -119,7 +119,7 @@ describe('DrawStepTranslator_Main', () => {
   });
 
   it('should translate step with "SET_TRANSFORM" type', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     translator.translate({
@@ -136,7 +136,7 @@ describe('DrawStepTranslator_Main', () => {
   });
 
   it('should translate step with "STROKE" type', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     translator.translate({
@@ -147,7 +147,7 @@ describe('DrawStepTranslator_Main', () => {
   });
 
   it('should throw an error if step type is unknown', () => {
-    const translator = new DrawStepTranslator_Main();
+    const translator = new DrawStepTranslator();
     const canvas = new Canvas_Mock();
 
     expect(() => translator.translate({

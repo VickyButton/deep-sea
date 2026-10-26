@@ -1,9 +1,13 @@
 import type { Canvas } from '../../canvas/canvas.types';
 import type { DrawStep, DrawStep_DrawArc, DrawStep_DrawLine, DrawStep_DrawRectangle, DrawStep_SetFillColor, DrawStep_SetStrokeColor, DrawStep_SetTransform } from '../drawStep.types';
-import type { DrawStepTranslator } from './drawStepTranslator.types';
 
-/** The main implementation of the DrawStepTranslator interface. */
-export class DrawStepTranslator_Main implements DrawStepTranslator {
+/** Used for translating draw steps into canvas callbacks. */
+export class DrawStepTranslator {
+  /**
+   * Translates a draw step into a canvas callback.
+   * @param step The step to translate.
+   * @returns Callback for executing the step on a canvas.
+   */
   public translate(step: DrawStep) {
     switch (step.type) {
       case 'BEGIN_PATH':

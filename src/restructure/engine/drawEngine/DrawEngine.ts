@@ -1,6 +1,6 @@
 import type { Canvas } from '../../domain/canvas/canvas.types';
 import type { DrawStep } from '../../domain/drawStep/drawStep.types';
-import type { DrawStepTranslator } from '../../domain/drawStep/translator/drawStepTranslator.types';
+import type { DrawStepTranslator } from '../../domain/drawStep/translator/DrawStepTranslator';
 
 /** An interface for executing draw steps on a target canvas. */
 export class DrawEngine {
