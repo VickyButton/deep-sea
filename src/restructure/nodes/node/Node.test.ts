@@ -1,5 +1,5 @@
 import { Node } from './Node';
-import { SceneTree_Mock } from '../../engine/sceneTree/SceneTree_Mock';
+import { SceneTree } from '../../engine/sceneTree/SceneTree';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Node', () => {
@@ -62,7 +62,7 @@ describe('Node', () => {
 
   it('should enter a node into tree upon adding as a child', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
+    const tree = new SceneTree();
     const child = new Node('child');
 
     node.enterTree(tree);
@@ -83,8 +83,8 @@ describe('Node', () => {
 
   it('should throw an error if trying to enter a tree while already belonging to another tree', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
-    const otherTree = new SceneTree_Mock();
+    const tree = new SceneTree();
+    const otherTree = new SceneTree();
 
     node.enterTree(tree);
 
@@ -93,7 +93,7 @@ describe('Node', () => {
 
   it('should register with tree upon entering a tree', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
+    const tree = new SceneTree();
     const registerNodeSpy = vi.spyOn(tree, 'registerNode');
 
     node.enterTree(tree);
@@ -103,7 +103,7 @@ describe('Node', () => {
 
   it('should enter a tree', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
+    const tree = new SceneTree();
 
     node.enterTree(tree);
 
@@ -112,7 +112,7 @@ describe('Node', () => {
 
   it('should emit "tree_entered" signal upon entering a tree', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
+    const tree = new SceneTree();
     const emitSpy = vi.spyOn(node.tree_entered, 'emit');
 
     node.enterTree(tree);
@@ -122,7 +122,7 @@ describe('Node', () => {
 
   it('should enter children into tree upon entering a tree', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
+    const tree = new SceneTree();
     const child = new Node('child');
 
     node.addChild(child);
@@ -133,7 +133,7 @@ describe('Node', () => {
 
   it('should be inside a tree after entering a tree', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
+    const tree = new SceneTree();
 
     node.enterTree(tree);
 
@@ -142,8 +142,8 @@ describe('Node', () => {
 
   it('should throw an error if trying to exit a tree that it does not belong to', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
-    const otherTree = new SceneTree_Mock();
+    const tree = new SceneTree();
+    const otherTree = new SceneTree();
 
     node.enterTree(tree);
 
@@ -152,7 +152,7 @@ describe('Node', () => {
 
   it('should deregister from tree upon exiting a tree', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
+    const tree = new SceneTree();
     const deregisterNodeSpy = vi.spyOn(tree, 'deregisterNode');
 
     node.enterTree(tree);
@@ -163,7 +163,7 @@ describe('Node', () => {
 
   it('should exit a tree', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
+    const tree = new SceneTree();
 
     node.enterTree(tree);
     node.exitTree(tree);
@@ -174,7 +174,7 @@ describe('Node', () => {
   it('should exit children from a tree after exiting a tree', () => {
     const node = new Node('node');
     const child = new Node('child');
-    const tree = new SceneTree_Mock();
+    const tree = new SceneTree();
 
     node.addChild(child);
     node.enterTree(tree);
@@ -185,7 +185,7 @@ describe('Node', () => {
 
   it('should emit "tree_exited" signal upon exiting a tree', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
+    const tree = new SceneTree();
     const emitSpy = vi.spyOn(node.tree_exited, 'emit');
 
     node.enterTree(tree);
@@ -253,7 +253,7 @@ describe('Node', () => {
 
   it('should exit a node from tree upon removing as a child', () => {
     const node = new Node('node');
-    const tree = new SceneTree_Mock();
+    const tree = new SceneTree();
     const child = new Node('child');
 
     node.enterTree(tree);
