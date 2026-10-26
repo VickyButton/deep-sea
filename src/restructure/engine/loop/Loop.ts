@@ -1,6 +1,6 @@
-import type { LoopCallback } from './loop.types';
 import type { AnimationFrameProvider, FrameRequestCallback } from '../../providers/animationFrameProvider/animationFrameProvider.types';
 import type { TimeProvider } from '../../providers/timeProvider/timeProvider.types';
+import { Signal } from '../../domain/signal/Signal';
 import { clamp } from '../../utils/clamp';
 
 const LOOPS_PER_SECOND_MIN = 1;
@@ -8,11 +8,12 @@ const LOOPS_PER_SECOND_MAX = 120;
 
 /** Responsible for managing loop timing and executing loop callback. */
 export class Loop {
+  /** Emitted when an interval has elapsed. The time delta is passed to callbacks. */
+  public readonly interval_elapsed = new Signal<number>();
   private readonly animationFrameProvider: AnimationFrameProvider;
   private readonly timeProvider: TimeProvider;
   private lastAnimationFrameTimestamp = 0;
   private lastLoopTimestamp = 0;
-  private loopCallback: LoopCallback = () => { };
   private loopsPerSecond = 60;
   private millisecondsPerLoop = this.computeMillisecondsPerLoop();
   private millisecondsSinceLastLoop = 0;
@@ -21,11 +22,6 @@ export class Loop {
   constructor(animationFrameProvider: AnimationFrameProvider, timeProvider: TimeProvider) {
     this.animationFrameProvider = animationFrameProvider;
     this.timeProvider = timeProvider;
-  }
-
-  /** Sets the callback to execute on each new loop. */
-  public setLoopCallback(callback: LoopCallback) {
-    this.loopCallback = callback;
   }
 
   /** Sets the number of loops per second to run at. */
@@ -58,7 +54,11 @@ export class Loop {
   private onAnimationFrame = () => {
     this.updateLastAnimationFrameTimestamp();
     this.updateMillisecondsSinceLastLoop();
-    this.checkIfNewFrameIsDue();
+
+    if (this.isIntervalElapsed) {
+      this.onIntervalElapsed();
+    }
+
     this.scheduleAnimationFrameRequest();
   };
 
@@ -78,19 +78,21 @@ export class Loop {
     return this.lastAnimationFrameTimestamp - this.lastLoopTimestamp;
   }
 
-  private checkIfNewFrameIsDue() {
-    if (this.isDueForNewFrame()) {
-      this.updateLastLoopTimestamp();
-      this.loopCallback(this.millisecondsSinceLastLoop);
-    }
+  private get isIntervalElapsed() {
+    return this.millisecondsSinceLastLoop >= this.millisecondsPerLoop;
   }
 
-  private isDueForNewFrame() {
-    return this.millisecondsSinceLastLoop >= this.millisecondsPerLoop;
+  private onIntervalElapsed() {
+    this.updateLastLoopTimestamp();
+    this.emitIntervalElapsedSignal(this.millisecondsSinceLastLoop);
   }
 
   private updateLastLoopTimestamp() {
     this.lastLoopTimestamp = this.lastAnimationFrameTimestamp;
+  }
+
+  private emitIntervalElapsedSignal(dt: number) {
+    this.interval_elapsed.emit(dt);
   }
 
   /** Stops the loop. */

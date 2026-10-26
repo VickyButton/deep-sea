@@ -13,38 +13,36 @@ describe('Loop', () => {
     vi.useRealTimers();
   });
 
-  it('should execute loop callback on interval', () => {
+  it('should emit "interval_elapsed" signal upon loop interval elapsing after starting', () => {
     const animationFrameProvider = new AnimationFrameProvider_Mock();
     const timeProvider = new TimeProvider_Mock();
     const loop = new Loop(animationFrameProvider, timeProvider);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
-    const loopCallback = vi.fn();
+    const emitSpy = vi.spyOn(loop.interval_elapsed, 'emit');
 
     loop.setLoopsPerSecond(loopsPerSecond);
-    loop.setLoopCallback(loopCallback);
     loop.start();
     advanceTime(loopsPerSecondInterval, timeProvider);
 
-    expect(loopCallback).toHaveBeenCalledExactlyOnceWith(loopsPerSecondInterval);
+    expect(emitSpy).toHaveBeenCalledExactlyOnceWith(loopsPerSecondInterval);
   });
 
-  it('should not execute loop callback after stopping', () => {
+  it('should emit "interval_elapsed" signal upon loop interval elapsing after stopping', () => {
     const animationFrameProvider = new AnimationFrameProvider_Mock();
     const timeProvider = new TimeProvider_Mock();
     const loop = new Loop(animationFrameProvider, timeProvider);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
-    const loopCallback = vi.fn();
+    const emitSpy = vi.spyOn(loop.interval_elapsed, 'emit');
 
     loop.setLoopsPerSecond(loopsPerSecond);
-    loop.setLoopCallback(loopCallback);
     loop.start();
     advanceTime(loopsPerSecondInterval, timeProvider);
     loop.stop();
     advanceTime(loopsPerSecondInterval, timeProvider);
 
-    expect(loopCallback).toHaveBeenCalledOnce();
+    expect(emitSpy).toHaveBeenCalledOnce();
   });
 });
 

@@ -1,16 +1,16 @@
 import type { DrawInstructionsQueue } from './drawInstructionsQueue/drawInstructionsQueue.types';
 import type { DrawInstructionsResolver } from './drawInstructionsResolver/DrawInstructionsResolver';
 import type { DrawStepTranslator } from './drawStepTranslator/DrawStepTranslator';
-import type { NewFrameCallback, SceneConstructor } from './engine.types';
+import type { SceneConstructor } from './engine.types';
 import type { Loop } from './loop/Loop';
-import type { LoopCallback } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/PluginManager';
 import type { SceneTree } from './sceneTree/SceneTree';
 import type { Canvas } from '../domain/canvas/canvas.types';
 import type { DrawInstructions } from '../domain/drawInstructions/drawInstructions.types';
 import type { DrawStep } from '../domain/drawStep/drawStep.types';
 import type { Node } from '../nodes/node/Node';
-import { SignalController } from '../domain';
+import { Signal } from '../domain/signal/Signal';
+import { SignalController } from '../domain/signalController/SignalController';
 import { CanvasNode } from '../nodes';
 
 /** Coordinates interactions between engine components. */
@@ -18,13 +18,14 @@ export class Engine {
   public readonly drawInstructionsQueue: DrawInstructionsQueue;
   public readonly drawInstructionsResolver: DrawInstructionsResolver;
   public readonly drawStepTranslator: DrawStepTranslator;
+  /** Emitted when a new frame is rendered. The frame image bitmap is passed to callbacks. */
+  public readonly new_frame_rendered = new Signal<ImageBitmap>(); // TODO: Emit from drawing-related component.
   public readonly loop: Loop;
   public readonly pluginManager: PluginManager;
   public readonly sceneTree: SceneTree;
   public readonly targetCanvas: Canvas;
   private readonly controller = new EngineController(this);
   private currentScene: Node | null = null;
-  private newFrameCallback: NewFrameCallback | null = null;
 
   constructor(components: EngineComponents) {
     this.drawInstructionsQueue = components.drawInstructionsQueue;
@@ -61,78 +62,13 @@ export class Engine {
     this.sceneTree.addScene(scene);
   }
 
-  /**
-   * Sets the callback to execute when a new frame is ready.
-   * @param callback The callback to execute when a new frame is ready.
-   */
-  public setNewFrameCallback(callback: NewFrameCallback) {
-    this.newFrameCallback = callback;
-  }
-
   /** Sets up the engine. This should be called before starting the engine. */
   public setup() {
     this.setupController();
-    this.setupLoop();
   }
 
   private setupController() {
     this.controller.setup();
-  }
-
-  private setupLoop() {
-    this.setLoopCallback(this.executeLoop);
-  }
-
-  private setLoopCallback(callback: LoopCallback) {
-    this.loop.setLoopCallback(callback);
-  }
-
-  private executeLoop = (dt: number) => {
-    this.processSceneTree(dt);
-    this.draw();
-
-    if (this.newFrameCallback) {
-      this.newFrameCallback(this.getFrame());
-    }
-  };
-
-  private processSceneTree(dt: number) {
-    this.sceneTree.process(dt);
-  }
-
-  private draw() {
-    for (const step of this.getQueuedDrawSteps()) {
-      this.executeDrawStep(step);
-    }
-  }
-
-  private executeDrawStep(step: DrawStep) {
-    this.getCanvasCallback(step)(this.targetCanvas);
-  }
-
-  private getCanvasCallback(step: DrawStep) {
-    return this.drawStepTranslator.translate(step);
-  }
-
-  private getQueuedDrawSteps() {
-    return this.drawInstructionsResolver.resolve(this.getQueuedInstructionsList());
-  }
-
-  private getQueuedInstructionsList() {
-    const list = [];
-    let instructions = this.drawInstructionsQueue.remove();
-
-    while (instructions) {
-      list.push(instructions);
-
-      instructions = this.drawInstructionsQueue.remove();
-    }
-
-    return list;
-  }
-
-  private getFrame() {
-    return this.targetCanvas.toImageBitmap();
   }
 
   /** Starts the engine. */
@@ -198,6 +134,64 @@ class EngineController {
   }
 
   public setup() {
+    this.registerLoopSignals();
+    this.registerSceneTreeSignals();
+  }
+
+  private registerLoopSignals() {
+    this.controller.register(this.engine.loop.interval_elapsed, this.onIntervalElapsed);
+  }
+
+  private onIntervalElapsed = (dt: number) => {
+    this.processSceneTree(dt);
+    this.draw();
+    this.emitNewFrameRenderedSignal(this.getFrame());
+  };
+
+  private processSceneTree(dt: number) {
+    this.engine.sceneTree.process(dt);
+  }
+
+  private draw() {
+    for (const step of this.getQueuedDrawSteps()) {
+      this.executeDrawStep(step);
+    }
+  }
+
+  private executeDrawStep(step: DrawStep) {
+    this.getCanvasCallback(step)(this.engine.targetCanvas);
+  }
+
+  private getCanvasCallback(step: DrawStep) {
+    return this.engine.drawStepTranslator.translate(step);
+  }
+
+  private getQueuedDrawSteps() {
+    return this.engine.drawInstructionsResolver.resolve(this.getQueuedInstructionsList());
+  }
+
+  private getQueuedInstructionsList() {
+    const list = [];
+    let instructions = this.engine.drawInstructionsQueue.remove();
+
+    while (instructions) {
+      list.push(instructions);
+
+      instructions = this.engine.drawInstructionsQueue.remove();
+    }
+
+    return list;
+  }
+
+  private emitNewFrameRenderedSignal(frame: ImageBitmap) {
+    this.engine.new_frame_rendered.emit(frame);
+  }
+
+  private getFrame() {
+    return this.engine.targetCanvas.toImageBitmap();
+  }
+
+  private registerSceneTreeSignals() {
     this.controller.register(this.engine.sceneTree.node_registered, this.onNodeRegistered);
     this.controller.register(this.engine.sceneTree.node_deregistered, this.onNodeDeregistered);
   }

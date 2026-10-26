@@ -53,15 +53,6 @@ describe('Engine', () => {
     expect(drawInstructionsQueueAddSpy).not.toHaveBeenCalledWith();
   });
 
-  it('should set loop callback upon setup', () => {
-    const engine = createEngine();
-    const loopSetLoopCallbackSpy = vi.spyOn(engine.loop, 'setLoopCallback');
-
-    engine.setup();
-
-    expect(loopSetLoopCallbackSpy).toHaveBeenCalled();
-  });
-
   it('should set current scene in scene tree', () => {
     const engine = createEngine();
     const sceneTreeAddSceneSpy = vi.spyOn(engine.sceneTree, 'addScene');
