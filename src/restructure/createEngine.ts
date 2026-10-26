@@ -9,32 +9,21 @@ import { Engine } from './engine/Engine';
 import { Loop } from './engine/loop/Loop';
 import { PluginManager } from './engine/pluginManager/PluginManager';
 import { SceneTree } from './engine/sceneTree/SceneTree';
-import { AnimationFrameProvider_Browser } from './providers/animationFrameProvider/AnimationFrameProvider_Browser';
-import { TimeProvider_Performance } from './providers/timeProvider/TimeProvider_Performance';
 
 /**
  * Creates a new engine instance.
- * @param config The engine configuration.
- * @returns The instantiated engine.
+ * @param config The configuration to create the engine with.
+ * @returns The new engine instance.
  */
-export function createEngine(config: Config): Engine {
-  const drawInstructionsQueue = createDrawInstructionsQueue();
-  const drawInstructionsResolver = createDrawInstructionsResolver();
-  const animationFrameProvider = createAnimationFrameProvider();
-  const timeProvider = createTimeProvider();
-  const loop = createLoop(animationFrameProvider, timeProvider);
-  const pluginManager = createPluginManager();
-  const sceneTree = createSceneTree();
-  const targetCanvas = createTargetCanvas(config.canvas.width, config.canvas.height);
-
+export function createEngine(config: Config) {
   return new Engine({
-    drawInstructionsQueue,
-    drawInstructionsResolver,
+    drawInstructionsQueue: createDrawInstructionsQueue(),
+    drawInstructionsResolver: createDrawInstructionsResolver(),
     drawStepTranslator: createDrawStepTranslator(),
-    loop,
-    pluginManager,
-    sceneTree,
-    targetCanvas,
+    loop: createLoop(config),
+    pluginManager: createPluginManager(),
+    sceneTree: createSceneTree(),
+    targetCanvas: createTargetCanvas(config),
   });
 }
 
@@ -50,35 +39,43 @@ function createDrawStepTranslator() {
   return new DrawStepTranslator();
 }
 
-function createSceneTree() {
-  return new SceneTree();
+function createLoop(config: Config) {
+  return new Loop(createAnimationFrameProvider(config), createTimeProvider(config));
 }
 
-function createLoop(animationFrameProvider: AnimationFrameProvider, timeProvider: TimeProvider) {
-  return new Loop(animationFrameProvider, timeProvider);
+function createAnimationFrameProvider({ providers }: Config) {
+  return new providers.AnimationFrameProvider();
 }
 
-function createAnimationFrameProvider() {
-  return new AnimationFrameProvider_Browser();
-}
-
-function createTimeProvider() {
-  return new TimeProvider_Performance();
+function createTimeProvider({ providers }: Config) {
+  return new providers.TimeProvider();
 }
 
 function createPluginManager() {
   return new PluginManager();
 }
 
-function createTargetCanvas(width: number, height: number) {
-  return new Canvas_2D(width, height);
+function createSceneTree() {
+  return new SceneTree();
+}
+
+function createTargetCanvas({ canvas }: Config) {
+  return new Canvas_2D(canvas.width, canvas.height);
 }
 
 interface Config {
   canvas: CanvasConfig;
+  providers: Providers;
 }
 
 interface CanvasConfig {
   width: number;
   height: number;
 }
+
+interface Providers {
+  AnimationFrameProvider: Constructor<AnimationFrameProvider>;
+  TimeProvider: Constructor<TimeProvider>;
+}
+
+type Constructor<T> = new () => T;
