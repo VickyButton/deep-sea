@@ -2,45 +2,88 @@ import type { DrawEngine } from './drawEngine/DrawEngine';
 import type { DrawInstructionsQueue } from './drawInstructionsQueue/drawInstructionsQueue.types';
 import type { DrawInstructionsResolver } from './drawInstructionsResolver/DrawInstructionsResolver';
 import type { NewFrameCallback, SceneConstructor } from './engine.types';
-import type { EngineController } from './engineController/EngineController';
 import type { Loop } from './loop/Loop';
+import type { LoopCallback } from './loop/loop.types';
 import type { PluginManager } from './pluginManager/PluginManager';
 import type { SceneTree } from './sceneTree/SceneTree';
 import type { Canvas } from '../domain/canvas/canvas.types';
+import type { DrawInstructions } from '../domain/drawInstructions/drawInstructions.types';
 import type { Node } from '../nodes/node/Node';
+import { SignalController } from '../domain';
+import { CanvasNode } from '../nodes';
 
 /** Coordinates interactions between engine components. */
 export class Engine {
-  private readonly drawEngine: DrawEngine;
-  private readonly drawInstructionsQueue: DrawInstructionsQueue;
-  private readonly drawInstructionsResolver: DrawInstructionsResolver;
-  private readonly engineController: EngineController;
-  private readonly loop: Loop;
-  private readonly pluginManager: PluginManager;
-  private readonly sceneTree: SceneTree;
-  private readonly targetCanvas: Canvas;
+  public readonly drawEngine: DrawEngine;
+  public readonly drawInstructionsQueue: DrawInstructionsQueue;
+  public readonly drawInstructionsResolver: DrawInstructionsResolver;
+  public readonly loop: Loop;
+  public readonly pluginManager: PluginManager;
+  public readonly sceneTree: SceneTree;
+  public readonly targetCanvas: Canvas;
+  private readonly controller = new EngineController(this);
   private currentScene: Node | null = null;
   private newFrameCallback: NewFrameCallback | null = null;
 
-  constructor({ drawEngine, drawInstructionsQueue, drawInstructionsResolver, engineController, loop, pluginManager, sceneTree, targetCanvas }: EngineComponents) {
+  constructor({ drawEngine, drawInstructionsQueue, drawInstructionsResolver, loop, pluginManager, sceneTree, targetCanvas }: EngineComponents) {
     this.drawEngine = drawEngine;
     this.drawInstructionsQueue = drawInstructionsQueue;
     this.drawInstructionsResolver = drawInstructionsResolver;
-    this.engineController = engineController;
     this.loop = loop;
     this.pluginManager = pluginManager;
     this.sceneTree = sceneTree;
     this.targetCanvas = targetCanvas;
+  }
+
+  /** Whether or not the engine is listening for signals. */
+  public get isActive() {
+    return this.controller.isListening;
+  }
+
+  /** Replaces the current scene in the scene tree. */
+  public replaceScene(Scene: SceneConstructor) {
+    const sceneNode = new Scene('scene');
+
+    if (this.currentScene) {
+      this.removeSceneFromSceneTree(this.currentScene);
+    }
+
+    this.currentScene = sceneNode;
+    this.addSceneToSceneTree(this.currentScene);
+  }
+
+  private removeSceneFromSceneTree(scene: Node) {
+    this.sceneTree.removeScene(scene);
+  }
+
+  private addSceneToSceneTree(scene: Node) {
+    this.sceneTree.addScene(scene);
+  }
+
+  /**
+   * Sets the callback to execute when a new frame is ready.
+   * @param callback The callback to execute when a new frame is ready.
+   */
+  public setNewFrameCallback(callback: NewFrameCallback) {
+    this.newFrameCallback = callback;
+  }
+
+  /** Sets up the engine. This should be called before starting the engine. */
+  public setup() {
     this.setupController();
-    this.setLoopCallback();
+    this.setupLoop();
   }
 
   private setupController() {
-    this.engineController.setup();
+    this.controller.setup();
   }
 
-  private setLoopCallback() {
-    this.loop.setLoopCallback(this.executeLoop);
+  private setupLoop() {
+    this.setLoopCallback(this.executeLoop);
+  }
+
+  private setLoopCallback(callback: LoopCallback) {
+    this.loop.setLoopCallback(callback);
   }
 
   private executeLoop = (dt: number) => {
@@ -81,39 +124,6 @@ export class Engine {
     return this.targetCanvas.toImageBitmap();
   }
 
-  /** Whether or not the engine is listening for signals. */
-  public get isActive() {
-    return this.engineController.isListening;
-  }
-
-  /** Replaces the current scene in the scene tree. */
-  public replaceScene(Scene: SceneConstructor) {
-    const sceneNode = new Scene('scene');
-
-    if (this.currentScene) {
-      this.removeSceneFromSceneTree(this.currentScene);
-    }
-
-    this.currentScene = sceneNode;
-    this.addSceneToSceneTree(this.currentScene);
-  }
-
-  private removeSceneFromSceneTree(scene: Node) {
-    this.sceneTree.removeScene(scene);
-  }
-
-  private addSceneToSceneTree(scene: Node) {
-    this.sceneTree.addScene(scene);
-  }
-
-  /**
-   * Sets the callback to execute when a new frame is ready.
-   * @param callback The callback to execute when a new frame is ready.
-   */
-  public setNewFrameCallback(callback: NewFrameCallback) {
-    this.newFrameCallback = callback;
-  }
-
   /** Starts the engine. */
   public start() {
     this.startController();
@@ -123,7 +133,7 @@ export class Engine {
   }
 
   private startController() {
-    this.engineController.startListening();
+    this.controller.startListening();
   }
 
   private startPlugins() {
@@ -159,7 +169,61 @@ export class Engine {
   }
 
   private stopController() {
-    this.engineController.stopListening();
+    this.controller.stopListening();
+  }
+}
+
+/** The main controller used for listening for signals from engine components. */
+class EngineController {
+  private readonly controller = new SignalController();
+  private readonly engine: Engine;
+
+  constructor(engine: Engine) {
+    this.engine = engine;
+  }
+
+  public get isListening() {
+    return this.controller.isListening;
+  }
+
+  public setup() {
+    this.controller.register(this.engine.sceneTree.node_registered, this.onNodeRegistered);
+    this.controller.register(this.engine.sceneTree.node_deregistered, this.onNodeDeregistered);
+  }
+
+  private onNodeRegistered = (node: Node) => {
+    if (this.isCanvasNode(node)) {
+      this.handleCanvasNodeRegistered(node);
+    }
+  };
+
+  private isCanvasNode(node: Node): node is CanvasNode {
+    return node instanceof CanvasNode;
+  }
+
+  private handleCanvasNodeRegistered(node: CanvasNode) {
+    this.controller.register(node.redraw_requested, this.onCanvasNodeRedrawRequested);
+  }
+
+  private onCanvasNodeRedrawRequested = (instructions: DrawInstructions) => {
+    this.engine.drawInstructionsQueue.add(instructions);
+  };
+  private onNodeDeregistered = (node: Node) => {
+    if (this.isCanvasNode(node)) {
+      this.handleCanvasNodeDeregistered(node);
+    }
+  };
+
+  private handleCanvasNodeDeregistered(node: CanvasNode) {
+    this.controller.deregister(node.redraw_requested, this.onCanvasNodeRedrawRequested);
+  }
+
+  public startListening() {
+    this.controller.startListening();
+  }
+
+  public stopListening() {
+    this.controller.stopListening();
   }
 }
 
@@ -167,7 +231,6 @@ interface EngineComponents {
   drawEngine: DrawEngine;
   drawInstructionsQueue: DrawInstructionsQueue;
   drawInstructionsResolver: DrawInstructionsResolver;
-  engineController: EngineController;
   loop: Loop;
   pluginManager: PluginManager;
   sceneTree: SceneTree;

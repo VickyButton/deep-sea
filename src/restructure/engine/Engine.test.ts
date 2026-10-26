@@ -1,9 +1,8 @@
-import type { DrawInstructionsQueue } from './drawInstructionsQueue/drawInstructionsQueue.types';
 import type { DrawInstructions } from '../domain/drawInstructions/drawInstructions.types';
+import { CanvasNode } from '../nodes';
 import { DrawEngine } from './drawEngine/DrawEngine';
 import { DrawInstructionsResolver } from './drawInstructionsResolver/DrawInstructionsResolver';
 import { Engine } from './Engine';
-import { EngineController } from './engineController/EngineController';
 import { Loop } from './loop/Loop';
 import { PluginManager } from './pluginManager/PluginManager';
 import { SceneTree } from './sceneTree/SceneTree';
@@ -17,142 +16,167 @@ import { describe, expect, it, vi } from 'vitest';
 
 describe('Engine', () => {
   it('should not be active by default', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const sceneTree = createSceneTree();
+    expect(new Engine({
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      loop: createLoop(),
+      pluginManager: createPluginManager(),
+      sceneTree: createSceneTree(),
+      targetCanvas: createTargetCanvas(),
+    }).isActive).toBe(false);
+  });
+
+  it('should queue draw instructions upon canvas node emitting "redraw_requested" signal', () => {
     const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop: createLoop(),
       pluginManager: createPluginManager(),
       sceneTree: createSceneTree(),
-      targetCanvas: new Canvas_Mock(),
+      targetCanvas: createTargetCanvas(),
     });
+    const canvasNode = new CanvasNode('node');
+    const instructions = {
+      steps: [],
+      zIndex: canvasNode.globalZIndex,
+    };
+    const drawInstructionsQueueAddSpy = vi.spyOn(engine.drawInstructionsQueue, 'add');
 
-    expect(engine.isActive).toBe(false);
+    engine.setup();
+    engine.start();
+    engine.sceneTree.node_registered.emit(canvasNode);
+    canvasNode.redraw_requested.emit(instructions);
+
+    expect(drawInstructionsQueueAddSpy).toHaveBeenCalledWith(instructions);
   });
 
-  it('should set loop callback upon instantiation', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const loop = createLoop();
-    const sceneTree = createSceneTree();
-    const setLoopCallbackSpy = vi.spyOn(loop, 'setLoopCallback');
-
-    new Engine({
+  it('should not queue draw instructions upon deregistered canvas node emitting "redraw_requested" signal', () => {
+    const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
-      loop,
+      loop: createLoop(),
       pluginManager: createPluginManager(),
       sceneTree: createSceneTree(),
-      targetCanvas: new Canvas_Mock(),
+      targetCanvas: createTargetCanvas(),
     });
+    const canvasNode = new CanvasNode('node');
+    const instructions = {
+      steps: [],
+      zIndex: canvasNode.globalZIndex,
+    };
+    const drawInstructionsQueueAddSpy = vi.spyOn(engine.drawInstructionsQueue, 'add');
 
-    expect(setLoopCallbackSpy).toHaveBeenCalled();
+    engine.setup();
+    engine.start();
+    engine.sceneTree.node_registered.emit(canvasNode);
+    engine.sceneTree.node_deregistered.emit(canvasNode);
+    canvasNode.redraw_requested.emit(instructions);
+
+    expect(drawInstructionsQueueAddSpy).not.toHaveBeenCalledWith();
+  });
+
+  it('should set loop callback upon setup', () => {
+    const engine = new Engine({
+      drawEngine: createDrawEngine(),
+      drawInstructionsQueue: createDrawInstructionsQueue(),
+      drawInstructionsResolver: createDrawInstructionsResolver(),
+      loop: createLoop(),
+      pluginManager: createPluginManager(),
+      sceneTree: createSceneTree(),
+      targetCanvas: createTargetCanvas(),
+    });
+    const loopSetLoopCallbackSpy = vi.spyOn(engine.loop, 'setLoopCallback');
+
+    engine.setup();
+
+    expect(loopSetLoopCallbackSpy).toHaveBeenCalled();
   });
 
   it('should set current scene in scene tree', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const sceneTree = createSceneTree();
     const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop: createLoop(),
       pluginManager: createPluginManager(),
-      sceneTree,
-      targetCanvas: new Canvas_Mock(),
+      sceneTree: createSceneTree(),
+      targetCanvas: createTargetCanvas(),
     });
-    const addSceneSpy = vi.spyOn(sceneTree, 'addScene');
+    const sceneTreeAddSceneSpy = vi.spyOn(engine.sceneTree, 'addScene');
 
     engine.replaceScene(Node);
 
-    expect(addSceneSpy).toHaveBeenCalled();
+    expect(sceneTreeAddSceneSpy).toHaveBeenCalled();
   });
 
   it('should remove current scene when replacing scene in scene tree', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const sceneTree = createSceneTree();
     const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop: createLoop(),
       pluginManager: createPluginManager(),
-      sceneTree,
-      targetCanvas: new Canvas_Mock(),
+      sceneTree: createSceneTree(),
+      targetCanvas: createTargetCanvas(),
     });
-    const removeSceneSpy = vi.spyOn(sceneTree, 'removeScene');
+    const sceneTreeRemoveSceneSpy = vi.spyOn(engine.sceneTree, 'removeScene');
 
     engine.replaceScene(Node);
     engine.replaceScene(Node);
 
-    expect(removeSceneSpy).toHaveBeenCalled();
+    expect(sceneTreeRemoveSceneSpy).toHaveBeenCalled();
   });
 
   it('should start plugins upon starting', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const pluginManager = createPluginManager();
-    const sceneTree = createSceneTree();
     const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop: createLoop(),
-      pluginManager,
+      pluginManager: createPluginManager(),
       sceneTree: createSceneTree(),
-      targetCanvas: new Canvas_Mock(),
+      targetCanvas: createTargetCanvas(),
     });
-    const startPluginsSpy = vi.spyOn(pluginManager, 'startPlugins');
+    const pluginManagerStartPluginsSpy = vi.spyOn(engine.pluginManager, 'startPlugins');
 
     engine.start();
 
-    expect(startPluginsSpy).toHaveBeenCalled();
+    expect(pluginManagerStartPluginsSpy).toHaveBeenCalled();
   });
 
   it('should start scene tree after starting plugins', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const pluginManager = createPluginManager();
-    const sceneTree = createSceneTree();
     const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop: createLoop(),
-      pluginManager,
-      sceneTree,
-      targetCanvas: new Canvas_Mock(),
+      pluginManager: createPluginManager(),
+      sceneTree: createSceneTree(),
+      targetCanvas: createTargetCanvas(),
     });
-    const startSpy = vi.spyOn(sceneTree, 'start');
-    const startPluginsSpy = vi.spyOn(pluginManager, 'startPlugins');
+    const sceneTreeStartSpy = vi.spyOn(engine.sceneTree, 'start');
+    const pluginManagerStartPluginsSpy = vi.spyOn(engine.pluginManager, 'startPlugins');
 
     engine.start();
 
-    expect(startSpy).toHaveBeenCalledAfter(startPluginsSpy);
+    expect(sceneTreeStartSpy).toHaveBeenCalledAfter(pluginManagerStartPluginsSpy);
   });
 
   it('should start loop after starting scene tree', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const loop = createLoop();
-    const sceneTree = createSceneTree();
     const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
-      loop,
+      loop: createLoop(),
       pluginManager: createPluginManager(),
-      sceneTree,
-      targetCanvas: new Canvas_Mock(),
+      sceneTree: createSceneTree(),
+      targetCanvas: createTargetCanvas(),
     });
-    const loopStartSpy = vi.spyOn(loop, 'start');
-    const sceneTreeStartSpy = vi.spyOn(sceneTree, 'start');
+    const loopStartSpy = vi.spyOn(engine.loop, 'start');
+    const sceneTreeStartSpy = vi.spyOn(engine.sceneTree, 'start');
 
     engine.start();
 
@@ -160,17 +184,14 @@ describe('Engine', () => {
   });
 
   it('should be active after starting', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const sceneTree = createSceneTree();
     const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop: createLoop(),
       pluginManager: createPluginManager(),
       sceneTree: createSceneTree(),
-      targetCanvas: new Canvas_Mock(),
+      targetCanvas: createTargetCanvas(),
     });
 
     engine.start();
@@ -179,20 +200,16 @@ describe('Engine', () => {
   });
 
   it('should stop loop upon stopping', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const loop = createLoop();
-    const sceneTree = createSceneTree();
     const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
-      loop,
+      loop: createLoop(),
       pluginManager: createPluginManager(),
       sceneTree: createSceneTree(),
-      targetCanvas: new Canvas_Mock(),
+      targetCanvas: createTargetCanvas(),
     });
-    const loopStopSpy = vi.spyOn(loop, 'stop');
+    const loopStopSpy = vi.spyOn(engine.loop, 'stop');
 
     engine.stop();
 
@@ -200,21 +217,18 @@ describe('Engine', () => {
   });
 
   it('should stop scene tree after stopping loop', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const loop = createLoop();
-    const sceneTree = createSceneTree();
+
     const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
-      loop,
+      loop: createLoop(),
       pluginManager: createPluginManager(),
-      sceneTree,
-      targetCanvas: new Canvas_Mock(),
+      sceneTree: createSceneTree(),
+      targetCanvas: createTargetCanvas(),
     });
-    const sceneTreeStopSpy = vi.spyOn(sceneTree, 'stop');
-    const loopStopSpy = vi.spyOn(loop, 'stop');
+    const sceneTreeStopSpy = vi.spyOn(engine.sceneTree, 'stop');
+    const loopStopSpy = vi.spyOn(engine.loop, 'stop');
 
     engine.stop();
 
@@ -222,21 +236,17 @@ describe('Engine', () => {
   });
 
   it('should stop plugins after stopping scene tree', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const pluginManager = createPluginManager();
-    const sceneTree = createSceneTree();
     const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop: createLoop(),
-      pluginManager,
-      sceneTree,
-      targetCanvas: new Canvas_Mock(),
+      pluginManager: createPluginManager(),
+      sceneTree: createSceneTree(),
+      targetCanvas: createTargetCanvas(),
     });
-    const pluginManagerStopPluginsSpy = vi.spyOn(pluginManager, 'stopPlugins');
-    const sceneTreeStopSpy = vi.spyOn(sceneTree, 'stop');
+    const pluginManagerStopPluginsSpy = vi.spyOn(engine.pluginManager, 'stopPlugins');
+    const sceneTreeStopSpy = vi.spyOn(engine.sceneTree, 'stop');
 
     engine.stop();
 
@@ -244,17 +254,14 @@ describe('Engine', () => {
   });
 
   it('should not be active after starting', () => {
-    const drawInstructionsQueue = createDrawInstructionsQueue();
-    const sceneTree = createSceneTree();
     const engine = new Engine({
       drawEngine: createDrawEngine(),
       drawInstructionsQueue: createDrawInstructionsQueue(),
       drawInstructionsResolver: createDrawInstructionsResolver(),
-      engineController: createEngineController(drawInstructionsQueue, sceneTree),
       loop: createLoop(),
       pluginManager: createPluginManager(),
       sceneTree: createSceneTree(),
-      targetCanvas: new Canvas_Mock(),
+      targetCanvas: createTargetCanvas(),
     });
 
     engine.stop();
@@ -275,13 +282,6 @@ function createDrawInstructionsResolver() {
   return new DrawInstructionsResolver();
 }
 
-function createEngineController(drawInstructionsQueue: DrawInstructionsQueue, sceneTree: SceneTree) {
-  return new EngineController({
-    drawInstructionsQueue,
-    sceneTree,
-  });
-}
-
 function createLoop() {
   return new Loop(createAnimationFrameProvider(), createTimeProvider());
 }
@@ -300,4 +300,8 @@ function createPluginManager() {
 
 function createSceneTree() {
   return new SceneTree();
+}
+
+function createTargetCanvas() {
+  return new Canvas_Mock();
 }

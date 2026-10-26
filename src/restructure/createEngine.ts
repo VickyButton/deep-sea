@@ -7,7 +7,6 @@ import { Queue_Main } from './domain/queue/Queue_Main';
 import { DrawEngine } from './engine/drawEngine/DrawEngine';
 import { DrawInstructionsResolver } from './engine/drawInstructionsResolver/DrawInstructionsResolver';
 import { Engine } from './engine/Engine';
-import { EngineController } from './engine/engineController/EngineController';
 import { Loop } from './engine/loop/Loop';
 import { PluginManager } from './engine/pluginManager/PluginManager';
 import { SceneTree } from './engine/sceneTree/SceneTree';
@@ -23,19 +22,17 @@ export function createEngine(config: Config): Engine {
   const drawEngine = createDrawEngine(createDrawStepTranslator());
   const drawInstructionsQueue = createDrawInstructionsQueue();
   const drawInstructionsResolver = createDrawInstructionsResolver();
-  const sceneTree = createSceneTree();
-  const engineController = createEngineController(drawInstructionsQueue, sceneTree);
   const animationFrameProvider = createAnimationFrameProvider();
   const timeProvider = createTimeProvider();
   const loop = createLoop(animationFrameProvider, timeProvider);
   const pluginManager = createPluginManager();
+  const sceneTree = createSceneTree();
   const targetCanvas = createTargetCanvas(config.canvas.width, config.canvas.height);
 
   return new Engine({
     drawEngine,
     drawInstructionsQueue,
     drawInstructionsResolver,
-    engineController,
     loop,
     pluginManager,
     sceneTree,
@@ -61,13 +58,6 @@ function createDrawInstructionsResolver() {
 
 function createSceneTree() {
   return new SceneTree();
-}
-
-function createEngineController(drawInstructionsQueue: ReturnType<typeof createDrawInstructionsQueue>, sceneTree: ReturnType<typeof createSceneTree>) {
-  return new EngineController({
-    drawInstructionsQueue,
-    sceneTree,
-  });
 }
 
 function createLoop(animationFrameProvider: AnimationFrameProvider, timeProvider: TimeProvider) {
