@@ -6,9 +6,11 @@ describe('RenderPipeline', () => {
   it('should render an image using the provided steps', () => {
     const step1 = vi.fn();
     const step2 = vi.fn();
-    const pipeline = new RenderPipeline([step1, step2]);
+    const pipeline = new RenderPipeline();
     const canvas = new CanvasProvider_Mock().createCanvas(1, 1);
 
+    pipeline.addStep(step1);
+    pipeline.addStep(step2);
     pipeline.render(canvas);
 
     expect(step1).toHaveBeenCalled();

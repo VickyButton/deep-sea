@@ -2,10 +2,14 @@ import type { Canvas } from '../../domain/canvas/canvas.types';
 
 /** An ordered set of steps for rendering an image. */
 export class RenderPipeline {
-  private readonly steps: RenderStep[];
+  private readonly steps: RenderStep[] = [];
 
-  constructor(steps: RenderStep[]) {
-    this.steps = steps;
+  /**
+   * Adds a step to the pipeline.
+   * @param step The step to add to the pipeline.
+   */
+  public addStep(step: RenderStep) {
+    this.steps.push(step);
   }
 
   /**
