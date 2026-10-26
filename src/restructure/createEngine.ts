@@ -1,6 +1,7 @@
 import type { DrawInstructions } from './domain/drawInstructions/drawInstructions.types';
+import type { AnimationFrameProvider } from './providers/animationFrameProvider/animationFrameProvider.types';
+import type { TimeProvider } from './providers/timeProvider/timeProvider.types';
 import { Canvas_2D } from './domain/canvas/Canvas_2D';
-import { Clock_System } from './domain/clock/Clock_System';
 import { DrawStepTranslator_Main } from './domain/drawStep/translator/DrawStepTranslator_Main';
 import { Queue_Main } from './domain/queue/Queue_Main';
 import { DrawEngine } from './engine/drawEngine/DrawEngine';
@@ -11,6 +12,7 @@ import { Loop } from './engine/loop/Loop';
 import { PluginManager } from './engine/pluginManager/PluginManager';
 import { SceneTree } from './engine/sceneTree/SceneTree';
 import { AnimationFrameProvider_Browser } from './providers/animationFrameProvider/AnimationFrameProvider_Browser';
+import { TimeProvider_Performance } from './providers/timeProvider/TimeProvider_Performance';
 
 /**
  * Creates a new engine instance.
@@ -23,8 +25,9 @@ export function createEngine(config: Config): Engine {
   const drawInstructionsResolver = createDrawInstructionsResolver();
   const sceneTree = createSceneTree();
   const engineController = createEngineController(drawInstructionsQueue, sceneTree);
-  const clock = createClock();
-  const loop = createLoop(clock);
+  const animationFrameProvider = createAnimationFrameProvider();
+  const timeProvider = createTimeProvider();
+  const loop = createLoop(animationFrameProvider, timeProvider);
   const pluginManager = createPluginManager();
   const targetCanvas = createTargetCanvas(config.canvas.width, config.canvas.height);
 
@@ -67,16 +70,16 @@ function createEngineController(drawInstructionsQueue: ReturnType<typeof createD
   });
 }
 
-function createLoop(clock: ReturnType<typeof createClock>) {
-  return new Loop(createAnimationFrameProvider(), clock);
+function createLoop(animationFrameProvider: AnimationFrameProvider, timeProvider: TimeProvider) {
+  return new Loop(animationFrameProvider, timeProvider);
 }
 
 function createAnimationFrameProvider() {
   return new AnimationFrameProvider_Browser();
 }
 
-function createClock() {
-  return new Clock_System();
+function createTimeProvider() {
+  return new TimeProvider_Performance();
 }
 
 function createPluginManager() {
