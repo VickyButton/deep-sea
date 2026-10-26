@@ -75,8 +75,10 @@ function createTargetCanvas(width: number, height: number) {
 }
 
 interface Config {
-  canvas: {
-    width: number;
-    height: number;
-  };
+  canvas: CanvasConfig;
+}
+
+interface CanvasConfig {
+  width: number;
+  height: number;
 }
