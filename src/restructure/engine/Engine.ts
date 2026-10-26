@@ -1,5 +1,6 @@
 import type { DrawInstructionsQueue } from './drawInstructionsQueue/drawInstructionsQueue.types';
 import type { DrawInstructionsResolver } from './drawInstructionsResolver/DrawInstructionsResolver';
+import type { DrawStepTranslator } from './drawStepTranslator/DrawStepTranslator';
 import type { NewFrameCallback, SceneConstructor } from './engine.types';
 import type { Loop } from './loop/Loop';
 import type { LoopCallback } from './loop/loop.types';
@@ -8,7 +9,6 @@ import type { SceneTree } from './sceneTree/SceneTree';
 import type { Canvas } from '../domain/canvas/canvas.types';
 import type { DrawInstructions } from '../domain/drawInstructions/drawInstructions.types';
 import type { DrawStep } from '../domain/drawStep/drawStep.types';
-import type { DrawStepTranslator } from '../domain/drawStep/translator/DrawStepTranslator';
 import type { Node } from '../nodes/node/Node';
 import { SignalController } from '../domain';
 import { CanvasNode } from '../nodes';

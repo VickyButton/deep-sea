@@ -1,5 +1,5 @@
 import { DrawStepTranslator } from './DrawStepTranslator';
-import { Canvas_Mock } from '../../canvas/Canvas_Mock';
+import { Canvas_Mock } from '../../domain/canvas/Canvas_Mock';
 import { describe, expect, it } from 'vitest';
 
 describe('DrawStepTranslator', () => {

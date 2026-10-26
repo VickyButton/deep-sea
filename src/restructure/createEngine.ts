@@ -2,9 +2,9 @@ import type { DrawInstructions } from './domain/drawInstructions/drawInstruction
 import type { AnimationFrameProvider } from './providers/animationFrameProvider/animationFrameProvider.types';
 import type { TimeProvider } from './providers/timeProvider/timeProvider.types';
 import { Canvas_2D } from './domain/canvas/Canvas_2D';
-import { DrawStepTranslator } from './domain/drawStep/translator/DrawStepTranslator';
 import { Queue_Main } from './domain/queue/Queue_Main';
 import { DrawInstructionsResolver } from './engine/drawInstructionsResolver/DrawInstructionsResolver';
+import { DrawStepTranslator } from './engine/drawStepTranslator/DrawStepTranslator';
 import { Engine } from './engine/Engine';
 import { Loop } from './engine/loop/Loop';
 import { PluginManager } from './engine/pluginManager/PluginManager';

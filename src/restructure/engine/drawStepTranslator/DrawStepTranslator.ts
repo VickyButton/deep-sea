@@ -1,5 +1,5 @@
-import type { Canvas } from '../../canvas/canvas.types';
-import type { DrawStep, DrawStep_DrawArc, DrawStep_DrawLine, DrawStep_DrawRectangle, DrawStep_SetFillColor, DrawStep_SetStrokeColor, DrawStep_SetTransform } from '../drawStep.types';
+import type { Canvas } from '../../domain/canvas/canvas.types';
+import type { DrawStep, DrawStep_DrawArc, DrawStep_DrawLine, DrawStep_DrawRectangle, DrawStep_SetFillColor, DrawStep_SetStrokeColor, DrawStep_SetTransform } from '../../domain/drawStep/drawStep.types';
 
 /** Used for translating draw steps into canvas callbacks. */
 export class DrawStepTranslator {

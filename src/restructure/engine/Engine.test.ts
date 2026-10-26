@@ -1,12 +1,12 @@
 import type { DrawInstructions } from '../domain/drawInstructions/drawInstructions.types';
 import { CanvasNode } from '../nodes';
 import { DrawInstructionsResolver } from './drawInstructionsResolver/DrawInstructionsResolver';
+import { DrawStepTranslator } from './drawStepTranslator/DrawStepTranslator';
 import { Engine } from './Engine';
 import { Loop } from './loop/Loop';
 import { PluginManager } from './pluginManager/PluginManager';
 import { SceneTree } from './sceneTree/SceneTree';
 import { Canvas_Mock } from '../domain/canvas/Canvas_Mock';
-import { DrawStepTranslator } from '../domain/drawStep/translator/DrawStepTranslator';
 import { Queue_Mock } from '../domain/queue/Queue_Mock';
 import { Node } from '../nodes/node/Node';
 import { AnimationFrameProvider_Mock } from '../providers/animationFrameProvider/AnimationFrameProvider_Mock';
