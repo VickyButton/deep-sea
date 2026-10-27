@@ -1,5 +1,5 @@
-import type { CanvasCommand } from '../../../domain/canvas/canvas.types';
-import type { DrawStep } from '../../../domain/drawStep/drawStep.types';
+import type { CanvasCommand } from '../../../../domain/canvas/canvas.types';
+import type { DrawStep } from '../../../../domain/drawStep/drawStep.types';
 
 /** Translates draw steps into canvas commands. */
 export abstract class DrawStepTranslator {
