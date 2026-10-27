@@ -1,6 +1,6 @@
 import type { DrawInstructions } from '../../../domain/drawInstructions/drawInstructions.types';
 
-/** Used for queueing draw instructions. */
+/** Queues draw instructions. */
 export class DrawInstructionsQueue {
   private _items: DrawInstructions[] = [];
 
