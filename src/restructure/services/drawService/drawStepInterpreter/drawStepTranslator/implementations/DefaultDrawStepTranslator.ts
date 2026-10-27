@@ -1,14 +1,8 @@
 import type { CanvasCommand } from '../../../../../domain/canvas/canvas.types';
 import type { DrawStep, DrawStep_DrawArc, DrawStep_DrawLine, DrawStep_DrawRectangle, DrawStep_SetFillColor, DrawStep_SetStrokeColor, DrawStep_SetTransform } from '../../../../../domain/drawStep/drawStep.types';
 
-/** Translates draw steps into canvas commands. */
+/** The default draw step translator. */
 export class DefaultDrawStepTranslator {
-  /**
-   * Translates a draw step into a canvas command.
-   * @param step The draw step to translate.
-   * @returns The corresponding canvas command.
-   * @throws An error if no corresponding canvas command.
-   */
   public translate(step: DrawStep) {
     switch (step.type) {
       case 'BEGIN_PATH':
