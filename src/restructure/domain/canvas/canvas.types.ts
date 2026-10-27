@@ -68,3 +68,5 @@ export interface Canvas {
    */
   toImageBitmap(): ImageBitmap;
 }
+
+export type CanvasCommand = (canvas: Canvas) => void;
