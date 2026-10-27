@@ -5,7 +5,7 @@ import type { DrawStep, DrawStep_DrawArc, DrawStep_DrawLine, DrawStep_DrawRectan
 export class DrawStepTranslator {
   /**
    * Translates a draw step into a canvas command.
-   * @param step The step to translate.
+   * @param step The draw step to translate.
    * @returns The corresponding canvas command.
    * @throws An error if no corresponding canvas command.
    */
