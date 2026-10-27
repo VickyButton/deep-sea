@@ -1,6 +1,6 @@
 import type { DrawInstructions } from '../../../domain/drawInstructions/drawInstructions.types';
 
-/** Sorts draw instructions by ascending z-index. */
+/** Sorts a list of draw instructions. */
 export class DrawInstructionsSorter {
   /**
    * Sorts a list of draw instructions by ascending z-index.
