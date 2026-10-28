@@ -1,5 +1,6 @@
 import type { Canvas } from './canvas/Canvas';
-import type { CanvasCallback, CanvasCommand } from './canvasCommandInterpreter.types';
+import type { CanvasCommand } from './canvasCommand/canvasCommands.types';
+import type { CanvasCallback } from './canvasCommandInterpreter.types';
 
 /** Executes canvas commands on the output canvas. */
 export abstract class CanvasCommandInterpreter {
