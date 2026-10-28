@@ -4,7 +4,7 @@ import { MockCanvasCommandTranslator } from './canvasCommandTranslator/MockCanva
 import { describe, expect, it, vi } from 'vitest';
 
 describe('CanvasCommandInterpreter', () => {
-  it('should execute canvas command on an output canvas', () => {
+  it('should execute canvas command on a canvas', () => {
     const canvas = new MockCanvas();
     const translator = new MockCanvasCommandTranslator();
     const interpreter = new CanvasCommandInterpreter(canvas, translator);

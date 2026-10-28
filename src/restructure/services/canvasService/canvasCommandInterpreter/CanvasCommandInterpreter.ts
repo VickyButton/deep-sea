@@ -2,7 +2,7 @@ import type { Canvas } from './canvasCommandTranslator/canvas/Canvas';
 import type { CanvasCommandTranslator } from './canvasCommandTranslator/CanvasCommandTranslator';
 import type { CanvasCallback, CanvasCommand } from './canvasCommandTranslator/canvasCommandTranslator.types';
 
-/** Executes canvas commands on an output canvas. */
+/** Executes canvas commands on a canvas. */
 export class CanvasCommandInterpreter {
   private readonly canvas: Canvas;
   private readonly translator: CanvasCommandTranslator;
@@ -17,7 +17,7 @@ export class CanvasCommandInterpreter {
   }
 
   /**
-   * Executes a canvas command on the output canvas.
+   * Executes a canvas command on the canvas.
    * @param command The command to execute.
    */
   public execute(command: CanvasCommand) {
