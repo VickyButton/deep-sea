@@ -17,8 +17,8 @@ export abstract class Canvas {
   public abstract closePath(): void;
   /**
    * Draws an arc.
-   * @param x The horizontal coordinate of the arc's center.
-   * @param y The vertical coordinate of the arc's center.
+   * @param x The x-axis coordinate of the arc's center.
+   * @param y The y-axis coordinate of the arc's center.
    * @param radius The arc's radius in pixels.
    * @param startAngle The angle at which the arc starts in radians, measured from the positive x-axis.
    * @param endAngle The angle at which the arc ends in radians, measured from the positive x-axis.
@@ -47,12 +47,12 @@ export abstract class Canvas {
   public abstract resetTransform(): void;
   /**
    * Sets the fill color.
-   * @param color The color to use for filling.
+   * @param color The color to set the fill color to.
    */
   public abstract setFillColor(color: string): void;
   /**
    * Sets the stroke color.
-   * @param color The color to use for stroking.
+   * @param color The color to set the stroke color to.
    */
   public abstract setStrokeColor(color: string): void;
   /**
