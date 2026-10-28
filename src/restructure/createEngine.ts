@@ -1,10 +1,5 @@
-import type { DrawInstructions } from './domain/drawInstructions/drawInstructions.types';
 import type { AnimationFrameProvider } from './providers/animationFrameProvider/animationFrameProvider.types';
 import type { TimeProvider } from './providers/timeProvider/timeProvider.types';
-import { Canvas_2D } from './domain/canvas/Canvas_2D';
-import { Queue } from './domain/queue/Queue';
-import { DrawInstructionsResolver } from './engine/drawInstructionsResolver/DrawInstructionsResolver';
-import { DrawStepTranslator } from './engine/drawStepTranslator/DrawStepTranslator';
 import { Engine } from './engine/Engine';
 import { Loop } from './engine/loop/Loop';
 import { PluginManager } from './engine/pluginManager/PluginManager';
@@ -17,26 +12,10 @@ import { SceneTree } from './engine/sceneTree/SceneTree';
  */
 export function createEngine(config: Config) {
   return new Engine({
-    drawInstructionsQueue: createDrawInstructionsQueue(),
-    drawInstructionsResolver: createDrawInstructionsResolver(),
-    drawStepTranslator: createDrawStepTranslator(),
     loop: createLoop(config),
     pluginManager: createPluginManager(),
     sceneTree: createSceneTree(),
-    targetCanvas: createTargetCanvas(config),
   });
-}
-
-function createDrawInstructionsQueue() {
-  return new Queue<DrawInstructions>();
-}
-
-function createDrawInstructionsResolver() {
-  return new DrawInstructionsResolver();
-}
-
-function createDrawStepTranslator() {
-  return new DrawStepTranslator();
 }
 
 function createLoop(config: Config) {
@@ -57,10 +36,6 @@ function createPluginManager() {
 
 function createSceneTree() {
   return new SceneTree();
-}
-
-function createTargetCanvas({ canvas }: Config) {
-  return new Canvas_2D(canvas.width, canvas.height);
 }
 
 interface Config {

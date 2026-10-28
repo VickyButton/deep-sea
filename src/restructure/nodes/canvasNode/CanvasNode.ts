@@ -1,18 +1,12 @@
-import type { DrawCallback } from './canvasNode.types';
-import type { DrawInstructions } from '../../domain/drawInstructions/drawInstructions.types';
-import { DrawInstructionsBuilder } from '../../domain/drawInstructions/builder/DrawInstructionsBuilder';
 import { Signal } from '../../domain/signal/Signal';
 import { Node } from '../node/Node';
 
 /** A node that can be drawn onto a canvas. */
 export class CanvasNode extends Node {
-  /** Emitted after a redraw has been requested for the node. The draw instructions are passed to callbacks. */
-  public readonly redraw_requested = new Signal<DrawInstructions>();
   /** Emitted after the node's visibility has been changed. The new visibility is passed to callbacks. */
   public readonly visibility_changed = new Signal<boolean>();
   /** Emitted after the node's z-index has been changed. The new z-index is passed to callbacks. */
   public readonly z_index_changed = new Signal<number>();
-  private drawCallback: DrawCallback | null = null;
   private _visible = true;
   private _zIndex = 0;
 
@@ -93,40 +87,6 @@ export class CanvasNode extends Node {
   /** Turns off the node's visibility. Hidden nodes cannot be drawn. */
   public hide() {
     this.visible = false;
-  }
-
-  public process(dt: number) {
-    super.process(dt);
-
-    if (this.globalVisible) {
-      this.requestRedraw();
-    }
-  }
-
-  /** Requests a redraw for the next frame. */
-  public requestRedraw() {
-    this.emitRedrawRequestedSignal(this.buildDrawInstructions());
-  }
-
-  private emitRedrawRequestedSignal(instructions: DrawInstructions) {
-    this.redraw_requested.emit(instructions);
-  }
-
-  private buildDrawInstructions() {
-    const builder = new DrawInstructionsBuilder();
-
-    builder.setZIndex(this.globalZIndex);
-
-    if (this.drawCallback) {
-      this.drawCallback(builder);
-    }
-
-    return builder.build();
-  }
-
-  /** Sets the callback to execute when building the node's draw instructions. */
-  public setDrawCallback(callback: DrawCallback) {
-    this.drawCallback = callback;
   }
 
   /** Turns on the node's visibility. Visible nodes can be drawn. */

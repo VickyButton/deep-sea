@@ -1,12 +1,7 @@
-import { CanvasNode } from '../nodes';
-import { DrawInstructionsQueue } from './drawInstructionsQueue/drawInstructionsQueue.types';
-import { DrawInstructionsResolver } from './drawInstructionsResolver/DrawInstructionsResolver';
-import { DrawStepTranslator } from './drawStepTranslator/DrawStepTranslator';
 import { Engine } from './Engine';
 import { Loop } from './loop/Loop';
 import { PluginManager } from './pluginManager/PluginManager';
 import { SceneTree } from './sceneTree/SceneTree';
-import { Canvas_Mock } from '../domain/canvas/Canvas_Mock';
 import { Node } from '../nodes/node/Node';
 import { AnimationFrameProvider_Mock } from '../providers/animationFrameProvider/AnimationFrameProvider_Mock';
 import { TimeProvider_Mock } from '../providers/timeProvider/TimeProvider_Mock';
@@ -15,41 +10,6 @@ import { describe, expect, it, vi } from 'vitest';
 describe('Engine', () => {
   it('should not be active by default', () => {
     expect(createEngine().isActive).toBe(false);
-  });
-
-  it('should queue draw instructions upon canvas node emitting "redraw_requested" signal', () => {
-    const engine = createEngine();
-    const canvasNode = new CanvasNode('node');
-    const instructions = {
-      steps: [],
-      zIndex: canvasNode.globalZIndex,
-    };
-    const drawInstructionsQueueAddSpy = vi.spyOn(engine.drawInstructionsQueue, 'add');
-
-    engine.setup();
-    engine.start();
-    engine.sceneTree.node_registered.emit(canvasNode);
-    canvasNode.redraw_requested.emit(instructions);
-
-    expect(drawInstructionsQueueAddSpy).toHaveBeenCalledWith(instructions);
-  });
-
-  it('should not queue draw instructions upon deregistered canvas node emitting "redraw_requested" signal', () => {
-    const engine = createEngine();
-    const canvasNode = new CanvasNode('node');
-    const instructions = {
-      steps: [],
-      zIndex: canvasNode.globalZIndex,
-    };
-    const drawInstructionsQueueAddSpy = vi.spyOn(engine.drawInstructionsQueue, 'add');
-
-    engine.setup();
-    engine.start();
-    engine.sceneTree.node_registered.emit(canvasNode);
-    engine.sceneTree.node_deregistered.emit(canvasNode);
-    canvasNode.redraw_requested.emit(instructions);
-
-    expect(drawInstructionsQueueAddSpy).not.toHaveBeenCalledWith();
   });
 
   it('should set current scene in scene tree', () => {
@@ -149,26 +109,10 @@ describe('Engine', () => {
 
 function createEngine() {
   return new Engine({
-    drawInstructionsQueue: createDrawInstructionsQueue(),
-    drawInstructionsResolver: createDrawInstructionsResolver(),
-    drawStepTranslator: createDrawStepTranslator(),
     loop: createLoop(),
     pluginManager: createPluginManager(),
     sceneTree: createSceneTree(),
-    targetCanvas: createTargetCanvas(),
   });
-}
-
-function createDrawInstructionsQueue() {
-  return new DrawInstructionsQueue();
-}
-
-function createDrawInstructionsResolver() {
-  return new DrawInstructionsResolver();
-}
-
-function createDrawStepTranslator() {
-  return new DrawStepTranslator();
 }
 
 function createLoop() {
@@ -189,8 +133,4 @@ function createPluginManager() {
 
 function createSceneTree() {
   return new SceneTree();
-}
-
-function createTargetCanvas() {
-  return new Canvas_Mock();
 }

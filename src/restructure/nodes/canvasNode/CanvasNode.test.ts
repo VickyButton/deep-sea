@@ -96,28 +96,6 @@ describe('CanvasNode', () => {
     expect(emitSpy).toHaveBeenCalledWith(false);
   });
 
-  it('should execute draw callback upon redraw request', () => {
-    const node = new CanvasNode('node');
-    const callback = vi.fn();
-
-    node.setDrawCallback(callback);
-    node.requestRedraw();
-
-    expect(callback).toHaveBeenCalled();
-  });
-
-  it('should emit "redraw_requested" signal upon redraw request', () => {
-    const node = new CanvasNode('node');
-    const emitSpy = vi.spyOn(node.redraw_requested, 'emit');
-
-    node.requestRedraw();
-
-    expect(emitSpy).toHaveBeenCalledWith({
-      zIndex: node.globalZIndex,
-      steps: [],
-    });
-  });
-
   it('should show node', () => {
     const node = new CanvasNode('node');
     const emitSpy = vi.spyOn(node.visibility_changed, 'emit');
