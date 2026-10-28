@@ -1,4 +1,5 @@
-import type { CanvasCallback, CanvasCommand } from './canvasCommandTranslator.types';
+import type { CanvasCallback } from './canvasCommandTranslator.types';
+import type { CanvasCommand } from '../../../../domain/canvasCommand/CanvasCommand';
 
 /** Translates canvas commands into canvas callbacks. */
 export abstract class CanvasCommandTranslator {

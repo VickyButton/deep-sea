@@ -1,6 +1,6 @@
 import type { Canvas } from './canvasCommandInterpreter/canvasCommandTranslator/canvas/Canvas';
 import type { CanvasCommandTranslator } from './canvasCommandInterpreter/canvasCommandTranslator/CanvasCommandTranslator';
-import type { CanvasCommand } from './canvasCommandInterpreter/canvasCommandTranslator/canvasCommandTranslator.types';
+import type { CanvasCommand } from '../../domain/canvasCommand/CanvasCommand';
 import { CanvasCommandInterpreter } from './canvasCommandInterpreter/CanvasCommandInterpreter';
 
 /** A service for executing canvas commands. */

@@ -1,6 +1,7 @@
 import type { Canvas } from './canvasCommandTranslator/canvas/Canvas';
 import type { CanvasCommandTranslator } from './canvasCommandTranslator/CanvasCommandTranslator';
-import type { CanvasCallback, CanvasCommand } from './canvasCommandTranslator/canvasCommandTranslator.types';
+import type { CanvasCallback } from './canvasCommandTranslator/canvasCommandTranslator.types';
+import type { CanvasCommand } from '../../../domain/canvasCommand/CanvasCommand';
 
 /** Executes canvas commands on a canvas. */
 export class CanvasCommandInterpreter {
