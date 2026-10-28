@@ -2,6 +2,7 @@ import type { Canvas } from './canvas/Canvas';
 import type { CanvasCommand } from './canvasCommandTranslator.types';
 import { CanvasCommandTranslator } from './CanvasCommandTranslator';
 
+/** The default canvas command translator. */
 export class DefaultCanvasCommandTranslator extends CanvasCommandTranslator {
   public translate(command: CanvasCommand) {
     switch (command.type) {
