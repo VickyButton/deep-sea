@@ -2,7 +2,7 @@ import { Canvas } from '../Canvas';
 import { vi } from 'vitest';
 
 /** A mock canvas to use for testing. */
-export class Canvas_Mock extends Canvas {
+export class MockCanvas extends Canvas {
   public height = 0;
   public width = 0;
   public beginPath = vi.fn();
