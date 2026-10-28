@@ -1,13 +1,19 @@
-import type { Canvas } from './canvas/Canvas';
-import type { CanvasCommand } from './canvasCommand/canvasCommands.types';
-import type { CanvasCallback } from './canvasCommandInterpreter.types';
+import type { Canvas } from './canvasCommandTranslator/canvas/Canvas';
+import type { CanvasCommandTranslator } from './canvasCommandTranslator/CanvasCommandTranslator';
+import type { CanvasCallback, CanvasCommand } from './canvasCommandTranslator/canvasCommandTranslator.types';
 
-/** Executes canvas commands on the output canvas. */
-export abstract class CanvasCommandInterpreter {
-  private canvas: Canvas;
+/** Executes canvas commands on an output canvas. */
+export class CanvasCommandInterpreter {
+  private readonly canvas: Canvas;
+  private readonly translator: CanvasCommandTranslator;
 
-  constructor(canvas: Canvas) {
+  /**
+   * @param canvas The canvas to execute canvas commands on.
+   * @param translator The translator to use for translating canvas commands into canvas callbacks.
+   */
+  constructor(canvas: Canvas, translator: CanvasCommandTranslator) {
     this.canvas = canvas;
+    this.translator = translator;
   }
 
   /**
@@ -15,18 +21,15 @@ export abstract class CanvasCommandInterpreter {
    * @param command The command to execute.
    */
   public execute(command: CanvasCommand) {
-    this.executeCallback(this.toCallback(command));
+    this.executeCallback(this.translate(command));
   }
 
   private executeCallback(callback: CanvasCallback) {
     callback(this.canvas);
   }
 
-  /**
-   * Translates a canvas command into a canvas callback.
-   * @param command The command to translate.
-   * @throws An error if command cannot be translated.
-   */
-  protected abstract toCallback(command: CanvasCommand): CanvasCallback;
+  private translate(command: CanvasCommand) {
+    return this.translator.translate(command);
+  }
 }
 
