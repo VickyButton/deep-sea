@@ -1,4 +1,4 @@
-import { Canvas } from '../Canvas';
+import { Canvas } from './Canvas';
 
 /** A canvas that utilizes 2D rendering context. */
 export class Canvas2D extends Canvas {
