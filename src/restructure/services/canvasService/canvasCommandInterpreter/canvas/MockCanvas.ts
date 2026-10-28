@@ -1,4 +1,4 @@
-import { Canvas } from '../Canvas';
+import { Canvas } from './Canvas';
 import { vi } from 'vitest';
 
 /** A mock canvas to use for testing. */
