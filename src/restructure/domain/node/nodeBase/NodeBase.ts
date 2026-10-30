@@ -50,16 +50,9 @@ export abstract class NodeBase {
    * @param node The child node to remove.
    */
   public removeChild(node: NodeBase) {
-    if (!this.isParentOf(node)) {
-      return;
+    if (this._children.delete(node)) {
+      this.childRemovedSignal.emit(node);
     }
-
-    this._children.delete(node);
-    this.childRemovedSignal.emit(node);
-  }
-
-  private isParentOf(node: NodeBase) {
-    return this._children.has(node);
   }
 
   /**
