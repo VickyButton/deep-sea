@@ -58,11 +58,7 @@ describe('Vector2', () => {
   });
 
   it('should compute the dot product of two vectors', () => {
-    const left = new Vector2(1, 2);
-    const right = new Vector2(1, 2);
-    const result = left.dot(right);
-
-    expect(result).toBe(5);
+    expect(new Vector2(1, 2).dot(new Vector2(1, 2))).toBe(5);
   });
 
   it('should determine that two vectors are equal', () => {
