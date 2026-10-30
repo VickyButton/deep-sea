@@ -1,10 +1,9 @@
 import type { NodeBaseOptions } from './nodeBase.types';
-import type { Node } from '../Node';
 
 export abstract class NodeBase {
   public readonly id: string;
-  private _children = new Set<Node>();
-  private _parent: Node | null = null;
+  private _children = new Set<NodeBase>();
+  private _parent: NodeBase | null = null;
 
   constructor(options: NodeBaseOptions) {
     this.id = options.id;
@@ -18,7 +17,7 @@ export abstract class NodeBase {
     return this._parent;
   }
 
-  public addChild(node: Node) {
+  public addChild(node: NodeBase) {
     if (this === node) {
       throw NodeBase.CircularRelationshipError;
     }
@@ -30,11 +29,11 @@ export abstract class NodeBase {
     this._children.add(node);
   }
 
-  public removeChild(node: Node) {
+  public removeChild(node: NodeBase) {
     this._children.delete(node);
   }
 
-  public setParent(node: Node) {
+  public setParent(node: NodeBase) {
     if (this === node) {
       throw NodeBase.CircularRelationshipError;
     }
