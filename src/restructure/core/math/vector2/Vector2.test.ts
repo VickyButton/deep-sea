@@ -50,20 +50,11 @@ describe('Vector2', () => {
     });
   });
 
-  it('should multiply two vectors', () => {
-    const left = new Vector2(2, 2);
-    const right = new Vector2(2, 2);
-    const result = left.multiply(right);
-
-    expect(result).toEqual(new Vector2(4, 4));
-  });
-
-  it('should divide two vectors', () => {
-    const left = new Vector2(2, 2);
-    const right = new Vector2(2, 2);
-    const result = left.divide(right);
-
-    expect(result).toEqual(new Vector2(1, 1));
+  it('should scale components by a constant scalar', () => {
+    expect(new Vector2(1, 2).scale(3)).toEqual({
+      x: 3,
+      y: 6,
+    });
   });
 
   it('should compute the dot product of two vectors', () => {

@@ -80,27 +80,15 @@ export class Vector2 {
   }
 
   /**
-   * Computes the product resulting from multiplying this vector by another vector.
-   * @param vector The vector to multiply this vector by.
-   * @returns The product vector.
+   * Scales this vector's components by a constant scalar.
+   * @param scalar The constant scalar to multiply this vector's components by.
+   * @returns This vector.
    */
-  public multiply(vector: Vector2) {
-    const productX = this.x * vector.x;
-    const productY = this.y * vector.y;
+  public scale(scalar: number) {
+    this.x *= scalar;
+    this.y *= scalar;
 
-    return new Vector2(productX, productY);
-  }
-
-  /**
-   * Computes the product resulting from dividing this vector by another vector.
-   * @param vector The vector to divide this vector by.
-   * @returns The quotient vector.
-   */
-  public divide(vector: Vector2) {
-    const quotientX = this.x / vector.x;
-    const quotientY = this.y / vector.y;
-
-    return new Vector2(quotientX, quotientY);
+    return this;
   }
 
   /**
