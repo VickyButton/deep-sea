@@ -1,7 +1,10 @@
 import type { NodeBaseOptions } from './nodeBase.types';
+import { Signal } from '../../signal/Signal';
 
 /** The base node class for all nodes. */
 export abstract class NodeBase {
+  /** Emits when a child node is added to the node. */
+  public readonly childAddedSignal = new Signal<NodeBase>();
   /** The node's unique ID. */
   public readonly id: string;
   private _children = new Set<NodeBase>();
@@ -37,6 +40,11 @@ export abstract class NodeBase {
     }
 
     this._children.add(node);
+    this.emitChildAddedSignal(node);
+  }
+
+  private emitChildAddedSignal(child: NodeBase) {
+    this.childAddedSignal.emit(child);
   }
 
   /**

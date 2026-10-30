@@ -1,5 +1,5 @@
 import { NodeBase } from './NodeBase';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('NodeBase', () => {
   it('should have no children by default', () => {
@@ -32,6 +32,17 @@ describe('NodeBase', () => {
     node.addChild(child);
 
     expect(node.children[0]).toBe(child);
+  });
+
+  it('should emit a signal upon adding a child', () => {
+    const node = createNode();
+    const child = createNode();
+    const callback = vi.fn();
+
+    node.childAddedSignal.listen(callback);
+    node.addChild(child);
+
+    expect(callback).toHaveBeenCalledWith(child);
   });
 
   it('should remove a child', () => {
