@@ -19,21 +19,18 @@ describe('Vector2', () => {
   });
 
   it('should get vector length', () => {
-    const vector = new Vector2(1, 0);
-
-    expect(vector.length).toBe(1);
+    expect(new Vector2(1, 0).length).toBe(1);
   });
 
   it('should get vector angle', () => {
-    const vector = new Vector2(1, 1);
-
-    expect(vector.angle).toBe(Math.PI / 4);
+    expect(new Vector2(1, 1).angle).toBe(Math.PI / 4);
   });
 
   it('should get normalized vector', () => {
-    const vector = new Vector2(2, 0);
-
-    expect(vector.normalized).toEqual(new Vector2(1, 0));
+    expect(new Vector2(2, 0).normalized).toEqual({
+      x: 1,
+      y: 0,
+    });
   });
 
   it('should add two vectors', () => {
