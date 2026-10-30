@@ -30,7 +30,7 @@ export class Vector2 {
 
   /** The angle of the vector in radians. */
   public get angle() {
-    return Math.atan(this.y / this.x);
+    return Math.atan2(this.y, this.x);
   }
 
   /** The length of the vector. */
