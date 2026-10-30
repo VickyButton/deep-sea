@@ -73,10 +73,7 @@ export class Vector2 {
    * @returns This vector.
    */
   public subtract(vector: Vector2) {
-    this.x -= vector.x;
-    this.y -= vector.y;
-
-    return this;
+    return this.add(new Vector2(-vector.x, -vector.y));
   }
 
   /**
