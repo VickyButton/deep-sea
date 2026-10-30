@@ -1,11 +1,11 @@
-import type { CanvasNodeOptions } from './canvasNode.types';
+import type { DrawableNodeOptions } from './drawableNode.types';
 import { NodeBase } from '../nodeBase/NodeBase';
 
-export class CanvasNode extends NodeBase {
+export class DrawableNode extends NodeBase {
   private _visible: boolean;
   private _zIndex: number;
 
-  constructor(options: CanvasNodeOptions) {
+  constructor(options: DrawableNodeOptions) {
     super(options);
 
     this._visible = options.visible;

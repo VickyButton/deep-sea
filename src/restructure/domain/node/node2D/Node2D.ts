@@ -1,8 +1,8 @@
 import type { Node2DOptions } from './node2D.types';
 import { Vector2 } from '../../vector2/Vector2';
-import { CanvasNode } from '../canvasNode/CanvasNode';
+import { DrawableNode } from '../drawableNode/DrawableNode';
 
-export class Node2D extends CanvasNode {
+export class Node2D extends DrawableNode {
   private _positionX: number;
   private _positionY: number;
   private _rotation: number;
