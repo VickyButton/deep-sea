@@ -15,6 +15,10 @@ export class Vector2 {
     return this.x;
   }
 
+  /**
+   * Sets the vector's X component.
+   * @param x The number to set the vector's X component to.
+   */
   public set 0(x: number) {
     this.x = x;
   }
@@ -24,6 +28,10 @@ export class Vector2 {
     return this.y;
   }
 
+  /**
+   * Sets the vector's Y component.
+   * @param y The number to set the vector's Y component to.
+   */
   public set 1(y: number) {
     this.y = y;
   }
