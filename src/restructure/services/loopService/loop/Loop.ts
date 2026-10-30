@@ -1,6 +1,6 @@
 import type { AnimationFrameProvider, FrameRequestCallback } from './animationFrameProvider/animationFrameProvider.types';
 import type { TimeProvider } from './timeProvider/timeProvider.types';
-import { Signal } from '../../../domain';
+import { Signal } from '../../../domain/signal/Signal';
 import { clamp } from '../../../utils/clamp';
 
 const LOOPS_PER_SECOND_MIN = 1;
