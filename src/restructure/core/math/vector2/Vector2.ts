@@ -90,11 +90,20 @@ export class Vector2 {
 
   /**
    * Computes the dot product of this vector and another vector.
-   * @param vector The other vector to multiply.
+   * @param vector The other vector to multiply this vector by.
    * @returns The resulting scalar.
    */
   public dot(vector: Vector2) {
     return this.x * vector.x + this.y * vector.y;
+  }
+
+  /**
+   * Computes the cross product of this vector and another vector.
+   * @param vector The other vector to multiply this vector by.
+   * @returns The resulting scalar.
+   */
+  public cross(vector: Vector2) {
+    return this.x * vector.y - this.y * vector.x;
   }
 
   /**

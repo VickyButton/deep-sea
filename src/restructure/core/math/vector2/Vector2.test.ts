@@ -61,6 +61,10 @@ describe('Vector2', () => {
     expect(new Vector2(1, 2).dot(new Vector2(1, 2))).toBe(5);
   });
 
+  it('should compute the cross product of two vectors', () => {
+    expect(new Vector2(1, 0).cross(new Vector2(0, 1))).toBe(1);
+  });
+
   it('should determine that two vectors are equal', () => {
     const left = new Vector2(1, 1);
     const right = new Vector2(1, 1);
