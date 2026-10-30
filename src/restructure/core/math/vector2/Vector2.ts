@@ -28,6 +28,11 @@ export class Vector2 {
     this.y = y;
   }
 
+  /** The angle of the vector in radians. */
+  public get angle() {
+    return Math.atan(this.y / this.x);
+  }
+
   /** The length of the vector. */
   public get length() {
     return Math.sqrt(this.xSquared + this.ySquared);
@@ -39,11 +44,6 @@ export class Vector2 {
 
   private get ySquared() {
     return this.y * this.y;
-  }
-
-  /** The angle of the vector in radians. */
-  public get angle() {
-    return Math.atan(this.y / this.x);
   }
 
   /** The vector normalized as a unit vector. */
