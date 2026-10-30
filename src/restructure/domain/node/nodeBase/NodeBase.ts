@@ -1,6 +1,8 @@
 import type { NodeBaseOptions } from './nodeBase.types';
 
+/** The base node class for all nodes. */
 export abstract class NodeBase {
+  /** The node's unique ID. */
   public readonly id: string;
   private _children = new Set<NodeBase>();
   private _parent: NodeBase | null = null;
@@ -9,14 +11,22 @@ export abstract class NodeBase {
     this.id = options.id;
   }
 
+  /** The node's child nodes. */
   public get children() {
     return Array.from(this._children);
   }
 
+  /** The node's parent node, or null if it has no parent. */
   public get parent() {
     return this._parent;
   }
 
+  /**
+   * Adds a child node to the node.
+   * @param node The child node to add.
+   * @throws An error if the child node is the node itself.
+   * @throws An error if the child node already has a parent.
+   */
   public addChild(node: NodeBase) {
     if (this === node) {
       throw NodeBase.CircularRelationshipError;
@@ -29,10 +39,19 @@ export abstract class NodeBase {
     this._children.add(node);
   }
 
+  /**
+   * Removes a child node from the node.
+   * @param node The child node to remove.
+   */
   public removeChild(node: NodeBase) {
     this._children.delete(node);
   }
 
+  /**
+   * Sets the node's parent node.
+   * @param node The parent node to set.
+   * @throws An error if the parent node is the node itself.
+   */
   public setParent(node: NodeBase) {
     if (this === node) {
       throw NodeBase.CircularRelationshipError;
@@ -41,6 +60,7 @@ export abstract class NodeBase {
     this._parent = node;
   }
 
+  /** Unsets the node's parent node. */
   public unsetParent() {
     this._parent = null;
   }
