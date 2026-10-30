@@ -68,15 +68,15 @@ export class Vector2 {
   }
 
   /**
-   * Computes the difference resulting from subtracting this vector by another vector.
+   * Subtracts this vector by another vector.
    * @param vector The vector to subtract this vector by.
-   * @returns The difference vector.
+   * @returns This vector.
    */
   public subtract(vector: Vector2) {
-    const differenceX = this.x - vector.x;
-    const differenceY = this.y - vector.y;
+    this.x -= vector.x;
+    this.y -= vector.y;
 
-    return new Vector2(differenceX, differenceY);
+    return this;
   }
 
   /**
