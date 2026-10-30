@@ -18,6 +18,10 @@ export class DrawableNode extends NodeBase {
     return this._visible;
   }
 
+  /**
+   * Sets the node's local visibility.
+   * @param visible The visibility to set the node's visibility to.
+   */
   public set visible(visible: boolean) {
     this._visible = visible;
   }
@@ -27,6 +31,10 @@ export class DrawableNode extends NodeBase {
     return this._zIndex;
   }
 
+  /**
+   * Sets the node's local z-index.
+   * @param zIndex The z-index to set the node's z-index to.
+   */
   public set zIndex(zIndex: number) {
     this._zIndex = zIndex;
   }
