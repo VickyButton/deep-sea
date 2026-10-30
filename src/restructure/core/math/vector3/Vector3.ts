@@ -9,6 +9,12 @@ export class Vector3 {
   /** The vector's Z component. */
   public z: number;
 
+  /**
+   * Creates a new Vector3.
+   * @param x The vector's X component.
+   * @param y The vector's Y component.
+   * @param z The vector's Z component.
+   */
   constructor(x = 0, y = 0, z = 0) {
     this.x = x;
     this.y = y;
@@ -20,6 +26,10 @@ export class Vector3 {
     return this.x;
   }
 
+  /**
+   * Sets the vector's X component.
+   * @param x The number to set the vector's X component to.
+   */
   public set 0(x: number) {
     this.x = x;
   }
@@ -29,6 +39,10 @@ export class Vector3 {
     return this.y;
   }
 
+  /**
+   * Sets the vector's Y component.
+   * @param y The number to set the vector's Y component to.
+   */
   public set 1(y: number) {
     this.y = y;
   }
@@ -38,25 +52,17 @@ export class Vector3 {
     return this.z;
   }
 
+  /**
+   * Sets the vector's Z component.
+   * @param z The number to set the vector's Z component to.
+   */
   public set 2(z: number) {
     this.z = z;
   }
 
   /** The length of the vector. */
   public get length() {
-    return Math.sqrt(this.xSquared + this.ySquared + this.zSquared);
-  }
-
-  private get xSquared() {
-    return Math.pow(this.x, 2);
-  }
-
-  private get ySquared() {
-    return Math.pow(this.y, 2);
-  }
-
-  private get zSquared() {
-    return Math.pow(this.z, 2);
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
   }
 
   /** The vector normalized as a unit vector. */
