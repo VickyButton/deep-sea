@@ -1,5 +1,5 @@
 import { CollisionResolver2D_SeparatingAxisTheorem } from './CollisionResolver2D_SeparatingAxisTheorem';
-import { Vector2 } from '../../vector2/Vector2';
+import { Vector2 } from '../../../core/math/vector2/Vector2';
 import { describe, expect, it } from 'vitest';
 
 describe('CollisionResolver2D_SeparatingAxisTheorem', () => {

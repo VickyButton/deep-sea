@@ -1,8 +1,8 @@
 import type { Shape2D } from './shape2D.types';
 import type { DrawStep_DrawLine } from '../drawStep/drawStep.types';
 import type { Transform2D } from '../transform2D/Transform2D';
-import { Vector2 } from '../vector2/Vector2';
 import { CollisionResolver2D_Polygon } from './collisionResolver2D/CollisionResolver2D_Polygon';
+import { Vector2 } from '../../core/math/vector2/Vector2';
 
 /** The polygon implementation of the Shape2D interface. */
 export class Shape2D_Polygon implements Shape2D {

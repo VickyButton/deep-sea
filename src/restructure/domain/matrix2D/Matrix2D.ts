@@ -1,4 +1,4 @@
-import { Vector2 } from '../vector2/Vector2';
+import { Vector2 } from '../../core/math/vector2/Vector2';
 
 /** A 2-dimensional matrix. */
 export class Matrix2D {

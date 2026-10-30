@@ -1,5 +1,5 @@
 import { Matrix2D } from './Matrix2D';
-import { Vector2 } from '../vector2/Vector2';
+import { Vector2 } from '../../core/math/vector2/Vector2';
 import { describe, expect, it } from 'vitest';
 
 describe('Matrix2D', () => {

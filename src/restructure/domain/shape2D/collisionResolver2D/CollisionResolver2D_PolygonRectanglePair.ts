@@ -1,5 +1,5 @@
+import type { Vector2 } from '../../../core/math/vector2/Vector2';
 import type { Transform2D } from '../../transform2D/Transform2D';
-import type { Vector2 } from '../../vector2/Vector2';
 import type { Shape2D_Polygon } from '../Shape2D_Polygon';
 import type { Shape2D_Rectangle } from '../Shape2D_Rectangle';
 import { CollisionResolver2D } from './CollisionResolver2D';

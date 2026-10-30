@@ -1,7 +1,7 @@
-import { Shape2D_Polygon } from './Shape2D_Polygon';
-import { Transform2D } from '../transform2D/Transform2D';
-import { Vector2 } from '../vector2/Vector2';
 import { CollisionResolver2D_Polygon } from './collisionResolver2D/CollisionResolver2D_Polygon';
+import { Shape2D_Polygon } from './Shape2D_Polygon';
+import { Vector2 } from '../../core/math/vector2/Vector2';
+import { Transform2D } from '../transform2D/Transform2D';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Shape2D_Polygon', () => {

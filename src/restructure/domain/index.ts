@@ -7,8 +7,8 @@ import { Signal } from './signal/Signal';
 import { SignalController } from './signalController/SignalController';
 import { Task } from './task/Task';
 import { Transform2D } from './transform2D/Transform2D';
-import { Vector2 } from './vector2/Vector2';
 import { Vector3 } from './vector3/Vector3';
+import { Vector2 } from '../core/math/vector2/Vector2';
 
 export {
   Color_RGBA as RGBA,

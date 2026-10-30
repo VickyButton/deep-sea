@@ -1,5 +1,5 @@
 import { Transform2D } from './Transform2D';
-import { Vector2 } from '../vector2/Vector2';
+import { Vector2 } from '../../core/math/vector2/Vector2';
 import { describe, expect, it } from 'vitest';
 
 // Cosine(90 degrees) does not return 0, but rather a number close to zero.
