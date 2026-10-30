@@ -45,21 +45,33 @@ describe('Vector2', () => {
   });
 
   it('should add two vectors', () => {
-    expect(new Vector2(1, 1).add(new Vector2(2, 2))).toEqual({
+    const vector = new Vector2(1, 1);
+
+    vector.add(new Vector2(2, 2));
+
+    expect(vector).toEqual({
       x: 3,
       y: 3,
     });
   });
 
   it('should subtract two vectors', () => {
-    expect(new Vector2(3, 3).subtract(new Vector2(2, 2))).toEqual({
+    const vector = new Vector2(3, 3);
+
+    vector.subtract(new Vector2(2, 2));
+
+    expect(vector).toEqual({
       x: 1,
       y: 1,
     });
   });
 
-  it('should scale components by a constant scalar', () => {
-    expect(new Vector2(1, 2).scale(3)).toEqual({
+  it('should scale components by a scalar', () => {
+    const vector = new Vector2(1, 2);
+
+    vector.scale(3);
+
+    expect(vector).toEqual({
       x: 3,
       y: 6,
     });

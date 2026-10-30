@@ -69,34 +69,27 @@ export class Vector2 {
   /**
    * Adds another vector to this vector.
    * @param vector The vector to add to this vector.
-   * @returns This vector.
    */
   public add(vector: Vector2) {
     this.x += vector.x;
     this.y += vector.y;
-
-    return this;
   }
 
   /**
    * Subtracts this vector by another vector.
    * @param vector The vector to subtract this vector by.
-   * @returns This vector.
    */
   public subtract(vector: Vector2) {
-    return this.add(new Vector2(-vector.x, -vector.y));
+    this.add(new Vector2(-vector.x, -vector.y));
   }
 
   /**
    * Scales this vector's components by a scalar.
    * @param scalar The scalar to multiply this vector's components by.
-   * @returns This vector.
    */
   public scale(scalar: number) {
     this.x *= scalar;
     this.y *= scalar;
-
-    return this;
   }
 
   /**
