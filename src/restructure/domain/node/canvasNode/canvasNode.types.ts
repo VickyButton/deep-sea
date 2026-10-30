@@ -1,6 +1,6 @@
 import type { NodeBaseOptions } from '../nodeBase/nodeBase.types';
 
-export interface DrawableNodeOptions extends NodeBaseOptions {
+export interface CanvasNodeOptions extends NodeBaseOptions {
   visible: boolean;
   zIndex: number;
 }

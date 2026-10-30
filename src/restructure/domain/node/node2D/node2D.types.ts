@@ -1,6 +1,6 @@
-import type { DrawableNodeOptions } from '../drawableNode/drawableNode.types';
+import type { CanvasNodeOptions } from '../canvasNode/canvasNode.types';
 
-export interface Node2DOptions extends DrawableNodeOptions {
+export interface Node2DOptions extends CanvasNodeOptions {
   scaleX: number;
   scaleY: number;
   rotation: number;
