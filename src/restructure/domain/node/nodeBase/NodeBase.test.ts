@@ -20,7 +20,7 @@ describe('NodeBase', () => {
     const node = createNode();
     const nodeWithParent = createNode();
 
-    nodeWithParent.setParent(createNode());
+    nodeWithParent.parent = createNode();
 
     expect(() => node.addChild(nodeWithParent)).toThrowError(NodeBase.ChildHasParentError);
   });
@@ -32,6 +32,7 @@ describe('NodeBase', () => {
     node.addChild(child);
 
     expect(node.children[0]).toBe(child);
+    expect(child.parent).toBe(node);
   });
 
   it('should emit a signal upon adding a child', () => {
@@ -53,6 +54,7 @@ describe('NodeBase', () => {
     node.removeChild(child);
 
     expect(node.children[0]).toBe(undefined);
+    expect(child.parent).toBe(null);
   });
 
   it('should emit a signal upon removing a child', () => {
@@ -80,14 +82,14 @@ describe('NodeBase', () => {
   it('should throw an error if trying to set self as a parent', () => {
     const node = createNode();
 
-    expect(() => node.setParent(node)).toThrowError(NodeBase.CircularRelationshipError);
+    expect(() => node.parent = node).toThrowError(NodeBase.CircularRelationshipError);
   });
 
   it('should set a parent', () => {
     const node = createNode();
     const parent = createNode();
 
-    node.setParent(parent);
+    node.parent = parent;
 
     expect(node.parent).toBe(parent);
   });
@@ -96,8 +98,8 @@ describe('NodeBase', () => {
     const node = createNode();
     const parent = createNode();
 
-    node.setParent(parent);
-    node.unsetParent();
+    node.parent = parent;
+    node.parent = null;
 
     expect(node.parent).toBe(null);
   });

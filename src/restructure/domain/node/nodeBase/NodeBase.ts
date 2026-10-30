@@ -27,6 +27,19 @@ export abstract class NodeBase {
   }
 
   /**
+   * Sets the node's parent node.
+   * @param node The node to set as the node's parent.
+   * @throws An error if the parent node is the node itself.
+   */
+  public set parent(node: NodeBase | null) {
+    if (this === node) {
+      throw NodeBase.CircularRelationshipError;
+    }
+
+    this._parent = node;
+  }
+
+  /**
    * Adds a child node to the node.
    * @param node The child node to add.
    * @throws An error if the child node is the node itself.
@@ -42,6 +55,7 @@ export abstract class NodeBase {
     }
 
     this._children.add(node);
+    node.parent = this;
     this.childAddedSignal.emit(node);
   }
 
@@ -51,26 +65,9 @@ export abstract class NodeBase {
    */
   public removeChild(node: NodeBase) {
     if (this._children.delete(node)) {
+      node.parent = null;
       this.childRemovedSignal.emit(node);
     }
-  }
-
-  /**
-   * Sets the node's parent node.
-   * @param node The parent node to set.
-   * @throws An error if the parent node is the node itself.
-   */
-  public setParent(node: NodeBase) {
-    if (this === node) {
-      throw NodeBase.CircularRelationshipError;
-    }
-
-    this._parent = node;
-  }
-
-  /** Unsets the node's parent node. */
-  public unsetParent() {
-    this._parent = null;
   }
 
   public static get ChildHasParentError() {
