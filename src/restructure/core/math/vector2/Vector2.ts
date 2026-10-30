@@ -35,15 +35,7 @@ export class Vector2 {
 
   /** The length of the vector. */
   public get length() {
-    return Math.sqrt(this.xSquared + this.ySquared);
-  }
-
-  private get xSquared() {
-    return this.x * this.x;
-  }
-
-  private get ySquared() {
-    return this.y * this.y;
+    return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 
   /** The vector normalized as a unit vector. */
