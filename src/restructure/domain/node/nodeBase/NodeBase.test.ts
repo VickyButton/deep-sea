@@ -55,6 +55,28 @@ describe('NodeBase', () => {
     expect(node.children[0]).toBe(undefined);
   });
 
+  it('should emit a signal upon removing a child', () => {
+    const node = createNode();
+    const child = createNode();
+    const callback = vi.fn();
+
+    node.childRemovedSignal.listen(callback);
+    node.addChild(child);
+    node.removeChild(child);
+
+    expect(callback).toHaveBeenCalledWith(child);
+  });
+
+  it('should not emit a signal if a child was not removed', () => {
+    const node = createNode();
+    const callback = vi.fn();
+
+    node.childRemovedSignal.listen(callback);
+    node.removeChild(createNode());
+
+    expect(callback).not.toHaveBeenCalled();
+  });
+
   it('should throw an error if trying to set self as a parent', () => {
     const node = createNode();
 

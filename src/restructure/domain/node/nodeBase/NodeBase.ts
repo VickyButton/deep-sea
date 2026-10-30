@@ -5,6 +5,8 @@ import { Signal } from '../../signal/Signal';
 export abstract class NodeBase {
   /** Emits when a child node is added to the node. */
   public readonly childAddedSignal = new Signal<NodeBase>();
+  /** Emits when a child node is removed from the node. */
+  public readonly childRemovedSignal = new Signal<NodeBase>();
   /** The node's unique ID. */
   public readonly id: string;
   private _children = new Set<NodeBase>();
@@ -52,7 +54,20 @@ export abstract class NodeBase {
    * @param node The child node to remove.
    */
   public removeChild(node: NodeBase) {
+    if (!this.isParentOf(node)) {
+      return;
+    }
+
     this._children.delete(node);
+    this.emitChildRemovedSignal(node);
+  }
+
+  private isParentOf(node: NodeBase) {
+    return this._children.has(node);
+  }
+
+  private emitChildRemovedSignal(node: NodeBase) {
+    this.childRemovedSignal.emit(node);
   }
 
   /**
