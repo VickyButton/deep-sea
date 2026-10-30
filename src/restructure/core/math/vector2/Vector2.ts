@@ -89,15 +89,12 @@ export class Vector2 {
   }
 
   /**
-   * Computes the sum of the X and Y components of a vector product.
-   * @param vector The vector to multiply this vector by.
-   * @returns The dot product of the two vectors.
+   * Computes the dot product of this vector and another vector.
+   * @param vector The other vector to multiply.
+   * @returns The resulting scalar.
    */
-  public computeDotProduct(vector: Vector2) {
-    const productX = this.x * vector.x;
-    const productY = this.y * vector.y;
-
-    return productX + productY;
+  public dot(vector: Vector2) {
+    return this.x * vector.x + this.y * vector.y;
   }
 
   /**

@@ -60,7 +60,7 @@ describe('Vector2', () => {
   it('should compute the dot product of two vectors', () => {
     const left = new Vector2(1, 2);
     const right = new Vector2(1, 2);
-    const result = left.computeDotProduct(right);
+    const result = left.dot(right);
 
     expect(result).toBe(5);
   });
