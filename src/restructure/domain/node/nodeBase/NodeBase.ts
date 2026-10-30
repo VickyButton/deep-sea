@@ -42,11 +42,7 @@ export abstract class NodeBase {
     }
 
     this._children.add(node);
-    this.emitChildAddedSignal(node);
-  }
-
-  private emitChildAddedSignal(child: NodeBase) {
-    this.childAddedSignal.emit(child);
+    this.childAddedSignal.emit(node);
   }
 
   /**
@@ -59,15 +55,11 @@ export abstract class NodeBase {
     }
 
     this._children.delete(node);
-    this.emitChildRemovedSignal(node);
+    this.childRemovedSignal.emit(node);
   }
 
   private isParentOf(node: NodeBase) {
     return this._children.has(node);
-  }
-
-  private emitChildRemovedSignal(node: NodeBase) {
-    this.childRemovedSignal.emit(node);
   }
 
   /**
