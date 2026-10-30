@@ -56,15 +56,15 @@ export class Vector2 {
   }
 
   /**
-   * Computes the sum resulting from adding this vector to another vector.
+   * Adds another vector to this vector.
    * @param vector The vector to add to this vector.
-   * @returns The sum vector.
+   * @returns This vector.
    */
   public add(vector: Vector2) {
-    const sumX = this.x + vector.x;
-    const sumY = this.y + vector.y;
+    this.x += vector.x;
+    this.y += vector.y;
 
-    return new Vector2(sumX, sumY);
+    return this;
   }
 
   /**

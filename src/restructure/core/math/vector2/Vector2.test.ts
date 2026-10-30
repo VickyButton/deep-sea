@@ -37,11 +37,10 @@ describe('Vector2', () => {
   });
 
   it('should add two vectors', () => {
-    const left = new Vector2(1, 1);
-    const right = new Vector2(-1, -1);
-    const result = left.add(right);
-
-    expect(result).toEqual(new Vector2(0, 0));
+    expect(new Vector2(1, 1).add(new Vector2(2, 2))).toEqual({
+      x: 3,
+      y: 3,
+    });
   });
 
   it('should subtract two vectors', () => {
