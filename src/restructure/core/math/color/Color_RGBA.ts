@@ -1,5 +1,5 @@
 import type { Color } from './color.types';
-import { clamp } from '../../utils/clamp';
+import { clamp } from '../../../utils/clamp';
 
 const COLOR_COMPONENT_MIN = 0;
 const COLOR_COMPONENT_MAX = 255;
