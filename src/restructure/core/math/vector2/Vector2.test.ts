@@ -33,6 +33,17 @@ describe('Vector2', () => {
     });
   });
 
+  it('should normalize vector', () => {
+    const vector = new Vector2(2, 0);
+
+    vector.normalize();
+
+    expect(vector).toEqual({
+      x: 1,
+      y: 0,
+    });
+  });
+
   it('should add two vectors', () => {
     expect(new Vector2(1, 1).add(new Vector2(2, 2))).toEqual({
       x: 3,

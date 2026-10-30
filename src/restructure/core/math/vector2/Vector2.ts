@@ -40,11 +40,30 @@ export class Vector2 {
 
   /** The vector normalized as a unit vector. */
   public get normalized() {
-    const magnitude = this.length;
-    const normalizedX = this.x / magnitude;
-    const normalizedY = this.y / magnitude;
+    const vector = new Vector2(this.x, this.y);
+    vector.normalize();
 
-    return new Vector2(normalizedX, normalizedY);
+    return vector;
+  }
+
+  /** Normalizes the vector. */
+  public normalize() {
+    const lengthSquared = this.lengthSquared;
+
+    if (lengthSquared === 0) {
+      this.zero();
+    } else {
+      this.scale(1 / Math.sqrt(lengthSquared));
+    }
+  }
+
+  private get lengthSquared() {
+    return this.x * this.x + this.y + this.y;
+  }
+
+  private zero() {
+    this.x = 0;
+    this.y = 0;
   }
 
   /**
