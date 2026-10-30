@@ -5,6 +5,11 @@ export class Vector2 {
   /** The vector's Y component. */
   public y: number;
 
+  /**
+   * Creates a new Vector2.
+   * @param x The vector's X component.
+   * @param y The vector's Y component.
+   */
   constructor(x = 0, y = 0) {
     this.x = x;
     this.y = y;
