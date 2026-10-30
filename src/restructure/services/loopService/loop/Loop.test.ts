@@ -1,6 +1,6 @@
+import { AnimationFrameProvider_Mock } from './animationFrameProvider/AnimationFrameProvider_Mock';
 import { Loop } from './Loop';
-import { AnimationFrameProvider_Mock } from '../../providers/animationFrameProvider/AnimationFrameProvider_Mock';
-import { TimeProvider_Mock } from '../../providers/timeProvider/TimeProvider_Mock';
+import { TimeProvider_Mock } from './timeProvider/TimeProvider_Mock';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('Loop', () => {

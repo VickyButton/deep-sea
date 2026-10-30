@@ -1,7 +1,7 @@
-import type { AnimationFrameProvider, FrameRequestCallback } from '../../providers/animationFrameProvider/animationFrameProvider.types';
-import type { TimeProvider } from '../../providers/timeProvider/timeProvider.types';
-import { Signal } from '../../domain/signal/Signal';
-import { clamp } from '../../utils/clamp';
+import type { AnimationFrameProvider, FrameRequestCallback } from './animationFrameProvider/animationFrameProvider.types';
+import type { TimeProvider } from './timeProvider/timeProvider.types';
+import { Signal } from '../../../domain';
+import { clamp } from '../../../utils/clamp';
 
 const LOOPS_PER_SECOND_MIN = 1;
 const LOOPS_PER_SECOND_MAX = 120;
