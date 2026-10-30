@@ -1,7 +1,7 @@
 import { CollisionResolver2D_Polygon } from './collisionResolver2D/CollisionResolver2D_Polygon';
 import { Shape2D_Polygon } from './Shape2D_Polygon';
-import { Vector2 } from '../../core/math/vector2/Vector2';
 import { Transform2D } from '../transform2D/Transform2D';
+import { Vector2 } from '../vector2/Vector2';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Shape2D_Polygon', () => {
@@ -27,34 +27,6 @@ describe('Shape2D_Polygon', () => {
       new Vector2(-0.5000000000000004, 0.8660254037844387),
       new Vector2(-0.5000000000000004, -0.8660254037844385),
       new Vector2(1, -0.8660254037844385),
-    ]);
-  });
-
-  it('should compute draw steps', () => {
-    const polygon = new Shape2D_Polygon(VERTICES);
-
-    expect(polygon.drawSteps).toEqual([
-      {
-        type: 'DRAW_LINE',
-        fromX: 1,
-        fromY: 0,
-        toX: -0.4999999999999998,
-        toY: 0.8660254037844387,
-      },
-      {
-        type: 'DRAW_LINE',
-        fromX: -0.4999999999999998,
-        fromY: 0.8660254037844387,
-        toX: -0.5000000000000004,
-        toY: -0.8660254037844385,
-      },
-      {
-        type: 'DRAW_LINE',
-        fromX: -0.5000000000000004,
-        fromY: -0.8660254037844385,
-        toX: 1,
-        toY: 0,
-      },
     ]);
   });
 

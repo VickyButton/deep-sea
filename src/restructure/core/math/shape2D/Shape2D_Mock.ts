@@ -1,5 +1,5 @@
 import type { BoundingBox2D, Shape2D } from './shape2D.types';
-import { Vector2 } from '../../core/math/vector2/Vector2';
+import { Vector2 } from '../vector2/Vector2';
 import { vi } from 'vitest';
 
 /** The mock implementation of the Shape2D interface. */

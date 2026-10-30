@@ -1,7 +1,7 @@
 import { CollisionResolver2D_Rectangle } from './collisionResolver2D/CollisionResolver2D_Rectangle';
 import { Shape2D_Rectangle } from './Shape2D_Rectangle';
-import { Vector2 } from '../../core/math/vector2/Vector2';
 import { Transform2D } from '../transform2D/Transform2D';
+import { Vector2 } from '../vector2/Vector2';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Shape2D_Rectangle', () => {
@@ -25,20 +25,6 @@ describe('Shape2D_Rectangle', () => {
       new Vector2(-0.5, 0.5),
       new Vector2(-0.5, -0.5),
       new Vector2(0.5, -0.5),
-    ]);
-  });
-
-  it('should compute draw steps', () => {
-    const rectangle = new Shape2D_Rectangle(1, 1);
-
-    expect(rectangle.drawSteps).toEqual([
-      {
-        type: 'DRAW_RECTANGLE',
-        x: -0.5,
-        y: 0.5,
-        width: 1,
-        height: 1,
-      },
     ]);
   });
 

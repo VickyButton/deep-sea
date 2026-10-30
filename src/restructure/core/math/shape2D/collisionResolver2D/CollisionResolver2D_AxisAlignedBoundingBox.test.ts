@@ -1,6 +1,6 @@
 import type { BoundingBox2D } from '../shape2D.types';
 import { CollisionResolver2D_AxisAlignedBoundingBox } from './CollisionResolver2D_AxisAlignedBoundingBox';
-import { Vector2 } from '../../../core/math/vector2/Vector2';
+import { Vector2 } from '../../vector2/Vector2';
 import { describe, expect, it } from 'vitest';
 
 describe('CollisionResolver2D_AxisAlignedBoundingBox', () => {

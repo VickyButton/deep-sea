@@ -1,8 +1,7 @@
 import type { Shape2D } from './shape2D.types';
-import type { DrawStep_DrawLine } from '../drawStep/drawStep.types';
 import type { Transform2D } from '../transform2D/Transform2D';
 import { CollisionResolver2D_Polygon } from './collisionResolver2D/CollisionResolver2D_Polygon';
-import { Vector2 } from '../../core/math/vector2/Vector2';
+import { Vector2 } from '../vector2/Vector2';
 
 /** The polygon implementation of the Shape2D interface. */
 export class Shape2D_Polygon implements Shape2D {
@@ -48,38 +47,6 @@ export class Shape2D_Polygon implements Shape2D {
       new Vector2(xMin, yMin),
       new Vector2(xMax, yMin),
     ];
-  }
-
-  public get drawSteps() {
-    return this.computeDrawSteps();
-  }
-
-  private computeDrawSteps() {
-    return this.computeDrawPolygonSteps();
-  }
-
-  private computeDrawPolygonSteps(): DrawStep_DrawLine[] {
-    return this.computeLines().map(([from, to]) => ({
-      type: 'DRAW_LINE',
-      fromX: from.x,
-      fromY: from.y,
-      toX: to.x,
-      toY: to.y,
-    }));
-  }
-
-  private computeLines() {
-    const lines: [Vector2, Vector2][] = [];
-    const vertices = this.vertices;
-
-    for (let i = 0; i < vertices.length; i++) {
-      const from = vertices[i];
-      const to = vertices[(i + 1) % vertices.length];
-
-      lines.push([from, to]);
-    }
-
-    return lines;
   }
 
   /** The set of vertices that form the polygon, in counterclockwise order. */

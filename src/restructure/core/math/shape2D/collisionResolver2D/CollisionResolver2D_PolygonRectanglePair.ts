@@ -1,23 +1,24 @@
-import type { Vector2 } from '../../../core/math/vector2/Vector2';
 import type { Transform2D } from '../../transform2D/Transform2D';
+import type { Vector2 } from '../../vector2/Vector2';
 import type { Shape2D_Polygon } from '../Shape2D_Polygon';
+import type { Shape2D_Rectangle } from '../Shape2D_Rectangle';
 import { CollisionResolver2D } from './CollisionResolver2D';
 import { CollisionResolver2D_SeparatingAxisTheorem } from './CollisionResolver2D_SeparatingAxisTheorem';
 
-/** Resolves a collision between two 2D polygons. */
-export class CollisionResolver2D_PolygonPair extends CollisionResolver2D {
-  private readonly polygonA: Shape2D_Polygon;
-  private readonly transformA: Transform2D;
-  private readonly polygonB: Shape2D_Polygon;
-  private readonly transformB: Transform2D;
+/** Resolves a collision between a 2D polygon and a rectangle. */
+export class CollisionResolver2D_PolygonRectanglePair extends CollisionResolver2D {
+  private readonly polygon: Shape2D_Polygon;
+  private readonly polygonTransform: Transform2D;
+  private readonly rectangle: Shape2D_Rectangle;
+  private readonly rectangleTransform: Transform2D;
 
-  constructor(polygonA: Shape2D_Polygon, transformA: Transform2D, polygonB: Shape2D_Polygon, transformB: Transform2D) {
+  constructor(polygon: Shape2D_Polygon, polygonTransform: Transform2D, rectangle: Shape2D_Rectangle, rectangleTransform: Transform2D) {
     super();
 
-    this.polygonA = polygonA;
-    this.transformA = transformA;
-    this.polygonB = polygonB;
-    this.transformB = transformB;
+    this.polygon = polygon;
+    this.polygonTransform = polygonTransform;
+    this.rectangle = rectangle;
+    this.rectangleTransform = rectangleTransform;
   }
 
   public resolveCollision() {
@@ -36,11 +37,11 @@ export class CollisionResolver2D_PolygonPair extends CollisionResolver2D {
   }
 
   private get verticesA() {
-    return this.transformVertices(this.polygonA.vertices, this.transformA);
+    return this.transformVertices(this.polygon.vertices, this.polygonTransform);
   }
 
   private get verticesB() {
-    return this.transformVertices(this.polygonB.vertices, this.transformB);
+    return this.transformVertices(this.rectangle.vertices, this.rectangleTransform);
   }
 
   private transformVertices(vertices: Vector2[], transform: Transform2D) {

@@ -1,5 +1,5 @@
-import type { Vector2 } from '../../core/math/vector2/Vector2';
-import { Vector3 } from '../../core/math/vector3/Vector3';
+import type { Vector2 } from '../vector2/Vector2';
+import { Vector3 } from '../vector3/Vector3';
 
 /** A 3-dimensional matrix. */
 export class Matrix3D {

@@ -1,13 +1,11 @@
-import type { Vector2 } from '../../core/math/vector2/Vector2';
-import type { DrawStep } from '../drawStep/drawStep.types';
 import type { Transform2D } from '../transform2D/Transform2D';
+import type { Vector2 } from '../vector2/Vector2';
 
+// TODO: Decouple .
 /** A 2D shape that can be transformed and drawn. */
 export interface Shape2D {
   /** The axis-aligned bounding box of the shape. */
   get boundingBox(): BoundingBox2D;
-  /** The draw steps for drawing the shape. */
-  get drawSteps(): DrawStep[];
   /**
    * Checks whether this shape overlaps another shape.
    * @param transform The 2D transformation matrix to apply to this shape.

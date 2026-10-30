@@ -1,6 +1,6 @@
-import { Vector2 } from '../../core/math/vector2/Vector2';
-import { Vector3 } from '../../core/math/vector3/Vector3';
 import { Matrix3D } from '../matrix3D/Matrix3D';
+import { Vector2 } from '../vector2/Vector2';
+import { Vector3 } from '../vector3/Vector3';
 
 /**
  * A 2D transform matrix.

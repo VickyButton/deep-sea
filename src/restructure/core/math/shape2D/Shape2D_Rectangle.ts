@@ -1,8 +1,7 @@
 import type { Shape2D } from './shape2D.types';
-import type { DrawStep_DrawRectangle } from '../drawStep/drawStep.types';
 import type { Transform2D } from '../transform2D/Transform2D';
 import { CollisionResolver2D_Rectangle } from './collisionResolver2D/CollisionResolver2D_Rectangle';
-import { Vector2 } from '../../core/math/vector2/Vector2';
+import { Vector2 } from '../vector2/Vector2';
 
 /** The rectangle implementation of the Shape2D interface. */
 export class Shape2D_Rectangle implements Shape2D {
@@ -50,26 +49,6 @@ export class Shape2D_Rectangle implements Shape2D {
 
   private computeBottomRightVertex(halfWidth: number, halfHeight: number) {
     return new Vector2(halfWidth, -halfHeight);
-  }
-
-  public get drawSteps() {
-    return this.computeDrawSteps();
-  }
-
-  private computeDrawSteps() {
-    return [this.computeDrawRectangleStep()];
-  }
-
-  private computeDrawRectangleStep(): DrawStep_DrawRectangle {
-    const topLeftVertex = this.computeTopLeftVertex(this.halfWidth, this.halfHeight);
-
-    return {
-      type: 'DRAW_RECTANGLE',
-      x: topLeftVertex.x,
-      y: topLeftVertex.y,
-      width: this.width,
-      height: this.height,
-    };
   }
 
   /** The vertices of the rectangle, in counterclockwise order. */
