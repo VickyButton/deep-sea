@@ -77,8 +77,8 @@ export class Vector2 {
   }
 
   /**
-   * Scales this vector's components by a constant scalar.
-   * @param scalar The constant scalar to multiply this vector's components by.
+   * Scales this vector's components by a scalar.
+   * @param scalar The scalar to multiply this vector's components by.
    * @returns This vector.
    */
   public scale(scalar: number) {
