@@ -34,11 +34,11 @@ export class Vector2 {
   }
 
   private get xSquared() {
-    return Math.pow(this.x, 2);
+    return this.x * this.x;
   }
 
   private get ySquared() {
-    return Math.pow(this.y, 2);
+    return this.y * this.y;
   }
 
   /** The angle of the vector in radians. */
