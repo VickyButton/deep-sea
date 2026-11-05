@@ -46,6 +46,18 @@ describe('Vector3', () => {
     });
   });
 
+  it('should scale components by a scalar', () => {
+    const vector = new Vector3(1, 2, 3);
+
+    vector.scale(3);
+
+    expect(vector).toEqual({
+      x: 3,
+      y: 6,
+      z: 9,
+    });
+  });
+
   it('should add two vectors', () => {
     const vector = new Vector3(1, 1, 1);
 
@@ -67,18 +79,6 @@ describe('Vector3', () => {
       x: 1,
       y: 1,
       z: 1,
-    });
-  });
-
-  it('should scale components by a scalar', () => {
-    const vector = new Vector3(1, 2, 3);
-
-    vector.scale(3);
-
-    expect(vector).toEqual({
-      x: 3,
-      y: 6,
-      z: 9,
     });
   });
 

@@ -95,6 +95,16 @@ export class Vector3 {
   }
 
   /**
+   * Scales this vector's components by a scalar.
+   * @param scalar The scalar to multiply this vector's components by.
+   */
+  public scale(scalar: number) {
+    this.x *= scalar;
+    this.y *= scalar;
+    this.z *= scalar;
+  }
+
+  /**
    * Adds another vector to this vector.
    * @param other The other vector to add to this vector.
    */
@@ -110,16 +120,6 @@ export class Vector3 {
    */
   public subtract(other: Vector3) {
     this.add(new Vector3(-other.x, -other.y, -other.z));
-  }
-
-  /**
-   * Scales this vector's components by a scalar.
-   * @param scalar The scalar to multiply this vector's components by.
-   */
-  public scale(scalar: number) {
-    this.x *= scalar;
-    this.y *= scalar;
-    this.z *= scalar;
   }
 
   /**
