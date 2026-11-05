@@ -95,38 +95,26 @@ describe('Vector3', () => {
   });
 
   it('should determine that two vectors are equal', () => {
-    const left = new Vector3(1, 1, 1);
-    const right = new Vector3(1, 1, 1);
-    const result = left.equals(right);
-
-    expect(result).toBe(true);
+    expect(new Vector3(1, 1, 1).equals(new Vector3(1, 1, 1))).toBe(true);
   });
 
   it('should determine that two vectors are not equal', () => {
-    const left = new Vector3(1, 1, 1);
-    const right = new Vector3(-1, -1, -1);
-    const result = left.equals(right);
-
-    expect(result).toBe(false);
+    expect(new Vector3(1, 1, 1).equals(new Vector3(-1, -1, -1))).toBe(false);
   });
 
   it('should create a vector copy', () => {
-    const vector = new Vector3(1, 1, 1);
-    const copy = vector.copy();
+    const original = new Vector3(1, 1, 1);
+    const copy = original.copy();
 
-    expect(copy).toEqual(vector);
-    expect(copy).not.toBe(vector);
+    expect(copy).toEqual(original);
+    expect(copy).not.toBe(original);
   });
 
   it('should copy to a 2D vector', () => {
-    const vector = new Vector3(1, 1, 1);
-
-    expect(vector.to2D()).toEqual(new Vector2(1, 1));
+    expect(new Vector3(1, 1, 1).to2D()).toEqual(new Vector2(1, 1));
   });
 
   it('should create a 3D vector from a 2D vector', () => {
-    const vector2D = new Vector2(1, 1);
-
-    expect(Vector3.from2D(vector2D)).toEqual(new Vector3(1, 1, 0));
+    expect(Vector3.from2D(new Vector2(1, 1))).toEqual(new Vector3(1, 1, 0));
   });
 });
