@@ -50,6 +50,18 @@ describe('Vector3', () => {
     expect(result).toEqual(new Vector3(0, 0, 0));
   });
 
+  it('should scale components by a scalar', () => {
+    const vector = new Vector3(1, 2, 3);
+
+    vector.scale(3);
+
+    expect(vector).toEqual({
+      x: 3,
+      y: 6,
+      z: 9,
+    });
+  });
+
   it('should multiply two vectors', () => {
     const left = new Vector3(2, 2, 2);
     const right = new Vector3(2, 2, 2);

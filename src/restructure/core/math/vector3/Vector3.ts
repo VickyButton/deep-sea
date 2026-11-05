@@ -102,6 +102,16 @@ export class Vector3 {
   }
 
   /**
+   * Scales this vector's components by a scalar.
+   * @param scalar The scalar to multiply this vector's components by.
+   */
+  public scale(scalar: number) {
+    this.x *= scalar;
+    this.y *= scalar;
+    this.z *= scalar;
+  }
+
+  /**
    * Computes the product resulting from multiplying this vector by another vector.
    * @param vector The vector to multiply this vector by.
    * @returns The product vector.
