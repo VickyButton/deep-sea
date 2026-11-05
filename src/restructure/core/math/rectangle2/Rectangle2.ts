@@ -90,4 +90,61 @@ export class Rectangle2 {
   public get top() {
     return this.position.y + this.size.y;
   }
+
+  /**
+   * Checks if this rectangle intersects another rectangle.
+   * @param other The other rectangle to check for an intersection with.
+   * @param includeBorders Whether or not the borders of the rectangles intersecting should count as an intersection.
+   */
+  public intersects(other: Rectangle2, includeBorders = false) {
+    return includeBorders ? this.intersectsIncludingBorders(other) : this.intersectsExcludingBorders(other);
+  }
+
+  private intersectsIncludingBorders(other: Rectangle2) {
+    if (this.left > other.right) {
+      // Gap between left side of this rectangle and right side of other rectangle.
+      return false;
+    }
+
+    if (this.right < other.left) {
+      // Gap between right side of this rectangle and left side of other rectangle.
+      return false;
+    }
+
+    if (this.bottom > other.top) {
+      // Gap between bottom side of this rectangle and top side of other rectangle.
+      return false;
+    }
+
+    if (this.top < other.bottom) {
+      // Gap between top side of this rectangle and bottom side of other rectangle.
+      return false;
+    }
+
+    return true;
+  }
+
+  private intersectsExcludingBorders(other: Rectangle2) {
+    if (this.left >= other.right) {
+      // Gap between left side of this rectangle and right side of other rectangle.
+      return false;
+    }
+
+    if (this.right <= other.left) {
+      // Gap between right side of this rectangle and left side of other rectangle.
+      return false;
+    }
+
+    if (this.bottom >= other.top) {
+      // Gap between bottom side of this rectangle and top side of other rectangle.
+      return false;
+    }
+
+    if (this.top <= other.bottom) {
+      // Gap between top side of this rectangle and bottom side of other rectangle.
+      return false;
+    }
+
+    return true;
+  }
 }

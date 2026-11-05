@@ -79,4 +79,50 @@ describe('Rectangle2', () => {
   it('should get Y component of the bottom side', () => {
     expect(new Rectangle2().top).toBe(1);
   });
+
+  it.each([
+    {
+      relation: 'to the left of',
+      other: new Rectangle2(-1, 0),
+    },
+    {
+      relation: 'to the right of',
+      other: new Rectangle2(1, 0),
+    },
+    {
+      relation: 'above',
+      other: new Rectangle2(0, 1),
+    },
+    {
+      relation: 'below',
+      other: new Rectangle2(0, -1),
+    },
+  ])('should not intersect if other rectangle is $relation the rectangle, excluding borders', ({ other }) => {
+    expect(new Rectangle2(0, 0).intersects(other)).toBe(false);
+  });
+
+  it.each([
+    {
+      relation: 'on the left border of',
+      other: new Rectangle2(-1, 0),
+    },
+    {
+      relation: 'on the right border of',
+      other: new Rectangle2(1, 0),
+    },
+    {
+      relation: 'on the top border of',
+      other: new Rectangle2(0, 1),
+    },
+    {
+      relation: 'on the bottom border of',
+      other: new Rectangle2(0, -1),
+    },
+    {
+      relation: 'completely overlapping',
+      other: new Rectangle2(0, 0),
+    },
+  ])('should intersect if other rectangle is $relation the rectangle, including borders', ({ other }) => {
+    expect(new Rectangle2(0, 0).intersects(other, true)).toBe(true);
+  });
 });
