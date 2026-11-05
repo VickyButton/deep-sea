@@ -86,50 +86,46 @@ describe('Vector2', () => {
   });
 
   it('should determine that two vectors are equal', () => {
-    const left = new Vector2(1, 1);
-    const right = new Vector2(1, 1);
-    const result = left.equals(right);
-
-    expect(result).toBe(true);
+    expect(new Vector2(1, 1).equals(new Vector2(1, 1))).toBe(true);
   });
 
   it('should determine that two vectors are not equal', () => {
-    const left = new Vector2(1, 1);
-    const right = new Vector2(-1, -1);
-    const result = left.equals(right);
-
-    expect(result).toBe(false);
+    expect(new Vector2(1, 1).equals(new Vector2(-1, -1))).toBe(false);
   });
 
   it('should create a vector copy', () => {
-    const vector = new Vector2(1, 1);
-    const copy = vector.copy();
+    const original = new Vector2(1, 1);
+    const copy = original.copy();
 
-    expect(copy).toEqual(vector);
-    expect(copy).not.toBe(vector);
+    expect(copy).toEqual(original);
+    expect(copy).not.toBe(original);
   });
 
   it('should create a vector pointing up', () => {
-    const vector = Vector2.UP;
-
-    expect(vector).toEqual(new Vector2(0, 1));
+    expect(Vector2.UP).toEqual({
+      x: 0,
+      y: 1,
+    });
   });
 
   it('should create a vector pointing down', () => {
-    const vector = Vector2.DOWN;
-
-    expect(vector).toEqual(new Vector2(0, -1));
+    expect(Vector2.DOWN).toEqual({
+      x: 0,
+      y: -1,
+    });
   });
 
   it('should create a vector pointing right', () => {
-    const vector = Vector2.RIGHT;
-
-    expect(vector).toEqual(new Vector2(1, 0));
+    expect(Vector2.RIGHT).toEqual({
+      x: 1,
+      y: 0,
+    });
   });
 
   it('should create a vector pointing left', () => {
-    const vector = Vector2.LEFT;
-
-    expect(vector).toEqual(new Vector2(-1, 0));
+    expect(Vector2.LEFT).toEqual({
+      x: -1,
+      y: 0,
+    });
   });
 });
