@@ -93,6 +93,20 @@ describe('Vector2', () => {
     expect(new Vector2(1, 1).equals(new Vector2(-1, -1))).toBe(false);
   });
 
+  it('should compute a vector that is perpendicular to the vector in the clockwise direction', () => {
+    expect(new Vector2(1, 0).perpendicularClockwise).toEqual({
+      x: 0,
+      y: -1,
+    });
+  });
+
+  it('should compute a vector that is perpendicular to the vector in the counterclockwise direction', () => {
+    expect(new Vector2(1, 0).perpendicularCounterclockwise).toEqual({
+      x: 0,
+      y: 1,
+    });
+  });
+
   it('should create a vector copy', () => {
     const original = new Vector2(1, 1);
     const copy = original.copy();
