@@ -67,12 +67,31 @@ export class Vector3 {
 
   /** The vector normalized as a unit vector. */
   public get normalized() {
-    const magnitude = this.length;
-    const normalizedX = this.x / magnitude;
-    const normalizedY = this.y / magnitude;
-    const normalizedZ = this.z / magnitude;
+    const vector = new Vector3(this.x, this.y, this.z);
+    vector.normalize();
 
-    return new Vector3(normalizedX, normalizedY, normalizedZ);
+    return vector;
+  }
+
+  /** Normalizes the vector. */
+  public normalize() {
+    const lengthSquared = this.lengthSquared;
+
+    if (lengthSquared === 0) {
+      this.zero();
+    } else {
+      this.scale(1 / Math.sqrt(lengthSquared));
+    }
+  }
+
+  private get lengthSquared() {
+    return this.x * this.x + this.y + this.y + this.z * this.z;
+  }
+
+  private zero() {
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
   }
 
   /**

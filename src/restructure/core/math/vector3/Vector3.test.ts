@@ -34,6 +34,18 @@ describe('Vector3', () => {
     expect(vector.normalized).toEqual(new Vector3(0, 0, 1));
   });
 
+  it('should normalize vector', () => {
+    const vector = new Vector3(0, 0, 2);
+
+    vector.normalize();
+
+    expect(vector).toEqual({
+      x: 0,
+      y: 0,
+      z: 1,
+    });
+  });
+
   it('should add two vectors', () => {
     const left = new Vector3(1, 1, 1);
     const right = new Vector3(-1, -1, -1);
