@@ -95,29 +95,21 @@ export class Vector3 {
   }
 
   /**
-   * Computes the sum resulting from adding this vector to another vector.
+   * Adds another vector to this vector.
    * @param vector The vector to add to this vector.
-   * @returns The sum vector.
    */
   public add(vector: Vector3) {
-    const sumX = this.x + vector.x;
-    const sumY = this.y + vector.y;
-    const sumZ = this.z + vector.z;
-
-    return new Vector3(sumX, sumY, sumZ);
+    this.x += vector.x;
+    this.y += vector.y;
+    this.z += vector.z;
   }
 
   /**
-   * Computes the difference resulting from subtracting this vector by another vector.
+   * Subtracts this vector by another vector.
    * @param vector The vector to subtract this vector by.
-   * @returns The difference vector.
    */
   public subtract(vector: Vector3) {
-    const differenceX = this.x - vector.x;
-    const differenceY = this.y - vector.y;
-    const differenceZ = this.z - vector.z;
-
-    return new Vector3(differenceX, differenceY, differenceZ);
+    this.add(new Vector3(-vector.x, -vector.y, -vector.z));
   }
 
   /**

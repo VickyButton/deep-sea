@@ -47,19 +47,27 @@ describe('Vector3', () => {
   });
 
   it('should add two vectors', () => {
-    const left = new Vector3(1, 1, 1);
-    const right = new Vector3(-1, -1, -1);
-    const result = left.add(right);
+    const vector = new Vector3(1, 1, 1);
 
-    expect(result).toEqual(new Vector3(0, 0, 0));
+    vector.add(new Vector3(2, 2, 2));
+
+    expect(vector).toEqual({
+      x: 3,
+      y: 3,
+      z: 3,
+    });
   });
 
   it('should subtract two vectors', () => {
-    const left = new Vector3(1, 1, 1);
-    const right = new Vector3(1, 1, 1);
-    const result = left.subtract(right);
+    const vector = new Vector3(3, 3, 3);
 
-    expect(result).toEqual(new Vector3(0, 0, 0));
+    vector.subtract(new Vector3(2, 2, 2));
+
+    expect(vector).toEqual({
+      x: 1,
+      y: 1,
+      z: 1,
+    });
   });
 
   it('should scale components by a scalar', () => {
@@ -75,11 +83,7 @@ describe('Vector3', () => {
   });
 
   it('should compute the dot product of two vectors', () => {
-    const left = new Vector3(1, 2, 3);
-    const right = new Vector3(1, 2, 3);
-    const result = left.dot(right);
-
-    expect(result).toBe(14);
+    expect(new Vector3(1, 2, 3).dot(new Vector3(1, 2, 3))).toBe(14);
   });
 
   it('should compute the cross product of two vectors', () => {
