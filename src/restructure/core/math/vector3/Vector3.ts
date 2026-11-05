@@ -144,6 +144,19 @@ export class Vector3 {
   }
 
   /**
+   * Computes the cross product of this vector and another vector.
+   * @param vector The other vector to multiply this vector by.
+   * @returns The resulting vector.
+   */
+  public cross(vector: Vector3) {
+    return new Vector3(
+      this.y * vector.z - this.z * vector.y,
+      this.z * vector.x - this.x * vector.z,
+      this.x * vector.y - this.y * vector.x,
+    );
+  }
+
+  /**
    * Checks if this vector is equal to another vector.
    * @param vector The vector to compare equality to.
    * @returns True if equal, false if not.

@@ -82,6 +82,14 @@ describe('Vector3', () => {
     expect(result).toBe(14);
   });
 
+  it('should compute the cross product of two vectors', () => {
+    expect(new Vector3(1, 2, 3).cross(new Vector3(3, 2, 1))).toEqual({
+      x: -4,
+      y: 8,
+      z: -4,
+    });
+  });
+
   it('should determine that two vectors are equal', () => {
     const left = new Vector3(1, 1, 1);
     const right = new Vector3(1, 1, 1);
