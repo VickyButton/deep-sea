@@ -96,20 +96,20 @@ export class Vector3 {
 
   /**
    * Adds another vector to this vector.
-   * @param vector The vector to add to this vector.
+   * @param other The other vector to add to this vector.
    */
-  public add(vector: Vector3) {
-    this.x += vector.x;
-    this.y += vector.y;
-    this.z += vector.z;
+  public add(other: Vector3) {
+    this.x += other.x;
+    this.y += other.y;
+    this.z += other.z;
   }
 
   /**
    * Subtracts this vector by another vector.
-   * @param vector The vector to subtract this vector by.
+   * @param other The other vector to subtract this vector by.
    */
-  public subtract(vector: Vector3) {
-    this.add(new Vector3(-vector.x, -vector.y, -vector.z));
+  public subtract(other: Vector3) {
+    this.add(new Vector3(-other.x, -other.y, -other.z));
   }
 
   /**
@@ -124,33 +124,33 @@ export class Vector3 {
 
   /**
    * Computes the sum of the X, Y, and Z components of a vector product.
-   * @param vector The vector to multiply this vector by.
+   * @param other The other vector to multiply this vector by.
    * @returns The dot product of the two vectors.
    */
-  public dot(vector: Vector3) {
-    return this.x * vector.x + this.y * vector.y + this.z * vector.z;
+  public dot(other: Vector3) {
+    return this.x * other.x + this.y * other.y + this.z * other.z;
   }
 
   /**
    * Computes the cross product of this vector and another vector.
-   * @param vector The other vector to multiply this vector by.
+   * @param other The other vector to multiply this vector by.
    * @returns The resulting vector.
    */
-  public cross(vector: Vector3) {
+  public cross(other: Vector3) {
     return new Vector3(
-      this.y * vector.z - this.z * vector.y,
-      this.z * vector.x - this.x * vector.z,
-      this.x * vector.y - this.y * vector.x,
+      this.y * other.z - this.z * other.y,
+      this.z * other.x - this.x * other.z,
+      this.x * other.y - this.y * other.x,
     );
   }
 
   /**
    * Checks if this vector is equal to another vector.
-   * @param vector The vector to compare equality to.
+   * @param other The other vector to compare equality to.
    * @returns True if equal, false if not.
    */
-  public equals(vector: Vector3) {
-    return this.x === vector.x && this.y === vector.y && this.z === vector.z;
+  public equals(other: Vector3) {
+    return this.x === other.x && this.y === other.y && this.z === other.z;
   }
 
   /**
