@@ -70,4 +70,24 @@ export class Rectangle2 {
   public set height(height: number) {
     this.size.y = height;
   }
+
+  /** The X component of the rectangle's left side . */
+  public get left() {
+    return this.position.x;
+  }
+
+  /** The X component of the rectangle's right side . */
+  public get right() {
+    return this.position.x + this.size.x;
+  }
+
+  /** The Y component of the rectangle's bottom side . */
+  public get bottom() {
+    return this.position.y;
+  }
+
+  /** The Y component of the rectangle's top side . */
+  public get top() {
+    return this.position.y + this.size.y;
+  }
 }

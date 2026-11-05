@@ -63,4 +63,20 @@ describe('Rectangle2', () => {
 
     expect(rectangle.height).toBe(2);
   });
+
+  it('should get X component of the left side', () => {
+    expect(new Rectangle2().left).toBe(0);
+  });
+
+  it('should get X component of the right side', () => {
+    expect(new Rectangle2().right).toBe(1);
+  });
+
+  it('should get Y component of the bottom side', () => {
+    expect(new Rectangle2().bottom).toBe(0);
+  });
+
+  it('should get Y component of the bottom side', () => {
+    expect(new Rectangle2().top).toBe(1);
+  });
 });
