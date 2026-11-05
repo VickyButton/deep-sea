@@ -128,11 +128,7 @@ export class Vector3 {
    * @returns The dot product of the two vectors.
    */
   public dot(vector: Vector3) {
-    const productX = this.x * vector.x;
-    const productY = this.y * vector.y;
-    const productZ = this.z * vector.z;
-
-    return productX + productY + productZ;
+    return this.x * vector.x + this.y * vector.y + this.z * vector.z;
   }
 
   /**
