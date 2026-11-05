@@ -135,7 +135,7 @@ export class Vector3 {
    * @param vector The vector to multiply this vector by.
    * @returns The dot product of the two vectors.
    */
-  public computeDotProduct(vector: Vector3) {
+  public dot(vector: Vector3) {
     const productX = this.x * vector.x;
     const productY = this.y * vector.y;
     const productZ = this.z * vector.z;

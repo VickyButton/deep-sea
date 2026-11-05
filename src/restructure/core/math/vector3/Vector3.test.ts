@@ -77,7 +77,7 @@ describe('Vector3', () => {
   it('should compute the dot product of two vectors', () => {
     const left = new Vector3(1, 2, 3);
     const right = new Vector3(1, 2, 3);
-    const result = left.computeDotProduct(right);
+    const result = left.dot(right);
 
     expect(result).toBe(14);
   });
