@@ -95,6 +95,7 @@ export class Rectangle2 {
    * Checks if this rectangle intersects another rectangle.
    * @param other The other rectangle to check for an intersection with.
    * @param includeBorders Whether or not the borders of the rectangles intersecting should count as an intersection.
+   * @returns True if the rectangles intersect, false if not.
    */
   public intersects(other: Rectangle2, includeBorders = false) {
     return includeBorders ? this.intersectsIncludingBorders(other) : this.intersectsExcludingBorders(other);
