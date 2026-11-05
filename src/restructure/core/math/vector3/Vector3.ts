@@ -107,19 +107,19 @@ export class Vector3 {
   /**
    * Adds another vector to this vector.
    * @param other The other vector to add to this vector.
+   * @returns The resulting sum vector.
    */
   public add(other: Vector3) {
-    this.x += other.x;
-    this.y += other.y;
-    this.z += other.z;
+    return new Vector3(this.x + other.x, this.y + other.y, this.z + other.z);
   }
 
   /**
    * Subtracts this vector by another vector.
    * @param other The other vector to subtract this vector by.
+   * @returns The resulting difference vector.
    */
   public subtract(other: Vector3) {
-    this.add(new Vector3(-other.x, -other.y, -other.z));
+    return this.add(new Vector3(-other.x, -other.y, -other.z));
   }
 
   /**

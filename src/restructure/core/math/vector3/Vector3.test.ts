@@ -59,11 +59,7 @@ describe('Vector3', () => {
   });
 
   it('should add two vectors', () => {
-    const vector = new Vector3(1, 1, 1);
-
-    vector.add(new Vector3(2, 2, 2));
-
-    expect(vector).toEqual({
+    expect(new Vector3(1, 1, 1).add(new Vector3(2, 2, 2))).toEqual({
       x: 3,
       y: 3,
       z: 3,
@@ -71,11 +67,7 @@ describe('Vector3', () => {
   });
 
   it('should subtract two vectors', () => {
-    const vector = new Vector3(3, 3, 3);
-
-    vector.subtract(new Vector3(2, 2, 2));
-
-    expect(vector).toEqual({
+    expect(new Vector3(3, 3, 3).subtract(new Vector3(2, 2, 2))).toEqual({
       x: 1,
       y: 1,
       z: 1,
