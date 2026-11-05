@@ -81,19 +81,19 @@ export class Vector2 {
 
   /**
    * Adds another vector to this vector.
-   * @param vector The vector to add to this vector.
+   * @param other The other vector to add to this vector.
    */
-  public add(vector: Vector2) {
-    this.x += vector.x;
-    this.y += vector.y;
+  public add(other: Vector2) {
+    this.x += other.x;
+    this.y += other.y;
   }
 
   /**
    * Subtracts this vector by another vector.
-   * @param vector The vector to subtract this vector by.
+   * @param other The other vector to subtract this vector by.
    */
-  public subtract(vector: Vector2) {
-    this.add(new Vector2(-vector.x, -vector.y));
+  public subtract(other: Vector2) {
+    this.add(new Vector2(-other.x, -other.y));
   }
 
   /**
@@ -107,29 +107,29 @@ export class Vector2 {
 
   /**
    * Computes the dot product of this vector and another vector.
-   * @param vector The other vector to multiply this vector by.
+   * @param other The other vector to multiply this vector by.
    * @returns The resulting scalar.
    */
-  public dot(vector: Vector2) {
-    return this.x * vector.x + this.y * vector.y;
+  public dot(other: Vector2) {
+    return this.x * other.x + this.y * other.y;
   }
 
   /**
    * Computes the cross product of this vector and another vector.
-   * @param vector The other vector to multiply this vector by.
+   * @param other The other vector to multiply this vector by.
    * @returns The resulting scalar.
    */
-  public cross(vector: Vector2) {
-    return this.x * vector.y - this.y * vector.x;
+  public cross(other: Vector2) {
+    return this.x * other.y - this.y * other.x;
   }
 
   /**
    * Checks if this vector is equal to another vector.
-   * @param vector The vector to compare equality to.
+   * @param other The other vector to compare equality to.
    * @returns True if equal, false if not.
    */
-  public equals(vector: Vector2) {
-    return this.x === vector.x && this.y === vector.y;
+  public equals(other: Vector2) {
+    return this.x === other.x && this.y === other.y;
   }
 
   /**
