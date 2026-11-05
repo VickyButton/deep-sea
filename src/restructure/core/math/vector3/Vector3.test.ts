@@ -70,14 +70,6 @@ describe('Vector3', () => {
     expect(result).toEqual(new Vector3(4, 4, 4));
   });
 
-  it('should divide two vectors', () => {
-    const left = new Vector3(2, 2, 2);
-    const right = new Vector3(2, 2, 2);
-    const result = left.divide(right);
-
-    expect(result).toEqual(new Vector3(1, 1, 1));
-  });
-
   it('should compute the dot product of two vectors', () => {
     const left = new Vector3(1, 2, 3);
     const right = new Vector3(1, 2, 3);

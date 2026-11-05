@@ -125,19 +125,6 @@ export class Vector3 {
   }
 
   /**
-   * Computes the product resulting from dividing this vector by another vector.
-   * @param vector The vector to divide this vector by.
-   * @returns The quotient vector.
-   */
-  public divide(vector: Vector3) {
-    const quotientX = this.x / vector.x;
-    const quotientY = this.y / vector.y;
-    const quotientZ = this.z / vector.z;
-
-    return new Vector3(quotientX, quotientY, quotientZ);
-  }
-
-  /**
    * Computes the sum of the X, Y, and Z components of a vector product.
    * @param vector The vector to multiply this vector by.
    * @returns The dot product of the two vectors.
