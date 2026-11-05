@@ -112,19 +112,6 @@ export class Vector3 {
   }
 
   /**
-   * Computes the product resulting from multiplying this vector by another vector.
-   * @param vector The vector to multiply this vector by.
-   * @returns The product vector.
-   */
-  public multiply(vector: Vector3) {
-    const productX = this.x * vector.x;
-    const productY = this.y * vector.y;
-    const productZ = this.z * vector.z;
-
-    return new Vector3(productX, productY, productZ);
-  }
-
-  /**
    * Computes the sum of the X, Y, and Z components of a vector product.
    * @param vector The vector to multiply this vector by.
    * @returns The dot product of the two vectors.
