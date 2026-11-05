@@ -1,6 +1,6 @@
 import { Vector2 } from '../vector2/Vector2';
 
-/** A 2D axis-aligned rectangle. */
+/** An axis-aligned 2D rectangle. */
 export class Rectangle2 {
   /** The bottom-left corner of the rectangle. */
   public position: Vector2;
