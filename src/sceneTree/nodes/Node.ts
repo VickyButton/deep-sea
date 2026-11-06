@@ -1,5 +1,5 @@
 import type { NodeOptions } from './node.types';
-import { Signal } from '../../signal/Signal';
+import { Signal } from '../signal/Signal';
 
 /** The base node class for all nodes. */
 export abstract class Node {

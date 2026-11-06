@@ -1,4 +1,4 @@
-import type { NodeOptions } from '../node/node.types';
+import type { NodeOptions } from '../node.types';
 
 export interface CanvasNodeOptions extends NodeOptions {
   visible: boolean;
