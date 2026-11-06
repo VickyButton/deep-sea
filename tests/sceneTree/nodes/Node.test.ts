@@ -1,4 +1,4 @@
-import { Node } from './Node';
+import { Node } from '../../../src/sceneTree/nodes/Node';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Node', () => {
