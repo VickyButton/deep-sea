@@ -1,4 +1,5 @@
 import { SignalController } from './SignalController';
+import { Signal } from '../signal/Signal';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('SignalController', () => {
@@ -134,28 +135,3 @@ describe('SignalController', () => {
     expect(signal.callbackCount).toBe(0);
   });
 });
-
-class Signal<T = void> {
-  public readonly name = 'signal';
-  private readonly callbacks = new Set<(data: T) => void>();
-
-  public get callbackCount() {
-    return this.callbacks.size;
-  }
-
-  public clear() {
-    this.callbacks.clear();
-  }
-
-  public emit(data: T) {
-    this.callbacks.forEach((callback) => callback(data));
-  }
-
-  public listen(callback: (data: T) => void) {
-    this.callbacks.add(callback);
-  }
-
-  public unlisten(callback: (data: T) => void) {
-    this.callbacks.delete(callback);
-  }
-}
