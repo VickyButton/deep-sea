@@ -1,3 +1,12 @@
+import { Viewport } from '../node/viewport/Viewport';
+
 export class SceneTree {
-  // TODO: Implement.
+  /** The scene viewport. */
+  public readonly viewport = SceneTree.createViewport();
+
+  private static createViewport() {
+    return new Viewport({
+      id: 'SCENE_VIEWPORT',
+    });
+  }
 }
