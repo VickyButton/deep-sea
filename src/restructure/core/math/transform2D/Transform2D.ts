@@ -20,8 +20,8 @@ export class Transform2D {
   }
 
   /**
-   * Applies the transform to a vector.
-   * @param vector The vector to apply the transform to.
+   * Applies the affine transform to a vector.
+   * @param vector The vector to apply the affine transform to.
    * @returns The transformed vector.
    */
   public applyTo(vector: Vector2) {
