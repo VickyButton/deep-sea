@@ -1,73 +1,69 @@
-import { Matrix3D } from '../matrix3D/Matrix3D';
 import { Vector2 } from '../vector2/Vector2';
-import { Vector3 } from '../vector3/Vector3';
 
-/**
- * A 2D transform matrix.
- * 
- * In a 2D transform, transformations are applied in the following order:
- * 1. Rotation
- * 2. Scaling
- * 3. Translation
- */
+/** A 2D transformation that can be applied to a 2D vector. */
 export class Transform2D {
-  /** The transform rotation in radians. */
-  public rotation: number;
-  /** The transform scalar vector. */
-  public scale: Vector2;
-  /** The transform translation vector. */
-  public translation: Vector2;
+  private readonly columns: [Vector2, Vector2, Vector2];
 
-  constructor(options?: Transform2D_Options) {
-    this.rotation = options?.rotation ?? 0;
-    this.scale = options?.scale ?? new Vector2(1, 1);
-    this.translation = options?.translation ?? new Vector2(0, 0);
+  constructor(rotation = Transform2D.DEFAULT_ROTATION, scale = Transform2D.DEFAULT_SCALE, translation = Transform2D.DEFAULT_TRANSLATION) {
+    this.columns = this.computeMatrix(rotation, scale, translation);
+  }
+
+  private computeMatrix(rotation: number, scale: Vector2, translation: Vector2): [Vector2, Vector2, Vector2] {
+    const cosine = Math.cos(rotation);
+    const sine = Math.sin(rotation);
+
+    return [
+      new Vector2(cosine * scale.x, sine * scale.x),
+      new Vector2(-sine * scale.y, cosine * scale.y),
+      new Vector2(translation.x, translation.y),
+    ];
   }
 
   /**
-   * Computes a transformation matrix for the transform.
-   * @returns The composite transformation matrix.
+   * Applies the transform to a vector.
+   * @param vector The vector to apply the transform to.
+   * @returns The transformed vector.
    */
-  public computeTransformationMatrix() {
-    // TODO: Cache matrix with a matrix getter.
-    const rotationMatrix = this.computeRotationMatrix();
-    const scalingMatrix = this.computeScalingMatrix();
-    const translationMatrix = this.computeTranslationMatrix();
-
-    // Rotation is applied first, then scaling, and finally translation.
-    return rotationMatrix.multiplyMatrix(scalingMatrix).multiplyMatrix(translationMatrix);
+  public applyTo(vector: Vector2) {
+    return new Vector2(
+      vector.dot(new Vector2(this.columns[0][0], this.columns[1][0])),
+      vector.dot(new Vector2(this.columns[0][1], this.columns[1][1])),
+    ).add(this.columns[2]);
   }
 
-  private computeRotationMatrix() {
-    const cosine = Math.cos(this.rotation);
-    const sine = Math.sin(this.rotation);
-
-    return new Matrix3D([
-      new Vector3(cosine, sine, 0),
-      new Vector3(-sine, cosine, 0),
-      new Vector3(0, 0, 1),
-    ]);
+  /**
+   * Creates a new Transform2D from a rotation.
+   * @param rotation The rotation to create the new transform with.
+   */
+  public static fromRotation(rotation: number) {
+    return new Transform2D(rotation, Transform2D.DEFAULT_SCALE, Transform2D.DEFAULT_TRANSLATION);
   }
 
-  private computeScalingMatrix() {
-    return new Matrix3D([
-      new Vector3(this.scale.x, 0, 0),
-      new Vector3(0, this.scale.y, 0),
-      new Vector3(0, 0, 1),
-    ]);
+  /**
+   * Creates a new Transform2D from a scale.
+   * @param rotation The scale to create the new transform with.
+   */
+  public static fromScale(scale: Vector2) {
+    return new Transform2D(Transform2D.DEFAULT_ROTATION, scale, Transform2D.DEFAULT_TRANSLATION);
   }
 
-  private computeTranslationMatrix() {
-    return new Matrix3D([
-      new Vector3(1, 0, 0),
-      new Vector3(0, 1, 0),
-      new Vector3(this.translation.x, this.translation.y, 1),
-    ]);
+  /**
+   * Creates a new Transform2D from a translation.
+   * @param rotation The translation to create the new transform with.
+   */
+  public static fromTranslation(translation: Vector2) {
+    return new Transform2D(Transform2D.DEFAULT_ROTATION, Transform2D.DEFAULT_SCALE, translation);
   }
-}
 
-export interface Transform2D_Options {
-  rotation?: number;
-  scale?: Vector2;
-  translation?: Vector2;
+  private static get DEFAULT_ROTATION() {
+    return 0;
+  }
+
+  private static get DEFAULT_SCALE() {
+    return new Vector2(1, 1);
+  }
+
+  private static get DEFAULT_TRANSLATION() {
+    return new Vector2(0, 0);
+  }
 }
