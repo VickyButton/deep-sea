@@ -1,4 +1,4 @@
-import type { NodeOptions } from './node.types';
+import type { NodeOptions } from './Node.types';
 import { Signal } from '../signal/Signal';
 
 /** The base node class for all nodes. */
