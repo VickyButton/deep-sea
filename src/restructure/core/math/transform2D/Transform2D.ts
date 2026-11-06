@@ -2,6 +2,7 @@ import { Vector2 } from '../vector2/Vector2';
 
 /** A 2D transformation matrix that can be applied to a 2D vector. */
 export class Transform2D {
+  /** The three columns of the transformation matrix. */
   public readonly columns: [Vector2, Vector2, Vector2];
 
   constructor(rotation = Transform2D.DEFAULT_ROTATION, scale = Transform2D.DEFAULT_SCALE, translation = Transform2D.DEFAULT_TRANSLATION) {
