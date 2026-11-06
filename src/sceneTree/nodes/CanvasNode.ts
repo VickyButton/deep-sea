@@ -1,4 +1,4 @@
-import type { CanvasNodeOptions } from './canvasNode.types';
+import type { CanvasNodeOptions } from './CanvasNode.types';
 import { Node } from '../node/Node';
 
 /** A node that can draw to a canvas. */

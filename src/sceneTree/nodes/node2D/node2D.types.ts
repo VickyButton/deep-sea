@@ -1,4 +1,4 @@
-import type { CanvasNodeOptions } from '../canvasNode/canvasNode.types';
+import type { CanvasNodeOptions } from '../CanvasNode.types';
 
 export interface Node2DOptions extends CanvasNodeOptions {
   position: {
