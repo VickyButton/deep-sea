@@ -1,6 +1,6 @@
 import type { Node2DOptions } from './Node2D.types';
 import { Vector2 } from '../../../core/math/vector2/Vector2';
-import { CanvasNode } from '../CanvasNode';
+import { CanvasNode } from '../main/CanvasNode';
 
 export class Node2D extends CanvasNode {
   private _positionX: number;
