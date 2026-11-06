@@ -24,6 +24,42 @@ export class Transform2D {
     return this.columns[0][0] * this.columns[1][1] - this.columns[0][1] * this.columns[1][0];
   }
 
+  /** The inverted transformation matrix. */
+  public get inverted() {
+    const transform = this.copy();
+    transform.invert();
+
+    return transform;
+  }
+
+  /** Inverts the transformation matrix. */
+  public invert() {
+    const determinant = this.determinant;
+
+    if (determinant === 0) {
+      throw new Error('Cannot invert matrix with determinant of zero.');
+    }
+
+    // Swap cells "a" and "d".
+    const aCopy = this.columns[0][0];
+    const dCopy = this.columns[1][1];
+    this.columns[0][0] = dCopy;
+    this.columns[1][1] = aCopy;
+
+    // Multiply cells in fist two columns by determinants.
+    const inverseDeterminant = 1 / determinant;
+    this.columns[0][0] *= inverseDeterminant;
+    this.columns[0][1] *= -inverseDeterminant;
+    this.columns[1][0] *= -inverseDeterminant;
+    this.columns[1][1] *= inverseDeterminant;
+
+    // Flip signs of cells in the third column.
+    this.columns[2].scale(-1);
+
+    // Apply basis transform to the third column.
+    this.columns[2] = this.applyBasisTo(this.columns[2]);
+  }
+
   /**
    * Applies the affine transform to a vector.
    * @param vector The vector to apply the affine transform to.

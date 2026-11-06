@@ -7,6 +7,19 @@ describe('Transform2D', () => {
     expect(new Transform2D().determinant).toBe(1);
   });
 
+  it('should throw an error if trying to get inverted transformation matrix of matrix with determinant of zero', () => {
+    expect(() => Transform2D.fromScale(new Vector2(0, 0)).inverted).toThrowError();
+  });
+
+  it('should get inverted transformation matrix that cancels out original transformation matrix', () => {
+    const transform = new Transform2D(Math.PI, new Vector2(2, 2), new Vector2(1, 1));
+
+    expect(transform.inverted.applyTo(transform.applyTo(new Vector2(1, 1)))).toEqual({
+      x: 1,
+      y: 1,
+    });
+  });
+
   it('should apply rotation to a 2D vector', () => {
     expect(Transform2D.fromRotation(Math.PI).applyTo(new Vector2(1, 1))).toEqual({
       x: -1.0000000000000002,
