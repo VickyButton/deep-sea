@@ -41,4 +41,12 @@ describe('Transform2D', () => {
       y: -1.9999999999999998,
     });
   });
+
+  it('should create a copy of itself', () => {
+    const original = new Transform2D();
+    const copy = original.copy();
+
+    expect(copy).toEqual(original);
+    expect(copy).not.toBe(original);
+  });
 });

@@ -1,8 +1,8 @@
 import { Vector2 } from '../vector2/Vector2';
 
-/** A 2D transformation that can be applied to a 2D vector. */
+/** A 2D transformation matrix that can be applied to a 2D vector. */
 export class Transform2D {
-  private readonly columns: [Vector2, Vector2, Vector2];
+  public readonly columns: [Vector2, Vector2, Vector2];
 
   constructor(rotation = Transform2D.DEFAULT_ROTATION, scale = Transform2D.DEFAULT_SCALE, translation = Transform2D.DEFAULT_TRANSLATION) {
     this.columns = this.computeMatrix(rotation, scale, translation);
@@ -46,6 +46,19 @@ export class Transform2D {
       vector.dot(new Vector2(this.columns[0][0], this.columns[1][0])),
       vector.dot(new Vector2(this.columns[0][1], this.columns[1][1])),
     );
+  }
+
+  /**
+   * Creates a copy of this transformation matrix.
+   * @returns A copy of this transformation matrix.
+   */
+  public copy() {
+    const transform = new Transform2D();
+    transform.columns[0] = this.columns[0].copy();
+    transform.columns[1] = this.columns[1].copy();
+    transform.columns[2] = this.columns[2].copy();
+
+    return transform;
   }
 
   /**
