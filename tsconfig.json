@@ -4,54 +4,6 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "isolatedModules": true,
-    "baseUrl": "./",
-    "paths": {
-      "@nodes/*": [
-        "./src/core/nodes/*"
-      ],
-      "@structures/*": [
-        "./src/core/structures/*"
-      ],
-      "@utils/*": [
-        "./src/core/utils/*"
-      ],
-      "assets": [
-        "./src/core/engine/assets"
-      ],
-      "audio": [
-        "./src/core/engine/audio"
-      ],
-      "config": [
-        "./src/core/engine/config"
-      ],
-      "game": [
-        "./src/core/engine/game"
-      ],
-      "graphics": [
-        "./src/core/engine/graphics"
-      ],
-      "input": [
-        "./src/core/engine/input"
-      ],
-      "loop": [
-        "./src/core/engine/loop"
-      ],
-      "nodes": [
-        "./src/core/engine/nodes"
-      ],
-      "physics": [
-        "./src/core/engine/physics"
-      ],
-      "renderer": [
-        "./src/core/engine/renderer"
-      ],
-      "scenes": [
-        "./src/core/engine/scenes"
-      ],
-      "tasks": [
-        "./src/core/engine/tasks"
-      ]
-    },
     "lib": [
       "DOM",
       "DOM.Iterable",

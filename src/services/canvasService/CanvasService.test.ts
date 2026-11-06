@@ -1,0 +1,20 @@
+import { CanvasCommandInterpreter } from './canvasCommandInterpreter/CanvasCommandInterpreter';
+import { MockCanvas } from './canvasCommandInterpreter/canvasCommandTranslator/canvas/MockCanvas';
+import { MockCanvasCommandTranslator } from './canvasCommandInterpreter/canvasCommandTranslator/MockCanvasCommandTranslator';
+import { describe, expect, it, vi } from 'vitest';
+
+describe('CanvasService', () => {
+  it('should execute canvas command on a canvas', () => {
+    const canvas = new MockCanvas();
+    const translator = new MockCanvasCommandTranslator();
+    const interpreter = new CanvasCommandInterpreter(canvas, translator);
+    const callback = vi.fn();
+    translator.translate.mockReturnValueOnce(callback);
+
+    interpreter.execute({
+      type: 'BEGIN_PATH',
+    });
+
+    expect(callback).toHaveBeenCalledWith(canvas);
+  });
+});
