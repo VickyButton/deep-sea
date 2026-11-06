@@ -125,15 +125,7 @@ export class Transform2D {
     return new Transform2D(Transform2D.DEFAULT_ROTATION, Transform2D.DEFAULT_SCALE, translation);
   }
 
-  private static get DEFAULT_ROTATION() {
-    return 0;
-  }
-
-  private static get DEFAULT_SCALE() {
-    return new Vector2(1, 1);
-  }
-
-  private static get DEFAULT_TRANSLATION() {
-    return new Vector2(0, 0);
-  }
+  private static readonly DEFAULT_ROTATION = 0;
+  private static readonly DEFAULT_SCALE = new Vector2(1, 1);
+  private static readonly DEFAULT_TRANSLATION = new Vector2(0, 0);
 }
