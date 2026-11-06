@@ -1,7 +1,7 @@
-import { NodeBase } from './NodeBase';
+import { Node } from './Node';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('NodeBase', () => {
+describe('Node', () => {
   it('should have no children by default', () => {
     expect(createNode().children).toEqual([]);
   });
@@ -13,7 +13,7 @@ describe('NodeBase', () => {
   it('should throw an error if trying to add self as a child', () => {
     const node = createNode();
 
-    expect(() => node.addChild(node)).toThrowError(NodeBase.CircularRelationshipError);
+    expect(() => node.addChild(node)).toThrowError(Node.CircularRelationshipError);
   });
 
   it('should throw an error if trying to add a parented node as a child', () => {
@@ -22,7 +22,7 @@ describe('NodeBase', () => {
 
     nodeWithParent.parent = createNode();
 
-    expect(() => node.addChild(nodeWithParent)).toThrowError(NodeBase.ChildHasParentError);
+    expect(() => node.addChild(nodeWithParent)).toThrowError(Node.ChildHasParentError);
   });
 
   it('should add a child', () => {
@@ -82,7 +82,7 @@ describe('NodeBase', () => {
   it('should throw an error if trying to set self as a parent', () => {
     const node = createNode();
 
-    expect(() => node.parent = node).toThrowError(NodeBase.CircularRelationshipError);
+    expect(() => node.parent = node).toThrowError(Node.CircularRelationshipError);
   });
 
   it('should set a parent', () => {
@@ -105,7 +105,7 @@ describe('NodeBase', () => {
   });
 });
 
-class NodeBaseImplementation extends NodeBase { }
+class NodeBaseImplementation extends Node { }
 
 function createNode(id = 'ID') {
   return new NodeBaseImplementation({

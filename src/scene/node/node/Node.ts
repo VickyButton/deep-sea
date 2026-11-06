@@ -1,18 +1,18 @@
-import type { NodeBaseOptions } from './nodeBase.types';
+import type { NodeOptions } from './node.types';
 import { Signal } from '../../signal/Signal';
 
 /** The base node class for all nodes. */
-export abstract class NodeBase {
+export abstract class Node {
   /** Emits when a child node is added to the node. */
-  public readonly childAddedSignal = new Signal<NodeBase>();
+  public readonly childAddedSignal = new Signal<Node>();
   /** Emits when a child node is removed from the node. */
-  public readonly childRemovedSignal = new Signal<NodeBase>();
+  public readonly childRemovedSignal = new Signal<Node>();
   /** The node's unique ID. */
   public readonly id: string;
-  private _children = new Set<NodeBase>();
-  private _parent: NodeBase | null = null;
+  private _children = new Set<Node>();
+  private _parent: Node | null = null;
 
-  constructor(options: NodeBaseOptions) {
+  constructor(options: NodeOptions) {
     this.id = options.id;
   }
 
@@ -31,9 +31,9 @@ export abstract class NodeBase {
    * @param node The node to set as the node's parent.
    * @throws An error if the parent node is the node itself.
    */
-  public set parent(node: NodeBase | null) {
+  public set parent(node: Node | null) {
     if (this === node) {
-      throw NodeBase.CircularRelationshipError;
+      throw Node.CircularRelationshipError;
     }
 
     this._parent = node;
@@ -45,13 +45,13 @@ export abstract class NodeBase {
    * @throws An error if the child node is the node itself.
    * @throws An error if the child node already has a parent.
    */
-  public addChild(node: NodeBase) {
+  public addChild(node: Node) {
     if (this === node) {
-      throw NodeBase.CircularRelationshipError;
+      throw Node.CircularRelationshipError;
     }
 
     if (node.parent !== null) {
-      throw NodeBase.ChildHasParentError;
+      throw Node.ChildHasParentError;
     }
 
     this._children.add(node);
@@ -63,7 +63,7 @@ export abstract class NodeBase {
    * Removes a child node from the node.
    * @param node The child node to remove.
    */
-  public removeChild(node: NodeBase) {
+  public removeChild(node: Node) {
     if (this._children.delete(node)) {
       node.parent = null;
       this.childRemovedSignal.emit(node);

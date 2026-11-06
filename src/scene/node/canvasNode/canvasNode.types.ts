@@ -1,6 +1,6 @@
-import type { NodeBaseOptions } from '../nodeBase/nodeBase.types';
+import type { NodeOptions } from '../node/node.types';
 
-export interface CanvasNodeOptions extends NodeBaseOptions {
+export interface CanvasNodeOptions extends NodeOptions {
   visible: boolean;
   zIndex: number;
 }

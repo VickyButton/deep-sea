@@ -1,8 +1,8 @@
 import { Camera2D } from '../camera2D/Camera2D';
-import { NodeBase } from '../nodeBase/NodeBase';
+import { Node } from '../node/Node';
 
 /** A node that acts as a scene's viewport. */
-export class Viewport extends NodeBase {
+export class Viewport extends Node {
   /** The viewport camera. */
   public readonly camera = Viewport.createCamera();
 

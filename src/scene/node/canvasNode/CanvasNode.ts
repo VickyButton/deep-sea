@@ -1,8 +1,8 @@
 import type { CanvasNodeOptions } from './canvasNode.types';
-import { NodeBase } from '../nodeBase/NodeBase';
+import { Node } from '../node/Node';
 
 /** A node that can draw to a canvas. */
-export class CanvasNode extends NodeBase {
+export class CanvasNode extends Node {
   private _visible: boolean;
   private _zIndex: number;
 
