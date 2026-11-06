@@ -3,6 +3,10 @@ import { Vector2 } from '../vector2/Vector2';
 import { describe, expect, it } from 'vitest';
 
 describe('Transform2D', () => {
+  it('should get determinant', () => {
+    expect(new Transform2D().determinant).toBe(1);
+  });
+
   it('should apply rotation to a 2D vector', () => {
     expect(Transform2D.fromRotation(Math.PI).applyTo(new Vector2(1, 1))).toEqual({
       x: -1.0000000000000002,

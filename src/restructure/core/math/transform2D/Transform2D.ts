@@ -19,6 +19,11 @@ export class Transform2D {
     ];
   }
 
+  /** The determinant of the matrix. */
+  public get determinant() {
+    return this.columns[0][0] * this.columns[1][1] - this.columns[0][1] * this.columns[1][0];
+  }
+
   /**
    * Applies the affine transform to a vector.
    * @param vector The vector to apply the affine transform to.
