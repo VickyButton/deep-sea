@@ -1,23 +1,17 @@
-import type { Color } from './color.types';
 import { clamp } from '../../../utils/clamp';
 
-const COLOR_COMPONENT_MIN = 0;
-const COLOR_COMPONENT_MAX = 255;
-const ALPHA_COMPONENT_MIN = 0;
-const ALPHA_COMPONENT_MAX = 1;
-
-/** The RGBA implementation of the Color interface. */
-export class Color_RGBA implements Color {
+/** A color which can be converted into a string. */
+export class Color {
   private _r: number;
   private _g: number;
   private _b: number;
   private _a: number;
 
   constructor(options?: RGBA_Options) {
-    this._r = options?.r !== undefined ? this.clampColorComponent(options.r) : COLOR_COMPONENT_MAX;
-    this._g = options?.g !== undefined ? this.clampColorComponent(options.g) : COLOR_COMPONENT_MAX;
-    this._b = options?.b !== undefined ? this.clampColorComponent(options.b) : COLOR_COMPONENT_MAX;
-    this._a = options?.a !== undefined ? this.clampAlphaComponent(options.a) : ALPHA_COMPONENT_MAX;
+    this._r = options?.r !== undefined ? this.clampColorComponent(options.r) : Color.COLOR_COMPONENT_MAX;
+    this._g = options?.g !== undefined ? this.clampColorComponent(options.g) : Color.COLOR_COMPONENT_MAX;
+    this._b = options?.b !== undefined ? this.clampColorComponent(options.b) : Color.COLOR_COMPONENT_MAX;
+    this._a = options?.a !== undefined ? this.clampAlphaComponent(options.a) : Color.ALPHA_COMPONENT_MAX;
   }
 
   /** The color's red value, ranging from 0 to 255 inclusive. */
@@ -48,7 +42,7 @@ export class Color_RGBA implements Color {
   }
 
   private clampColorComponent(value: number) {
-    return clamp(value, COLOR_COMPONENT_MIN, COLOR_COMPONENT_MAX);
+    return clamp(value, Color.COLOR_COMPONENT_MIN, Color.COLOR_COMPONENT_MAX);
   }
 
   /** The color's alpha value, ranging from 0 to 1 inclusive. */
@@ -61,7 +55,7 @@ export class Color_RGBA implements Color {
   }
 
   private clampAlphaComponent(value: number) {
-    return clamp(value, ALPHA_COMPONENT_MIN, ALPHA_COMPONENT_MAX);
+    return clamp(value, Color.ALPHA_COMPONENT_MIN, Color.ALPHA_COMPONENT_MAX);
   }
 
   public toString() {
@@ -69,7 +63,7 @@ export class Color_RGBA implements Color {
   }
 
   public static get RED() {
-    return new Color_RGBA({
+    return new Color({
       r: 255,
       g: 0,
       b: 0,
@@ -78,7 +72,7 @@ export class Color_RGBA implements Color {
   }
 
   public static get GREEN() {
-    return new Color_RGBA({
+    return new Color({
       r: 0,
       g: 255,
       b: 0,
@@ -87,7 +81,7 @@ export class Color_RGBA implements Color {
   }
 
   public static get BLUE() {
-    return new Color_RGBA({
+    return new Color({
       r: 0,
       g: 0,
       b: 255,
@@ -96,7 +90,7 @@ export class Color_RGBA implements Color {
   }
 
   public static get WHITE() {
-    return new Color_RGBA({
+    return new Color({
       r: 255,
       g: 255,
       b: 255,
@@ -105,13 +99,18 @@ export class Color_RGBA implements Color {
   }
 
   public static get BLACK() {
-    return new Color_RGBA({
+    return new Color({
       r: 0,
       g: 0,
       b: 0,
       a: 1,
     });
   }
+
+  private static readonly COLOR_COMPONENT_MIN = 0;
+  private static readonly COLOR_COMPONENT_MAX = 255;
+  private static readonly ALPHA_COMPONENT_MIN = 0;
+  private static readonly ALPHA_COMPONENT_MAX = 1;
 }
 
 export interface RGBA_Options {
