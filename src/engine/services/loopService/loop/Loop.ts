@@ -1,6 +1,6 @@
 import type { AnimationFrameProvider, FrameRequestCallback } from './animationFrameProvider/animationFrameProvider.types';
 import type { TimeProvider } from './timeProvider/timeProvider.types';
-import { clamp } from '../../../utils/clamp';
+import { clamp } from '../../../../utils/clamp';
 
 const LOOPS_PER_SECOND_MIN = 1;
 const LOOPS_PER_SECOND_MAX = 120;
