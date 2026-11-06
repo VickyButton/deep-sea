@@ -51,18 +51,12 @@ export class Vector2 {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 
-  /**
-   * Computes a vector that is perpendicular to this vector in the clockwise direction.
-   * @returns A vector that is perpendicular to this vector in the clockwise direction.
-   */
+  /** Computes a vector that is perpendicular to this vector in the clockwise direction. */
   public get perpendicularClockwise() {
     return new Vector2(this.y, this.x === 0 ? 0 : -this.x);
   }
 
-  /**
-   * Computes a vector that is perpendicular to this vector in the counterclockwise direction.
-   * @returns A vector that is perpendicular to this vector in the counterclockwise direction.
-   */
+  /** A vector that is perpendicular to this vector in the counterclockwise direction. */
   public get perpendicularCounterclockwise() {
     return new Vector2(this.y === 0 ? 0 : -this.y, this.x);
   }
