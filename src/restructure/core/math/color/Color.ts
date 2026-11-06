@@ -7,11 +7,11 @@ export class Color {
   private _b: number;
   private _a: number;
 
-  constructor(options?: RGBA_Options) {
-    this._r = options?.r !== undefined ? this.clampColorComponent(options.r) : Color.COLOR_COMPONENT_MAX;
-    this._g = options?.g !== undefined ? this.clampColorComponent(options.g) : Color.COLOR_COMPONENT_MAX;
-    this._b = options?.b !== undefined ? this.clampColorComponent(options.b) : Color.COLOR_COMPONENT_MAX;
-    this._a = options?.a !== undefined ? this.clampAlphaComponent(options.a) : Color.ALPHA_COMPONENT_MAX;
+  constructor(r = 255, g = 255, b = 255, a = 1) {
+    this._r = r !== undefined ? this.clampColorComponent(r) : Color.COLOR_COMPONENT_MAX;
+    this._g = g !== undefined ? this.clampColorComponent(g) : Color.COLOR_COMPONENT_MAX;
+    this._b = b !== undefined ? this.clampColorComponent(b) : Color.COLOR_COMPONENT_MAX;
+    this._a = a !== undefined ? this.clampAlphaComponent(a) : Color.ALPHA_COMPONENT_MAX;
   }
 
   /** The color's red value, ranging from 0 to 255 inclusive. */
@@ -63,59 +63,27 @@ export class Color {
   }
 
   public static get RED() {
-    return new Color({
-      r: 255,
-      g: 0,
-      b: 0,
-      a: 1,
-    });
+    return new Color(255, 0, 0, 1);
   }
 
   public static get GREEN() {
-    return new Color({
-      r: 0,
-      g: 255,
-      b: 0,
-      a: 1,
-    });
+    return new Color(0, 255, 0, 1);
   }
 
   public static get BLUE() {
-    return new Color({
-      r: 0,
-      g: 0,
-      b: 255,
-      a: 1,
-    });
+    return new Color(0, 0, 255, 1);
   }
 
   public static get WHITE() {
-    return new Color({
-      r: 255,
-      g: 255,
-      b: 255,
-      a: 1,
-    });
+    return new Color(255, 255, 255, 1);
   }
 
   public static get BLACK() {
-    return new Color({
-      r: 0,
-      g: 0,
-      b: 0,
-      a: 1,
-    });
+    return new Color(0, 0, 0, 1);
   }
 
   private static readonly COLOR_COMPONENT_MIN = 0;
   private static readonly COLOR_COMPONENT_MAX = 255;
   private static readonly ALPHA_COMPONENT_MIN = 0;
   private static readonly ALPHA_COMPONENT_MAX = 1;
-}
-
-export interface RGBA_Options {
-  r?: number;
-  g?: number;
-  b?: number;
-  a?: number;
 }
