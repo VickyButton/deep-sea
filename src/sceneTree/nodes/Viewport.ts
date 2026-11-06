@@ -1,5 +1,5 @@
-import { Camera2D } from '../camera2D/Camera2D';
-import { Node } from '../node/Node';
+import { Camera2D } from './2D/Camera2D';
+import { Node } from './Node';
 
 /** A node that acts as a scene's viewport. */
 export class Viewport extends Node {

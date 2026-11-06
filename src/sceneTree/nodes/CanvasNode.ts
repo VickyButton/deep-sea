@@ -1,5 +1,5 @@
 import type { CanvasNodeOptions } from './CanvasNode.types';
-import { Node } from '../node/Node';
+import { Node } from './Node';
 
 /** A node that can draw to a canvas. */
 export class CanvasNode extends Node {

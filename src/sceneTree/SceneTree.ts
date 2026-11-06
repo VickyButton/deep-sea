@@ -1,5 +1,5 @@
 import type { Engine } from '../engine/Engine';
-import { Viewport } from './nodes/viewport/Viewport';
+import { Viewport } from './nodes/Viewport';
 
 /** Controls scene node hierarchy and provides nodes with an interface for using engine services. */
 export class SceneTree {
