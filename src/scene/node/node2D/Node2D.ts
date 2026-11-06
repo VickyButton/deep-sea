@@ -46,7 +46,7 @@ export class Node2D extends CanvasNode {
   }
 
   public applyScale(ratio: Vector2) {
-    this.scale = this.scale.multiply(ratio);
+    this.scale = new Vector2(this.scale.x * ratio.x, this.scale.y * ratio.y);
   }
 
   public rotate(radians: number) {
