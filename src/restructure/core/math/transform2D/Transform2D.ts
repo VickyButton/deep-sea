@@ -67,10 +67,7 @@ export class Transform2D {
    * @returns The affine-transformed vector.
    */
   public applyTo(vector: Vector2) {
-    return new Vector2(
-      vector.dot(new Vector2(this.columns[0][0], this.columns[1][0])),
-      vector.dot(new Vector2(this.columns[0][1], this.columns[1][1])),
-    ).add(this.columns[2]);
+    return this.applyBasisTo(vector).add(this.columns[2]);
   }
 
   /**
