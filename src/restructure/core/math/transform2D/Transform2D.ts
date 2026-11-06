@@ -35,6 +35,18 @@ export class Transform2D {
 
   /** Inverts the transformation matrix. */
   public invert() {
+    // Invert the basis of the matrix.
+    this.invertBasis();
+
+    // Flip signs of cells in the third column.
+    this.columns[2].scale(-1);
+
+    // Apply basis transform to the third column.
+    this.columns[2] = this.applyBasisTo(this.columns[2]);
+  }
+
+  /** Inverts the basis of the transformation matrix. */
+  public invertBasis() {
     const determinant = this.determinant;
 
     if (determinant === 0) {
@@ -53,12 +65,6 @@ export class Transform2D {
     this.columns[0][1] *= -inverseDeterminant;
     this.columns[1][0] *= -inverseDeterminant;
     this.columns[1][1] *= inverseDeterminant;
-
-    // Flip signs of cells in the third column.
-    this.columns[2].scale(-1);
-
-    // Apply basis transform to the third column.
-    this.columns[2] = this.applyBasisTo(this.columns[2]);
   }
 
   /**
