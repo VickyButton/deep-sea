@@ -4,9 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --open",
     "build": "tsc && vite build",
-    "preview": "vite preview",
     "lint": "eslint ./src/restructure",
     "lint:fix": "eslint --fix ./src/restructure",
     "test": "vitest ./src/restructure"
@@ -24,6 +22,5 @@
   },
   "dependencies": {
     "uuid": "^13.0.0"
-  },
-  "exports": {}
+  }
 }
