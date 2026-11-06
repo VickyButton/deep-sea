@@ -2,12 +2,12 @@ import { Color } from './Color';
 import { describe, expect, it } from 'vitest';
 
 describe('Color', () => {
-  it('should default to fully-opaque white color', () => {
+  it('should default to fully-opaque black color', () => {
     const color = new Color();
 
-    expect(color.r).toEqual(255);
-    expect(color.g).toEqual(255);
-    expect(color.b).toEqual(255);
+    expect(color.r).toEqual(0);
+    expect(color.g).toEqual(0);
+    expect(color.b).toEqual(0);
     expect(color.a).toEqual(1);
   });
 
@@ -60,9 +60,9 @@ describe('Color', () => {
   });
 
   it('should convert color into a canvas-ready color string', () => {
-    const color = new Color();
+    const color = new Color(0, 0, 0, 1);
 
-    expect(color.toString()).toEqual('rgba(255,255,255,1)');
+    expect(color.toString()).toEqual('rgba(0,0,0,1)');
   });
 
   it('should create red color', () => {

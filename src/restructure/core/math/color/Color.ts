@@ -7,7 +7,7 @@ export class Color {
   private _b: number;
   private _a: number;
 
-  constructor(r = 255, g = 255, b = 255, a = 1) {
+  constructor(r = 0, g = 0, b = 0, a = 1) {
     this._r = r !== undefined ? this.clampColorComponent(r) : Color.COLOR_COMPONENT_MAX;
     this._g = g !== undefined ? this.clampColorComponent(g) : Color.COLOR_COMPONENT_MAX;
     this._b = b !== undefined ? this.clampColorComponent(b) : Color.COLOR_COMPONENT_MAX;
