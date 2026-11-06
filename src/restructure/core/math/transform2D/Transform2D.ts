@@ -22,13 +22,25 @@ export class Transform2D {
   /**
    * Applies the affine transform to a vector.
    * @param vector The vector to apply the affine transform to.
-   * @returns The transformed vector.
+   * @returns The affine-transformed vector.
    */
   public applyTo(vector: Vector2) {
     return new Vector2(
       vector.dot(new Vector2(this.columns[0][0], this.columns[1][0])),
       vector.dot(new Vector2(this.columns[0][1], this.columns[1][1])),
     ).add(this.columns[2]);
+  }
+
+  /**
+   * Applies the basis transform to a vector.
+   * @param vector The vector to apply the basis transform to.
+   * @returns The basis-transformed vector.
+   */
+  public applyBasisTo(vector: Vector2) {
+    return new Vector2(
+      vector.dot(new Vector2(this.columns[0][0], this.columns[1][0])),
+      vector.dot(new Vector2(this.columns[0][1], this.columns[1][1])),
+    );
   }
 
   /**

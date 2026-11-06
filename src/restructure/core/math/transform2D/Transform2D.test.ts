@@ -24,10 +24,17 @@ describe('Transform2D', () => {
     });
   });
 
-  it('applies transform to a 2D vector', () => {
+  it('applies affine transform to a 2D vector', () => {
     expect(new Transform2D(Math.PI, new Vector2(2, 2), new Vector2(1, 1)).applyTo(new Vector2(1, 1))).toEqual({
       x: -1.0000000000000004,
       y: -0.9999999999999998,
+    });
+  });
+
+  it('should apply basis transform to a 2D vector', () => {
+    expect(new Transform2D(Math.PI, new Vector2(2, 2), new Vector2(1, 1)).applyBasisTo(new Vector2(1, 1))).toEqual({
+      x: -2.0000000000000004,
+      y: -1.9999999999999998,
     });
   });
 });
