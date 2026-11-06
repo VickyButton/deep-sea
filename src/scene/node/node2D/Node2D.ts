@@ -12,11 +12,11 @@ export class Node2D extends CanvasNode {
   constructor(options: Node2DOptions) {
     super(options);
 
-    this._positionX = options.positionX;
-    this._positionY = options.positionY;
+    this._positionX = options.position.x;
+    this._positionY = options.position.y;
     this._rotation = options.rotation;
-    this._scaleX = options.scaleX;
-    this._scaleY = options.scaleY;
+    this._scaleX = options.scale.x;
+    this._scaleY = options.scale.y;
   }
 
   public get position() {

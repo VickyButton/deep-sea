@@ -1,9 +1,13 @@
 import type { CanvasNodeOptions } from '../canvasNode/canvasNode.types';
 
 export interface Node2DOptions extends CanvasNodeOptions {
-  scaleX: number;
-  scaleY: number;
+  position: {
+    x: number;
+    y: number;
+  };
   rotation: number;
-  positionX: number;
-  positionY: number;
+  scale: {
+    x: number;
+    y: number;
+  };
 }
