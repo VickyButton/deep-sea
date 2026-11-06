@@ -9,6 +9,17 @@ export class Viewport extends NodeBase {
   private static createCamera() {
     return new Camera2D({
       id: 'VIEWPORT_CAMERA',
+      position: {
+        x: 0,
+        y: 0,
+      },
+      rotation: 0,
+      scale: {
+        x: 1,
+        y: 1,
+      },
+      visible: true,
+      zIndex: 0,
     });
   }
 }
