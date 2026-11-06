@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "tsc && vite build",
-    "lint": "eslint ./src/restructure",
-    "lint:fix": "eslint --fix ./src/restructure",
-    "test": "vitest ./src/restructure"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "test": "vitest"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.10.0",
