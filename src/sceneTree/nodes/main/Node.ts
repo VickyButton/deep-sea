@@ -94,15 +94,22 @@ export abstract class Node {
    */
   public addChild(node: Node) {
     if (this === node) {
+      // Attempting to add self as a child, throw error.
       throw Node.CircularRelationshipError;
     }
 
     if (node.parent !== null) {
+      // Attempting to add parented node as a child, throw error.
       throw Node.ChildHasParentError;
     }
 
+    // Add node to children.
     this._children.add(node);
+
+    // Set node's parent to this node.
     node.parent = this;
+
+    // Emit signal.
     this.childAddedSignal.emit(node);
   }
 
