@@ -1,26 +1,38 @@
+import type { Camera2D } from '../2D/Camera2D';
 import { Node } from './Node';
-import { Camera2D } from '../2D/Camera2D';
 
 /** A node that acts as a scene's viewport. */
 export class Viewport extends Node {
-  /** The viewport camera. */
-  public readonly camera = Viewport.createCamera();
+  private _camera: Camera2D | null = null;
 
-  private static createCamera() {
-    return new Camera2D({
-      id: 'VIEWPORT_CAMERA',
-      position: {
-        x: 0,
-        y: 0,
-      },
-      rotation: 0,
-      scale: {
-        x: 1,
-        y: 1,
-      },
-      visible: true,
-      zIndex: 0,
-      zoom: 1,
-    });
+  /** The viewport's camera, or null if it has no camera. */
+  public get camera() {
+    return this._camera;
+  }
+
+  /**
+   * Sets the viewport's camera.
+   * @param camera The camera to set the viewport's camera to.
+   */
+  public setCamera(camera: Camera2D) {
+    // Add camera as a child.
+    this.addChild(camera);
+
+    // Store reference of camera.
+    this._camera = camera;
+  }
+
+  /** Unsets the viewport's camera. */
+  public unsetCamera() {
+    if (!this.camera) {
+      // No camera to unset, exit early.
+      return;
+    }
+
+    // Remove camera from children.
+    this.removeChild(this.camera);
+
+    // Delete camera reference.
+    this._camera = null;
   }
 }
