@@ -13,7 +13,7 @@ export class Camera2D extends Node2D {
   constructor(options: Camera2DOptions) {
     super(options);
 
-    this._zoom = options.zoom;
+    this._zoom = options.zoom ?? Camera2D.ZOOM_DEFAULT;
   }
 
   /** The camera's zoom level. The higher the zoom level, the more zoomed out the camera is. */
@@ -33,6 +33,7 @@ export class Camera2D extends Node2D {
     return clamp(value, Camera2D.ZOOM_MINIMUM, Camera2D.ZOOM_MAXIMUM);
   }
 
-  private static ZOOM_MAXIMUM = 10; // TODO: Make adjustable via engine config.
-  private static ZOOM_MINIMUM = 1; // TODO: Make adjustable via engine config.
+  private static readonly ZOOM_DEFAULT = 1;
+  private static readonly ZOOM_MAXIMUM = 10; // TODO: Make adjustable via engine config.
+  private static readonly ZOOM_MINIMUM = 1; // TODO: Make adjustable via engine config.
 }
