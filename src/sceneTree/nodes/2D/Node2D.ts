@@ -3,29 +3,30 @@ import { Vector2 } from '../../../core/math/Vector2';
 import { CanvasNode } from '../main/CanvasNode';
 
 export class Node2D extends CanvasNode {
-  private _positionX: number;
-  private _positionY: number;
+  private _position: Vector2;
   private _rotation: number;
-  private _scaleX: number;
-  private _scaleY: number;
+  private _scale: Vector2;
 
   constructor(options: Node2DOptions) {
     super(options);
 
-    this._positionX = options.position.x;
-    this._positionY = options.position.y;
-    this._rotation = options.rotation;
-    this._scaleX = options.scale.x;
-    this._scaleY = options.scale.y;
+    this._position = new Vector2(
+      options.positionX ?? Node2D.POSITION_X_DEFAULT,
+      options.positionY ?? Node2D.POSITION_Y_DEFAULT,
+    );
+    this._rotation = options.rotation ?? Node2D.ROTATION_DEFAULT;
+    this._scale = new Vector2(
+      options.scaleX ?? Node2D.SCALE_X_DEFAULT,
+      options.scaleY ?? Node2D.SCALE_Y_DEFAULT,
+    );
   }
 
   public get position() {
-    return new Vector2(this._positionX, this._positionY);
+    return this._position;
   }
 
   public set position(position: Vector2) {
-    this._positionX = position.x;
-    this._positionY = position.y;
+    this._position = position;
   }
 
   public get rotation() {
@@ -37,12 +38,11 @@ export class Node2D extends CanvasNode {
   }
 
   public get scale() {
-    return new Vector2(this._scaleX, this._scaleY);
+    return this._scale;
   }
 
   public set scale(scale: Vector2) {
-    this._scaleX = scale.x;
-    this._scaleY = scale.y;
+    this._scale = scale;
   }
 
   public applyScale(ratio: Vector2) {
@@ -56,4 +56,10 @@ export class Node2D extends CanvasNode {
   public translate(offset: Vector2) {
     this.position = this.position.add(offset);
   }
+
+  private static readonly POSITION_X_DEFAULT = 0;
+  private static readonly POSITION_Y_DEFAULT = 0;
+  private static readonly ROTATION_DEFAULT = 0;
+  private static readonly SCALE_X_DEFAULT = 1;
+  private static readonly SCALE_Y_DEFAULT = 1;
 }
