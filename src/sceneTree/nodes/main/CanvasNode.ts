@@ -24,7 +24,7 @@ export class CanvasNode extends Node {
 
   /**
    * Sets the node's local visibility.
-   * @param visible The visibility to set the node's visibility to.
+   * @param visible The visibility to set the node's local visibility to.
    */
   public set visible(visible: boolean) {
     this._visible = visible;
@@ -47,7 +47,7 @@ export class CanvasNode extends Node {
 
   /**
    * Sets the node's local z-index.
-   * @param zIndex The z-index to set the node's z-index to.
+   * @param zIndex The z-index to set the node's local z-index to.
    */
   public set zIndex(zIndex: number) {
     this._zIndex = zIndex;
