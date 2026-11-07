@@ -16,6 +16,7 @@ export class Viewport extends Node {
    */
   public setCamera(camera: Camera2D) {
     if (this.camera) {
+      // Viewport already has a camera, unset it before setting new camera.
       this.unsetCamera();
     }
 
