@@ -1,5 +1,5 @@
-import type { AnimationFrameProvider, FrameRequestCallback } from './animationFrameProvider/animationFrameProvider.types';
 import type { TimeProvider } from './timeProvider/timeProvider.types';
+import type { Animation } from '../../../../core/browser/Animation';
 import { clamp } from '../../../../utils/clamp';
 
 const LOOPS_PER_SECOND_MIN = 1;
@@ -7,7 +7,7 @@ const LOOPS_PER_SECOND_MAX = 120;
 
 /** Responsible for managing loop timing and executing loop callback. */
 export class Loop {
-  private readonly animationFrameProvider: AnimationFrameProvider;
+  private readonly animation: Animation;
   private readonly timeProvider: TimeProvider;
   private lastAnimationFrameTimestamp = 0;
   private lastLoopTimestamp = 0;
@@ -16,8 +16,8 @@ export class Loop {
   private millisecondsSinceLastLoop = 0;
   private scheduledAnimationFrameRequestId: number | null = null;
 
-  constructor(animationFrameProvider: AnimationFrameProvider, timeProvider: TimeProvider) {
-    this.animationFrameProvider = animationFrameProvider;
+  constructor(animation: Animation, timeProvider: TimeProvider) {
+    this.animation = animation;
     this.timeProvider = timeProvider;
   }
 
@@ -45,7 +45,7 @@ export class Loop {
   }
 
   private requestAnimationFrame(callback: FrameRequestCallback) {
-    return this.animationFrameProvider.requestAnimationFrame(callback);
+    return this.animation.requestAnimationFrame(callback);
   }
 
   private onAnimationFrame = () => {
@@ -96,7 +96,7 @@ export class Loop {
   }
 
   private cancelAnimationFrameRequest(requestId: number) {
-    this.animationFrameProvider.cancelAnimationFrameRequest(requestId);
+    this.animation.cancelAnimationFrameRequest(requestId);
     this.scheduledAnimationFrameRequestId = null;
   }
 }
