@@ -6,6 +6,10 @@ export class CanvasNode extends Node {
   private _visible: boolean;
   private _zIndex: number;
 
+  /**
+   * Creates a new CanvasNode instance.
+   * @param options The options for the node.
+   */
   constructor(options: CanvasNodeOptions) {
     super(options);
 
