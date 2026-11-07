@@ -1,4 +1,4 @@
-import { Vector2 } from '../vector2/Vector2';
+import { Vector2 } from './Vector2';
 
 /** An axis-aligned 2D rectangle. */
 export class Rectangle2 {

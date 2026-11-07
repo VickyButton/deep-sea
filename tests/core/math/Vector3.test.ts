@@ -1,6 +1,5 @@
-
 import { Vector2 } from '../../../src/core/math/Vector2';
-import { Vector3 } from '../../../src/core/math/vector3/Vector3';
+import { Vector3 } from '../../../src/core/math/Vector3';
 import { describe, expect, it } from 'vitest';
 
 describe('Vector3', () => {

@@ -1,5 +1,5 @@
 
-import { Polygon2 } from '../../../src/core/math/polygon2/Polygon2';
+import { Polygon2 } from '../../../src/core/math/Polygon2';
 import { Vector2 } from '../../../src/core/math/Vector2';
 import { describe, expect, it } from 'vitest';
 

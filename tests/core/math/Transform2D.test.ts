@@ -1,5 +1,4 @@
-
-import { Transform2D } from '../../../src/core/math/transform2D/Transform2D';
+import { Transform2D } from '../../../src/core/math/Transform2D';
 import { Vector2 } from '../../../src/core/math/Vector2';
 import { describe, expect, it } from 'vitest';
 

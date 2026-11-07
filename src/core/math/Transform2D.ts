@@ -1,4 +1,4 @@
-import { Vector2 } from '../vector2/Vector2';
+import { Vector2 } from './Vector2';
 
 /** A 2D transformation matrix that can be applied to a 2D vector. */
 export class Transform2D {

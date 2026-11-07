@@ -1,4 +1,4 @@
-import type { Vector2 } from '../vector2/Vector2';
+import type { Vector2 } from './Vector2';
 
 /** A 2D polygon composed of vertices. */
 export class Polygon2 {

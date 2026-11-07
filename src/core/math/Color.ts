@@ -1,4 +1,4 @@
-import { clamp } from '../../../utils/clamp';
+import { clamp } from '../../utils/clamp';
 
 /** A color which can be converted into a string. */
 export class Color {

@@ -1,4 +1,4 @@
-import { Vector2 } from '../Vector2';
+import { Vector2 } from './Vector2';
 
 /** A vector consisting of 3 components. */
 export class Vector3 {
