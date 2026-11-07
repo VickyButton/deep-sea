@@ -1,4 +1,4 @@
-import { Stroke } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/stroke/Stroke';
+import { Stroke } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/Stroke';
 import { describe, expect, it } from 'vitest';
 
 describe('Stroke', () => {

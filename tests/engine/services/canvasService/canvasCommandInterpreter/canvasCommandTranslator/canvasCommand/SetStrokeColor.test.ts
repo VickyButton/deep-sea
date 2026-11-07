@@ -1,4 +1,4 @@
-import { SetStrokeColor } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/setStrokeColor/SetStrokeColor';
+import { SetStrokeColor } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/SetStrokeColor';
 import { describe, expect, it } from 'vitest';
 
 describe('SetStrokeColor', () => {

@@ -1,4 +1,4 @@
-import { SetTransform } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/setTransform/SetTransform';
+import { SetTransform } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/SetTransform';
 import { describe, expect, it } from 'vitest';
 
 describe('SetTransform', () => {

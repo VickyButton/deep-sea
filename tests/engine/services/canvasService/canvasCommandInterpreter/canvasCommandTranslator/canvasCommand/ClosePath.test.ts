@@ -1,4 +1,4 @@
-import { ClosePath } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/closePath/ClosePath';
+import { ClosePath } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/ClosePath';
 import { describe, expect, it } from 'vitest';
 
 describe('ClosePath', () => {
