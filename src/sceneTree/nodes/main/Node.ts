@@ -53,6 +53,7 @@ export abstract class Node {
    * @param tree The tree to enter.
    */
   public enterTree(tree: SceneTree) {
+    this._tree = tree;
     this.treeEnteredSignal.emit(tree);
     this.children.forEach((child) => child.enterTree(tree));
   }

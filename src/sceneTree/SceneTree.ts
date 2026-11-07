@@ -7,7 +7,7 @@ export class SceneTree {
 
   /** Creates a new SceneTree. */
   constructor() {
-    this.viewport.tree = this;
+    this.viewport.enterTree(this);
   }
 
   private static createViewport() {
