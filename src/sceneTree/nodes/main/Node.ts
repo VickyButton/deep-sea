@@ -118,10 +118,16 @@ export abstract class Node {
    * @param node The child node to remove.
    */
   public removeChild(node: Node) {
-    if (this._children.delete(node)) {
-      node.parent = null;
-      this.childRemovedSignal.emit(node);
+    if (!this._children.delete(node)) {
+      // Passed node is not a child of this node, exit early.
+      return;
     }
+
+    // Set removed child node's parent to null.
+    node.parent = null;
+
+    // Emit signal.
+    this.childRemovedSignal.emit(node);
   }
 
   public static get AlreadyInTreeError() {
