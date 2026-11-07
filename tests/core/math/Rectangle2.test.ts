@@ -1,4 +1,4 @@
-import { Rectangle2 } from './Rectangle2';
+import { Rectangle2 } from '../../../src/core/math/rectangle2/Rectangle2';
 import { describe, expect, it } from 'vitest';
 
 describe('Rectangle2', () => {
