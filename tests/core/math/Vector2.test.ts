@@ -1,4 +1,4 @@
-import { Vector2 } from './Vector2';
+import { Vector2 } from '../../../src/core/math/vector2/Vector2';
 import { describe, expect, it } from 'vitest';
 
 describe('Vector2', () => {
