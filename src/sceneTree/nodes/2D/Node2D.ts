@@ -86,7 +86,10 @@ export class Node2D extends CanvasNode {
    * @param ratio The ratio to scale the node by.
    */
   public applyScale(ratio: Vector2) {
-    this.scale = new Vector2(this.scale.x * ratio.x, this.scale.y * ratio.y);
+    this.scale = new Vector2(
+      this.scale.x * ratio.x,
+      this.scale.y * ratio.y,
+    );
   }
 
   private static readonly POSITION_X_DEFAULT = 0;
