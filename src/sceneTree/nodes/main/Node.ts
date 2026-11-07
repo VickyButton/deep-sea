@@ -18,6 +18,10 @@ export abstract class Node {
   private _parent: Node | null = null;
   private _tree: SceneTree | null = null;
 
+  /**
+   * Creates a new Node instance.
+   * @param options The options for the node.
+   */
   constructor(options: NodeOptions) {
     this.id = options.id;
   }
