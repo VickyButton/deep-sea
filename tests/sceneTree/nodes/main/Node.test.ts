@@ -24,6 +24,28 @@ describe('Node', () => {
     expect(node.tree).toBe(tree);
   });
 
+  it('should emit a signal upon entering tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+    const callback = vi.fn();
+
+    node.treeEnteredSignal.listen(callback);
+    node.tree = tree;
+
+    expect(callback).toHaveBeenCalledWith(tree);
+  });
+
+  it('should enter children into tree upon entering tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+    const child = createNode();
+    node.addChild(child);
+
+    node.tree = tree;
+
+    expect(child.tree).toBe(tree);
+  });
+
   it('should throw an error if trying to add self as a child', () => {
     const node = createNode();
 

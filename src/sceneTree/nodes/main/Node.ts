@@ -10,6 +10,8 @@ export abstract class Node {
   public readonly childRemovedSignal = new Signal<Node>();
   /** The node's unique ID. */
   public readonly id: string;
+  /** Emits when the node enters a tree. */
+  public readonly treeEnteredSignal = new Signal<SceneTree>();
   private _children = new Set<Node>();
   private _parent: Node | null = null;
   private _tree: SceneTree | null = null;
@@ -52,6 +54,15 @@ export abstract class Node {
    */
   public set tree(tree: SceneTree | null) {
     this._tree = tree;
+
+    if (tree) {
+      this.enterTree(tree);
+    }
+  }
+
+  private enterTree(tree: SceneTree) {
+    this.treeEnteredSignal.emit(tree);
+    this.children.forEach((child) => child.tree = tree);
   }
 
   /**
