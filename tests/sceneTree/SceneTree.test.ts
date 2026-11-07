@@ -7,4 +7,8 @@ describe('SceneTree', () => {
 
     expect(tree.viewport.tree).toBe(tree);
   });
+
+  it('should set viewport camera', () => {
+    expect(new SceneTree().viewport.camera).not.toBe(null);
+  });
 });
