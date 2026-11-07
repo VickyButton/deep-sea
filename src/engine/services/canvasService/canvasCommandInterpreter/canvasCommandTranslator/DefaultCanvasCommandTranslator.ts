@@ -1,5 +1,5 @@
-import type { Canvas } from '../../../../../core/os/Canvas';
 import type { CanvasCommand } from './canvasCommand/CanvasCommand';
+import type { Canvas } from '../../../../../core/os/Canvas';
 import { CanvasCommandTranslator } from './CanvasCommandTranslator';
 
 /** The default canvas command translator. */
