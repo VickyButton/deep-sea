@@ -1,5 +1,5 @@
-import { SignalController } from './SignalController';
-import { Signal } from '../signal/Signal';
+import { Signal } from '../../../src/sceneTree/signal/Signal';
+import { SignalController } from '../../../src/sceneTree/signalController/SignalController';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('SignalController', () => {
