@@ -1,19 +1,17 @@
-import { Root } from './nodes/main/Root';
+import { Viewport } from './nodes/main/Viewport';
 
 /** Controls scene node hierarchy and provides nodes with an interface for using engine services. */
 export class SceneTree {
   /** The root node. */
-  public readonly root = SceneTree.createRoot();
+  public readonly viewport = SceneTree.createViewport();
 
-  /**
-   * Creates a new SceneTree.
-   */
+  /** Creates a new SceneTree. */
   constructor() {
-    this.root.tree = this;
+    this.viewport.tree = this;
   }
 
-  private static createRoot() {
-    return new Root({
+  private static createViewport() {
+    return new Viewport({
       id: 'ROOT',
     });
   }

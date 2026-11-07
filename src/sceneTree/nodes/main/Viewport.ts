@@ -20,6 +20,7 @@ export class Viewport extends Node {
       },
       visible: true,
       zIndex: 0,
+      zoom: 1,
     });
   }
 }
