@@ -145,6 +145,22 @@ describe('Node', () => {
     expect(child.parent).toBe(null);
   });
 
+  it('should return false if child was removed', () => {
+    const node = createNode();
+    const child = createNode();
+
+    expect(node.removeChild(child)).toBe(false);
+  });
+
+  it('should return true if child was removed', () => {
+    const node = createNode();
+    const child = createNode();
+
+    node.addChild(child);
+
+    expect(node.removeChild(child)).toBe(true);
+  });
+
   it('should emit a signal upon removing a child', () => {
     const node = createNode();
     const child = createNode();

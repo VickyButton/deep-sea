@@ -127,11 +127,12 @@ export abstract class Node {
   /**
    * Removes a child node from the node.
    * @param node The child node to remove.
+   * @returns True if the child was removed and false if not.
    */
   public removeChild(node: Node) {
     if (!this._children.delete(node)) {
-      // Passed node is not a child of this node, exit early.
-      return;
+      // Passed node is not a child of this node, return false.
+      return false;
     }
 
     // Set removed child node's parent to null.
@@ -139,6 +140,8 @@ export abstract class Node {
 
     // Child has been fully removed, emit signal.
     this.childRemovedSignal.emit(node);
+
+    return true;
   }
 
   /** Thrown when attempting to enter a node into a tree while already in a tree. */
