@@ -32,7 +32,7 @@ export abstract class Node {
     return Array.from(this._children);
   }
 
-  /** The node's parent node, or null if it has no parent. */
+  /** The node's parent node or null if it has no parent. */
   public get parent() {
     return this._parent;
   }

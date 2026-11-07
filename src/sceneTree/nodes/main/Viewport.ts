@@ -5,7 +5,7 @@ import { Node } from './Node';
 export class Viewport extends Node {
   private _camera: Camera2D | null = null;
 
-  /** The viewport's camera, or null if it has no camera. */
+  /** The viewport's camera or null if it has no camera. */
   public get camera() {
     return this._camera;
   }
