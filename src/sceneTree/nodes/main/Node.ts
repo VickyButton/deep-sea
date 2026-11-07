@@ -12,6 +12,8 @@ export abstract class Node {
   public readonly id: string;
   /** Emits when the node enters a tree. */
   public readonly treeEnteredSignal = new Signal<SceneTree>();
+  /** Emits when the node exits a tree. */
+  public readonly treeExitedSignal = new Signal<SceneTree>();
   private _children = new Set<Node>();
   private _parent: Node | null = null;
   private _tree: SceneTree | null = null;
@@ -53,9 +55,30 @@ export abstract class Node {
    * @param tree The tree to enter.
    */
   public enterTree(tree: SceneTree) {
+    // Enter self into tree before entering children into tree.
     this._tree = tree;
     this.treeEnteredSignal.emit(tree);
+
+    // Enter children into tree.
     this.children.forEach((child) => child.enterTree(tree));
+  }
+
+  /** Exits the node and its children from their current tree. */
+  public exitTree() {
+    // Exit children from tree before exiting self from tree.
+    this.children.forEach((child) => child.exitTree());
+
+    if (!this.tree) {
+      // Not in a tree, exit early.
+      return;
+    }
+
+    // Save tree reference before exiting.
+    const previousTree = this.tree;
+
+    // Exit self from tree.
+    this._tree = null;
+    this.treeExitedSignal.emit(previousTree);
   }
 
   /**

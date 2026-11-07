@@ -46,6 +46,49 @@ describe('Node', () => {
     expect(child.tree).toBe(tree);
   });
 
+  it('should exit a tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+
+    node.enterTree(tree);
+    node.exitTree();
+
+    expect(node.tree).toBe(null);
+  });
+
+  it('should not emit a signal upon exiting tree if not in a tree', () => {
+    const node = createNode();
+    const callback = vi.fn();
+
+    node.treeExitedSignal.listen(callback);
+    node.exitTree();
+
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('should emit a signal upon exiting tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+    const callback = vi.fn();
+
+    node.treeExitedSignal.listen(callback);
+    node.enterTree(tree);
+    node.exitTree();
+
+    expect(callback).toHaveBeenCalledWith(tree);
+  });
+
+  it('should exit children from tree upon exiting tree', () => {
+    const node = createNode();
+    const child = createNode();
+    node.addChild(child);
+
+    node.enterTree(new SceneTree());
+    node.exitTree();
+
+    expect(child.tree).toBe(null);
+  });
+
   it('should throw an error if trying to add self as a child', () => {
     const node = createNode();
 
