@@ -1,4 +1,5 @@
 import type { NodeOptions } from './Node.types';
+import type { SceneTree } from '../../SceneTree';
 import { Signal } from '../../signal/Signal';
 
 /** The base node class for all nodes. */
@@ -37,6 +38,11 @@ export abstract class Node {
     }
 
     this._parent = node;
+  }
+
+  /** The scene tree to which the node belongs to or null if the node does not belong to a scene tree. */
+  public get tree(): SceneTree | null {
+    return this.parent?.tree ?? null;
   }
 
   /**
