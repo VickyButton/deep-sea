@@ -1,6 +1,7 @@
-import { AnimationFrameProvider_Mock } from './animationFrameProvider/AnimationFrameProvider_Mock';
-import { Loop } from './Loop';
-import { TimeProvider_Mock } from './timeProvider/TimeProvider_Mock';
+
+import { Loop } from '../../../../../src/engine/services/loopService/loop/Loop';
+import { MockAnimation } from '../../../../mocks/MockAnimation';
+import { MockTime } from '../../../../mocks/MockTime';
 import { afterEach, beforeEach, describe, it, vi } from 'vitest';
 
 // TODO: Rewrite after Loop rework w/ callbacks.
@@ -15,8 +16,8 @@ describe('Loop', () => {
   });
 
   it('should emit "interval_elapsed" signal upon loop interval elapsing after starting', () => {
-    const animationFrameProvider = new AnimationFrameProvider_Mock();
-    const timeProvider = new TimeProvider_Mock();
+    const animationFrameProvider = new MockAnimation();
+    const timeProvider = new MockTime();
     const loop = new Loop(animationFrameProvider, timeProvider);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
@@ -27,8 +28,8 @@ describe('Loop', () => {
   });
 
   it('should emit "interval_elapsed" signal upon loop interval elapsing after stopping', () => {
-    const animationFrameProvider = new AnimationFrameProvider_Mock();
-    const timeProvider = new TimeProvider_Mock();
+    const animationFrameProvider = new MockAnimation();
+    const timeProvider = new MockTime();
     const loop = new Loop(animationFrameProvider, timeProvider);
     const loopsPerSecond = 1;
     const loopsPerSecondInterval = 1000;
@@ -41,12 +42,12 @@ describe('Loop', () => {
   });
 });
 
-function advanceTime(ms: number, timeProvider: TimeProvider_Mock) {
+function advanceTime(ms: number, timeProvider: MockTime) {
   advanceClockByTime(timeProvider, ms);
   advanceTimersByTime(ms);
 }
 
-function advanceClockByTime(timeProvider: TimeProvider_Mock, ms: number) {
+function advanceClockByTime(timeProvider: MockTime, ms: number) {
   timeProvider.now += ms;
 }
 
