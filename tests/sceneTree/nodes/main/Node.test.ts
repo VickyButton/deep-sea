@@ -123,6 +123,17 @@ describe('Node', () => {
     expect(child.parent).toBe(node);
   });
 
+  it('should enter child node into tree upon adding a child', () => {
+    const node = createNode();
+    const child = createNode();
+    const tree = new SceneTree();
+
+    node.enterTree(tree);
+    node.addChild(child);
+
+    expect(child.tree).toBe(tree);
+  });
+
   it('should emit a signal upon adding a child', () => {
     const node = createNode();
     const child = createNode();
@@ -145,20 +156,16 @@ describe('Node', () => {
     expect(child.parent).toBe(null);
   });
 
-  it('should return false if child was removed', () => {
+  it('should exit child node from tree upon removing a child', () => {
     const node = createNode();
     const child = createNode();
+    const tree = new SceneTree();
 
-    expect(node.removeChild(child)).toBe(false);
-  });
-
-  it('should return true if child was removed', () => {
-    const node = createNode();
-    const child = createNode();
-
+    node.enterTree(tree);
     node.addChild(child);
+    node.removeChild(child);
 
-    expect(node.removeChild(child)).toBe(true);
+    expect(child.tree).toBe(null);
   });
 
   it('should emit a signal upon removing a child', () => {
@@ -181,6 +188,22 @@ describe('Node', () => {
     node.removeChild(createNode());
 
     expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('should return false if child was removed', () => {
+    const node = createNode();
+    const child = createNode();
+
+    expect(node.removeChild(child)).toBe(false);
+  });
+
+  it('should return true if child was removed', () => {
+    const node = createNode();
+    const child = createNode();
+
+    node.addChild(child);
+
+    expect(node.removeChild(child)).toBe(true);
   });
 
   it('should throw an error if trying to set self as a parent', () => {

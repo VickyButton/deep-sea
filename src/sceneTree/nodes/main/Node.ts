@@ -120,6 +120,11 @@ export abstract class Node {
     // Set node's parent to this node.
     node.parent = this;
 
+    if (this.tree) {
+      // This node is in a tree, enter child into tree.
+      node.enterTree(this.tree);
+    }
+
     // Child has been fully added, emit signal.
     this.childAddedSignal.emit(node);
   }
@@ -130,6 +135,11 @@ export abstract class Node {
    * @returns True if the child was removed and false if not.
    */
   public removeChild(node: Node) {
+    if (this.tree) {
+      // This node is in a tree, exit child from tree.
+      node.exitTree();
+    }
+
     if (!this._children.delete(node)) {
       // Passed node is not a child of this node, return false.
       return false;
