@@ -55,6 +55,11 @@ export abstract class Node {
    * @param tree The tree to enter.
    */
   public enterTree(tree: SceneTree) {
+    if (this.tree) {
+      // Already in a tree, throw error.
+      throw Node.AlreadyInTreeError;
+    }
+
     // Enter self into tree before entering children into tree.
     this._tree = tree;
     this.treeEnteredSignal.emit(tree);
@@ -110,6 +115,10 @@ export abstract class Node {
       node.parent = null;
       this.childRemovedSignal.emit(node);
     }
+  }
+
+  public static get AlreadyInTreeError() {
+    return new Error('Cannot enter a tree when already in a tree.');
   }
 
   public static get ChildHasParentError() {

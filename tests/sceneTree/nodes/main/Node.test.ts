@@ -15,6 +15,15 @@ describe('Node', () => {
     expect(createNode().tree).toBe(null);
   });
 
+  it('should throw an error if entering a tree when already in a tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+
+    node.enterTree(tree);
+
+    expect(() => node.enterTree(new SceneTree())).toThrowError(Node.AlreadyInTreeError);
+  });
+
   it('should enter a tree', () => {
     const tree = new SceneTree();
     const node = createNode();
