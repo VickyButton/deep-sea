@@ -137,14 +137,17 @@ export abstract class Node {
     this.childRemovedSignal.emit(node);
   }
 
+  /** Thrown when attempting to enter a node into a tree while already in a tree. */
   public static get AlreadyInTreeError() {
     return new Error('Cannot enter a tree when already in a tree.');
   }
 
+  /** Thrown when attempting to add a child node that already has a parent. */
   public static get ChildHasParentError() {
     return new Error('Cannot add parented child as a child.');
   }
 
+  /** Thrown when attempting to add a parent node that would create a circular relationship. */
   public static get CircularRelationshipError() {
     return new Error('Cannot create a circular relationship.');
   }
