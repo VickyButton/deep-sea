@@ -15,11 +15,11 @@ describe('Node', () => {
     expect(createNode().tree).toBe(null);
   });
 
-  it('should set tree', () => {
+  it('should enter a tree', () => {
     const tree = new SceneTree();
     const node = createNode();
 
-    node.tree = tree;
+    node.enterTree(tree);
 
     expect(node.tree).toBe(tree);
   });
@@ -30,7 +30,7 @@ describe('Node', () => {
     const callback = vi.fn();
 
     node.treeEnteredSignal.listen(callback);
-    node.tree = tree;
+    node.enterTree(tree);
 
     expect(callback).toHaveBeenCalledWith(tree);
   });
@@ -41,7 +41,7 @@ describe('Node', () => {
     const child = createNode();
     node.addChild(child);
 
-    node.tree = tree;
+    node.enterTree(tree);
 
     expect(child.tree).toBe(tree);
   });

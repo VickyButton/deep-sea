@@ -49,20 +49,12 @@ export abstract class Node {
   }
 
   /**
-   * Sets the tree to which the node belongs to.
-   * @param tree The tree to set the node's tree to, or null if removing it from a tree.
+   * Enters the node and its children into a tree.
+   * @param tree The tree to enter.
    */
-  public set tree(tree: SceneTree | null) {
-    this._tree = tree;
-
-    if (tree) {
-      this.enterTree(tree);
-    }
-  }
-
-  private enterTree(tree: SceneTree) {
+  public enterTree(tree: SceneTree) {
     this.treeEnteredSignal.emit(tree);
-    this.children.forEach((child) => child.tree = tree);
+    this.children.forEach((child) => child.enterTree(tree));
   }
 
   /**
