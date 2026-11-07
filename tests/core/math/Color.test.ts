@@ -1,4 +1,4 @@
-import { Color } from './Color';
+import { Color } from '../../../src/core/math/color/Color';
 import { describe, expect, it } from 'vitest';
 
 describe('Color', () => {
