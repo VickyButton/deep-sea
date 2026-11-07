@@ -39,6 +39,14 @@ export class Node2D extends CanvasNode {
     this._position = position;
   }
 
+  /**
+   * Translates the node a certain distance.
+   * @param offset The offset to translate the node by.
+   */
+  public translate(offset: Vector2) {
+    this.position = this.position.add(offset);
+  }
+
   /** The node's local rotation, in radians. */
   public get rotation() {
     return this._rotation;
@@ -50,6 +58,14 @@ export class Node2D extends CanvasNode {
    */
   public set rotation(radians: number) {
     this._rotation = radians;
+  }
+
+  /**
+   * Rotates the node.
+   * @param radians The number of radians to rotate the node by.
+   */
+  public rotate(radians: number) {
+    this.rotation = this.rotation + radians;
   }
 
   /** The node's local scale. */
@@ -71,22 +87,6 @@ export class Node2D extends CanvasNode {
    */
   public applyScale(ratio: Vector2) {
     this.scale = new Vector2(this.scale.x * ratio.x, this.scale.y * ratio.y);
-  }
-
-  /**
-   * Rotates the node.
-   * @param radians The number of radians to rotate the node by.
-   */
-  public rotate(radians: number) {
-    this.rotation = this.rotation + radians;
-  }
-
-  /**
-   * Translates the node a certain distance.
-   * @param offset The offset to translate the node by.
-   */
-  public translate(offset: Vector2) {
-    this.position = this.position.add(offset);
   }
 
   private static readonly POSITION_X_DEFAULT = 0;
