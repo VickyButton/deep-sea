@@ -1,4 +1,4 @@
-import { DrawLine } from './DrawLine';
+import { DrawLine } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/drawLine/DrawLine';
 import { describe, expect, it } from 'vitest';
 
 describe('DrawLine', () => {
