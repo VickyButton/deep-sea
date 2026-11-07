@@ -1,5 +1,5 @@
-import { MockCanvas } from './canvas/MockCanvas';
-import { DefaultCanvasCommandTranslator } from './DefaultCanvasCommandTranslator';
+import { DefaultCanvasCommandTranslator } from '../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/DefaultCanvasCommandTranslator';
+import { MockCanvas } from '../../../../mocks/MockCanvas';
 import { describe, expect, it } from 'vitest';
 
 describe('DefaultCanvasCommandTranslator', () => {
