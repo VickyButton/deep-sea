@@ -12,6 +12,7 @@ export abstract class Node {
   public readonly id: string;
   private _children = new Set<Node>();
   private _parent: Node | null = null;
+  private _tree: SceneTree | null = null;
 
   constructor(options: NodeOptions) {
     this.id = options.id;
@@ -41,8 +42,16 @@ export abstract class Node {
   }
 
   /** The scene tree to which the node belongs to or null if the node does not belong to a scene tree. */
-  public get tree(): SceneTree | null {
-    return this.parent?.tree ?? null;
+  public get tree() {
+    return this._tree;
+  }
+
+  /**
+   * Sets the tree to which the node belongs to.
+   * @param tree The tree to set the node's tree to, or null if removing it from a tree.
+   */
+  public set tree(tree: SceneTree | null) {
+    this._tree = tree;
   }
 
   /**

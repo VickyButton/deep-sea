@@ -1,4 +1,5 @@
 import { Node } from '../../../../src/sceneTree/nodes/main/Node';
+import { SceneTree } from '../../../../src/sceneTree/SceneTree';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('Node', () => {
@@ -8,6 +9,19 @@ describe('Node', () => {
 
   it('should have no parent by default', () => {
     expect(createNode().parent).toBe(null);
+  });
+
+  it('should have no tree by default', () => {
+    expect(createNode().tree).toBe(null);
+  });
+
+  it('should set tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+
+    node.tree = tree;
+
+    expect(node.tree).toBe(tree);
   });
 
   it('should throw an error if trying to add self as a child', () => {
