@@ -1,4 +1,4 @@
-/** The browser canvas interface. */
+/** The operating system canvas interface. */
 export abstract class Canvas {
   /** The height of the canvas in pixels. */
   public abstract get height(): number;

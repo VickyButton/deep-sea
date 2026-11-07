@@ -1,6 +1,6 @@
 import type { FrameRequestCallback } from './Animation.types';
 
-/** The browser animation interface. */
+/** The operating system animation interface. */
 export abstract class Animation {
   /**
    * Cancels an active animation frame request.

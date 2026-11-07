@@ -1,5 +1,5 @@
 import type { TimeProvider } from './timeProvider/timeProvider.types';
-import type { Animation } from '../../../../core/browser/Animation';
+import type { Animation } from '../../../../core/os/Animation';
 import { clamp } from '../../../../utils/clamp';
 
 const LOOPS_PER_SECOND_MIN = 1;
