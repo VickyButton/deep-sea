@@ -24,6 +24,7 @@ export abstract class Node {
 
   /** The node's child nodes. */
   public get children() {
+    // Convert the child nodes into an array for better functionality.
     return Array.from(this._children);
   }
 
@@ -39,9 +40,11 @@ export abstract class Node {
    */
   public set parent(node: Node | null) {
     if (this === node) {
+      // Attempting to set self as parent, throw error.
       throw Node.CircularRelationshipError;
     }
 
+    // Set this node's parent to the passed node.
     this._parent = node;
   }
 
