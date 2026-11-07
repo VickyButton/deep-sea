@@ -9,8 +9,8 @@ export class CanvasNode extends Node {
   constructor(options: CanvasNodeOptions) {
     super(options);
 
-    this._visible = options.visible;
-    this._zIndex = options.zIndex;
+    this._visible = options.visible ?? CanvasNode.VISIBLE_DEFAULT;
+    this._zIndex = options.zIndex ?? CanvasNode.Z_INDEX_DEFAULT;
   }
 
   /** The node's local visibility. */
@@ -48,4 +48,7 @@ export class CanvasNode extends Node {
   public show() {
     this.visible = true;
   }
+
+  private static readonly VISIBLE_DEFAULT = true;
+  private static readonly Z_INDEX_DEFAULT = 0;
 }
