@@ -141,6 +141,7 @@ export abstract class Node {
     // Child has been fully removed, emit signal.
     this.childRemovedSignal.emit(node);
 
+    // Child was removed, return true.
     return true;
   }
 
