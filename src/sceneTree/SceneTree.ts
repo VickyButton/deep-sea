@@ -6,7 +6,7 @@ export class SceneTree {
   /** The root node. */
   public readonly viewport = SceneTree.createViewport();
 
-  /** Creates a new SceneTree. */
+  /** Creates a new SceneTree instance. */
   constructor() {
     this.viewport.enterTree(this);
     this.viewport.setCamera(this.createCamera());

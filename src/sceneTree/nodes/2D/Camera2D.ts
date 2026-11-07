@@ -7,7 +7,7 @@ export class Camera2D extends Node2D {
   private _zoom: number;
 
   /**
-   * Creates a new Camera2D.
+   * Creates a new Camera2D instance.
    * @param options The options for the new Camera2D.
    */
   constructor(options: Camera2DOptions) {
