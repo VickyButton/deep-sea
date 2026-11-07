@@ -1,4 +1,4 @@
-/** A graphical canvas that can be drawn on. */
+/** The browser canvas interface. */
 export abstract class Canvas {
   /** The height of the canvas in pixels. */
   public abstract get height(): number;
