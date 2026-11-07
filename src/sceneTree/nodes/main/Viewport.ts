@@ -15,10 +15,14 @@ export class Viewport extends Node {
    * @param camera The camera to set the viewport's camera to.
    */
   public setCamera(camera: Camera2D) {
-    // Add camera as a child.
+    if (this.camera) {
+      this.unsetCamera();
+    }
+
+    // Add camera to children.
     this.addChild(camera);
 
-    // Store reference of camera.
+    // Store camera reference.
     this._camera = camera;
   }
 
