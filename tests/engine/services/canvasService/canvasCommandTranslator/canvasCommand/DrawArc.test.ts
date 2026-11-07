@@ -1,4 +1,4 @@
-import { DrawArc } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/DrawArc';
+import { DrawArc } from '../../../../../../src/engine/services/canvasService/canvasCommandTranslator/canvasCommand/DrawArc';
 import { describe, expect, it } from 'vitest';
 
 describe('DrawArc', () => {

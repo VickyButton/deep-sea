@@ -1,20 +1,16 @@
-import { CanvasCommandInterpreter } from '../../../../src/engine/services/canvasService/canvasCommandInterpreter/CanvasCommandInterpreter';
+import { CanvasService } from '../../../../src/engine/services/canvasService/CanvasService';
 import { MockCanvas } from '../../../mocks/MockCanvas';
-import { MockCanvasCommandTranslator } from '../../../mocks/MockCanvasCommandTranslator';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 describe('CanvasService', () => {
   it('should execute canvas command on a canvas', () => {
     const canvas = new MockCanvas();
-    const translator = new MockCanvasCommandTranslator();
-    const interpreter = new CanvasCommandInterpreter(canvas, translator);
-    const callback = vi.fn();
-    translator.translate.mockReturnValueOnce(callback);
+    const service = new CanvasService(canvas);
 
-    interpreter.execute({
+    service.execute({
       type: 'BEGIN_PATH',
     });
 
-    expect(callback).toHaveBeenCalledWith(canvas);
+    expect(canvas.beginPath).toHaveBeenCalled();
   });
 });

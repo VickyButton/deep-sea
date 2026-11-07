@@ -1,11 +1,10 @@
-
-import { DefaultCanvasCommandTranslator } from '../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/DefaultCanvasCommandTranslator';
-import { MockCanvas } from '../../../../../mocks/MockCanvas';
+import { CanvasCommandTranslator } from '../../../../../src/engine/services/canvasService/canvasCommandTranslator/CanvasCommandTranslator';
+import { MockCanvas } from '../../../../mocks/MockCanvas';
 import { describe, expect, it } from 'vitest';
 
-describe('DefaultCanvasCommandTranslator', () => {
+describe('CanvasCommandTranslator', () => {
   it('should translate step with "BEGIN_PATH" type', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     translator.translate({
@@ -16,7 +15,7 @@ describe('DefaultCanvasCommandTranslator', () => {
   });
 
   it('should translate step with "CLOSE_PATH" type', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     translator.translate({
@@ -27,7 +26,7 @@ describe('DefaultCanvasCommandTranslator', () => {
   });
 
   it('should translate step with "DRAW_ARC" type', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     translator.translate({
@@ -44,7 +43,7 @@ describe('DefaultCanvasCommandTranslator', () => {
   });
 
   it('should translate step with "DRAW_LINE" type', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     translator.translate({
@@ -59,7 +58,7 @@ describe('DefaultCanvasCommandTranslator', () => {
   });
 
   it('should translate step with "DRAW_RECTANGLE" type', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     translator.translate({
@@ -74,7 +73,7 @@ describe('DefaultCanvasCommandTranslator', () => {
   });
 
   it('should translate step with "FILL" type', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     translator.translate({
@@ -85,7 +84,7 @@ describe('DefaultCanvasCommandTranslator', () => {
   });
 
   it('should translate step with "RESET_TRANSFORM" type', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     translator.translate({
@@ -96,7 +95,7 @@ describe('DefaultCanvasCommandTranslator', () => {
   });
 
   it('should translate step with "SET_FILL_COLOR" type', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     translator.translate({
@@ -108,7 +107,7 @@ describe('DefaultCanvasCommandTranslator', () => {
   });
 
   it('should translate step with "SET_STROKE_COLOR" type', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     translator.translate({
@@ -120,7 +119,7 @@ describe('DefaultCanvasCommandTranslator', () => {
   });
 
   it('should translate step with "SET_TRANSFORM" type', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     translator.translate({
@@ -137,7 +136,7 @@ describe('DefaultCanvasCommandTranslator', () => {
   });
 
   it('should translate step with "STROKE" type', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     translator.translate({
@@ -148,7 +147,7 @@ describe('DefaultCanvasCommandTranslator', () => {
   });
 
   it('should throw an error if step type is unknown', () => {
-    const translator = new DefaultCanvasCommandTranslator();
+    const translator = new CanvasCommandTranslator();
     const canvas = new MockCanvas();
 
     expect(() => translator.translate({

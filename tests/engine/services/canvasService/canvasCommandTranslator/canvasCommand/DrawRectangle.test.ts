@@ -1,4 +1,4 @@
-import { DrawRectangle } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/DrawRectangle';
+import { DrawRectangle } from '../../../../../../src/engine/services/canvasService/canvasCommandTranslator/canvasCommand/DrawRectangle';
 import { describe, expect, it } from 'vitest';
 
 describe('DrawRectangle', () => {

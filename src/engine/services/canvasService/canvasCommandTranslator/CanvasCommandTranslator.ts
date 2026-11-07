@@ -1,9 +1,14 @@
 import type { CanvasCommand } from './canvasCommand/CanvasCommand';
-import type { Canvas } from '../../../../../core/os/Canvas';
-import { CanvasCommandTranslator } from './CanvasCommandTranslator';
+import type { Canvas } from '../../../../core/os/Canvas';
 
-/** The default canvas command translator. */
-export class DefaultCanvasCommandTranslator extends CanvasCommandTranslator {
+/** Translates canvas commands into canvas callbacks. */
+export class CanvasCommandTranslator {
+  /**
+   * Translates a canvas command into a canvas callback.
+   * @param command The canvas command to translate.
+   * @returns The translated canvas callback.
+   * @throws An error if the command cannot be translated.
+   */
   public translate(command: CanvasCommand) {
     switch (command.type) {
       case 'BEGIN_PATH':

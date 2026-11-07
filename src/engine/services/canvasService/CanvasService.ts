@@ -1,14 +1,14 @@
-import type { CanvasCommand } from './canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/CanvasCommand';
-import type { CanvasCommandTranslator } from './canvasCommandInterpreter/canvasCommandTranslator/CanvasCommandTranslator';
+import type { CanvasCommand } from './canvasCommandTranslator/canvasCommand/CanvasCommand';
 import type { Canvas } from '../../../core/os/Canvas';
-import { CanvasCommandInterpreter } from './canvasCommandInterpreter/CanvasCommandInterpreter';
+import { CanvasCommandTranslator } from './canvasCommandTranslator/CanvasCommandTranslator';
 
 /** A service for executing canvas commands. */
 export class CanvasService {
-  private readonly interpreter: CanvasCommandInterpreter;
+  private readonly canvas: Canvas;
+  private readonly translator = new CanvasCommandTranslator();
 
-  constructor(canvas: Canvas, translator: CanvasCommandTranslator) {
-    this.interpreter = new CanvasCommandInterpreter(canvas, translator);
+  constructor(canvas: Canvas) {
+    this.canvas = canvas;
   }
 
   /**
@@ -16,6 +16,10 @@ export class CanvasService {
    * @param command The canvas command to execute.
    */
   public execute(command: CanvasCommand) {
-    this.interpreter.execute(command);
+    this.translate(command)(this.canvas);
+  }
+
+  private translate(command: CanvasCommand) {
+    return this.translator.translate(command);
   }
 }

@@ -1,4 +1,4 @@
-import { Fill } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/Fill';
+import { Fill } from '../../../../../../src/engine/services/canvasService/canvasCommandTranslator/canvasCommand/Fill';
 import { describe, expect, it } from 'vitest';
 
 describe('Fill', () => {

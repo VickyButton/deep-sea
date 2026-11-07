@@ -1,4 +1,4 @@
-import { BeginPath } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/BeginPath';
+import { BeginPath } from '../../../../../../src/engine/services/canvasService/canvasCommandTranslator/canvasCommand/BeginPath';
 import { describe, expect, it } from 'vitest';
 
 describe('BeginPath', () => {

@@ -1,4 +1,4 @@
-import { ResetTransform } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/ResetTransform';
+import { ResetTransform } from '../../../../../../src/engine/services/canvasService/canvasCommandTranslator/canvasCommand/ResetTransform';
 import { describe, expect, it } from 'vitest';
 
 describe('ResetTransform', () => {

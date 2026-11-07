@@ -1,4 +1,4 @@
-import { SetFillColor } from '../../../../../../../src/engine/services/canvasService/canvasCommandInterpreter/canvasCommandTranslator/canvasCommand/SetFillColor';
+import { SetFillColor } from '../../../../../../src/engine/services/canvasService/canvasCommandTranslator/canvasCommand/SetFillColor';
 import { describe, expect, it } from 'vitest';
 
 describe('SetFillColor', () => {
