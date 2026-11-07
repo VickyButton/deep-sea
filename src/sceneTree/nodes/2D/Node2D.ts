@@ -1,5 +1,5 @@
 import type { Node2DOptions } from './Node2D.types';
-import { Vector2 } from '../../../core/math/vector2/Vector2';
+import { Vector2 } from '../../../core/math/Vector2';
 import { CanvasNode } from '../main/CanvasNode';
 
 export class Node2D extends CanvasNode {
