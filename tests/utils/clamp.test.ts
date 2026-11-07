@@ -1,4 +1,4 @@
-import { clamp } from './clamp';
+import { clamp } from '../../src/utils/clamp';
 import { describe, expect, it } from 'vitest';
 
 describe('clamp', () => {
