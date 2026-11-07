@@ -1,5 +1,6 @@
-import { Transform2D } from './Transform2D';
-import { Vector2 } from '../vector2/Vector2';
+
+import { Transform2D } from '../../../src/core/math/transform2D/Transform2D';
+import { Vector2 } from '../../../src/core/math/vector2/Vector2';
 import { describe, expect, it } from 'vitest';
 
 describe('Transform2D', () => {
