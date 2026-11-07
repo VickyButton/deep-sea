@@ -1,4 +1,4 @@
-import type { Canvas } from './canvas/Canvas';
+import type { Canvas } from '../../../../../core/browser/Canvas';
 import type { CanvasCommand } from './canvasCommand/CanvasCommand';
 import { CanvasCommandTranslator } from './CanvasCommandTranslator';
 
