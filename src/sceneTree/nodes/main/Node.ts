@@ -62,6 +62,8 @@ export abstract class Node {
 
     // Enter self into tree before entering children into tree.
     this._tree = tree;
+
+    // The node has entered the tree, emit signal.
     this.treeEnteredSignal.emit(tree);
 
     // Enter children into tree.
@@ -83,6 +85,8 @@ export abstract class Node {
 
     // Exit self from tree.
     this._tree = null;
+
+    // The node and its children have exited the tree, emit signal.
     this.treeExitedSignal.emit(previousTree);
   }
 
@@ -109,7 +113,7 @@ export abstract class Node {
     // Set node's parent to this node.
     node.parent = this;
 
-    // Emit signal.
+    // Child has been fully added, emit signal.
     this.childAddedSignal.emit(node);
   }
 
@@ -126,7 +130,7 @@ export abstract class Node {
     // Set removed child node's parent to null.
     node.parent = null;
 
-    // Emit signal.
+    // Child has been fully removed, emit signal.
     this.childRemovedSignal.emit(node);
   }
 
