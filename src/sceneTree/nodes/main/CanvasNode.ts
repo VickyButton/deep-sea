@@ -30,6 +30,16 @@ export class CanvasNode extends Node {
     this._visible = visible;
   }
 
+  /** Turns off the node's visibility. */
+  public hide() {
+    this.visible = false;
+  }
+
+  /** Turns on the node's visibility. */
+  public show() {
+    this.visible = true;
+  }
+
   /** The node's local z-index. */
   public get zIndex() {
     return this._zIndex;
@@ -41,16 +51,6 @@ export class CanvasNode extends Node {
    */
   public set zIndex(zIndex: number) {
     this._zIndex = zIndex;
-  }
-
-  /** Turns off the node's visibility. */
-  public hide() {
-    this.visible = false;
-  }
-
-  /** Turns on the node's visibility. */
-  public show() {
-    this.visible = true;
   }
 
   private static readonly VISIBLE_DEFAULT = true;
