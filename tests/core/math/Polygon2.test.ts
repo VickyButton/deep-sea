@@ -1,5 +1,6 @@
-import { Polygon2 } from './Polygon2';
-import { Vector2 } from '../vector2/Vector2';
+
+import { Polygon2 } from '../../../src/core/math/polygon2/Polygon2';
+import { Vector2 } from '../../../src/core/math/vector2/Vector2';
 import { describe, expect, it } from 'vitest';
 
 describe('Polygon2', () => {
