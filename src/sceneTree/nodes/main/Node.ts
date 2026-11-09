@@ -32,64 +32,6 @@ export abstract class Node {
     return Array.from(this._children);
   }
 
-  /** The node's parent node or null if it has no parent. */
-  public get parent() {
-    return this._parent;
-  }
-
-  /**
-   * Sets the node's parent node.
-   * @param node The node to set as the node's parent.
-   */
-  public set parent(node: Node | null) {
-    this._parent = node;
-  }
-
-  /** The scene tree to which the node belongs to or null if the node does not belong to a scene tree. */
-  public get tree() {
-    return this._tree;
-  }
-
-  /**
-   * Enters the node and its children into a tree.
-   * @param tree The tree to enter.
-   */
-  public enterTree(tree: SceneTree) {
-    if (this.tree) {
-      // Already in a tree, throw error.
-      throw Node.AlreadyInTreeError;
-    }
-
-    // Enter self into tree before entering children into tree.
-    this._tree = tree;
-
-    // The node has entered the tree, emit signal.
-    this.treeEnteredSignal.emit(tree);
-
-    // Enter children into tree.
-    this.children.forEach((child) => child.enterTree(tree));
-  }
-
-  /** Exits the node and its children from their current tree. */
-  public exitTree() {
-    // Exit children from tree before exiting self from tree.
-    this.children.forEach((child) => child.exitTree());
-
-    if (!this.tree) {
-      // Not in a tree, exit early.
-      return;
-    }
-
-    // Save tree reference before exiting.
-    const previousTree = this.tree;
-
-    // Exit self from tree.
-    this._tree = null;
-
-    // The node and its children have exited the tree, emit signal.
-    this.treeExitedSignal.emit(previousTree);
-  }
-
   /**
    * Adds a child node to the node.
    * @param node The child node to add.
@@ -146,6 +88,64 @@ export abstract class Node {
 
     // Child was removed, return true.
     return true;
+  }
+
+  /** The node's parent node or null if it has no parent. */
+  public get parent() {
+    return this._parent;
+  }
+
+  /**
+   * Sets the node's parent node.
+   * @param node The node to set as the node's parent.
+   */
+  public set parent(node: Node | null) {
+    this._parent = node;
+  }
+
+  /** The scene tree to which the node belongs to or null if the node does not belong to a scene tree. */
+  public get tree() {
+    return this._tree;
+  }
+
+  /**
+   * Enters the node and its children into a tree.
+   * @param tree The tree to enter.
+   */
+  public enterTree(tree: SceneTree) {
+    if (this.tree) {
+      // Already in a tree, throw error.
+      throw Node.AlreadyInTreeError;
+    }
+
+    // Enter self into tree before entering children into tree.
+    this._tree = tree;
+
+    // The node has entered the tree, emit signal.
+    this.treeEnteredSignal.emit(tree);
+
+    // Enter children into tree.
+    this.children.forEach((child) => child.enterTree(tree));
+  }
+
+  /** Exits the node and its children from their current tree. */
+  public exitTree() {
+    // Exit children from tree before exiting self from tree.
+    this.children.forEach((child) => child.exitTree());
+
+    if (!this.tree) {
+      // Not in a tree, exit early.
+      return;
+    }
+
+    // Save tree reference before exiting.
+    const previousTree = this.tree;
+
+    // Exit self from tree.
+    this._tree = null;
+
+    // The node and its children have exited the tree, emit signal.
+    this.treeExitedSignal.emit(previousTree);
   }
 
   /** Thrown when attempting to enter a node into a tree while already in a tree. */

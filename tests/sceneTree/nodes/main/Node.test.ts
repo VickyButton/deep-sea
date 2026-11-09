@@ -7,97 +7,6 @@ describe('Node', () => {
     expect(createNode().children).toEqual([]);
   });
 
-  it('should have no parent by default', () => {
-    expect(createNode().parent).toBe(null);
-  });
-
-  it('should have no tree by default', () => {
-    expect(createNode().tree).toBe(null);
-  });
-
-  it('should throw an error if entering a tree when already in a tree', () => {
-    const tree = new SceneTree();
-    const node = createNode();
-
-    node.enterTree(tree);
-
-    expect(() => node.enterTree(new SceneTree())).toThrowError(Node.AlreadyInTreeError);
-  });
-
-  it('should enter a tree', () => {
-    const tree = new SceneTree();
-    const node = createNode();
-
-    node.enterTree(tree);
-
-    expect(node.tree).toBe(tree);
-  });
-
-  it('should emit a signal upon entering tree', () => {
-    const tree = new SceneTree();
-    const node = createNode();
-    const callback = vi.fn();
-
-    node.treeEnteredSignal.listen(callback);
-    node.enterTree(tree);
-
-    expect(callback).toHaveBeenCalledWith(tree);
-  });
-
-  it('should enter children into tree upon entering tree', () => {
-    const tree = new SceneTree();
-    const node = createNode();
-    const child = createNode();
-    node.addChild(child);
-
-    node.enterTree(tree);
-
-    expect(child.tree).toBe(tree);
-  });
-
-  it('should exit a tree', () => {
-    const tree = new SceneTree();
-    const node = createNode();
-
-    node.enterTree(tree);
-    node.exitTree();
-
-    expect(node.tree).toBe(null);
-  });
-
-  it('should not emit a signal upon exiting tree if not in a tree', () => {
-    const node = createNode();
-    const callback = vi.fn();
-
-    node.treeExitedSignal.listen(callback);
-    node.exitTree();
-
-    expect(callback).not.toHaveBeenCalled();
-  });
-
-  it('should emit a signal upon exiting tree', () => {
-    const tree = new SceneTree();
-    const node = createNode();
-    const callback = vi.fn();
-
-    node.treeExitedSignal.listen(callback);
-    node.enterTree(tree);
-    node.exitTree();
-
-    expect(callback).toHaveBeenCalledWith(tree);
-  });
-
-  it('should exit children from tree upon exiting tree', () => {
-    const node = createNode();
-    const child = createNode();
-    node.addChild(child);
-
-    node.enterTree(new SceneTree());
-    node.exitTree();
-
-    expect(child.tree).toBe(null);
-  });
-
   it('should throw an error if trying to add self as a child', () => {
     const node = createNode();
 
@@ -206,6 +115,10 @@ describe('Node', () => {
     expect(node.removeChild(child)).toBe(true);
   });
 
+  it('should have no parent by default', () => {
+    expect(createNode().parent).toBe(null);
+  });
+
   it('should set a parent', () => {
     const node = createNode();
     const parent = createNode();
@@ -223,6 +136,93 @@ describe('Node', () => {
     node.parent = null;
 
     expect(node.parent).toBe(null);
+  });
+
+  it('should have no tree by default', () => {
+    expect(createNode().tree).toBe(null);
+  });
+
+  it('should throw an error if entering a tree when already in a tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+
+    node.enterTree(tree);
+
+    expect(() => node.enterTree(new SceneTree())).toThrowError(Node.AlreadyInTreeError);
+  });
+
+  it('should enter a tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+
+    node.enterTree(tree);
+
+    expect(node.tree).toBe(tree);
+  });
+
+  it('should emit a signal upon entering tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+    const callback = vi.fn();
+
+    node.treeEnteredSignal.listen(callback);
+    node.enterTree(tree);
+
+    expect(callback).toHaveBeenCalledWith(tree);
+  });
+
+  it('should enter children into tree upon entering tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+    const child = createNode();
+    node.addChild(child);
+
+    node.enterTree(tree);
+
+    expect(child.tree).toBe(tree);
+  });
+
+  it('should exit a tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+
+    node.enterTree(tree);
+    node.exitTree();
+
+    expect(node.tree).toBe(null);
+  });
+
+  it('should not emit a signal upon exiting tree if not in a tree', () => {
+    const node = createNode();
+    const callback = vi.fn();
+
+    node.treeExitedSignal.listen(callback);
+    node.exitTree();
+
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('should emit a signal upon exiting tree', () => {
+    const tree = new SceneTree();
+    const node = createNode();
+    const callback = vi.fn();
+
+    node.treeExitedSignal.listen(callback);
+    node.enterTree(tree);
+    node.exitTree();
+
+    expect(callback).toHaveBeenCalledWith(tree);
+  });
+
+  it('should exit children from tree upon exiting tree', () => {
+    const node = createNode();
+    const child = createNode();
+    node.addChild(child);
+
+    node.enterTree(new SceneTree());
+    node.exitTree();
+
+    expect(child.tree).toBe(null);
   });
 });
 
