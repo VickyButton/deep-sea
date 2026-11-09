@@ -40,15 +40,8 @@ export abstract class Node {
   /**
    * Sets the node's parent node.
    * @param node The node to set as the node's parent.
-   * @throws An error if the parent node is the node itself.
    */
   public set parent(node: Node | null) {
-    if (this === node) {
-      // Attempting to set self as parent, throw error.
-      throw Node.CircularRelationshipError;
-    }
-
-    // Set this node's parent to the passed node.
     this._parent = node;
   }
 

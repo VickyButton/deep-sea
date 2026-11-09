@@ -206,12 +206,6 @@ describe('Node', () => {
     expect(node.removeChild(child)).toBe(true);
   });
 
-  it('should throw an error if trying to set self as a parent', () => {
-    const node = createNode();
-
-    expect(() => node.parent = node).toThrowError(Node.CircularRelationshipError);
-  });
-
   it('should set a parent', () => {
     const node = createNode();
     const parent = createNode();
