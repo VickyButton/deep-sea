@@ -1,5 +1,5 @@
-import type { CanvasCommand } from './canvasCommand/CanvasCommand';
-import type { Canvas } from '../../../../core/os/Canvas';
+import type { CanvasCommand } from './canvasCommandTranslator/canvasCommand/CanvasCommand';
+import type { Canvas } from '../../../core/os/Canvas';
 
 /** Translates canvas commands into canvas callbacks. */
 export class CanvasCommandTranslator {

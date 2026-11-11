@@ -1,6 +1,6 @@
 import type { CanvasCommand } from './canvasCommandTranslator/canvasCommand/CanvasCommand';
 import type { Canvas } from '../../../core/os/Canvas';
-import { CanvasCommandTranslator } from './canvasCommandTranslator/CanvasCommandTranslator';
+import { CanvasCommandTranslator } from './CanvasCommandTranslator';
 
 /** A service for executing canvas commands. */
 export class CanvasService {

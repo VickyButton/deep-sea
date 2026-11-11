@@ -1,4 +1,4 @@
-import { CanvasCommandTranslator } from '../../../../../src/engine/services/canvasService/canvasCommandTranslator/CanvasCommandTranslator';
+import { CanvasCommandTranslator } from '../../../../../src/engine/services/canvasService/CanvasCommandTranslator';
 import { MockCanvas } from '../../../../mocks/MockCanvas';
 import { describe, expect, it } from 'vitest';
 
